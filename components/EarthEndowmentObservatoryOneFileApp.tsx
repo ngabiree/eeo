@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState, type ReactNode } from "react";
+import React, { useCallback, useMemo, useState, type KeyboardEvent, type ReactNode } from "react";
 import {
   AlertTriangle,
   Archive,
@@ -85,6 +85,9 @@ const tabs: { id: TabId; label: string; icon: LucideIcon }[] = [
   { id: "corrections", label: "Corrections", icon: MessageSquareWarning },
   { id: "workspace", label: "Review Workspace", icon: Workflow },
 ];
+
+/** Tab order for keyboard navigation (WAI-ARIA tablist) — must match `tabs` order. */
+const SECTION_TAB_ORDER: TabId[] = tabs.map((t) => t.id);
 
 const claims: Claim[] = [
   {
@@ -352,14 +355,49 @@ function Meta({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ShellHeader({ active, setActive }: { active: TabId; setActive: (id: TabId) => void }) {
+/**
+ * WAI-ARIA horizontal tab list: ArrowLeft/ArrowRight, Home, End (automatic selection).
+ * @see https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
+ */
+function handleTabKeyDown(
+  e: KeyboardEvent<HTMLButtonElement>,
+  fromId: TabId,
+  onSelectSection: (id: TabId) => void
+) {
+  const idx = SECTION_TAB_ORDER.indexOf(fromId);
+  if (idx === -1) return;
+  let nextId: TabId | undefined;
+  switch (e.key) {
+    case "ArrowRight":
+      e.preventDefault();
+      nextId = SECTION_TAB_ORDER[(idx + 1) % SECTION_TAB_ORDER.length]!;
+      break;
+    case "ArrowLeft":
+      e.preventDefault();
+      nextId = SECTION_TAB_ORDER[(idx - 1 + SECTION_TAB_ORDER.length) % SECTION_TAB_ORDER.length]!;
+      break;
+    case "Home":
+      e.preventDefault();
+      nextId = SECTION_TAB_ORDER[0]!;
+      break;
+    case "End":
+      e.preventDefault();
+      nextId = SECTION_TAB_ORDER[SECTION_TAB_ORDER.length - 1]!;
+      break;
+    default:
+      return;
+  }
+  onSelectSection(nextId);
+}
+
+function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSection: (id: TabId) => void }) {
   return (
     <header className="sticky top-0 z-50 border-b border-stone-200 bg-[#F8F3E8]/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 md:px-6 lg:px-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <button
             type="button"
-            onClick={() => setActive("home")}
+            onClick={() => onSelectSection("home")}
             className="group flex items-center gap-3 text-left"
             aria-label="Earth Endowment Observatory, go to Home"
           >
@@ -380,8 +418,9 @@ function ShellHeader({ active, setActive }: { active: TabId; setActive: (id: Tab
         </div>
         <nav
           className="flex gap-2 overflow-x-auto pb-1"
-          aria-label="Corridor sections"
           role="tablist"
+          aria-label="Corridor sections"
+          aria-orientation="horizontal"
         >
           {tabs.map(({ id, label, icon: Icon }) => (
             <button
@@ -389,9 +428,11 @@ function ShellHeader({ active, setActive }: { active: TabId; setActive: (id: Tab
               type="button"
               role="tab"
               id={`eeo-tab-${id}`}
+              tabIndex={active === id ? 0 : -1}
               aria-selected={active === id}
               aria-controls="eeo-section-panel"
-              onClick={() => setActive(id)}
+              onClick={() => onSelectSection(id)}
+              onKeyDown={(e) => handleTabKeyDown(e, id, onSelectSection)}
               className={cls(
                 "inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-sm transition",
                 active === id
@@ -409,7 +450,7 @@ function ShellHeader({ active, setActive }: { active: TabId; setActive: (id: Tab
   );
 }
 
-function Home({ setActive }: { setActive: (id: TabId) => void }) {
+function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
   return (
     <div className="space-y-16">
       <section className="relative overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-950 text-white shadow-xl">
@@ -432,21 +473,21 @@ function Home({ setActive }: { setActive: (id: TabId) => void }) {
             <div className="mt-8 flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={() => setActive("dossier")}
+                onClick={() => onSelectSection("dossier")}
                 className="rounded-full bg-[#C9A24D] px-5 py-3 text-sm font-semibold text-stone-950 shadow-sm hover:brightness-105"
               >
                 Open evidence dossier
               </button>
               <button
                 type="button"
-                onClick={() => setActive("ledger")}
+                onClick={() => onSelectSection("ledger")}
                 className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
               >
                 Inspect evidence ledger
               </button>
               <button
                 type="button"
-                onClick={() => setActive("workspace")}
+                onClick={() => onSelectSection("workspace")}
                 className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
               >
                 View review workspace
@@ -800,8 +841,8 @@ function Workspace() {
   );
 }
 
-function AppContent({ active, setActive }: { active: TabId; setActive: (id: TabId) => void }) {
-  if (active === "home") return <Home setActive={setActive} />;
+function AppContent({ active, onSelectSection }: { active: TabId; onSelectSection: (id: TabId) => void }) {
+  if (active === "home") return <Home onSelectSection={onSelectSection} />;
   if (active === "dossier") return <Dossier />;
   if (active === "dashboard") return <Dashboard />;
   if (active === "ledger") return <Ledger />;
@@ -809,21 +850,29 @@ function AppContent({ active, setActive }: { active: TabId; setActive: (id: TabI
   if (active === "safeguards") return <Safeguards />;
   if (active === "corrections") return <Corrections />;
   if (active === "workspace") return <Workspace />;
-  return <Home setActive={setActive} />;
+  return <Home onSelectSection={onSelectSection} />;
 }
 
 export default function EarthEndowmentObservatoryOneFileApp() {
   const [active, setActive] = useState<TabId>("home");
+
+  const onSelectSection = useCallback((id: TabId) => {
+    setActive(id);
+    requestAnimationFrame(() => {
+      document.getElementById(`eeo-tab-${id}`)?.focus();
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#EFE8D8] text-stone-950">
-      <ShellHeader active={active} setActive={setActive} />
+      <ShellHeader active={active} onSelectSection={onSelectSection} />
       <main
         id="eeo-section-panel"
         className="mx-auto max-w-7xl px-4 py-8 md:px-6 lg:px-8"
         role="tabpanel"
         aria-labelledby={`eeo-tab-${active}`}
       >
-        <AppContent active={active} setActive={setActive} />
+        <AppContent active={active} onSelectSection={onSelectSection} />
       </main>
       <footer className="mt-20 border-t border-stone-300 bg-[#11110F] px-4 py-10 text-stone-200 md:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-[1.3fr_0.7fr]">
