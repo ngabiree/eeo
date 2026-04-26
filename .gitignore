@@ -7,6 +7,8 @@
 *.crt
 
 node_modules/
+# Use pnpm only — avoid committing npm’s lockfile
+package-lock.json
 .next/
 .vercel/
 coverage/
@@ -44,3 +46,6 @@ logs/
 
 # Local editor / agent settings
 .claude/
+
+# ESLint
+.eslintcache

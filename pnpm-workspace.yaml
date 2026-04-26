@@ -1,0 +1,4 @@
+# Single-package workspace: this directory is the pnpm project root
+# (avoids being absorbed by a pnpm-workspace.yaml in a parent directory).
+packages:
+  - "."

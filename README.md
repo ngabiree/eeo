@@ -7,27 +7,34 @@ This matches the institutional systems specification: not a court, global atlas,
 ## Requirements
 
 - Node.js **20+** (LTS recommended)
-- npm (ships with Node)
+- [pnpm](https://pnpm.io/installation) **9.x** (this repo uses **Corepack** via the `packageManager` field in `package.json` so everyone resolves the same pnpm)
 
 ## Run locally
 
 ```bash
 cd /path/to/eeo
-npm install
-npm run dev
+corepack enable
+pnpm install
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000). Use the top navigation to move between **Home**, **Evidence Dossier**, **Limited Dashboard**, **Evidence Ledger**, **Methods + Limits**, **Safeguards**, **Corrections**, and **Review Workspace** (in-app state; no separate routes in this MVP).
 
 ## Scripts
 
-| Command        | Purpose                    |
-|----------------|----------------------------|
-| `npm run dev`  | Development server         |
-| `npm run build`| Production build           |
-| `npm run start`| Run production build       |
-| `npm run lint` | ESLint (`next/core-web-vitals`) |
-| `npm run typecheck` | TypeScript (`tsc --noEmit`) |
+| Command             | Purpose                    |
+|---------------------|----------------------------|
+| `pnpm dev`          | Development server         |
+| `pnpm build`        | Production build           |
+| `pnpm start`        | Run production build       |
+| `pnpm lint`         | ESLint CLI (`next/core-web-vitals` + `next/typescript` via `eslint.config.mjs`) |
+| `pnpm typecheck`    | TypeScript (`tsc --noEmit`) |
+
+## Package manager
+
+This repository standardizes on **pnpm** with **`pnpm-lock.yaml`**. A root **`pnpm-workspace.yaml`** lists only this package (`"."`) so the directory is always a self-contained pnpm project root, even if you have a `pnpm-workspace.yaml` higher on your machine.
+
+Do not commit `package-lock.json` (it is in `.gitignore`). CI uses **`pnpm install --frozen-lockfile`**.
 
 ## Project layout
 
