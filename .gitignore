@@ -38,3 +38,9 @@ coverage/
 
 *.log
 logs/
+
+# TypeScript
+*.tsbuildinfo
+
+# Local editor / agent settings
+.claude/
