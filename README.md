@@ -46,6 +46,15 @@ Do not commit `package-lock.json` (it is in `.gitignore`). CI uses **`pnpm insta
 
 For the **static prototype**, you do not need a `.env` file. See `.env.example` for future Supabase/Vercel placeholders (service role **never** client-side).
 
+## Deployment (Vercel)
+
+The app is set up for **[Vercel](https://vercel.com/)** (CLI: `vercel whoami` — signed in as **engabire**; project scope: **uwanjye** team). Local link metadata lives in **`.vercel/`** (gitignored).
+
+- **Project dashboard:** [vercel.com/uwanjye/eeo](https://vercel.com/uwanjye/eeo)  
+- **Production URL:** [eeo-ten.vercel.app](https://eeo-ten.vercel.app) (and per-deployment preview URLs on each deploy)
+
+**Connect GitHub for auto-deploys:** in the [Git settings](https://vercel.com/uwanjye/eeo/settings/git) for the project, connect **https://github.com/ngabiree/eeo**. If the link fails, install the [Vercel GitHub app](https://vercel.com/docs/git/vercel-for-github) for the **ngabiree** org (or your account) and ensure the Vercel team has access to that repo, then try **Connect** again (or import the repo from the Vercel dashboard). CLI: `vercel link --yes --scope uwanjye` (already run once) / `vercel deploy --yes`.
+
 ## Security
 
 See `SECURITY.md`. Do not commit secrets, credentials, raw evidence, or sensitive geospatial files.
