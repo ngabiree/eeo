@@ -1,14 +1,6 @@
 "use client";
 
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-  type CSSProperties,
-  type HTMLAttributes,
-  type KeyboardEvent,
-  type ReactNode,
-} from "react";
+import React, { useCallback, useMemo, useState, type KeyboardEvent, type ReactNode } from "react";
 import {
   AlertTriangle,
   Archive,
@@ -42,10 +34,41 @@ import {
 
 /**
  * Earth Endowment Observatory — One-File Corridor Prototype
- * Canonical posture: controlled evidence product first, limited dashboard second.
- * This file is intentionally self-contained for design review, product critique,
- * founder demos, and implementation handoff.
+ * Step 1 earth-color update: deep-ocean blue, forest green, mineral gold palette.
+ * Ground: living sage. Authority: ocean blue. Ecology: forest green. Economy: mineral gold.
  */
+
+// ─── Earth Color System ───────────────────────────────────────────────────────
+// Inspired by Earth's three most dominant visual signatures from orbit:
+//   Blues  → ocean, atmosphere, freshwater
+//   Greens → canopy, grassland, wetland
+//   Yellows → savanna, mineral, solar light
+
+const EARTH = {
+  // Blues
+  deepOcean:   "#0A3554", // deep ocean authority — nav, footer, CTAs
+  midOcean:    "#1A5276", // mid-ocean — hover, secondary
+  sky:         "#2E86AB", // sky/atmosphere — info accents
+
+  // Greens
+  oldGrowth:   "#1A4731", // old-growth forest — ecological signals
+  canopy:      "#2D6A4F", // canopy — active green
+  moss:        "#52734D", // moss — softer green accent
+
+  // Yellows / Gold
+  solar:       "#C8A21A", // solar mineral — economic/caution
+  savanna:     "#C9A24D", // warm savanna — existing accent
+  amber:       "#E6C84A", // bright mineral gold — highlights
+
+  // Grounds
+  sageGround:  "#E7EDE1", // living sage — body background
+  sagePaper:   "#EFF4EA", // sage paper — header/card bg
+  sageLight:   "#F4F8F1", // near-white sage — card surfaces
+
+  // Darks
+  humus:       "#11110F", // rich earth black
+  bark:        "#2C2416", // dark bark
+} as const;
 
 type TabId =
   | "home"
@@ -58,17 +81,9 @@ type TabId =
   | "corrections"
   | "workspace";
 
-type BadgeTone = "neutral" | "blue" | "green" | "copper" | "red" | "gold" | "dark";
+type BadgeTone = "neutral" | "blue" | "green" | "copper" | "red" | "gold" | "dark" | "ocean" | "forest";
 
-type EcosystemModule = {
-  title: string;
-  status: string;
-  icon: LucideIcon;
-  body: string;
-};
-
-/** Single source of truth for all claim field values. */
-/* eslint-disable @typescript-eslint/no-unused-vars -- canonical enums are currently consumed by type unions */
+/* eslint-disable @typescript-eslint/no-unused-vars -- canonical enums are primarily used by type unions in this docs copy */
 const CLAIM_TYPES = [
   "Observed",
   "Official",
@@ -153,6 +168,25 @@ function daysUntilStale(staleAfterDate: string): number {
   return Math.ceil((new Date(staleAfterDate).getTime() - Date.now()) / 86_400_000);
 }
 
+const TIER_LABELS: Record<string, string> = {
+  tier_0_open: "Tier 0 · Open",
+  tier_1_contextual_public: "Tier 1 · Contextual public",
+  tier_2_aggregated: "Tier 2 · Aggregated",
+  tier_3_verified_access: "Tier 3 · Verified access",
+  tier_4_community_governed: "Tier 4 · Community-governed",
+  tier_5_suppressed: "Tier 5 · Suppressed",
+};
+
+function tierTone(tier: string): BadgeTone {
+  if (tier.includes("tier_0")) return "green";
+  if (tier.includes("tier_1")) return "blue";
+  if (tier.includes("tier_2")) return "copper";
+  if (tier.includes("tier_3")) return "neutral";
+  if (tier.includes("tier_4")) return "gold";
+  if (tier.includes("tier_5")) return "red";
+  return "neutral";
+}
+
 type Claim = {
   id: string;
   layer: string;
@@ -171,29 +205,87 @@ type Claim = {
   right_of_reply_status: (typeof RIGHT_OF_REPLY_STATUSES)[number];
 };
 
-const tabs: { id: TabId; label: string; icon: LucideIcon }[] = [
-  { id: "home", label: "Home", icon: Globe2 },
-  { id: "dossier", label: "Evidence Dossier", icon: ScrollText },
-  { id: "ownership", label: "Ownership + Control", icon: Building2 },
-  { id: "dashboard", label: "Limited Dashboard", icon: Layers3 },
-  { id: "ledger", label: "Evidence Ledger", icon: Database },
-  { id: "methods", label: "Methods + Limits", icon: BookOpen },
-  { id: "safeguards", label: "Safeguards", icon: ShieldCheck },
-  { id: "corrections", label: "Corrections", icon: MessageSquareWarning },
-  { id: "workspace", label: "Review Workspace", icon: Workflow },
+type EcosystemModule = {
+  title: string;
+  status: string;
+  icon: LucideIcon;
+  body: string;
+  earthColor: string;
+};
+
+const BRAND_DOCTRINE: {
+  title: string;
+  body: string;
+  icon: LucideIcon;
+  iconBg: string;
+  accentColor: string;
+}[] = [
+  {
+    title: "Reveal the chain",
+    body: "Make value pathways visible from endowment to public-benefit question.",
+    icon: Eye,
+    iconBg: EARTH.deepOcean,
+    accentColor: EARTH.sky,
+  },
+  {
+    title: "Inspect the claim",
+    body: "Treat every assertion as reviewable and tied to explicit evidence.",
+    icon: FileSearch,
+    iconBg: EARTH.midOcean,
+    accentColor: EARTH.deepOcean,
+  },
+  {
+    title: "Understand the source",
+    body: "Show provenance, method, and conditions before interpretation.",
+    icon: Archive,
+    iconBg: EARTH.savanna,
+    accentColor: EARTH.solar,
+  },
+  {
+    title: "Respect the limit",
+    body: "Publish with caveats and safeguards, never beyond what evidence supports.",
+    icon: AlertTriangle,
+    iconBg: "#7a5c10",
+    accentColor: EARTH.savanna,
+  },
+  {
+    title: "Challenge the record",
+    body: "Keep correction and right-of-reply pathways open at all times.",
+    icon: MessageSquareWarning,
+    iconBg: "#7a3e32",
+    accentColor: "#b91c1c",
+  },
+  {
+    title: "Protect the vulnerable",
+    body: "Tier, aggregate, suppress, or refuse exposure where harm is plausible.",
+    icon: ShieldCheck,
+    iconBg: EARTH.oldGrowth,
+    accentColor: EARTH.canopy,
+  },
 ];
 
-/** Tab order for keyboard navigation (WAI-ARIA tablist) — must match `tabs` order. */
+const tabs: { id: TabId; label: string; icon: LucideIcon }[] = [
+  { id: "home",        label: "Home",              icon: Globe2 },
+  { id: "dossier",    label: "Evidence Dossier",  icon: ScrollText },
+  { id: "ownership",  label: "Ownership + Control", icon: Building2 },
+  { id: "dashboard",  label: "Limited Dashboard", icon: Layers3 },
+  { id: "ledger",     label: "Evidence Ledger",   icon: Database },
+  { id: "methods",    label: "Methods + Limits",  icon: BookOpen },
+  { id: "safeguards", label: "Safeguards",        icon: ShieldCheck },
+  { id: "corrections",label: "Corrections",       icon: MessageSquareWarning },
+  { id: "workspace",  label: "Review Workspace",  icon: Workflow },
+];
+
 const SECTION_TAB_ORDER: TabId[] = tabs.map((t) => t.id);
 
-/** Design tokens (CSS custom properties) — used for future theming; layout still uses Tailwind. */
-const EEO_ROOT_TOKENS: CSSProperties = {
-  ["--eeo-ink" as string]: "#11110F",
-  ["--eeo-parchment" as string]: "#EFE8D8",
-  ["--eeo-paper" as string]: "#F8F3E8",
-  ["--eeo-blue" as string]: "#25465F",
-  ["--eeo-copper" as string]: "#B66A3C",
-  ["--eeo-gold" as string]: "#C9A24D",
+// Domain → earth color mapping for Step 2 preparation
+const DOMAIN_COLORS: Record<string, string> = {
+  Endowment:      EARTH.oldGrowth,
+  Governance:     EARTH.deepOcean,
+  Trade:          EARTH.midOcean,
+  Labor:          EARTH.savanna,
+  Ecology:        EARTH.canopy,
+  "Public revenue": EARTH.solar,
 };
 
 const claims: Claim[] = [
@@ -204,14 +296,12 @@ const claims: Claim[] = [
     confidence: "Official",
     tier: "tier_1_contextual_public",
     domain: "Endowment",
-    claim:
-      "Public mineral statistics identify copper and cobalt as economically significant critical minerals in the selected producing region.",
+    claim: "Public mineral statistics identify copper and cobalt as economically significant critical minerals in the selected producing region.",
     source: "USGS Mineral Commodity Summary; national statistical releases",
     method: "Manual source extraction + source-date normalization",
     granularity: "national-level",
     posture: "public-record description",
-    limitation:
-      "Does not identify unpublished deposits, artisanal workings, or sensitive security coordinates.",
+    limitation: "Does not identify unpublished deposits, artisanal workings, or sensitive security coordinates.",
     status: "Approved for public release",
     stale: "2027-04-26",
     right_of_reply_status: "not_required",
@@ -223,14 +313,12 @@ const claims: Claim[] = [
     confidence: "Official",
     tier: "tier_1_contextual_public",
     domain: "Governance",
-    claim:
-      "Public disclosures describe mining licenses, public authorities, and revenue-reporting obligations relevant to the selected corridor.",
+    claim: "Public disclosures describe mining licenses, public authorities, and revenue-reporting obligations relevant to the selected corridor.",
     source: "EITI country disclosure; public legal and contract repositories",
     method: "Document indexing + concession/legal entity mapping",
     granularity: "corridor-level",
     posture: "no legal claim",
-    limitation:
-      "Formal legal authority is not presented as proof of full legitimacy, consent, or public benefit.",
+    limitation: "Formal legal authority is not presented as proof of full legitimacy, consent, or public benefit.",
     status: "Legal reviewed",
     stale: "2026-12-31",
     right_of_reply_status: "not_required",
@@ -242,14 +330,12 @@ const claims: Claim[] = [
     confidence: "Modeled",
     tier: "tier_1_contextual_public",
     domain: "Trade",
-    claim:
-      "Reported trade data suggest commodity movement from producing jurisdictions toward downstream processing markets, but do not prove mine-level physical traceability.",
+    claim: "Reported trade data suggest commodity movement from producing jurisdictions toward downstream processing markets, but do not prove mine-level physical traceability.",
     source: "UN Comtrade; company disclosures where available",
     method: "HS-code comparison + mirror-data discrepancy review",
     granularity: "national-level",
     posture: "no legal claim",
-    limitation:
-      "Customs data does not establish that material from a specific site became a specific downstream product.",
+    limitation: "Customs data does not establish that material from a specific site became a specific downstream product.",
     status: "Technical reviewed",
     stale: "2026-10-01",
     right_of_reply_status: "not_required",
@@ -261,14 +347,12 @@ const claims: Claim[] = [
     confidence: "Estimated",
     tier: "tier_1_contextual_public",
     domain: "Labor",
-    claim:
-      "Available labor statistics and due-diligence sources raise questions about wage context, occupational safety, informality, and coercion risk across the broader mineral chain.",
+    claim: "Available labor statistics and due-diligence sources raise questions about wage context, occupational safety, informality, and coercion risk across the broader mineral chain.",
     source: "ILOSTAT; ILO standards; reputable labor-rights reports",
     method: "Sector-level indicator synthesis + PPP context note",
     granularity: "national-level",
     posture: "no legal claim",
-    limitation:
-      "Labor data may be national, sectoral, or modeled; worker-level identities are not collected or published.",
+    limitation: "Labor data may be national, sectoral, or modeled; worker-level identities are not collected or published.",
     status: "Labor review required before launch",
     stale: "2026-09-01",
     right_of_reply_status: "not_required",
@@ -280,14 +364,12 @@ const claims: Claim[] = [
     confidence: "Modeled",
     tier: "tier_2_aggregated",
     domain: "Ecology",
-    claim:
-      "Remote-sensing and water-risk layers indicate ecological pressure signals near the corridor, including land disturbance and watershed stress indicators.",
+    claim: "Remote-sensing and water-risk layers indicate ecological pressure signals near the corridor, including land disturbance and watershed stress indicators.",
     source: "Global Forest Watch; Aqueduct-style water risk; public environmental reports",
     method: "Spatial overlay + buffer analysis + method caveat",
     granularity: "corridor-level",
     posture: "no legal claim",
-    limitation:
-      "Spatial proximity does not prove causation; sensitive ecological locations are generalized or withheld.",
+    limitation: "Spatial proximity does not prove causation; sensitive ecological locations are generalized or withheld.",
     status: "Exposure reviewed",
     stale: "2026-08-01",
     right_of_reply_status: "not_required",
@@ -299,56 +381,61 @@ const claims: Claim[] = [
     confidence: "Estimated",
     tier: "tier_1_contextual_public",
     domain: "Public revenue",
-    claim:
-      "Disclosed royalties, taxes, or public payments raise a public-benefit question: whether endowment transformation becomes durable capability for producing communities and citizens.",
+    claim: "Disclosed royalties, taxes, or public payments raise a public-benefit question: whether endowment transformation becomes durable capability for producing communities and citizens.",
     source: "EITI disclosure; budget documents where available; company reports",
     method: "Revenue pathway synthesis + gap labeling",
     granularity: "national-level",
     posture: "no legal claim",
-    limitation:
-      "Disclosed revenue does not prove durable public benefit; budget-use evidence is separate.",
+    limitation: "Disclosed revenue does not prove durable public benefit; budget-use evidence is separate.",
     status: "Editorial reviewed",
     stale: "2026-12-31",
     right_of_reply_status: "not_required",
   },
 ];
 
+// Earth-colored module definitions
 const modules: EcosystemModule[] = [
   {
     title: "Source Registry",
     status: "Build first",
     icon: Archive,
     body: "Record source identity, publisher, license, use basis, update cadence, limitations, and sensitivity before any claim is drafted.",
+    earthColor: EARTH.deepOcean,
   },
   {
     title: "Evidence Vault",
     status: "Private by default",
     icon: Lock,
     body: "Preserve raw source snapshots, evidence files, hashes, and review materials in private storage with logged access.",
+    earthColor: EARTH.oldGrowth,
   },
   {
     title: "Claims Engine",
     status: "Canonical core",
     icon: Fingerprint,
     body: "The claim is the smallest public assertion. Every claim carries source, method, confidence, legal posture, disclosure tier, and review status.",
+    earthColor: EARTH.solar,
   },
   {
     title: "Review Control Plane",
     status: "Blocking authority",
     icon: ClipboardCheck,
     body: "Method, legal, safeguards, exposure, labor, ecology, licensing, and editorial reviews can approve, defer, reject, or block release.",
+    earthColor: EARTH.midOcean,
   },
   {
     title: "Release Manifest",
     status: "Public trust mark",
     icon: BadgeCheck,
     body: "A signed record of what was released, by whom, under which methods, with what correction route and disclosure rationale.",
+    earthColor: EARTH.canopy,
   },
   {
     title: "Correction Route",
     status: "Always live",
     icon: MessageSquareWarning,
     body: "Accept factual corrections, exposure concerns, right-of-reply updates, outdated-data notices, and source challenges.",
+    earthColor: EARTH.savanna,
   },
 ];
 
@@ -378,12 +465,14 @@ function Badge({
 }) {
   const tones: Record<BadgeTone, string> = {
     neutral: "border-stone-300 bg-stone-100 text-stone-700",
-    blue: "border-blue-200 bg-blue-50 text-blue-900",
-    green: "border-emerald-200 bg-emerald-50 text-emerald-900",
-    copper: "border-orange-200 bg-orange-50 text-orange-900",
-    red: "border-red-200 bg-red-50 text-red-900",
-    gold: "border-yellow-200 bg-yellow-50 text-yellow-900",
-    dark: "border-stone-700 bg-stone-950 text-stone-50",
+    blue:    "border-sky-300 bg-sky-50 text-sky-950",
+    green:   "border-emerald-300 bg-emerald-50 text-emerald-950",
+    copper:  "border-orange-300 bg-orange-50 text-orange-900",
+    red:     "border-red-300 bg-red-50 text-red-900",
+    gold:    "border-yellow-300 bg-yellow-50 text-yellow-900",
+    dark:    "border-stone-700 bg-stone-950 text-stone-50",
+    ocean:   "border-blue-400 bg-blue-950 text-blue-100",
+    forest:  "border-emerald-500 bg-emerald-950 text-emerald-100",
   };
   return (
     <span className={cls("inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium", tones[tone])}>
@@ -393,13 +482,10 @@ function Badge({
   );
 }
 
-function Card({
-  children,
-  className = "",
-  ...props
-}: { children: ReactNode; className?: string } & HTMLAttributes<HTMLDivElement>) {
+function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cls("rounded-3xl border border-stone-200 bg-white/80 shadow-sm backdrop-blur", className)} {...props}>
+    <div className={cls("rounded-3xl border border-stone-200 shadow-sm backdrop-blur", className)}
+         style={{ backgroundColor: EARTH.sageLight }}>
       {children}
     </div>
   );
@@ -408,81 +494,13 @@ function Card({
 function SectionTitle({ eyebrow, title, children }: { eyebrow?: string; title: string; children?: ReactNode }) {
   return (
     <div className="mb-6">
-      {eyebrow ? <div className="mb-2 font-mono text-xs uppercase tracking-[0.24em] text-stone-500">{eyebrow}</div> : null}
+      {eyebrow ? (
+        <div className="mb-2 font-mono text-xs uppercase tracking-[0.24em]" style={{ color: EARTH.canopy }}>
+          {eyebrow}
+        </div>
+      ) : null}
       <h2 className="max-w-4xl text-3xl font-semibold tracking-tight text-stone-950 md:text-4xl">{title}</h2>
       {children ? <p className="mt-3 max-w-3xl text-base leading-7 text-stone-600">{children}</p> : null}
-    </div>
-  );
-}
-
-function Meta({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-400">{label}</div>
-      <div className="mt-1 leading-6 text-stone-700">{value}</div>
-    </div>
-  );
-}
-
-const TIER_LABELS: Record<string, string> = {
-  tier_0_open: "Tier 0 · Open",
-  tier_1_contextual_public: "Tier 1 · Contextual public",
-  tier_2_aggregated: "Tier 2 · Aggregated",
-  tier_3_verified_access: "Tier 3 · Verified access",
-  tier_4_community_governed: "Tier 4 · Community-governed",
-  tier_5_suppressed: "Tier 5 · Suppressed",
-};
-
-function tierTone(tier: string): BadgeTone {
-  if (tier.includes("tier_0")) return "green";
-  if (tier.includes("tier_1")) return "blue";
-  if (tier.includes("tier_2")) return "copper";
-  if (tier.includes("tier_3")) return "neutral";
-  if (tier.includes("tier_4")) return "gold";
-  if (tier.includes("tier_5")) return "red";
-  return "neutral";
-}
-
-const LEVERAGE_PATHWAYS: Record<string, { use: string; limit: string }> = {
-  Endowment: {
-    use: "Resource policy context, academic research, public education.",
-    limit: "Does not determine ownership, jurisdiction, or rights over the endowment.",
-  },
-  Governance: {
-    use: "Due diligence, policy reform, parliamentary oversight, procurement screening.",
-    limit: "Formal legal authority is not proof of full legitimacy, consent, or public benefit.",
-  },
-  Trade: {
-    use: "Public-interest inquiry, trade-context research, due-diligence questions.",
-    limit: "Reported trade flows do not prove physical chain-of-custody or verified origin.",
-  },
-  Labor: {
-    use: "Labor-risk inquiry, union organizing, procurement screening, research.",
-    limit: "Not site-level worker diagnosis unless data explicitly supports it. Informal work may be undercounted.",
-  },
-  Ecology: {
-    use: "Environmental due diligence, policy reform context, conservation research.",
-    limit: "Spatial proximity does not establish causation without additional evidence.",
-  },
-  "Public revenue": {
-    use: "Budget oversight, parliamentary monitoring, public-finance research.",
-    limit: "Disclosed revenue does not prove durable public benefit. Budget-use evidence is separate.",
-  },
-};
-
-function LeveragePathwayPanel({ domain }: { domain: string }) {
-  const entry = LEVERAGE_PATHWAYS[domain];
-  if (!entry) return null;
-  return (
-    <div className="rounded-2xl border border-stone-100 bg-stone-50 p-3 text-sm space-y-1.5">
-      <div>
-        <span className="font-semibold text-stone-700">Use for: </span>
-        <span className="text-stone-600">{entry.use}</span>
-      </div>
-      <div>
-        <span className="font-semibold text-red-700">Do not use to: </span>
-        <span className="text-stone-600">{entry.limit}</span>
-      </div>
     </div>
   );
 }
@@ -515,82 +533,51 @@ function Chain() {
           >
             {item}
           </span>
-          {idx < items.length - 1 ? <ArrowRight className="h-3.5 w-3.5 text-stone-400" /> : null}
+          {idx < items.length - 1 ? (
+            <ArrowRight className="h-3.5 w-3.5 text-stone-400" />
+          ) : null}
         </React.Fragment>
       ))}
     </div>
   );
 }
 
-const BRAND_DOCTRINE: { title: string; body: string; icon: LucideIcon; tone: BadgeTone }[] = [
-  {
-    title: "Reveal the chain",
-    body: "Make value pathways visible from endowment to public-benefit question.",
-    icon: Eye,
-    tone: "blue",
-  },
-  {
-    title: "Inspect the claim",
-    body: "Treat every assertion as reviewable and tied to explicit evidence.",
-    icon: FileSearch,
-    tone: "neutral",
-  },
-  {
-    title: "Understand the source",
-    body: "Show provenance, method, and conditions before interpretation.",
-    icon: Archive,
-    tone: "copper",
-  },
-  {
-    title: "Respect the limit",
-    body: "Publish with caveats and safeguards, never beyond what evidence supports.",
-    icon: AlertTriangle,
-    tone: "gold",
-  },
-  {
-    title: "Challenge the record",
-    body: "Keep correction and right-of-reply pathways open at all times.",
-    icon: MessageSquareWarning,
-    tone: "red",
-  },
-  {
-    title: "Protect the vulnerable",
-    body: "Tier, aggregate, suppress, or refuse exposure where harm is plausible.",
-    icon: ShieldCheck,
-    tone: "green",
-  },
-];
-
 function ClaimCard({ claim, compact = false }: { claim: Claim; compact?: boolean }) {
   const tone: BadgeTone =
-    claim.confidence === "Official" ? "blue" : claim.confidence === "Modeled" ? "copper" : claim.confidence === "Estimated" ? "gold" : "neutral";
-  const tierLabel = TIER_LABELS[claim.tier] ?? claim.tier;
-  const granDisplay = claim.granularity.replace(/-/g, " ");
-  const postureDisplay = claim.posture ? claim.posture.charAt(0).toUpperCase() + claim.posture.slice(1) : "";
+    claim.confidence === "Official"  ? "blue"
+    : claim.confidence === "Modeled" ? "copper"
+    : claim.confidence === "Estimated" ? "gold"
+    : "neutral";
+
+  const domainColor = DOMAIN_COLORS[claim.domain] ?? EARTH.deepOcean;
+
   return (
     <Card className="overflow-hidden">
-      <div className="border-b border-stone-200 bg-stone-50/70 px-5 py-4">
+      <div
+        className="border-b border-stone-200 px-5 py-4"
+        style={{ background: `linear-gradient(135deg, ${domainColor}14 0%, ${EARTH.sageLight} 100%)` }}
+      >
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <div className="font-mono text-xs text-stone-500">{claim.id}</div>
+            <div className="font-mono text-xs" style={{ color: domainColor }}>{claim.id}</div>
             <div className="mt-1 font-semibold text-stone-950">{claim.domain}</div>
           </div>
           <div className="flex flex-wrap gap-2">
             <Badge tone={tone}>{claim.confidence}</Badge>
             <Badge tone="neutral">{claim.layer}</Badge>
-            <Badge tone={tierTone(claim.tier)}>{tierLabel}</Badge>
+            <Badge tone={tierTone(claim.tier)}>{TIER_LABELS[claim.tier] ?? claim.tier}</Badge>
           </div>
         </div>
       </div>
       <div className="space-y-4 p-5">
         <p className={cls("leading-7 text-stone-800", compact ? "text-sm" : "text-base")}>{claim.claim}</p>
         <div className="grid gap-3 text-sm md:grid-cols-2">
-          <Meta label="Source" value={claim.source} />
-          <Meta label="Method" value={claim.method} />
-          <Meta label="Legal posture" value={postureDisplay} />
-          <Meta label="Granularity" value={granDisplay} />
+          <Meta label="Source"       value={claim.source} />
+          <Meta label="Method"       value={claim.method} />
+          <Meta label="Legal posture" value={claim.posture.charAt(0).toUpperCase() + claim.posture.slice(1)} />
+          <Meta label="Granularity"  value={claim.granularity.replace(/-/g, " ")} />
         </div>
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3 text-sm leading-6 text-amber-950">
+        <div className="rounded-2xl border border-amber-200 p-3 text-sm leading-6 text-amber-950" style={{ backgroundColor: "#fdf8ec" }}>
           <strong>Limit:</strong> {claim.limitation}
         </div>
         {claim.right_of_reply_status !== "not_required" && (
@@ -599,7 +586,6 @@ function ClaimCard({ claim, compact = false }: { claim: Claim; compact?: boolean
             {RIGHT_OF_REPLY_LABELS[claim.right_of_reply_status]}
           </div>
         )}
-        <LeveragePathwayPanel domain={claim.domain} />
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-stone-100 pt-3 text-xs text-stone-500">
           <span>Status: {claim.status}</span>
           {isStale(claim.stale) ? (
@@ -608,13 +594,22 @@ function ClaimCard({ claim, compact = false }: { claim: Claim; compact?: boolean
               Stale since {claim.stale} — review required
             </span>
           ) : (
-            <span className="text-stone-400">
+            <span>
               Stale after: {claim.stale} ({daysUntilStale(claim.stale)}d remaining)
             </span>
           )}
         </div>
       </div>
     </Card>
+  );
+}
+
+function Meta({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-400">{label}</div>
+      <div className="mt-1 leading-6 text-stone-700">{value}</div>
+    </div>
   );
 }
 
@@ -685,7 +680,7 @@ const indicatorCards: IndicatorCardData[] = [
 function IndicatorCard({ card }: { card: IndicatorCardData }) {
   return (
     <Card className="p-5">
-      <div className="flex items-start justify-between gap-2 mb-3">
+      <div className="mb-3 flex items-start justify-between gap-2">
         <div>
           <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-400">{card.family}</div>
           <div className="mt-0.5 font-semibold text-stone-950">{card.name}</div>
@@ -705,21 +700,15 @@ function IndicatorCard({ card }: { card: IndicatorCardData }) {
         <Meta label="Disclosure tier" value={TIER_LABELS[card.disclosureTier] ?? card.disclosureTier} />
       </div>
       <div className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950">
-        <strong>Limit: </strong>
-        {card.limitation}
+        <strong>Limit: </strong>{card.limitation}
       </div>
       <div className="mt-2 rounded-2xl border border-red-100 bg-red-50 p-3 text-sm text-red-900">
-        <strong>Do not use to: </strong>
-        {card.misuse}
+        <strong>Do not use to: </strong>{card.misuse}
       </div>
     </Card>
   );
 }
 
-/**
- * WAI-ARIA horizontal tab list: ArrowLeft/ArrowRight, Home, End (automatic selection).
- * @see https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
- */
 function handleTabKeyDown(
   e: KeyboardEvent<HTMLButtonElement>,
   fromId: TabId,
@@ -727,23 +716,23 @@ function handleTabKeyDown(
 ) {
   const idx = SECTION_TAB_ORDER.indexOf(fromId);
   if (idx === -1) return;
-  let nextId: TabId;
+  let nextId: TabId | undefined;
   switch (e.key) {
     case "ArrowRight":
       e.preventDefault();
-      nextId = SECTION_TAB_ORDER[(idx + 1) % SECTION_TAB_ORDER.length] ?? fromId;
+      nextId = SECTION_TAB_ORDER[(idx + 1) % SECTION_TAB_ORDER.length]!;
       break;
     case "ArrowLeft":
       e.preventDefault();
-      nextId = SECTION_TAB_ORDER[(idx - 1 + SECTION_TAB_ORDER.length) % SECTION_TAB_ORDER.length] ?? fromId;
+      nextId = SECTION_TAB_ORDER[(idx - 1 + SECTION_TAB_ORDER.length) % SECTION_TAB_ORDER.length]!;
       break;
     case "Home":
       e.preventDefault();
-      nextId = SECTION_TAB_ORDER[0] ?? fromId;
+      nextId = SECTION_TAB_ORDER[0]!;
       break;
     case "End":
       e.preventDefault();
-      nextId = SECTION_TAB_ORDER[SECTION_TAB_ORDER.length - 1] ?? fromId;
+      nextId = SECTION_TAB_ORDER[SECTION_TAB_ORDER.length - 1]!;
       break;
     default:
       return;
@@ -753,7 +742,10 @@ function handleTabKeyDown(
 
 function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSection: (id: TabId) => void }) {
   return (
-    <header className="sticky top-0 z-50 border-b border-stone-200 bg-[#F8F3E8]/90 backdrop-blur-xl">
+    <header
+      className="sticky top-0 z-50 border-b border-stone-200 backdrop-blur-xl"
+      style={{ backgroundColor: `${EARTH.sagePaper}f0` }}
+    >
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 md:px-6 lg:px-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <button
@@ -762,21 +754,45 @@ function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSecti
             className="group flex items-center gap-3 text-left"
             aria-label="Earth Endowment Observatory, go to Home"
           >
-            <div className="relative grid h-12 w-12 place-items-center rounded-full border border-stone-900 bg-stone-950 text-[#EFE8D8] shadow-sm">
-              <div className="absolute inset-2 rounded-full border border-[#C9A24D]/60" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#C9A24D] shadow-[0_0_0_5px_rgba(201,162,77,0.16)]" />
+            {/* Logo: deep ocean shell with green inner ring and gold center */}
+            <div
+              className="relative grid h-12 w-12 place-items-center rounded-full shadow-sm"
+              style={{ backgroundColor: EARTH.deepOcean, border: `2px solid ${EARTH.deepOcean}` }}
+            >
+              {/* Green orbit ring */}
+              <div
+                className="absolute inset-1.5 rounded-full"
+                style={{ border: `1.5px solid ${EARTH.canopy}90` }}
+              />
+              {/* Outer atmospheric ring */}
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{ border: `1px solid ${EARTH.sky}40` }}
+              />
+              {/* Gold mineral core */}
+              <div
+                className="h-2.5 w-2.5 rounded-full"
+                style={{
+                  backgroundColor: EARTH.savanna,
+                  boxShadow: `0 0 0 4px ${EARTH.savanna}22`,
+                }}
+              />
             </div>
             <div>
-              <div className="font-serif text-xl font-semibold tracking-tight text-stone-950">Earth Endowment Observatory</div>
+              <div className="font-serif text-xl font-semibold tracking-tight text-stone-950">
+                Earth Endowment Observatory
+              </div>
               <div className="text-xs text-stone-600">From Earth to economy, made visible.</div>
             </div>
           </button>
+
           <div className="flex flex-wrap items-center gap-2">
-            <Badge tone="dark" icon={ShieldCheck}>Governed visibility</Badge>
-            <Badge tone="blue" icon={FileSearch}>Evidence product first</Badge>
+            <Badge tone="ocean" icon={ShieldCheck}>Governed visibility</Badge>
+            <Badge tone="forest" icon={FileSearch}>Evidence product first</Badge>
             <Badge tone="copper" icon={AlertTriangle}>No scores in MVP</Badge>
           </div>
         </div>
+
         <nav
           className="flex gap-2 overflow-x-auto pb-1"
           role="tablist"
@@ -794,12 +810,12 @@ function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSecti
               aria-controls="eeo-section-panel"
               onClick={() => onSelectSection(id)}
               onKeyDown={(e) => handleTabKeyDown(e, id, onSelectSection)}
-              className={cls(
-                "inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-sm transition",
+              className="inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-sm transition-all duration-150"
+              style={
                 active === id
-                  ? "border-stone-950 bg-stone-950 text-white"
-                  : "border-stone-300 bg-white/60 text-stone-700 hover:border-stone-500 hover:bg-white"
-              )}
+                  ? { backgroundColor: EARTH.deepOcean, borderColor: EARTH.deepOcean, color: "#fff" }
+                  : { backgroundColor: "rgba(255,255,255,0.5)", borderColor: "#d6d3d1", color: "#44403c" }
+              }
             >
               <Icon className="h-4 w-4" aria-hidden />
               {label}
@@ -814,50 +830,108 @@ function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSecti
 function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
   return (
     <div className="space-y-16">
-      <section className="relative overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-950 text-white shadow-xl">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute left-[-10%] top-[-20%] h-80 w-80 rounded-full border border-[#C9A24D]/60" />
-          <div className="absolute right-[-5%] top-[10%] h-[32rem] w-[32rem] rounded-full border border-[#25465F]" />
-          <div className="absolute bottom-[-20%] left-[28%] h-[28rem] w-[28rem] rounded-full border border-[#B66A3C]" />
+      {/* Hero — Earth globe palette: deep ocean shell, canopy/forest green mid, mineral gold */}
+      <section
+        className="relative overflow-hidden rounded-[2rem] shadow-xl"
+        style={{ backgroundColor: EARTH.deepOcean, border: `1px solid ${EARTH.midOcean}` }}
+      >
+        {/* Atmospheric orbs — prominent earth palette */}
+        <div className="absolute inset-0 pointer-events-none select-none">
+          {/* Canopy green — continental mass west */}
+          <div
+            className="absolute left-[-8%] top-[-15%] h-96 w-96 rounded-full"
+            style={{ background: `radial-gradient(circle, ${EARTH.canopy}55 0%, transparent 70%)` }}
+          />
+          {/* Deep forest — south */}
+          <div
+            className="absolute bottom-[-20%] left-[20%] h-[32rem] w-[32rem] rounded-full"
+            style={{ background: `radial-gradient(circle, ${EARTH.oldGrowth}44 0%, transparent 70%)` }}
+          />
+          {/* Sky blue — atmosphere east */}
+          <div
+            className="absolute right-[-5%] top-[5%] h-[36rem] w-[36rem] rounded-full"
+            style={{ background: `radial-gradient(circle, ${EARTH.sky}40 0%, transparent 70%)` }}
+          />
+          {/* Solar mineral — equatorial band */}
+          <div
+            className="absolute bottom-[10%] right-[8%] h-56 w-56 rounded-full"
+            style={{ background: `radial-gradient(circle, ${EARTH.savanna}30 0%, transparent 70%)` }}
+          />
+          {/* Subtle ring lines evoking latitude circles */}
+          <div
+            className="absolute left-[-15%] top-[-20%] h-[28rem] w-[28rem] rounded-full"
+            style={{ border: `1px solid ${EARTH.canopy}30` }}
+          />
+          <div
+            className="absolute right-[-10%] top-[0%] h-[42rem] w-[42rem] rounded-full"
+            style={{ border: `1px solid ${EARTH.sky}25` }}
+          />
+          <div
+            className="absolute bottom-[-25%] left-[25%] h-[30rem] w-[30rem] rounded-full"
+            style={{ border: `1px solid ${EARTH.savanna}20` }}
+          />
         </div>
+
         <div className="relative grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-12 lg:p-16">
           <div>
-            <div className="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.22em] text-stone-200">
+            <div
+              className="mb-5 inline-flex rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-[0.22em]"
+              style={{ borderColor: `${EARTH.canopy}50`, backgroundColor: `${EARTH.canopy}18`, color: "#a8d5be" }}
+            >
               Canonical web-app systems specification v2.0
             </div>
-            <h1 className="max-w-4xl font-serif text-5xl font-semibold tracking-tight md:text-7xl">
-              See the source. Follow the value. Know the evidence.
+            <h1 className="max-w-4xl font-serif text-5xl font-semibold tracking-tight text-white md:text-7xl">
+              See the source.{" "}
+              <span style={{ color: EARTH.amber }}>Follow the value.</span>{" "}
+              Know the evidence.
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-200">
-              A governed civic intelligence system for Earth’s endowment-to-economy chain — connecting evidence about natural endowments, governance, ownership, labor, trade, ecological condition, public revenue, and value capture without claiming authority over the chain.
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-300">
+              A governed civic intelligence system for Earth&apos;s endowment-to-economy chain — connecting evidence about natural endowments, governance, ownership, labor, trade, ecological condition, public revenue, and value capture without claiming authority over the chain.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <button
                 type="button"
                 onClick={() => onSelectSection("dossier")}
-                className="rounded-full bg-[#C9A24D] px-5 py-3 text-sm font-semibold text-stone-950 shadow-sm hover:brightness-105"
+                className="rounded-full px-5 py-3 text-sm font-semibold transition hover:brightness-110"
+                style={{ backgroundColor: EARTH.savanna, color: EARTH.deepOcean }}
               >
                 Open evidence dossier
               </button>
               <button
                 type="button"
                 onClick={() => onSelectSection("ledger")}
-                className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
+                className="rounded-full border px-5 py-3 text-sm font-semibold text-white transition"
+                style={{ borderColor: `${EARTH.sky}50`, backgroundColor: `${EARTH.sky}15` }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = `${EARTH.sky}30`)}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = `${EARTH.sky}15`)}
               >
                 Inspect evidence ledger
               </button>
               <button
                 type="button"
                 onClick={() => onSelectSection("workspace")}
-                className="rounded-full border border-white/25 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
+                className="rounded-full border px-5 py-3 text-sm font-semibold text-white transition"
+                style={{ borderColor: "rgba(255,255,255,0.2)", backgroundColor: "rgba(255,255,255,0.06)" }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.12)")}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.06)")}
               >
                 View review workspace
               </button>
             </div>
           </div>
-          <Card className="bg-white/10 p-5 text-white ring-1 ring-white/10">
+
+          {/* MVP loop card */}
+          <div
+            className="rounded-3xl p-5 text-white ring-1"
+            style={{ backgroundColor: `${EARTH.midOcean}40`, boxShadow: `inset 0 0 0 1px ${EARTH.sky}30` }}
+          >
             <div className="mb-4 flex items-center gap-2">
-              <div className="rounded-full bg-[#B66A3C]/20 p-2"><GitBranch className="h-5 w-5 text-[#E8B08B]" /></div>
+              <div
+                className="rounded-full p-2"
+                style={{ backgroundColor: `${EARTH.canopy}35` }}
+              >
+                <GitBranch className="h-5 w-5" style={{ color: "#a8d5be" }} />
+              </div>
               <div>
                 <div className="font-semibold">True MVP loop</div>
                 <div className="text-xs text-stone-300">Controlled evidence product first</div>
@@ -865,16 +939,26 @@ function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
             </div>
             <div className="space-y-2">
               {["source", "license", "evidence", "claim", "entity resolution", "review", "exposure review", "right-of-reply", "release manifest", "public dossier", "correction route"].map((step, idx) => (
-                <div key={step} className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm">
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-white/10 font-mono text-xs">{idx + 1}</span>
+                <div
+                  key={step}
+                  className="flex items-center gap-2 rounded-2xl border px-3 py-2 text-sm"
+                  style={{ borderColor: `${EARTH.sky}20`, backgroundColor: `${EARTH.sky}10` }}
+                >
+                  <span
+                    className="grid h-6 w-6 place-items-center rounded-full font-mono text-xs"
+                    style={{ backgroundColor: `${EARTH.sky}25`, color: "#a8d5be" }}
+                  >
+                    {idx + 1}
+                  </span>
                   <span>{step}</span>
                 </div>
               ))}
             </div>
-          </Card>
+          </div>
         </div>
       </section>
 
+      {/* Three principles — earth-color coded */}
       <section>
         <SectionTitle eyebrow="Strategic scope freeze" title="One corridor. One evidence standard. One launch gate.">
           The repaired build narrows ambition into an inspectable public release: one flagship evidence dossier, one limited corridor dashboard, one evidence ledger, one internal review workspace, one correction workflow, one signed release manifest.
@@ -882,11 +966,12 @@ function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
         <div className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-stone-500">Brand design doctrine</div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {BRAND_DOCTRINE.map((item) => (
-            <Principle key={item.title} icon={item.icon} title={item.title} body={item.body} tone={item.tone} />
+            <Principle key={item.title} icon={item.icon} title={item.title} body={item.body} iconBg={item.iconBg} accentColor={item.accentColor} />
           ))}
         </div>
       </section>
 
+      {/* Corridor chain */}
       <section>
         <SectionTitle eyebrow="Corridor hypothesis" title="Copper-cobalt critical-minerals corridor">
           The first pilot follows a narrowed endowment-to-economy path and proves that EEO can make strong claims inspectable while making unsafe exposure impossible.
@@ -899,19 +984,33 @@ function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
   );
 }
 
-function Principle({ icon: Icon, title, body, tone = "neutral" }: { icon: LucideIcon; title: string; body: string; tone?: BadgeTone }) {
-  const iconBgByTone: Record<BadgeTone, string> = {
-    neutral: "bg-stone-900",
-    blue: "bg-blue-900",
-    green: "bg-emerald-900",
-    copper: "bg-orange-900",
-    red: "bg-red-900",
-    gold: "bg-yellow-700",
-    dark: "bg-stone-950",
-  };
+function Principle({
+  icon: Icon,
+  title,
+  body,
+  iconBg,
+  accentColor,
+}: {
+  icon: LucideIcon;
+  title: string;
+  body: string;
+  iconBg: string;
+  accentColor: string;
+}) {
   return (
     <Card className="p-6">
-      <div className={cls("mb-4 inline-flex rounded-2xl p-3 text-white", iconBgByTone[tone])}><Icon className="h-5 w-5" /></div>
+      {/* Earth-colored icon container */}
+      <div
+        className="mb-4 inline-flex rounded-2xl p-3 text-white"
+        style={{ backgroundColor: iconBg }}
+      >
+        <Icon className="h-5 w-5" />
+      </div>
+      {/* Subtle left-border accent */}
+      <div
+        className="mb-3 h-0.5 w-8 rounded-full"
+        style={{ backgroundColor: accentColor }}
+      />
       <h3 className="text-lg font-semibold text-stone-950">{title}</h3>
       <p className="mt-2 leading-7 text-stone-600">{body}</p>
     </Card>
@@ -947,7 +1046,7 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 2" title="Sample claim cards (preview)" />
-        <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1">
+        <div className="grid gap-4">
           {claims.slice(0, 3).map((claim) => (
             <ClaimCard key={claim.id} claim={claim} compact />
           ))}
@@ -958,12 +1057,8 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
         <SectionTitle eyebrow="Section 3" title="Corridor boundary" />
         <Card className="border-amber-200 bg-amber-50 p-6">
           <p className="text-sm leading-7 text-amber-950">
-            Corridor geometry is <strong>pending map-safety review</strong> before any precise or interactive boundary can publish. For the generalized map placeholder and safety framing, open the{" "}
-            <button
-              type="button"
-              onClick={() => onSelectSection("dashboard")}
-              className="font-semibold underline decoration-amber-800 hover:text-amber-900"
-            >
+            Corridor geometry is <strong>pending map-safety review</strong> before any precise boundary can publish. For the generalized map placeholder and safety framing, open the{" "}
+            <button type="button" onClick={() => onSelectSection("dashboard")} className="font-semibold underline">
               Limited Dashboard
             </button>{" "}
             map panel.
@@ -999,30 +1094,29 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
       <section>
         <SectionTitle eyebrow="Section 6" title="Governance and authority profile" />
         <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
-          Stub — pending structured narrative. The <strong>governance profile</strong> module in the{" "}
+          Stub — pending structured narrative. The{" "}
           <button type="button" onClick={() => onSelectSection("dashboard")} className="font-semibold underline">
             Limited Dashboard
           </button>{" "}
-          previews the same theme at module level; full text will follow review.
+          governance module previews the same theme.
         </Card>
       </section>
 
       <section>
         <SectionTitle eyebrow="Section 7" title="Ownership and control profile" />
         <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
-          Stub — requires entity resolution and named-actor right-of-reply before publish. A dedicated{" "}
+          Stub — requires entity resolution and named-actor right-of-reply before publish. Open{" "}
           <button type="button" onClick={() => onSelectSection("ownership")} className="font-semibold underline">
             Ownership + Control
           </button>{" "}
-          tab describes the release gate; no ownership table ships in this draft.
+          for the release gate.
         </Card>
       </section>
 
       <section>
         <SectionTitle eyebrow="Section 8" title="Value-chain hypothesis" />
         <p className="mb-4 max-w-3xl text-sm leading-7 text-stone-600">
-          The path below is a <strong>hypothesis for inquiry</strong>, not a claim that every link is populated with verified, public-tier evidence. The terminal node marks epistemic limits, not a missing
-          &quot;data product.&quot;
+          The path below is a hypothesis for inquiry, not a claim that every link is fully verified in public-tier evidence.
         </p>
         <Card className="p-6">
           <Chain />
@@ -1045,7 +1139,9 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 11" title="Source registry snapshot" />
-        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">Stub — per-source license, update cadence, and sensitivity notes (pending import from registry build).</Card>
+        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
+          Stub — per-source license, update cadence, and sensitivity notes (pending import from registry build).
+        </Card>
       </section>
 
       <section>
@@ -1062,17 +1158,17 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
       <section>
         <SectionTitle eyebrow="Section 13" title="Correction and challenge path" />
         <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
-          Stub — live correction route and intake form: open the{" "}
+          Stub — correction route is in{" "}
           <button type="button" onClick={() => onSelectSection("corrections")} className="font-semibold underline">
             Corrections
-          </button>{" "}
-          tab.
+          </button>
+          .
         </Card>
       </section>
 
       <section>
         <SectionTitle eyebrow="Section 14" title="Right-of-reply status" />
-        <Card className="p-0 overflow-hidden">
+        <Card className="overflow-hidden p-0">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead className="border-b border-stone-200 bg-stone-50 font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
@@ -1098,7 +1194,9 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 15" title="Document control" />
-        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">Stub — version identifier, change log, and sign-off will attach at publication; this dossier is a draft prototype.</Card>
+        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
+          Stub — version identifier, change log, and sign-off attach at publication; this dossier is a draft prototype.
+        </Card>
       </section>
     </div>
   );
@@ -1112,21 +1210,56 @@ function Dashboard() {
       </SectionTitle>
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <Card className="overflow-hidden">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 bg-stone-50 px-5 py-4">
+          <div
+            className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 px-5 py-4"
+            style={{ backgroundColor: `${EARTH.deepOcean}08` }}
+          >
             <div>
               <div className="font-semibold text-stone-950">Safe-resolution corridor map</div>
               <div className="text-xs text-stone-500">Public geometry is generalized until map-safety review approves detail.</div>
             </div>
             <Badge tone="copper" icon={Map}>Placeholder · pending map-safety review</Badge>
           </div>
-          <div className="relative h-[460px] overflow-hidden bg-[#DED4BF]">
-            <div className="absolute inset-0 z-0 opacity-40" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(17,17,15,.25) 1px, transparent 0)", backgroundSize: "28px 28px" }} />
-            <div className="absolute left-[10%] top-[18%] z-0 h-64 w-80 rotate-[-14deg] rounded-[45%] border-2 border-[#4B3728]/50 bg-[#4B3728]/5" />
-            <div className="absolute right-[18%] top-[22%] z-0 h-72 w-56 rotate-[18deg] rounded-[45%] border-2 border-[#3F5A45]/50 bg-[#3F5A45]/5" />
-            <div className="absolute bottom-[22%] left-[22%] z-0 h-2 w-[52%] rotate-[-5deg] rounded-full bg-[#B66A3C]/70" />
-            <div className="absolute bottom-[29%] left-[31%] z-0 h-2 w-[40%] rotate-[10deg] rounded-full bg-[#25465F]/70" />
+          {/* Mock map — earth-palette tones */}
+          <div
+            className="relative h-[460px] overflow-hidden"
+            style={{ backgroundColor: "#c8d8c0" }} // muted sage — land mass
+          >
+            {/* Ocean areas */}
+            <div
+              className="absolute inset-0 opacity-40"
+              style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(10,53,84,.22) 1px, transparent 0)", backgroundSize: "28px 28px" }}
+            />
+            {/* Continental shapes */}
+            <div
+              className="absolute left-[8%] top-[16%] h-64 w-80 rotate-[-14deg] rounded-[45%]"
+              style={{ backgroundColor: `${EARTH.canopy}22`, border: `2px solid ${EARTH.canopy}60` }}
+            />
+            <div
+              className="absolute right-[16%] top-[20%] h-72 w-56 rotate-[18deg] rounded-[45%]"
+              style={{ backgroundColor: `${EARTH.oldGrowth}18`, border: `2px solid ${EARTH.oldGrowth}55` }}
+            />
+            {/* River/flow lines */}
+            <div
+              className="absolute bottom-[22%] left-[22%] h-1.5 w-[52%] rotate-[-5deg] rounded-full"
+              style={{ backgroundColor: `${EARTH.sky}bb` }}
+            />
+            <div
+              className="absolute bottom-[30%] left-[31%] h-1.5 w-[36%] rotate-[10deg] rounded-full"
+              style={{ backgroundColor: `${EARTH.deepOcean}88` }}
+            />
+            {/* Map labels */}
             {["Resource context", "Public authority", "Processing node", "Export flow", "Ecological signal"].map((label, i) => (
-              <div key={label} className="absolute z-0 rounded-full border border-stone-900 bg-white px-3 py-2 text-xs font-semibold shadow" style={{ left: `${16 + i * 14}%`, top: `${22 + (i % 2) * 34}%` }}>
+              <div
+                key={label}
+                className="absolute rounded-full border bg-white px-3 py-2 text-xs font-semibold shadow"
+                style={{
+                  left: `${16 + i * 14}%`,
+                  top: `${22 + (i % 2) * 34}%`,
+                  borderColor: i < 2 ? EARTH.deepOcean : i === 4 ? EARTH.canopy : EARTH.savanna,
+                  color: i < 2 ? EARTH.deepOcean : i === 4 ? EARTH.oldGrowth : "#7a5c18",
+                }}
+              >
                 {label}
               </div>
             ))}
@@ -1135,14 +1268,25 @@ function Dashboard() {
                 Map geometry pending safety review
               </div>
             </div>
-            <div className="absolute bottom-4 left-4 right-4 z-20 rounded-2xl border border-stone-300 bg-white/90 p-4 text-sm text-stone-700 shadow">
+            <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-stone-300 bg-white/90 p-4 text-sm text-stone-700 shadow">
               <strong>Map safety notice:</strong> exact sensitive coordinates, artisanal mining locations, community reports, sacred sites, and vulnerable ecological locations are not displayed.
             </div>
           </div>
         </Card>
+
         <div className="space-y-4">
-          <ModuleCard title="Governance profile" icon={Landmark} items={["Jurisdiction and public authority", "License / concession records", "Contract availability", "Rights and sovereignty notes", "Disclosure gaps"]} />
-          <ModuleCard title="Value-chain view" icon={Network} items={["Extraction context", "Processing pathway", "Reported trade flows", "Downstream hypothesis", "No traceability overclaim"]} />
+          <ModuleCard
+            title="Governance profile"
+            icon={Landmark}
+            items={["Jurisdiction and public authority", "License / concession records", "Contract availability", "Rights and sovereignty notes", "Disclosure gaps"]}
+            iconBg={EARTH.deepOcean}
+          />
+          <ModuleCard
+            title="Value-chain view"
+            icon={Network}
+            items={["Extraction context", "Processing pathway", "Reported trade flows", "Downstream hypothesis", "No traceability overclaim"]}
+            iconBg={EARTH.midOcean}
+          />
           <div className="grid gap-4">
             {indicatorCards.map((card) => (
               <IndicatorCard key={card.name} card={card} />
@@ -1154,11 +1298,16 @@ function Dashboard() {
   );
 }
 
-function ModuleCard({ title, icon: Icon, items }: { title: string; icon: LucideIcon; items: string[] }) {
+function ModuleCard({ title, icon: Icon, items, iconBg }: { title: string; icon: LucideIcon; items: string[]; iconBg?: string }) {
   return (
     <Card className="p-5">
       <div className="flex items-center gap-3">
-        <div className="rounded-2xl bg-stone-950 p-2 text-white"><Icon className="h-4 w-4" /></div>
+        <div
+          className="rounded-2xl p-2 text-white"
+          style={{ backgroundColor: iconBg ?? EARTH.deepOcean }}
+        >
+          <Icon className="h-4 w-4" />
+        </div>
         <h3 className="font-semibold text-stone-950">{title}</h3>
       </div>
       <ul className="mt-4 space-y-2 text-sm text-stone-600">
@@ -1189,15 +1338,12 @@ const SEARCH_FIELDS = [
 
 function Ledger() {
   const [query, setQuery] = useState("");
-  const q = query.toLowerCase().trim();
   const filtered = useMemo(
     () =>
-      q.length === 0
-        ? claims
-        : claims.filter((c) =>
-            SEARCH_FIELDS.some((k) => String(c[k as keyof typeof c]).toLowerCase().includes(q))
-          ),
-    [q]
+      claims.filter((c) =>
+        SEARCH_FIELDS.some((k) => String(c[k as keyof typeof c]).toLowerCase().includes(query.toLowerCase()))
+      ),
+    [query]
   );
   return (
     <div className="space-y-8">
@@ -1213,15 +1359,18 @@ function Ledger() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search claims, sources, domains, methods..."
               aria-label="Search evidence ledger"
-              className="w-full rounded-full border border-stone-300 bg-white py-3 pl-10 pr-4 text-sm outline-none focus:border-stone-900"
+              className="w-full rounded-full border border-stone-300 bg-white py-3 pl-10 pr-4 text-sm outline-none"
+              style={{ accentColor: EARTH.deepOcean }}
+              onFocus={e => (e.currentTarget.style.borderColor = EARTH.deepOcean)}
+              onBlur={e => (e.currentTarget.style.borderColor = "")}
             />
           </div>
           <button
             type="button"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-3 text-sm font-semibold text-stone-700 disabled:cursor-not-allowed disabled:opacity-50"
+            aria-label="Filter (not available in this prototype)"
+            title="Not implemented in prototype"
             disabled
-            title="Filtering by domain, confidence, and tier — not yet implemented"
-            aria-label="Filter (not yet implemented — use search)"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-3 text-sm font-semibold text-stone-400 cursor-not-allowed opacity-50"
           >
             <Filter className="h-4 w-4" aria-hidden />
             Filter
@@ -1236,12 +1385,12 @@ function Ledger() {
 }
 
 function Methods() {
-  const guardrails = [
-    ["Trade", "Reported trade flows do not prove physical chain-of-custody or verified origin."],
-    ["Labor", "Labor data may be national, sectoral, or modeled rather than site-specific; informal work may be undercounted."],
-    ["Public revenue", "Disclosed public revenue does not prove durable public benefit."],
-    ["Ecology", "Spatial proximity does not prove causation without additional evidence."],
-    ["Legal", "EEO makes no legal finding unless citing a competent authority’s finding."],
+  const guardrails: [string, string, string][] = [
+    ["Trade",          EARTH.deepOcean, "Reported trade flows do not prove physical chain-of-custody or verified origin."],
+    ["Labor",          EARTH.savanna,   "Labor data may be national, sectoral, or modeled rather than site-specific; informal work may be undercounted."],
+    ["Public revenue", EARTH.solar,     "Disclosed public revenue does not prove durable public benefit."],
+    ["Ecology",        EARTH.canopy,    "Spatial proximity does not prove causation without additional evidence."],
+    ["Legal",          "#7a3e32",       "EEO makes no legal finding unless citing a competent authority's finding."],
   ];
   return (
     <div className="space-y-8">
@@ -1249,10 +1398,21 @@ function Methods() {
         The public product separates factual, analytical, normative, and legal layers so users can inspect the difference between documentation, inference, public questions, and legal findings.
       </SectionTitle>
       <div className="grid gap-4 md:grid-cols-2">
-        {guardrails.map(([title, body]) => (
-          <Card key={title} className="p-5">
-            <div className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-stone-400">{title}</div>
-            <p className="leading-7 text-stone-700">{body}</p>
+        {guardrails.map(([title, color, body]) => (
+          <Card key={title} className="overflow-hidden">
+            <div
+              className="h-1.5 w-full"
+              style={{ backgroundColor: color }}
+            />
+            <div className="p-5">
+              <div
+                className="mb-2 font-mono text-xs uppercase tracking-[0.2em]"
+                style={{ color }}
+              >
+                {title}
+              </div>
+              <p className="leading-7 text-stone-700">{body}</p>
+            </div>
           </Card>
         ))}
       </div>
@@ -1260,7 +1420,13 @@ function Methods() {
         <h3 className="font-serif text-2xl font-semibold text-stone-950">Claim package</h3>
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           {["source", "license", "date", "method", "claim type", "evidence layer", "confidence", "granularity", "legal posture", "disclosure tier", "stale-after date", "review status", "correction path"].map((item) => (
-            <div key={item} className="rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 font-mono text-xs uppercase tracking-[0.14em] text-stone-600">{item}</div>
+            <div
+              key={item}
+              className="rounded-2xl border px-4 py-3 font-mono text-xs uppercase tracking-[0.14em]"
+              style={{ borderColor: `${EARTH.deepOcean}30`, backgroundColor: `${EARTH.deepOcean}06`, color: EARTH.deepOcean }}
+            >
+              {item}
+            </div>
           ))}
         </div>
       </Card>
@@ -1269,79 +1435,47 @@ function Methods() {
 }
 
 function Safeguards() {
+  const tiers: [string, string, string, BadgeTone][] = [
+    ["Tier 0", "Open",               "Public display, API, citation, possible download.",                            "green"],
+    ["Tier 1", "Contextual public",  "Public with warnings, provenance, method notes, and caveats.",                "blue"],
+    ["Tier 2", "Aggregated",         "Aggregate by geography, time, actor, or category.",                           "copper"],
+    ["Tier 3", "Verified access",    "Controlled access, purpose limits, logging, expiration.",                     "neutral"],
+    ["Tier 4", "Community-governed", "Governed by consent protocol and authority-specific rules.",                  "gold"],
+    ["Tier 5", "Suppressed",         "Do not publish. Store only if necessary and protected, or do not retain.",    "red"],
+  ];
+
+  const tierColors: string[] = [EARTH.canopy, EARTH.deepOcean, EARTH.savanna, "#6b7280", EARTH.solar, "#b91c1c"];
+
   return (
     <div className="space-y-8">
       <SectionTitle eyebrow="Tiered disclosure" title="Universal knowledge does not require universal exposure">
         Some evidence should be public. Some should be aggregated. Some should be restricted. Some should be community-governed. Some should be suppressed. Some should not be collected at all.
       </SectionTitle>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {(
-          [
-            ["Tier 0", "Open", "Public display, API, citation, possible download.", "green"],
-            ["Tier 1", "Contextual public", "Public with warnings, provenance, method notes, and caveats.", "blue"],
-            ["Tier 2", "Aggregated", "Aggregate by geography, time, actor, or category.", "copper"],
-            ["Tier 3", "Verified access", "Controlled access, purpose limits, logging, expiration.", "neutral"],
-            ["Tier 4", "Community-governed", "Governed by consent protocol and authority-specific rules.", "gold"],
-            ["Tier 5", "Suppressed", "Do not publish. Store only if necessary and protected, or do not retain.", "red"],
-          ] as [string, string, string, BadgeTone][]
-        ).map(([tier, title, body, tone]) => (
-          <Card key={tier} className="p-5">
-            <Badge tone={tone}>{tier}</Badge>
-            <h3 className="mt-4 text-lg font-semibold text-stone-950">{title}</h3>
-            <p className="mt-2 leading-7 text-stone-600">{body}</p>
+        {tiers.map(([tier, title, body, tone], i) => (
+          <Card key={tier} className="overflow-hidden">
+            <div className="h-1 w-full" style={{ backgroundColor: tierColors[i] }} />
+            <div className="p-5">
+              <Badge tone={tone}>{tier}</Badge>
+              <h3 className="mt-4 text-lg font-semibold text-stone-950">{title}</h3>
+              <p className="mt-2 leading-7 text-stone-600">{body}</p>
+            </div>
           </Card>
         ))}
       </div>
       <Card className="border-red-200 bg-red-50 p-6">
-        <h3 className="flex items-center gap-2 text-lg font-semibold text-red-950"><AlertTriangle className="h-5 w-5" /> Sensitive map defaults</h3>
-        <p className="mt-3 leading-7 text-red-950">Presume sensitivity for sacred sites, indigenous or community-held knowledge, endangered species locations, vulnerable habitats, artisanal mining settlements, whistleblower or grievance locations, community reports, critical infrastructure, illegal extraction targets, and locations where publication could trigger retaliation, speculation, poaching, or land grabbing.</p>
+        <h3 className="flex items-center gap-2 text-lg font-semibold text-red-950">
+          <AlertTriangle className="h-5 w-5" /> Sensitive map defaults
+        </h3>
+        <p className="mt-3 leading-7 text-red-950">
+          Presume sensitivity for sacred sites, indigenous or community-held knowledge, endangered species locations, vulnerable habitats, artisanal mining settlements, whistleblower or grievance locations, community reports, critical infrastructure, illegal extraction targets, and locations where publication could trigger retaliation, speculation, poaching, or land grabbing.
+        </p>
       </Card>
     </div>
   );
 }
 
 function Corrections() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    correction_type: "Factual correction",
-    affected_object_id: "",
-    body: "",
-    evidence_link: "",
-    safety_concern: false,
-    right_of_reply: false,
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const valid = form.name.trim() && form.email.trim() && form.body.trim();
-
-  function handleSubmit() {
-    if (!valid) return;
-    if (process.env.NODE_ENV === "development") {
-      console.log("Challenge submitted:", form);
-    }
-    setSubmitted(true);
-  }
-
-  if (submitted)
-    return (
-      <div className="space-y-8">
-        <SectionTitle eyebrow="Submitted" title="Challenge received" />
-        <Card className="p-8 text-center">
-          <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-700" />
-          <p className="mt-4 font-semibold text-stone-950">Your challenge has been logged.</p>
-          <p className="mt-2 text-stone-600 text-sm">Triage within 5 business days. You will be contacted at the address provided if a response is required.</p>
-          <button
-            type="button"
-            onClick={() => setSubmitted(false)}
-            className="mt-6 rounded-full border border-stone-300 px-5 py-2.5 text-sm font-semibold text-stone-700 hover:border-stone-900"
-          >
-            Submit another
-          </button>
-        </Card>
-      </div>
-    );
-
   return (
     <div className="space-y-8">
       <SectionTitle eyebrow="Challenge route" title="Correction, right-of-reply, and exposure concern intake">
@@ -1351,86 +1485,68 @@ function Corrections() {
         <Card className="p-6">
           <h3 className="font-serif text-2xl font-semibold text-stone-950">Submit a challenge</h3>
           <div className="mt-5 space-y-4">
-            <input
-              placeholder="Name or institution *"
-              value={form.name}
-              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
-            />
-            <input
-              placeholder="Contact email *"
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
-            />
+            <p className="text-sm text-stone-600">
+              This form is a UI shell only. Do not send sensitive information; backend intake is not connected.
+            </p>
+            {["Name or institution", "Contact email"].map((ph, i) => (
+              <input
+                key={ph}
+                placeholder={ph}
+                type={i === 1 ? "email" : "text"}
+                autoComplete={i === 1 ? "email" : "organization"}
+                aria-label={`${ph} (optional)`}
+                className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none"
+                onFocus={e => (e.currentTarget.style.borderColor = EARTH.deepOcean)}
+                onBlur={e => (e.currentTarget.style.borderColor = "")}
+              />
+            ))}
             <select
-              value={form.correction_type}
-              onChange={(e) => setForm((f) => ({ ...f, correction_type: e.target.value }))}
-              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
+              aria-label="Challenge type"
+              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none"
+              defaultValue="Factual correction"
             >
-              <option>Factual correction</option>
-              <option>Exposure concern</option>
-              <option>Right-of-reply</option>
-              <option>Outdated source</option>
-              <option>Identity conflation</option>
-              <option>Legal misdescription</option>
+              {["Factual correction", "Exposure concern", "Right-of-reply", "Outdated source", "Identity conflation", "Legal misdescription"].map(opt => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
             </select>
-            <input
-              placeholder="Claim ID (e.g. EEO-CM-0003) — if applicable"
-              value={form.affected_object_id}
-              onChange={(e) => setForm((f) => ({ ...f, affected_object_id: e.target.value }))}
-              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
-            />
             <textarea
-              placeholder="Describe the issue, source, or safety concern... *"
-              rows={5}
-              value={form.body}
-              onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))}
-              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
+              placeholder="Describe the issue, claim ID, source, or safety concern…"
+              rows={6}
+              aria-label="Description of the challenge, claim ID, or safety concern"
+              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none"
+              onFocus={e => (e.currentTarget.style.borderColor = EARTH.deepOcean)}
+              onBlur={e => (e.currentTarget.style.borderColor = "")}
             />
-            <input
-              placeholder="Supporting evidence link (optional)"
-              value={form.evidence_link}
-              onChange={(e) => setForm((f) => ({ ...f, evidence_link: e.target.value }))}
-              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
-            />
-            <div className="space-y-2">
-              <label className="flex items-center gap-3 text-sm text-stone-700 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={form.safety_concern}
-                  onChange={(e) => setForm((f) => ({ ...f, safety_concern: e.target.checked }))}
-                  className="h-4 w-4 rounded"
-                />
-                This is a safety or exposure concern requiring urgent triage
-              </label>
-              <label className="flex items-center gap-3 text-sm text-stone-700 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={form.right_of_reply}
-                  onChange={(e) => setForm((f) => ({ ...f, right_of_reply: e.target.checked }))}
-                  className="h-4 w-4 rounded"
-                />
-                I am requesting right-of-reply as a named party
-              </label>
-            </div>
             <button
               type="button"
-              onClick={handleSubmit}
-              disabled={!valid}
-              className="w-full rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white hover:bg-stone-800 disabled:opacity-40 disabled:cursor-not-allowed transition"
+              className="w-full rounded-full px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110"
+              style={{ backgroundColor: EARTH.deepOcean }}
+              title="Not connected in this prototype"
             >
               Submit for triage
             </button>
           </div>
         </Card>
+
         <Card className="p-6">
           <h3 className="font-semibold text-stone-950">Correction workflow</h3>
           <div className="mt-5 space-y-3">
-            {["public challenge submitted", "triage", "safety check", "assigned reviewer", "claim revised / confirmed / withdrawn", "public correction note if accepted", "audit trail retained"].map((step, i) => (
-              <div key={step} className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 p-3">
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-stone-950 font-mono text-xs text-white">{i + 1}</span>
+            {[
+              "public challenge submitted",
+              "triage",
+              "safety check",
+              "assigned reviewer",
+              "claim revised / confirmed / withdrawn",
+              "public correction note if accepted",
+              "audit trail retained",
+            ].map((step, i) => (
+              <div key={step} className="flex items-center gap-3 rounded-2xl border border-stone-200 p-3" style={{ backgroundColor: `${EARTH.deepOcean}05` }}>
+                <span
+                  className="grid h-7 w-7 place-items-center rounded-full font-mono text-xs text-white"
+                  style={{ backgroundColor: EARTH.deepOcean }}
+                >
+                  {i + 1}
+                </span>
                 <span className="text-sm text-stone-700">{step}</span>
               </div>
             ))}
@@ -1441,60 +1557,11 @@ function Corrections() {
   );
 }
 
-const RELEASE_MANIFEST = {
-  release_slug: "eeo-pilot-corridor-v0.1-draft",
-  corridor: "Copper-cobalt critical-minerals corridor",
-  release_title: "Pilot Corridor Evidence Dossier — Draft Release",
-  release_status: "draft",
-  signed_by: null,
-  signed_at: null,
-  method_note_path: "/docs/evidence-standard.md",
-  correction_route_path: "/pilot/corrections",
-  manifest_hash: null,
-};
-
-function ReleaseManifestPanel() {
-  const {
-    release_slug,
-    corridor,
-    release_title,
-    release_status,
-    signed_by,
-    signed_at,
-    method_note_path,
-    correction_route_path,
-    manifest_hash,
-  } = RELEASE_MANIFEST;
-  return (
-    <Card className="p-6">
-      <div className="flex items-start justify-between gap-3 mb-5">
-        <h3 className="font-serif text-2xl font-semibold text-stone-950">Release manifest</h3>
-        <Badge tone={release_status === "published" ? "green" : "copper"}>{release_status}</Badge>
-      </div>
-      <div className="grid gap-3 md:grid-cols-2">
-        <Meta label="Release slug" value={release_slug} />
-        <Meta label="Corridor" value={corridor} />
-        <Meta label="Release title" value={release_title} />
-        <Meta label="Signed by" value={signed_by ?? "— not yet signed"} />
-        <Meta label="Signed at" value={signed_at ?? "— not yet signed"} />
-        <Meta label="Method note path" value={method_note_path} />
-        <Meta label="Correction route" value={correction_route_path} />
-        <Meta label="Manifest hash" value={manifest_hash ?? "— generated at signing"} />
-      </div>
-      <div className="mt-5 rounded-2xl border border-stone-200 bg-stone-50 p-4 text-sm text-stone-600 leading-6">
-        This manifest is unsigned. It will be signed by the release owner only after all blocking reviews are complete, map-safety review passes, right-of-reply status is confirmed for all named
-        actors, and the launch readiness gate is passed.
-      </div>
-    </Card>
-  );
-}
-
 function OwnershipControl() {
   return (
     <div className="space-y-8">
       <SectionTitle eyebrow="Pending review" title="Ownership and control profile">
-        This section covers corporate structure, beneficial ownership, concession holders, and control relationships. It requires entity resolution, beneficial ownership data review, and named
-        actor right-of-reply workflow before any public claims can be published here.
+        This section covers corporate structure, beneficial ownership, concession holders, and control relationships. It requires entity resolution, beneficial ownership data review, and named actor right-of-reply workflow before any public claims can be published here.
       </SectionTitle>
       <Card className="border-amber-200 bg-amber-50 p-6">
         <div className="flex items-start gap-3">
@@ -1502,8 +1569,7 @@ function OwnershipControl() {
           <div>
             <h3 className="font-semibold text-amber-950">Publication gate not yet passed</h3>
             <p className="mt-2 leading-7 text-amber-900 text-sm">
-              Ownership and control data involves named actors with reputational consequence. Per the institutional release gate, this section will not publish until entity resolution, exposure
-              review, and right-of-reply workflows are complete for all named actors.
+              Ownership and control data involves named actors with reputational consequence. Per the institutional release gate, this section will not publish until entity resolution, exposure review, and right-of-reply workflows are complete for all named actors.
             </p>
           </div>
         </div>
@@ -1525,6 +1591,43 @@ function OwnershipControl() {
   );
 }
 
+const RELEASE_MANIFEST = {
+  release_slug: "eeo-pilot-corridor-v0.1-draft",
+  corridor: "Copper-cobalt critical-minerals corridor",
+  release_title: "Pilot Corridor Evidence Dossier — Draft Release",
+  release_status: "draft",
+  signed_by: null,
+  signed_at: null,
+  method_note_path: "/docs/evidence-standard.md",
+  correction_route_path: "/pilot/corrections",
+  manifest_hash: null,
+};
+
+function ReleaseManifestPanel() {
+  const { release_slug, corridor, release_title, release_status, signed_by, signed_at, method_note_path, correction_route_path, manifest_hash } = RELEASE_MANIFEST;
+  return (
+    <Card className="p-6">
+      <div className="mb-5 flex items-start justify-between gap-3">
+        <h3 className="font-serif text-2xl font-semibold text-stone-950">Release manifest</h3>
+        <Badge tone={release_status === "published" ? "green" : "copper"}>{release_status}</Badge>
+      </div>
+      <div className="grid gap-3 md:grid-cols-2">
+        <Meta label="Release slug" value={release_slug} />
+        <Meta label="Corridor" value={corridor} />
+        <Meta label="Release title" value={release_title} />
+        <Meta label="Signed by" value={signed_by ?? "— not yet signed"} />
+        <Meta label="Signed at" value={signed_at ?? "— not yet signed"} />
+        <Meta label="Method note path" value={method_note_path} />
+        <Meta label="Correction route" value={correction_route_path} />
+        <Meta label="Manifest hash" value={manifest_hash ?? "— generated at signing"} />
+      </div>
+      <div className="mt-5 rounded-2xl border border-stone-200 bg-stone-50 p-4 text-sm leading-6 text-stone-600">
+        This manifest is unsigned. It will be signed by the release owner only after all blocking reviews are complete, map-safety review passes, right-of-reply status is confirmed for all named actors, and the launch readiness gate is passed.
+      </div>
+    </Card>
+  );
+}
+
 function Workspace() {
   return (
     <div className="space-y-8">
@@ -1532,23 +1635,39 @@ function Workspace() {
         This surface is not public launch material. It shows the build order and review machinery required before the dossier can publish.
       </SectionTitle>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {modules.map(({ title, status, icon: Icon, body }) => (
-          <Card key={title} className="p-5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="rounded-2xl bg-stone-950 p-3 text-white"><Icon className="h-5 w-5" /></div>
-              <Badge tone="blue">{status}</Badge>
+        {modules.map(({ title, status, icon: Icon, body, earthColor }) => (
+          <Card key={title} className="overflow-hidden">
+            <div className="h-1 w-full" style={{ backgroundColor: earthColor }} />
+            <div className="p-5">
+              <div className="flex items-start justify-between gap-3">
+                <div className="rounded-2xl p-3 text-white" style={{ backgroundColor: earthColor }}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <Badge tone="blue">{status}</Badge>
+              </div>
+              <h3 className="mt-4 text-lg font-semibold text-stone-950">{title}</h3>
+              <p className="mt-2 leading-7 text-stone-600">{body}</p>
             </div>
-            <h3 className="mt-4 text-lg font-semibold text-stone-950">{title}</h3>
-            <p className="mt-2 leading-7 text-stone-600">{body}</p>
           </Card>
         ))}
       </div>
+
       <Card className="p-6">
         <h3 className="font-serif text-2xl font-semibold text-stone-950">Launch readiness gate</h3>
         <div className="mt-5 grid gap-3 md:grid-cols-2">
           {releaseChecks.map(([label, done]) => (
-            <div key={label} className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 p-3">
-              {done ? <CheckCircle2 className="h-5 w-5 text-emerald-700" /> : <XCircle className="h-5 w-5 text-red-700" />}
+            <div
+              key={label}
+              className="flex items-center gap-3 rounded-2xl border p-3"
+              style={{
+                borderColor: done ? `${EARTH.canopy}40` : "#fca5a5",
+                backgroundColor: done ? `${EARTH.canopy}06` : "#fef2f2",
+              }}
+            >
+              {done
+                ? <CheckCircle2 className="h-5 w-5" style={{ color: EARTH.canopy }} />
+                : <XCircle className="h-5 w-5 text-red-600" />
+              }
               <span className="text-sm text-stone-700">{label}</span>
             </div>
           ))}
@@ -1560,15 +1679,15 @@ function Workspace() {
 }
 
 function AppContent({ active, onSelectSection }: { active: TabId; onSelectSection: (id: TabId) => void }) {
-  if (active === "home") return <Home onSelectSection={onSelectSection} />;
-  if (active === "dossier") return <Dossier onSelectSection={onSelectSection} />;
-  if (active === "ownership") return <OwnershipControl />;
-  if (active === "dashboard") return <Dashboard />;
-  if (active === "ledger") return <Ledger />;
-  if (active === "methods") return <Methods />;
-  if (active === "safeguards") return <Safeguards />;
+  if (active === "home")        return <Home onSelectSection={onSelectSection} />;
+  if (active === "dossier")     return <Dossier onSelectSection={onSelectSection} />;
+  if (active === "ownership")   return <OwnershipControl />;
+  if (active === "dashboard")   return <Dashboard />;
+  if (active === "ledger")      return <Ledger />;
+  if (active === "methods")     return <Methods />;
+  if (active === "safeguards")  return <Safeguards />;
   if (active === "corrections") return <Corrections />;
-  if (active === "workspace") return <Workspace />;
+  if (active === "workspace")   return <Workspace />;
   return <Home onSelectSection={onSelectSection} />;
 }
 
@@ -1583,10 +1702,7 @@ export default function EarthEndowmentObservatoryOneFileApp() {
   }, []);
 
   return (
-    <div
-      className="min-h-screen bg-[#EFE8D8] text-stone-950"
-      style={EEO_ROOT_TOKENS}
-    >
+    <div className="min-h-screen text-stone-950" style={{ backgroundColor: EARTH.sageGround }}>
       <ShellHeader active={active} onSelectSection={onSelectSection} />
       <main
         id="eeo-section-panel"
@@ -1596,17 +1712,44 @@ export default function EarthEndowmentObservatoryOneFileApp() {
       >
         <AppContent active={active} onSelectSection={onSelectSection} />
       </main>
-      <footer className="mt-20 border-t border-stone-300 bg-[#11110F] px-4 py-10 text-stone-200 md:px-6 lg:px-8">
+
+      {/* Footer — deep ocean, not pure black */}
+      <footer
+        className="mt-20 border-t px-4 py-10 md:px-6 lg:px-8"
+        style={{ backgroundColor: EARTH.deepOcean, borderColor: `${EARTH.midOcean}80` }}
+      >
         <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-[1.3fr_0.7fr]">
           <div>
-            <div className="font-serif text-2xl font-semibold">Earth Endowment Observatory</div>
-            <p className="mt-3 max-w-3xl leading-7 text-stone-400">
+            <div className="font-serif text-2xl font-semibold text-white">
+              Earth Endowment Observatory
+            </div>
+            <p className="mt-3 max-w-3xl leading-7" style={{ color: `${EARTH.sky}cc` }}>
               Built as a governance-first claims platform: not a data dump, not a dashboard factory, not a global score, not a universal ownership map, not a blockchain project, not an AI authority.
             </p>
+            {/* Earth color legend */}
+            <div className="mt-5 flex flex-wrap gap-3">
+              {[
+                ["Ocean blue", EARTH.deepOcean],
+                ["Forest green", EARTH.canopy],
+                ["Mineral gold", EARTH.savanna],
+              ].map(([label, color]) => (
+                <div key={label} className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full border border-white/20" style={{ backgroundColor: color }} />
+                  <span className="text-xs" style={{ color: "#a8c4d4" }}>{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-            <div className="font-mono text-xs uppercase tracking-[0.2em] text-stone-400">Architecture law</div>
-            <p className="mt-2 leading-7 text-stone-200">The chain must be made visible without making vulnerable people, places, species, or knowledge more vulnerable.</p>
+          <div
+            className="rounded-3xl p-5"
+            style={{ backgroundColor: `${EARTH.midOcean}50`, border: `1px solid ${EARTH.sky}30` }}
+          >
+            <div className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: EARTH.savanna }}>
+              Architecture law
+            </div>
+            <p className="mt-2 leading-7 text-white">
+              The chain must be made visible without making vulnerable people, places, species, or knowledge more vulnerable.
+            </p>
           </div>
         </div>
       </footer>

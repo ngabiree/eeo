@@ -17,7 +17,6 @@ import {
   Filter,
   Fingerprint,
   Globe2,
-  Gavel,
   GitBranch,
   Landmark,
   Layers3,
@@ -275,6 +274,45 @@ function Chain() {
   );
 }
 
+const BRAND_DOCTRINE = [
+  {
+    title: "Reveal the chain",
+    body: "Make value pathways visible from endowment to public-benefit question.",
+    icon: Eye,
+    tone: "blue",
+  },
+  {
+    title: "Inspect the claim",
+    body: "Treat every assertion as reviewable and tied to explicit evidence.",
+    icon: FileSearch,
+    tone: "neutral",
+  },
+  {
+    title: "Understand the source",
+    body: "Show provenance, method, and conditions before interpretation.",
+    icon: Archive,
+    tone: "copper",
+  },
+  {
+    title: "Respect the limit",
+    body: "Publish with caveats and safeguards, never beyond what evidence supports.",
+    icon: AlertTriangle,
+    tone: "gold",
+  },
+  {
+    title: "Challenge the record",
+    body: "Keep correction and right-of-reply pathways open at all times.",
+    icon: MessageSquareWarning,
+    tone: "red",
+  },
+  {
+    title: "Protect the vulnerable",
+    body: "Tier, aggregate, suppress, or refuse exposure where harm is plausible.",
+    icon: ShieldCheck,
+    tone: "green",
+  },
+];
+
 function ClaimCard({ claim, compact = false }) {
   const tone = claim.confidence === "Official" ? "blue" : claim.confidence === "Modeled" ? "copper" : claim.confidence === "Estimated" ? "gold" : "neutral";
   return (
@@ -420,10 +458,11 @@ function Home({ setActive }) {
         <SectionTitle eyebrow="Strategic scope freeze" title="One corridor. One evidence standard. One launch gate.">
           The repaired build narrows ambition into an inspectable public release: one flagship evidence dossier, one limited corridor dashboard, one evidence ledger, one internal review workspace, one correction workflow, one signed release manifest.
         </SectionTitle>
-        <div className="grid gap-4 md:grid-cols-3">
-          <Principle icon={Eye} title="Reveal the chain" body="Make endowment transformation visible from source to public-benefit question without claiming control." />
-          <Principle icon={ShieldCheck} title="Protect the vulnerable" body="Tier, aggregate, suppress, or refuse data when publication could create harm." />
-          <Principle icon={Gavel} title="Do not adjudicate" body="Describe evidence, disputes, risks, and gaps. Do not determine title, liability, legality, consent, or fault." />
+        <div className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-stone-500">Brand design doctrine</div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {BRAND_DOCTRINE.map((item) => (
+            <Principle key={item.title} icon={item.icon} title={item.title} body={item.body} tone={item.tone} />
+          ))}
         </div>
       </section>
 
@@ -439,10 +478,19 @@ function Home({ setActive }) {
   );
 }
 
-function Principle({ icon: Icon, title, body }) {
+function Principle({ icon: Icon, title, body, tone = "neutral" }) {
+  const iconBgByTone = {
+    neutral: "bg-stone-900",
+    blue: "bg-blue-900",
+    green: "bg-emerald-900",
+    copper: "bg-orange-900",
+    red: "bg-red-900",
+    gold: "bg-yellow-700",
+    dark: "bg-stone-950",
+  };
   return (
     <Card className="p-6">
-      <div className="mb-4 inline-flex rounded-2xl bg-stone-950 p-3 text-white"><Icon className="h-5 w-5" /></div>
+      <div className={cls("mb-4 inline-flex rounded-2xl p-3 text-white", iconBgByTone[tone] || iconBgByTone.neutral)}><Icon className="h-5 w-5" /></div>
       <h3 className="text-lg font-semibold text-stone-950">{title}</h3>
       <p className="mt-2 leading-7 text-stone-600">{body}</p>
     </Card>

@@ -44,6 +44,9 @@ logs/
 # TypeScript
 *.tsbuildinfo
 
+# Supabase CLI local cache (project ref, pooler URL, version pins — do not commit)
+supabase/.temp/
+
 # Local editor / agent settings
 .claude/
 
