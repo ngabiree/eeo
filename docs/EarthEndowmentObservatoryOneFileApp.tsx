@@ -740,12 +740,69 @@ function handleTabKeyDown(
   onSelectSection(nextId);
 }
 
+function GlobalBodiesStrip() {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const bodies = [
+    "UN",
+    "World Bank",
+    "UNEP",
+    "ILO",
+    "UNESCO",
+    "FAO",
+    "OECD",
+    "EITI",
+    "IPBES",
+    "UN Global Compact",
+  ];
+
+  return (
+    <div className="w-full border-b border-[#C9A24D]/30 bg-[#0F2A32]/95 text-[#EFE8D8] backdrop-blur-sm">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 text-xs md:px-6 lg:px-8">
+        <span className="font-mono tracking-[0.18em] text-[#C9A24D]">CANONICAL GLOBAL BODIES &amp; STANDARDS</span>
+
+        <div className="hidden flex-wrap items-center gap-2 text-[#E6E1D6]/85 md:flex">
+          {bodies.map((body, idx) => (
+            <React.Fragment key={body}>
+              <span className="opacity-85 transition hover:opacity-100">{body}</span>
+              {idx < bodies.length - 1 ? <span className="text-[#C9A24D]/70">·</span> : null}
+            </React.Fragment>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="text-[#E6E1D6]/90 transition hover:text-[#EFE8D8] md:hidden"
+            aria-expanded={isMobileOpen}
+            aria-controls="global-bodies-mobile"
+            onClick={() => setIsMobileOpen((v) => !v)}
+          >
+            Global bodies
+          </button>
+          <button type="button" className="text-[#C9A24D] transition hover:underline">
+            See all
+          </button>
+        </div>
+      </div>
+
+      {isMobileOpen ? (
+        <div id="global-bodies-mobile" className="border-t border-[#C9A24D]/20 px-4 py-2 md:hidden">
+          <div className="flex gap-2 overflow-x-auto whitespace-nowrap text-[#E6E1D6]/85">
+            {bodies.map((body) => (
+              <span key={`mobile-${body}`} className="rounded-full border border-[#C9A24D]/25 px-2.5 py-1 text-[11px]">
+                {body}
+              </span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSection: (id: TabId) => void }) {
   return (
-    <header
-      className="sticky top-0 z-50 border-b border-stone-200 backdrop-blur-xl"
-      style={{ backgroundColor: `${EARTH.sagePaper}f0` }}
-    >
+    <header className="border-b border-stone-200 backdrop-blur-xl" style={{ backgroundColor: `${EARTH.sagePaper}f0` }}>
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 md:px-6 lg:px-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <button
@@ -827,6 +884,33 @@ function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSecti
   );
 }
 
+function ReleaseSystemSurface() {
+  return (
+    <section className="mb-5 overflow-hidden rounded-2xl border border-[#C9A24D]/30 bg-[#0F2A32]/95 text-[#EFE8D8] shadow-sm backdrop-blur-sm">
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C9A24D]/70 to-transparent" />
+      <div className="px-4 py-3 md:px-5">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full border border-[#C9A24D]/40 bg-[#C9A24D]/15 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[#C9A24D]">
+              Release system
+            </span>
+            <span className="rounded-full border border-[#E6E1D6]/30 px-2.5 py-1 text-xs text-[#E6E1D6]">Corridor pilot · Draft</span>
+            <span className="rounded-full border border-amber-300/40 bg-amber-300/10 px-2.5 py-1 text-xs text-amber-100">Unsigned manifest</span>
+          </div>
+          <div className="text-xs text-[#E6E1D6]/80">Status: internal review active · public correction route required at launch</div>
+        </div>
+
+        <div className="mt-3 grid gap-2 text-xs text-[#E6E1D6]/80 md:grid-cols-4">
+          <div className="rounded-xl border border-[#C9A24D]/20 bg-[#0f2a32]/75 px-3 py-2">Standards: EITI, OECD due diligence, ILO framing</div>
+          <div className="rounded-xl border border-[#C9A24D]/20 bg-[#0f2a32]/75 px-3 py-2">Governance: methods, legal, safeguards, exposure review</div>
+          <div className="rounded-xl border border-[#C9A24D]/20 bg-[#0f2a32]/75 px-3 py-2">Publication: evidence-first, no composite score</div>
+          <div className="rounded-xl border border-[#C9A24D]/20 bg-[#0f2a32]/75 px-3 py-2">Accountability: right-of-reply + corrections always open</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
   return (
     <div className="space-y-16">
@@ -900,20 +984,14 @@ function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
               <button
                 type="button"
                 onClick={() => onSelectSection("ledger")}
-                className="rounded-full border px-5 py-3 text-sm font-semibold text-white transition"
-                style={{ borderColor: `${EARTH.sky}50`, backgroundColor: `${EARTH.sky}15` }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = `${EARTH.sky}30`)}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = `${EARTH.sky}15`)}
+                className="rounded-full border border-[#C9A24D]/45 bg-[#0f2a32]/40 px-5 py-3 text-sm font-semibold text-[#EFE8D8] transition hover:bg-[#C9A24D]/12"
               >
                 Inspect evidence ledger
               </button>
               <button
                 type="button"
                 onClick={() => onSelectSection("workspace")}
-                className="rounded-full border px-5 py-3 text-sm font-semibold text-white transition"
-                style={{ borderColor: "rgba(255,255,255,0.2)", backgroundColor: "rgba(255,255,255,0.06)" }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.12)")}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.06)")}
+                className="rounded-full border border-[#C9A24D]/35 bg-[#0f2a32]/30 px-5 py-3 text-sm font-semibold text-[#EFE8D8] transition hover:bg-[#C9A24D]/10"
               >
                 View review workspace
               </button>
@@ -1146,12 +1224,23 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 12" title="Review and release posture" />
-        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
-          Stub — alignment with internal review workspace and unsigned release manifest. See{" "}
-          <button type="button" onClick={() => onSelectSection("workspace")} className="font-semibold underline">
-            Review Workspace
+        <Card className="border-[#C9A24D]/40 bg-[#0F2A32] p-6 text-sm text-[#EFE8D8]">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-[#C9A24D]/40 bg-[#C9A24D]/15 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#C9A24D]">
+              Release manifest checkpoint
+            </span>
+            <span className="rounded-full border border-amber-300/40 bg-amber-300/10 px-2.5 py-1 text-xs text-amber-100">Unsigned</span>
+          </div>
+          <p className="leading-7 text-[#E6E1D6]/90">
+            Publication cannot proceed until launch-gate blockers clear and the corridor release manifest is signed by the release owner.
+          </p>
+          <button
+            type="button"
+            onClick={() => onSelectSection("workspace")}
+            className="mt-4 rounded-full border border-[#C9A24D]/40 px-4 py-2 font-semibold text-[#C9A24D] transition hover:bg-[#C9A24D]/10"
+          >
+            Open launch gate workspace
           </button>
-          .
         </Card>
       </section>
 
@@ -1693,6 +1782,8 @@ function ReleaseManifestPanel() {
 }
 
 function Workspace() {
+  const passedChecks = releaseChecks.filter(([, done]) => done).length;
+  const totalChecks = releaseChecks.length;
   return (
     <div className="space-y-8">
       <SectionTitle eyebrow="Restricted workspace prototype" title="The internal control plane behind public trust">
@@ -1717,7 +1808,12 @@ function Workspace() {
       </div>
 
       <Card className="p-6">
-        <h3 className="font-serif text-2xl font-semibold text-stone-950">Launch readiness gate</h3>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h3 className="font-serif text-2xl font-semibold text-stone-950">Launch readiness gate</h3>
+          <span className="rounded-full border border-[#C9A24D]/35 bg-[#C9A24D]/10 px-3 py-1 text-xs font-semibold text-[#7A5C18]">
+            {passedChecks}/{totalChecks} checks passed
+          </span>
+        </div>
         <div className="mt-5 grid gap-3 md:grid-cols-2">
           {releaseChecks.map(([label, done]) => (
             <div
@@ -1767,53 +1863,69 @@ export default function EarthEndowmentObservatoryOneFileApp() {
 
   return (
     <div className="min-h-screen text-stone-950" style={{ backgroundColor: EARTH.sageGround }}>
-      <ShellHeader active={active} onSelectSection={onSelectSection} />
+      <div className="sticky top-0 z-50 shadow-[0_1px_0_rgba(201,162,77,0.2)]">
+        <GlobalBodiesStrip />
+        <ShellHeader active={active} onSelectSection={onSelectSection} />
+      </div>
       <main
         id="eeo-section-panel"
-        className="mx-auto max-w-7xl px-4 py-8 md:px-6 lg:px-8"
+        className="mx-auto max-w-7xl px-4 pb-8 pt-6 md:px-6 lg:px-8"
         role="tabpanel"
         aria-labelledby={`eeo-tab-${active}`}
       >
+        <ReleaseSystemSurface />
         <AppContent active={active} onSelectSection={onSelectSection} />
       </main>
 
-      {/* Footer — deep ocean, not pure black */}
-      <footer
-        className="mt-20 border-t px-4 py-10 md:px-6 lg:px-8"
-        style={{ backgroundColor: EARTH.deepOcean, borderColor: `${EARTH.midOcean}80` }}
-      >
-        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-[1.3fr_0.7fr]">
-          <div>
-            <div className="font-serif text-2xl font-semibold text-white">
-              Earth Endowment Observatory
+      <footer className="mt-20 border-t border-[#C9A24D]/30 bg-[#0F2A32] px-4 py-10 text-[#EFE8D8] md:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl space-y-8">
+          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <div>
+              <div className="font-serif text-2xl font-semibold">Earth Endowment Observatory</div>
+              <p className="mt-3 max-w-3xl leading-7 text-[#E6E1D6]/85">
+                A governance-first public-interest evidence system aligned with global norms for transparency, safeguards, accountability, and correction.
+              </p>
             </div>
-            <p className="mt-3 max-w-3xl leading-7" style={{ color: `${EARTH.sky}cc` }}>
-              Built as a governance-first claims platform: not a data dump, not a dashboard factory, not a global score, not a universal ownership map, not a blockchain project, not an AI authority.
-            </p>
-            {/* Earth color legend */}
-            <div className="mt-5 flex flex-wrap gap-3">
-              {[
-                ["Ocean blue", EARTH.deepOcean],
-                ["Forest green", EARTH.canopy],
-                ["Mineral gold", EARTH.savanna],
-              ].map(([label, color]) => (
-                <div key={label} className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full border border-white/20" style={{ backgroundColor: color }} />
-                  <span className="text-xs" style={{ color: "#a8c4d4" }}>{label}</span>
-                </div>
-              ))}
+            <div className="rounded-3xl border border-[#C9A24D]/30 bg-[#0f2a32]/80 p-5 backdrop-blur-sm">
+              <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#C9A24D]">Architecture law</div>
+              <p className="mt-2 leading-7 text-[#EFE8D8]">
+                The chain must be made visible without making vulnerable people, places, species, or knowledge more vulnerable.
+              </p>
             </div>
           </div>
-          <div
-            className="rounded-3xl p-5"
-            style={{ backgroundColor: `${EARTH.midOcean}50`, border: `1px solid ${EARTH.sky}30` }}
-          >
-            <div className="font-mono text-xs uppercase tracking-[0.2em]" style={{ color: EARTH.savanna }}>
-              Architecture law
+
+          <div className="grid gap-6 md:grid-cols-3">
+            <div>
+              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#C9A24D]">Canonical partners</div>
+              <div className="flex flex-wrap gap-2">
+                {["UN", "World Bank", "UNEP", "ILO", "UNESCO", "FAO", "OECD", "EITI", "IPBES", "UN Global Compact"].map((item) => (
+                  <span key={item} className="rounded-full border border-[#C9A24D]/25 px-2.5 py-1 text-xs text-[#E6E1D6]/85">
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
-            <p className="mt-2 leading-7 text-white">
-              The chain must be made visible without making vulnerable people, places, species, or knowledge more vulnerable.
-            </p>
+            <div>
+              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#C9A24D]">Contributors</div>
+              <ul className="space-y-1.5 text-sm text-[#E6E1D6]/85">
+                {["Methods reviewers", "Legal reviewers", "Safeguards reviewers", "Exposure and labor reviewers", "Editorial and release owners"].map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#C9A24D]">Standards references</div>
+              <ul className="space-y-1.5 text-sm text-[#E6E1D6]/85">
+                {["EITI disclosure practices", "UN Guiding Principles context", "ILO labor standards framing", "UNEP environmental evidence cautions", "OECD due diligence principles"].map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 border-t border-[#C9A24D]/25 pt-4 text-xs text-[#E6E1D6]/70 md:flex-row md:items-center md:justify-between">
+            <span>Institutional prototype layer · Canonical corridor release frame</span>
+            <span>Evidence first · Dashboard second · Corrections always open</span>
           </div>
         </div>
       </footer>
