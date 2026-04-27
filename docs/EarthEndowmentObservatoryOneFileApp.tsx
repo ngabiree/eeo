@@ -1338,12 +1338,15 @@ const SEARCH_FIELDS = [
 
 function Ledger() {
   const [query, setQuery] = useState("");
+  const q = query.toLowerCase().trim();
   const filtered = useMemo(
     () =>
-      claims.filter((c) =>
-        SEARCH_FIELDS.some((k) => String(c[k as keyof typeof c]).toLowerCase().includes(query.toLowerCase()))
-      ),
-    [query]
+      q.length === 0
+        ? claims
+        : claims.filter((c) =>
+            SEARCH_FIELDS.some((k) => String(c[k as keyof typeof c]).toLowerCase().includes(q))
+          ),
+    [q]
   );
   return (
     <div className="space-y-8">
@@ -1359,18 +1362,16 @@ function Ledger() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search claims, sources, domains, methods..."
               aria-label="Search evidence ledger"
-              className="w-full rounded-full border border-stone-300 bg-white py-3 pl-10 pr-4 text-sm outline-none"
+              className="w-full rounded-full border border-stone-300 bg-white py-3 pl-10 pr-4 text-sm outline-none focus:border-stone-900"
               style={{ accentColor: EARTH.deepOcean }}
-              onFocus={e => (e.currentTarget.style.borderColor = EARTH.deepOcean)}
-              onBlur={e => (e.currentTarget.style.borderColor = "")}
             />
           </div>
           <button
             type="button"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-3 text-sm font-semibold text-stone-700 disabled:cursor-not-allowed disabled:opacity-50"
-            aria-label="Filter (not available in this prototype)"
-            title="Not implemented in prototype"
             disabled
+            title="Filtering by domain, confidence, and tier — not yet implemented"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-3 text-sm font-semibold text-stone-400 cursor-not-allowed opacity-50"
+            aria-label="Filter (not yet implemented — use search)"
           >
             <Filter className="h-4 w-4" aria-hidden />
             Filter
@@ -1476,6 +1477,48 @@ function Safeguards() {
 }
 
 function Corrections() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    correction_type: "Factual correction",
+    affected_object_id: "",
+    body: "",
+    evidence_link: "",
+    safety_concern: false,
+    right_of_reply: false,
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const valid = Boolean(form.name.trim() && form.email.trim() && form.body.trim());
+
+  function handleSubmit() {
+    if (!valid) return;
+    if (process.env.NODE_ENV === "development") {
+      console.log("Challenge submitted:", form);
+    }
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <div className="space-y-8">
+        <SectionTitle eyebrow="Submitted" title="Challenge received" />
+        <Card className="p-8 text-center">
+          <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-700" />
+          <p className="mt-4 font-semibold text-stone-950">Your challenge has been logged.</p>
+          <p className="mt-2 text-stone-600 text-sm">Triage within 5 business days. You will be contacted at the address provided if a response is required.</p>
+          <button
+            type="button"
+            onClick={() => setSubmitted(false)}
+            className="mt-6 rounded-full border border-stone-300 px-5 py-2.5 text-sm font-semibold text-stone-700 hover:border-stone-900"
+          >
+            Submit another
+          </button>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       <SectionTitle eyebrow="Challenge route" title="Correction, right-of-reply, and exposure concern intake">
@@ -1485,43 +1528,75 @@ function Corrections() {
         <Card className="p-6">
           <h3 className="font-serif text-2xl font-semibold text-stone-950">Submit a challenge</h3>
           <div className="mt-5 space-y-4">
-            <p className="text-sm text-stone-600">
-              This form is a UI shell only. Do not send sensitive information; backend intake is not connected.
-            </p>
-            {["Name or institution", "Contact email"].map((ph, i) => (
-              <input
-                key={ph}
-                placeholder={ph}
-                type={i === 1 ? "email" : "text"}
-                autoComplete={i === 1 ? "email" : "organization"}
-                aria-label={`${ph} (optional)`}
-                className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none"
-                onFocus={e => (e.currentTarget.style.borderColor = EARTH.deepOcean)}
-                onBlur={e => (e.currentTarget.style.borderColor = "")}
-              />
-            ))}
-            <select
-              aria-label="Challenge type"
-              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none"
-              defaultValue="Factual correction"
-            >
-              {["Factual correction", "Exposure concern", "Right-of-reply", "Outdated source", "Identity conflation", "Legal misdescription"].map(opt => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
-            <textarea
-              placeholder="Describe the issue, claim ID, source, or safety concern…"
-              rows={6}
-              aria-label="Description of the challenge, claim ID, or safety concern"
-              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none"
-              onFocus={e => (e.currentTarget.style.borderColor = EARTH.deepOcean)}
-              onBlur={e => (e.currentTarget.style.borderColor = "")}
+            <input
+              placeholder="Name or institution *"
+              value={form.name}
+              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
             />
+            <input
+              placeholder="Contact email *"
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
+            />
+            <select
+              value={form.correction_type}
+              onChange={(e) => setForm((f) => ({ ...f, correction_type: e.target.value }))}
+              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
+            >
+              <option>Factual correction</option>
+              <option>Exposure concern</option>
+              <option>Right-of-reply</option>
+              <option>Outdated source</option>
+              <option>Identity conflation</option>
+              <option>Legal misdescription</option>
+            </select>
+            <input
+              placeholder="Claim ID (e.g. EEO-CM-0003) — if applicable"
+              value={form.affected_object_id}
+              onChange={(e) => setForm((f) => ({ ...f, affected_object_id: e.target.value }))}
+              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
+            />
+            <textarea
+              placeholder="Describe the issue, source, or safety concern... *"
+              rows={5}
+              value={form.body}
+              onChange={(e) => setForm((f) => ({ ...f, body: e.target.value }))}
+              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
+            />
+            <input
+              placeholder="Supporting evidence link (optional)"
+              value={form.evidence_link}
+              onChange={(e) => setForm((f) => ({ ...f, evidence_link: e.target.value }))}
+              className="w-full rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm outline-none focus:border-stone-900"
+            />
+            <div className="space-y-2">
+              <label className="flex cursor-pointer items-center gap-3 text-sm text-stone-700">
+                <input
+                  type="checkbox"
+                  checked={form.safety_concern}
+                  onChange={(e) => setForm((f) => ({ ...f, safety_concern: e.target.checked }))}
+                  className="h-4 w-4 rounded"
+                />
+                This is a safety or exposure concern requiring urgent triage
+              </label>
+              <label className="flex cursor-pointer items-center gap-3 text-sm text-stone-700">
+                <input
+                  type="checkbox"
+                  checked={form.right_of_reply}
+                  onChange={(e) => setForm((f) => ({ ...f, right_of_reply: e.target.checked }))}
+                  className="h-4 w-4 rounded"
+                />
+                I am requesting right-of-reply as a named party
+              </label>
+            </div>
             <button
               type="button"
-              className="w-full rounded-full px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110"
-              style={{ backgroundColor: EARTH.deepOcean }}
-              title="Not connected in this prototype"
+              onClick={handleSubmit}
+              disabled={!valid}
+              className="w-full rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-40"
             >
               Submit for triage
             </button>
@@ -1531,25 +1606,14 @@ function Corrections() {
         <Card className="p-6">
           <h3 className="font-semibold text-stone-950">Correction workflow</h3>
           <div className="mt-5 space-y-3">
-            {[
-              "public challenge submitted",
-              "triage",
-              "safety check",
-              "assigned reviewer",
-              "claim revised / confirmed / withdrawn",
-              "public correction note if accepted",
-              "audit trail retained",
-            ].map((step, i) => (
-              <div key={step} className="flex items-center gap-3 rounded-2xl border border-stone-200 p-3" style={{ backgroundColor: `${EARTH.deepOcean}05` }}>
-                <span
-                  className="grid h-7 w-7 place-items-center rounded-full font-mono text-xs text-white"
-                  style={{ backgroundColor: EARTH.deepOcean }}
-                >
-                  {i + 1}
-                </span>
-                <span className="text-sm text-stone-700">{step}</span>
-              </div>
-            ))}
+            {["public challenge submitted", "triage", "safety check", "assigned reviewer", "claim revised / confirmed / withdrawn", "public correction note if accepted", "audit trail retained"].map(
+              (step, i) => (
+                <div key={step} className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 p-3">
+                  <span className="grid h-7 w-7 place-items-center rounded-full bg-stone-950 font-mono text-xs text-white">{i + 1}</span>
+                  <span className="text-sm text-stone-700">{step}</span>
+                </div>
+              )
+            )}
           </div>
         </Card>
       </div>
