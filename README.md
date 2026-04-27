@@ -40,7 +40,9 @@ Do not commit `package-lock.json` (it is in `.gitignore`). CI uses **`pnpm insta
 
 - `app/` — Next.js App Router (`layout.tsx`, `page.tsx`, `globals.css`)
 - `components/EarthEndowmentObservatoryOneFileApp.tsx` — corridor UI (client component)
-- `docs/eeo_one_file_corridor_app.jsx` — original one-file snapshot (reference)
+- `docs/eeo_one_file_corridor_app.jsx` — small one-file corridor snapshot (reference; uses `lucide-react`)
+- `docs/EarthEndowmentObservatoryImplementationApp.jsx` — broader implementation blueprint: extra tabs, static contracts, self-contained SVG icons (no `lucide` dependency for sandbox-style builds)
+- `docs/EarthEndowmentObservatoryOneFileApp.tsx` — TypeScript mirror of the corridor UI for design review (kept close to `components/`)
 
 ## Environment
 
