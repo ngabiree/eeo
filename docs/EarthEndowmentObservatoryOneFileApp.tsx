@@ -742,6 +742,7 @@ function handleTabKeyDown(
 
 function GlobalBodiesStrip() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isAllOpen, setIsAllOpen] = useState(false);
   const bodies = [
     "UN",
     "World Bank",
@@ -779,7 +780,13 @@ function GlobalBodiesStrip() {
           >
             Global bodies
           </button>
-          <button type="button" className="text-[#C9A24D] transition hover:underline">
+          <button
+            type="button"
+            className="text-[#C9A24D] transition hover:underline"
+            aria-expanded={isAllOpen}
+            aria-controls="global-bodies-expanded"
+            onClick={() => setIsAllOpen((v) => !v)}
+          >
             See all
           </button>
         </div>
@@ -793,6 +800,32 @@ function GlobalBodiesStrip() {
                 {body}
               </span>
             ))}
+          </div>
+        </div>
+      ) : null}
+
+      {isAllOpen ? (
+        <div id="global-bodies-expanded" className="border-t border-[#C9A24D]/20 px-4 py-3 md:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl space-y-2">
+            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#C9A24D]">Canonical institutions (expanded)</div>
+            <div className="flex flex-wrap gap-2 text-xs text-[#E6E1D6]/90">
+              {[
+                "United Nations",
+                "World Bank Group",
+                "UNEP",
+                "ILO",
+                "UNESCO",
+                "FAO",
+                "OECD",
+                "EITI",
+                "IPBES",
+                "UN Global Compact",
+              ].map((body) => (
+                <span key={`expanded-${body}`} className="rounded-full border border-[#C9A24D]/30 bg-[#0f2a32]/80 px-2.5 py-1">
+                  {body}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}
