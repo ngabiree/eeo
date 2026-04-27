@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Earth Endowment Observatory — Corridor prototype",
+  title: "Public Evidence Prototype: Copper-Cobalt Corridor",
   description:
-    "Governed evidence prototype: controlled evidence product first, limited dashboard second. Synthetic data only. Not a court, score, or global atlas.",
+    "Evidence-first civic intelligence prototype for a copper-cobalt corridor dossier, evidence ledger, release manifest, and correction route.",
   robots: { index: true, follow: true },
 };
 
