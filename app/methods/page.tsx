@@ -18,6 +18,9 @@ export default function MethodsPage() {
           The prototype does not make legal findings unless explicitly supported by authoritative legal or regulatory
           sources.
         </p>
+        <p className="leading-7 text-stone-700">
+          The Observatory should eventually support Temporal Endowment Profiles: evidence-based records that describe baseline condition, current condition, observed change, drivers of change, and disciplined foresight for plausible futures. Prediction is not the goal; disciplined, evidence-bounded reasoning is.
+        </p>
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
           EEO does not treat production data, trade data, ownership data, labor-risk data, ecological data, or media
           reports as interchangeable forms of proof. Each source type has different evidentiary limits.

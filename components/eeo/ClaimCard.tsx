@@ -23,10 +23,10 @@ function governanceMessage(status: ClaimCorrectionSummary["governanceStatus"]): 
     return "This claim has been revised following review.";
   }
   if (status === "restricted") {
-    return "Some evidence or detail is restricted due to harm, rights, or legal review.";
+    return "Some evidence or detail is restricted due to harm, rights, or legal review. This is a publication protection measure, not a legal finding.";
   }
   if (status === "withdrawn") {
-    return "This claim should not be relied upon in its previous form.";
+    return "This claim should not be relied upon in its previous form. This is not a legal determination.";
   }
   return "No active correction items are currently linked to this claim.";
 }
@@ -93,7 +93,7 @@ export default function ClaimCard({
       ) : null}
       {correctionSummary.governanceStatus === "withdrawn" ? (
         <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">
-          This claim is marked withdrawn and should not be relied upon in its previous form.
+          This claim is marked withdrawn and should not be relied upon in its previous form. This is not a legal determination.
         </div>
       ) : null}
 
