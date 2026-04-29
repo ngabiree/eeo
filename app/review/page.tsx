@@ -2,9 +2,11 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CorrectionTriageActions from "@/components/eeo/CorrectionTriageActions";
+import ReviewGovernanceSignoff from "@/components/eeo/ReviewGovernanceSignoff";
 import { claims } from "@/data/claims";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
+import { listReleaseGovernanceLogEntries } from "@/lib/releaseGovernanceLogStore";
 import { isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
 export const dynamic = "force-dynamic";
@@ -60,6 +62,7 @@ export default async function ReviewPage() {
   }
 
   const submissions = listCorrectionSubmissions();
+  const governanceLog = listReleaseGovernanceLogEntries();
   const claimById = new Map(claims.map((claim) => [claim.id, claim]));
 
   return (
@@ -79,6 +82,33 @@ export default async function ReviewPage() {
         <Link href="/release" className="text-sm underline">
           Open release manifest
         </Link>
+        <ReviewGovernanceSignoff />
+        <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-stone-950">Release governance review log</h2>
+          <p className="mt-1 text-xs text-stone-600">
+            Internal sign-off history for claim governance and open correction posture.
+          </p>
+          {governanceLog.length === 0 ? (
+            <p className="mt-3 text-sm text-stone-600">No governance sign-off has been recorded in this runtime session.</p>
+          ) : (
+            <ul className="mt-3 space-y-2 text-sm text-stone-700">
+              {governanceLog.map((entry) => (
+                <li key={entry.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-3">
+                  <p>
+                    <strong>{new Date(entry.createdAt).toLocaleString()}</strong>
+                    {entry.reviewerLabel ? ` — ${entry.reviewerLabel}` : ""}
+                  </p>
+                  <p className="text-xs text-stone-600">
+                    challenged: {entry.challengedClaimCount}, corrected: {entry.correctedClaimCount}, restricted:{" "}
+                    {entry.restrictedClaimCount}, withdrawn: {entry.withdrawnClaimCount}, open corrections:{" "}
+                    {entry.openCorrectionCount}
+                  </p>
+                  {entry.note ? <p className="mt-1 text-xs text-stone-600">Note: {entry.note}</p> : null}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
 
         <section className="space-y-4 rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">Correction intake queue</h2>

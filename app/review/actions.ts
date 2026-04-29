@@ -3,13 +3,17 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
+import { claims } from "@/data/claims";
+import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import {
   type CorrectionGovernanceOutcome,
   getCorrectionSubmissionById,
+  listCorrectionSubmissions,
   patchCorrectionSubmission,
   type CorrectionTriagePatch,
   type CorrectionTriageStatus,
 } from "@/lib/correctionsStore";
+import { addReleaseGovernanceLogEntry, listReleaseGovernanceLogEntries } from "@/lib/releaseGovernanceLogStore";
 import { getReviewerIdentity, isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
 const MAX_TRIAGE_NOTE = 8_000;
@@ -102,4 +106,46 @@ export async function patchCorrectionTriage(
 
   revalidatePath("/review");
   return { ok: true };
+}
+
+export async function recordReleaseGovernanceReview(
+  note?: string
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const cookieStore = await cookies();
+  if (!isReviewAuthorizedFromCookies(cookieStore)) {
+    return { ok: false, error: "Unauthorized review session." };
+  }
+
+  const corrections = listCorrectionSubmissions();
+  const summaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
+  const challengedClaimCount = summaries.filter(
+    (summary) => summary.governanceStatus === "challenged" || summary.governanceStatus === "under_review"
+  ).length;
+  const correctedClaimCount = summaries.filter((summary) => summary.governanceStatus === "corrected").length;
+  const restrictedClaimCount = summaries.filter((summary) => summary.governanceStatus === "restricted").length;
+  const withdrawnClaimCount = summaries.filter((summary) => summary.governanceStatus === "withdrawn").length;
+  const openCorrectionCount = corrections.filter((correction) => correction.triageStatus !== "resolved").length;
+  const reviewer = getReviewerIdentity();
+  const trimmedNote = note?.trim();
+
+  addReleaseGovernanceLogEntry({
+    actor: "reviewer",
+    reviewerId: reviewer.reviewerId,
+    reviewerLabel: reviewer.reviewerLabel,
+    challengedClaimCount,
+    correctedClaimCount,
+    restrictedClaimCount,
+    withdrawnClaimCount,
+    openCorrectionCount,
+    note: trimmedNote ? trimmedNote : undefined,
+  });
+
+  revalidatePath("/review");
+  return { ok: true };
+}
+
+export async function getLatestReleaseGovernanceReview() {
+  const cookieStore = await cookies();
+  if (!isReviewAuthorizedFromCookies(cookieStore)) return null;
+  return listReleaseGovernanceLogEntries()[0] ?? null;
 }
