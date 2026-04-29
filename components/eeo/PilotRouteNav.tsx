@@ -7,6 +7,7 @@ import EeoLogo from "@/components/eeo/EeoLogo";
 
 const ROUTES: { href: string; label: string }[] = [
   { href: "/pilot", label: "Overview" },
+  { href: "/pilot/corridor", label: "Corridor shell" },
   { href: "/pilot/evidence-dossier", label: "Evidence Dossier" },
   { href: "/pilot/evidence-ledger", label: "Evidence Ledger" },
   { href: "/pilot/governance-profile", label: "Governance Profile" },

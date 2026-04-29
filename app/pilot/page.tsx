@@ -13,6 +13,9 @@ export default function PilotOverviewPage() {
           It is not a global atlas, ranking, certification, or legal adjudication system.
         </p>
         <div className="flex flex-wrap gap-3 text-sm">
+          <Link href="/pilot/corridor" className="underline">
+            Corridor shell (full interface)
+          </Link>
           <Link href="/pilot/evidence-dossier" className="underline">Evidence dossier</Link>
           <Link href="/pilot/evidence-ledger" className="underline">Evidence ledger</Link>
           <Link href="/pilot/governance-profile" className="underline">Governance profile</Link>
