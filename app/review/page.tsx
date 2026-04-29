@@ -69,6 +69,13 @@ export default async function ReviewPage() {
   const governanceLog = listReleaseGovernanceLogEntries();
   const hasRecentSignoff = hasRecentReleaseGovernanceSignoff(RELEASE_SIGNOFF_MAX_AGE_HOURS);
   const claimById = new Map(claims.map((claim) => [claim.id, claim]));
+  const openCorrectionCount = submissions.filter((s) => s.triageStatus !== "resolved").length;
+  const claimGovernanceSummaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, submissions));
+  const challengedClaimCount = claimGovernanceSummaries.filter((s) => s.governanceStatus === "challenged").length;
+  const underReviewClaimCount = claimGovernanceSummaries.filter((s) => s.governanceStatus === "under_review").length;
+  const correctedClaimCount = claimGovernanceSummaries.filter((s) => s.governanceStatus === "corrected").length;
+  const restrictedClaimCount = claimGovernanceSummaries.filter((s) => s.governanceStatus === "restricted").length;
+  const withdrawnClaimCount = claimGovernanceSummaries.filter((s) => s.governanceStatus === "withdrawn").length;
 
   return (
     <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
@@ -102,6 +109,18 @@ export default async function ReviewPage() {
             Release readiness requires a governance sign-off recorded within the last{" "}
             {RELEASE_SIGNOFF_MAX_AGE_HOURS} hours.
           </p>
+          {!hasRecentSignoff ? (
+            <ul className="mt-3 space-y-1 text-xs text-amber-800">
+              <li>No recent governance sign-off recorded.</li>
+              <li>
+                Open correction items: <strong>{openCorrectionCount}</strong>
+              </li>
+              <li>
+                Claims with governance signals:{" "}
+                <strong>{challengedClaimCount + underReviewClaimCount + correctedClaimCount + restrictedClaimCount + withdrawnClaimCount}</strong>
+              </li>
+            </ul>
+          ) : null}
         </section>
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-stone-950">Release governance review log</h2>
