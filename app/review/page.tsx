@@ -50,9 +50,10 @@ export default function ReviewPage() {
                     <span className="font-mono text-xs uppercase tracking-[0.14em] text-stone-500">
                       {submission.id}
                     </span>
-                    <span className="text-xs text-stone-500">
-                      {new Date(submission.submittedAt).toLocaleString()}
-                    </span>
+                  </div>
+                  <div className="mb-3 text-xs text-stone-500">
+                    <p>Submitted {new Date(submission.submittedAt).toLocaleString()}</p>
+                    <p>Last triage update {new Date(submission.triageUpdatedAt).toLocaleString()}</p>
                   </div>
                   <div className="grid gap-1 text-sm text-stone-700 md:grid-cols-2">
                     <p><strong>Category:</strong> {submission.category}</p>
@@ -66,6 +67,7 @@ export default function ReviewPage() {
                   <CorrectionTriageActions
                     submissionId={submission.id}
                     currentStatus={submission.triageStatus}
+                    initialNote={submission.triageNote}
                   />
                 </article>
               ))}

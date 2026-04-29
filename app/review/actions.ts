@@ -4,20 +4,12 @@ import { revalidatePath } from "next/cache";
 
 import {
   patchCorrectionSubmission,
-  type CorrectionSubmission,
   type CorrectionTriagePatch,
   type CorrectionTriageStatus,
 } from "@/lib/correctionsStore";
 
 const MAX_TRIAGE_NOTE = 8_000;
 const VALID_TRIAGE: CorrectionTriageStatus[] = ["queued", "in_review", "resolved"];
-
-/** Public shape for reviewer UI (omit internal fields like raw email). */
-export type CorrectionTriageView = Pick<
-  CorrectionSubmission,
-  "id" | "triageStatus" | "triageUpdatedAt"
-> &
-  Partial<Pick<CorrectionSubmission, "triageNote" | "submittedAt" | "category" | "claimId">>;
 
 export async function patchCorrectionTriage(
   submissionId: string,
