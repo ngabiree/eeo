@@ -2,19 +2,42 @@ import Link from "next/link";
 
 import { evidenceItems } from "@/data/evidence";
 import { canClaimBeApprovedForRelease } from "@/lib/publicationRules";
-import { getClaimIntegrityWarnings } from "@/lib/claimUtils";
+import { getClaimIntegrityWarnings, type ClaimCorrectionSummary } from "@/lib/claimUtils";
 import type { Claim } from "@/types/eeo";
 
 import {
   ConfidenceBadge,
   EvidenceRoleBadge,
   ExposureRiskBadge,
+  GovernanceStatusBadge,
   LegalPostureBadge,
   PublicationDecisionBadge,
   ReviewStatusBadge,
 } from "./StatusBadges";
 
-export default function ClaimCard({ claim }: { claim: Claim }) {
+function governanceMessage(status: ClaimCorrectionSummary["governanceStatus"]): string {
+  if (status === "challenged" || status === "under_review") {
+    return "This claim has an active correction or review item.";
+  }
+  if (status === "corrected") {
+    return "This claim has been revised following review.";
+  }
+  if (status === "restricted") {
+    return "Some evidence or detail is restricted due to harm, rights, or legal review.";
+  }
+  if (status === "withdrawn") {
+    return "This claim should not be relied upon in its previous form.";
+  }
+  return "No active correction items are currently linked to this claim.";
+}
+
+export default function ClaimCard({
+  claim,
+  correctionSummary,
+}: {
+  claim: Claim;
+  correctionSummary: ClaimCorrectionSummary;
+}) {
   const linkedEvidence = claim.evidenceLinks.map((link) => ({
     ...link,
     evidence: evidenceItems.find((item) => item.id === link.evidenceId),
@@ -60,6 +83,38 @@ export default function ClaimCard({ claim }: { claim: Claim }) {
           )}
         </div>
       ) : null}
+
+      {(correctionSummary.governanceStatus === "challenged" ||
+        correctionSummary.governanceStatus === "under_review") ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          This claim has an active correction or review item. Public text remains available, but users should review
+          the claim limitations and current governance status.
+        </div>
+      ) : null}
+      {correctionSummary.governanceStatus === "withdrawn" ? (
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">
+          This claim is marked withdrawn and should not be relied upon in its previous form.
+        </div>
+      ) : null}
+
+      <section className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+        <h4 className="font-semibold text-stone-950">Claim governance</h4>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <GovernanceStatusBadge value={correctionSummary.governanceStatus} />
+        </div>
+        <div className="mt-2 space-y-1 text-sm text-stone-700">
+          <p>
+            <strong>Linked corrections:</strong> {correctionSummary.linkedCorrections.length}
+          </p>
+          <p>
+            <strong>Latest correction activity:</strong>{" "}
+            {correctionSummary.latestCorrectionAt
+              ? new Date(correctionSummary.latestCorrectionAt).toLocaleString()
+              : "No linked correction activity"}
+          </p>
+          <p>{governanceMessage(correctionSummary.governanceStatus)}</p>
+        </div>
+      </section>
 
       <section className="space-y-3">
         <h4 className="font-semibold text-stone-950">Evidence links</h4>

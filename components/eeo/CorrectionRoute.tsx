@@ -11,12 +11,14 @@ export default function CorrectionRoute() {
     email: string;
     category: CorrectionCategory;
     claimId: string;
+    claimReference: string;
     details: string;
   }>({
     name: "",
     email: "",
     category: CORRECTION_CATEGORIES[0],
     claimId: "",
+    claimReference: "",
     details: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -86,6 +88,12 @@ export default function CorrectionRoute() {
         placeholder="Claim ID (optional)"
         value={form.claimId}
         onChange={(e) => setForm((f) => ({ ...f, claimId: e.target.value }))}
+      />
+      <input
+        className="w-full rounded-2xl border border-stone-300 px-4 py-3 text-sm outline-none focus:border-stone-900"
+        placeholder="Claim, page, or evidence item this concerns (optional)"
+        value={form.claimReference}
+        onChange={(e) => setForm((f) => ({ ...f, claimReference: e.target.value }))}
       />
       <textarea
         className="w-full rounded-2xl border border-stone-300 px-4 py-3 text-sm outline-none focus:border-stone-900"

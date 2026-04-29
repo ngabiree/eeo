@@ -3,8 +3,12 @@ import Link from "next/link";
 import ClaimCard from "@/components/eeo/ClaimCard";
 import CorridorChain from "@/components/eeo/CorridorChain";
 import { sampleClaim } from "@/data/claims";
+import { getClaimCorrectionSummary } from "@/lib/claimUtils";
+import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function HomePage() {
+  const corrections = listCorrectionSubmissions();
+  const sampleClaimCorrectionSummary = getClaimCorrectionSummary(sampleClaim.id, corrections);
   return (
     <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
       <div className="mx-auto max-w-6xl space-y-10 px-4 py-10 md:px-6">
@@ -53,7 +57,7 @@ export default function HomePage() {
             not by themselves prove that a specific battery, vehicle, or consumer product contains cobalt from a
             specific mine.
           </p>
-          <ClaimCard claim={sampleClaim} />
+          <ClaimCard claim={sampleClaim} correctionSummary={sampleClaimCorrectionSummary} />
         </section>
 
         <CorridorChain />

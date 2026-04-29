@@ -1,4 +1,6 @@
 import type { Claim } from "@/types/eeo";
+import type { ClaimGovernanceStatus } from "@/types/eeo";
+import type { CorrectionSubmission } from "@/lib/correctionsStore";
 
 import { hasContradictoryEvidence, isContextualOnly } from "./evidenceUtils";
 import { validateClaimRequiredFields } from "./validation";
@@ -44,4 +46,62 @@ export function getClaimIntegrityWarnings(claim: Claim): string[] {
   }
 
   return warnings;
+}
+
+export type ClaimCorrectionSummary = {
+  claimId: string;
+  linkedCorrections: CorrectionSubmission[];
+  openCorrections: CorrectionSubmission[];
+  resolvedCorrections: CorrectionSubmission[];
+  latestCorrectionAt?: string;
+  governanceStatus: ClaimGovernanceStatus;
+};
+
+function getCorrectionSortTimestamp(correction: CorrectionSubmission): string {
+  return correction.triageUpdatedAt || correction.submittedAt;
+}
+
+export function getClaimCorrectionSummary(
+  claimId: string,
+  corrections: CorrectionSubmission[]
+): ClaimCorrectionSummary {
+  const linkedCorrections = corrections.filter((correction) => correction.claimId === claimId);
+  const openCorrections = linkedCorrections.filter((correction) => correction.triageStatus !== "resolved");
+  const resolvedCorrections = linkedCorrections.filter((correction) => correction.triageStatus === "resolved");
+  const latestCorrectionAt = linkedCorrections
+    .map(getCorrectionSortTimestamp)
+    .sort((a, b) => b.localeCompare(a))[0];
+
+  const hasWithdrawal = linkedCorrections.some((correction) => correction.category === "Withdrawal request");
+  const hasRestriction = linkedCorrections.some(
+    (correction) =>
+      correction.category === "Harm-risk restriction request" ||
+      correction.category === "Indigenous or community-sensitive review"
+  );
+  const hasUnderReview = linkedCorrections.some((correction) => correction.triageStatus === "in_review");
+  const hasChallenged = linkedCorrections.some(
+    (correction) => correction.triageStatus === "queued" || correction.triageStatus === "needs_review"
+  );
+
+  let governanceStatus: ClaimGovernanceStatus = "stable";
+  if (hasWithdrawal) {
+    governanceStatus = "withdrawn";
+  } else if (hasRestriction) {
+    governanceStatus = "restricted";
+  } else if (hasUnderReview) {
+    governanceStatus = "under_review";
+  } else if (hasChallenged) {
+    governanceStatus = "challenged";
+  } else if (resolvedCorrections.length > 0) {
+    governanceStatus = "corrected";
+  }
+
+  return {
+    claimId,
+    linkedCorrections,
+    openCorrections,
+    resolvedCorrections,
+    latestCorrectionAt,
+    governanceStatus,
+  };
 }

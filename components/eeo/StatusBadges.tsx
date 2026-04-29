@@ -1,4 +1,5 @@
 import type {
+  ClaimGovernanceStatus,
   ConfidenceLevel,
   EvidenceRole,
   ExposureRisk,
@@ -80,4 +81,16 @@ export function EvidenceRoleBadge({ value }: { value: EvidenceRole }) {
     motivates_review: tone.neutral,
   };
   return <span className={badgeClass(map[value])}>evidence role: {value}</span>;
+}
+
+export function GovernanceStatusBadge({ value }: { value: ClaimGovernanceStatus }) {
+  const map: Record<ClaimGovernanceStatus, string> = {
+    stable: tone.green,
+    challenged: tone.amber,
+    under_review: tone.blue,
+    corrected: tone.green,
+    restricted: tone.neutral,
+    withdrawn: tone.red,
+  };
+  return <span className={badgeClass(map[value])}>governance: {value}</span>;
 }

@@ -9,6 +9,7 @@ const MAX_NAME = 300;
 const MAX_EMAIL = 320;
 const MAX_DETAILS = 20_000;
 const MAX_CLAIM_ID = 128;
+const MAX_CLAIM_REFERENCE = 300;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
@@ -44,6 +45,10 @@ export async function POST(request: Request) {
   if (claimIdRaw && claimIdRaw.length > MAX_CLAIM_ID) {
     return NextResponse.json({ error: "claimId is too long." }, { status: 400 });
   }
+  const claimReferenceRaw = body.claimReference?.trim();
+  if (claimReferenceRaw && claimReferenceRaw.length > MAX_CLAIM_REFERENCE) {
+    return NextResponse.json({ error: "claimReference is too long." }, { status: 400 });
+  }
 
   const submittedAt = new Date().toISOString();
   const submissionId = `CORR-${Date.now().toString(36).toUpperCase()}`;
@@ -56,6 +61,7 @@ export async function POST(request: Request) {
     email,
     category,
     claimId: claimIdRaw || undefined,
+    claimReference: claimReferenceRaw || undefined,
     details,
     triageStatus: "queued",
     triageUpdatedAt: submittedAt,

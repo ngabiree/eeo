@@ -5,8 +5,11 @@ import CorridorChain from "@/components/eeo/CorridorChain";
 import OwnershipControlNotice from "@/components/eeo/OwnershipControlNotice";
 import ReleaseManifestPanel from "@/components/eeo/ReleaseManifest";
 import { claims } from "@/data/claims";
+import { getClaimCorrectionSummary } from "@/lib/claimUtils";
+import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function DossierPage() {
+  const corrections = listCorrectionSubmissions();
   return (
     <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-10 md:px-6">
@@ -22,7 +25,11 @@ export default function DossierPage() {
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">Claim cards</h2>
           {claims.map((claim) => (
-            <ClaimCard key={claim.id} claim={claim} />
+            <ClaimCard
+              key={claim.id}
+              claim={claim}
+              correctionSummary={getClaimCorrectionSummary(claim.id, corrections)}
+            />
           ))}
         </section>
 

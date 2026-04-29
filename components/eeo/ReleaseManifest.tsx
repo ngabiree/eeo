@@ -1,7 +1,29 @@
 import { claims } from "@/data/claims";
 import { releaseManifest } from "@/data/releaseManifest";
+import { getClaimCorrectionSummary } from "@/lib/claimUtils";
+import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function ReleaseManifestPanel() {
+  const corrections = listCorrectionSubmissions();
+  const summaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
+  const challengedClaimIds = summaries
+    .filter((summary) => summary.governanceStatus === "challenged" || summary.governanceStatus === "under_review")
+    .map((summary) => summary.claimId);
+  const correctedClaimIds = summaries
+    .filter((summary) => summary.governanceStatus === "corrected")
+    .map((summary) => summary.claimId);
+  const restrictedClaimIds = summaries
+    .filter((summary) => summary.governanceStatus === "restricted")
+    .map((summary) => summary.claimId);
+  const withdrawnClaimIds = summaries
+    .filter((summary) => summary.governanceStatus === "withdrawn")
+    .map((summary) => summary.claimId);
+  const openCorrectionIds = corrections
+    .filter((correction) => correction.triageStatus !== "resolved")
+    .map((correction) => correction.id);
+  const lastCorrectionReviewAt = corrections
+    .map((correction) => correction.triageUpdatedAt || correction.submittedAt)
+    .sort((a, b) => b.localeCompare(a))[0];
   const rightOfReplySummary = claims.map((c) => `${c.id}: ${c.rightOfReplyStatus}`).join("; ");
 
   return (
@@ -12,11 +34,17 @@ export default function ReleaseManifestPanel() {
         <p><strong>Methodology version:</strong> {releaseManifest.methodologyVersion}</p>
         <p><strong>Claims included:</strong> {releaseManifest.includedClaimIds.join(", ") || "None"}</p>
         <p><strong>Claims withheld:</strong> {releaseManifest.withheldClaimIds.join(", ") || "None"}</p>
-        <p><strong>Claims restricted:</strong> None in this public release.</p>
+        <p><strong>Claims challenged:</strong> {challengedClaimIds.join(", ") || "None"}</p>
+        <p><strong>Claims corrected:</strong> {correctedClaimIds.join(", ") || "None"}</p>
+        <p><strong>Claims restricted:</strong> {restrictedClaimIds.join(", ") || "None"}</p>
+        <p><strong>Claims withdrawn:</strong> {withdrawnClaimIds.join(", ") || "None"}</p>
+        <p><strong>Open correction items:</strong> {openCorrectionIds.join(", ") || "None"}</p>
+        <p><strong>Last correction review date:</strong> {lastCorrectionReviewAt ? new Date(lastCorrectionReviewAt).toLocaleString() : "No correction activity yet"}</p>
         <p><strong>Unresolved disputes:</strong> {releaseManifest.unresolvedDisputes.join(", ") || "None"}</p>
         <p className="md:col-span-2"><strong>Exposure review result:</strong> {releaseManifest.exposureReviewSummary}</p>
         <p className="md:col-span-2"><strong>Right-of-reply status:</strong> {rightOfReplySummary}</p>
         <p className="md:col-span-2"><strong>Known limitations:</strong> {releaseManifest.publicLimitations.join(" ")}</p>
+        <p className="md:col-span-2"><strong>Release governance note:</strong> This release manifest records publication status, known limitations, open correction items, and claim governance status. It does not adjudicate legal liability.</p>
         <p><strong>Approvals:</strong> {releaseManifest.approvedBy.join(", ")}</p>
         <p><strong>Release date:</strong> {releaseManifest.releaseDate ?? "Not published"}</p>
         <p><strong>Correction route:</strong> /corrections</p>

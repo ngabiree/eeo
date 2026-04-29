@@ -2,6 +2,8 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CorrectionTriageActions from "@/components/eeo/CorrectionTriageActions";
+import { claims } from "@/data/claims";
+import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 import { isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
@@ -52,6 +54,7 @@ export default async function ReviewPage() {
   }
 
   const submissions = listCorrectionSubmissions();
+  const claimById = new Map(claims.map((claim) => [claim.id, claim]));
 
   return (
     <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
@@ -88,6 +91,13 @@ export default async function ReviewPage() {
             <div className="space-y-3">
               {submissions.map((submission) => (
                 <article key={submission.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+                  {(() => {
+                    const linkedClaim = submission.claimId ? claimById.get(submission.claimId) : undefined;
+                    const governance = linkedClaim
+                      ? getClaimCorrectionSummary(linkedClaim.id, submissions)
+                      : undefined;
+                    return (
+                      <>
                   <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                     <span className="font-mono text-xs uppercase tracking-[0.14em] text-stone-500">
                       {submission.id}
@@ -101,13 +111,38 @@ export default async function ReviewPage() {
                     <p><strong>Current status:</strong> {submission.triageStatus.replace(/_/g, " ")}</p>
                     <p><strong>Latest triage note:</strong> {submission.triageNote || "No note added"}</p>
                     <p><strong>Category:</strong> {submission.category}</p>
-                    <p><strong>Claim:</strong> {submission.claimId || "Not specified"}</p>
+                    <p><strong>Claim:</strong> {submission.claimId || "No linked claim"}</p>
+                    {submission.claimReference ? (
+                      <p><strong>Claim reference:</strong> {submission.claimReference}</p>
+                    ) : (
+                      <p><strong>Claim reference:</strong> Not provided</p>
+                    )}
                     <p><strong>Submitted by:</strong> {submission.name}</p>
                     <p><strong>Contact:</strong> {maskEmail(submission.email)}</p>
+                    <p><strong>Claim title:</strong> {linkedClaim?.title ?? "No linked claim title"}</p>
+                    <p><strong>Claim review status:</strong> {linkedClaim?.reviewStatus ?? "Not linked"}</p>
+                    <p><strong>Publication decision:</strong> {linkedClaim?.publicationDecision ?? "Not linked"}</p>
+                    <p>
+                      <strong>Claim governance status:</strong>{" "}
+                      {governance ? governance.governanceStatus.replace(/_/g, " ") : "Not linked"}
+                    </p>
                   </div>
+                  {submission.claimId ? (
+                    <p className="mt-2 text-xs text-stone-500">
+                      <Link className="underline" href="/dossier">
+                        Open dossier claims
+                      </Link>
+                    </p>
+                  ) : null}
                   <p className="mt-2 text-sm leading-6 text-stone-700">
                     <strong>Details:</strong> {submission.details}
                   </p>
+                  <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-stone-600">
+                    <li>This correction may require claim review.</li>
+                    <li>This correction may require evidence update.</li>
+                    <li>This correction may require release manifest update.</li>
+                    <li>This correction may require harm-risk restriction.</li>
+                  </ul>
                   <CorrectionTriageActions
                     submissionId={submission.id}
                     currentStatus={submission.triageStatus}
@@ -127,6 +162,9 @@ export default async function ReviewPage() {
                       )}
                     </ul>
                   </div>
+                      </>
+                    );
+                  })()}
                 </article>
               ))}
             </div>

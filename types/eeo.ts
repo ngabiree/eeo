@@ -55,6 +55,14 @@ export type LegalPosture =
   | "normative_concern"
   | "not_a_legal_finding";
 
+export type ClaimGovernanceStatus =
+  | "stable"
+  | "challenged"
+  | "under_review"
+  | "corrected"
+  | "restricted"
+  | "withdrawn";
+
 export interface Source {
   id: string;
   title: string;
@@ -166,6 +174,10 @@ export interface Claim {
   whatThisDoesNotProve: string[];
   whatWouldReviseThisClaim: string[];
   lastUpdated: string;
+  governanceStatus?: ClaimGovernanceStatus;
+  linkedCorrectionIds?: string[];
+  lastGovernanceReviewAt?: string;
+  governanceNote?: string;
 }
 
 export interface ReleaseManifest {
@@ -180,4 +192,10 @@ export interface ReleaseManifest {
   methodologyVersion: string;
   approvedBy: string[];
   publicLimitations: string[];
+  challengedClaimIds?: string[];
+  correctedClaimIds?: string[];
+  restrictedClaimIds?: string[];
+  withdrawnClaimIds?: string[];
+  openCorrectionIds?: string[];
+  lastCorrectionReviewAt?: string;
 }

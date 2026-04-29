@@ -60,6 +60,7 @@ export interface CorrectionSubmission {
   email: string;
   category: CorrectionCategory;
   claimId?: string;
+  claimReference?: string;
   details: string;
   triageStatus: CorrectionTriageStatus;
   /** Last time status or reviewer note changed (prototype; in-memory only). ISO string. */
