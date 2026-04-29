@@ -141,7 +141,7 @@ export default function CorrectionTriageActions({
       <div>
         <label htmlFor={`triage-note-${submissionId}`} className="text-xs font-semibold text-stone-600">
           Reviewer note{" "}
-          <span className="font-normal text-stone-400">(internal prototype; not visible to submitters)</span>
+          <span className="font-normal text-stone-400">(restricted reviewer view; not shown to submission authors)</span>
         </label>
         <textarea
           id={`triage-note-${submissionId}`}

@@ -7,7 +7,7 @@ import { sources } from "@/data/sources";
 
 export default function PilotEvidenceLedgerPage() {
   return (
-    <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
+    <main className="relative flex min-h-full flex-1 flex-col bg-transparent text-[color:var(--eeo-text)]">
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-10 md:px-6">
         <PilotRouteNav />
         <header className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
@@ -38,7 +38,7 @@ export default function PilotEvidenceLedgerPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-xs text-stone-500">Evidence items in this prototype: {evidenceItems.length}</p>
+          <p className="mt-4 text-xs text-[color:var(--eeo-muted)]">Evidence records in this ledger: {evidenceItems.length}</p>
         </section>
 
         <Link href="/pilot/evidence-dossier" className="text-sm underline">

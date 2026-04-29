@@ -20,15 +20,14 @@ export default function PilotEvidenceDossierPage() {
   const withdrawn = governanceSummaries.filter((summary) => summary.governanceStatus === "withdrawn");
 
   return (
-    <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
+    <main className="relative flex min-h-full flex-1 flex-col bg-transparent text-[color:var(--eeo-text)]">
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-10 md:px-6">
         <PilotRouteNav />
-        <header className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
-          <h1 className="text-3xl font-semibold tracking-tight">Public Evidence Prototype: Copper-Cobalt Corridor</h1>
-          <p className="mt-3 leading-7 text-stone-700">
-            This prototype tests whether public claims about a critical-minerals corridor can be made traceable,
-            qualified, reviewable, and correctable without overclaiming, exposing sensitive data, or collapsing legal
-            distinctions.
+        <header className="eeo-glass-card border-[color:var(--eeo-border)] p-6 shadow-sm">
+          <h1 className="text-3xl font-semibold tracking-tight text-[color:var(--eeo-ink)]">Copper–Cobalt corridor evidence dossier</h1>
+          <p className="mt-3 leading-7 text-[color:var(--eeo-text)]">
+            This dossier frames public claims about a critical-minerals corridor so they stay traceable, qualified, reviewable, and correctable—without overclaiming, exposing sensitive data, or collapsing
+            legal distinctions.
           </p>
         </header>
 

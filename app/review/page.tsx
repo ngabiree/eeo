@@ -85,8 +85,7 @@ export default async function ReviewPage() {
       <div className="mx-auto max-w-5xl space-y-6 px-4 py-10 md:px-6">
         <h1 className="text-3xl font-semibold tracking-tight">Review workspace</h1>
         <p className="leading-7 text-stone-700">
-          Internal prototype workspace for method review, exposure review, and release discipline checks before public
-          publication.
+          Internal reviewer workspace for method checks, exposure review, and publication discipline ahead of broader release.
         </p>
         <ul className="list-disc space-y-1 pl-5 text-stone-700">
           <li>Method review check</li>
@@ -174,7 +173,7 @@ export default async function ReviewPage() {
         <section className="space-y-4 rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-2xl font-semibold">Correction intake queue</h2>
           <p className="text-sm leading-6 text-stone-600">
-            Prototype triage view for correction requests submitted through the public correction route.
+            Review queue for correction requests submitted through the public correction route.
           </p>
           <p className="text-xs leading-5 text-stone-500">
             This workflow helps EEO review corrections, challenges, source updates, harm-risk concerns, and methodological disputes. It does not adjudicate legal liability.

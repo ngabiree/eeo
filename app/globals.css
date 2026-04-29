@@ -2,7 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --eeo-ink: #0f2f33;
+  --eeo-text: #13424a;
+  --eeo-muted: #4f6f75;
+  --eeo-primary: #1f6f78;
+  --eeo-primary-dark: #144e55;
+  --eeo-green: #2e8b57;
+  --eeo-green-dark: #1f6b45;
+  --eeo-green-soft: #dff3e7;
+  --eeo-sky: #cdeaf7;
+  --eeo-sky-deep: #a9d8f0;
+  --eeo-water: #bfe3e2;
+  --eeo-water-deep: #8fd0d0;
+  --eeo-gold: #b88928;
+  --eeo-gold-soft: #f3e4b8;
+  --eeo-clay: #9c5b36;
+  --eeo-danger: #8b3a2f;
+  --eeo-border: #cfe3da;
+  --eeo-surface: rgba(255, 255, 255, 0.82);
+}
+
 html,
 body {
-  @apply min-h-dvh antialiased;
+  @apply antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eeo-bg-sky,
+  .eeo-bg-water,
+  .eeo-bg-vegetation,
+  .eeo-bg-shimmer {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .eeo-bg-sky,
+  .eeo-bg-water,
+  .eeo-bg-vegetation {
+    will-change: auto;
+  }
+}
+
+@keyframes eeo-soft-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate3d(0.75%, -0.75%, 0) scale(1.01);
+    opacity: 0.98;
+  }
+}
+
+@keyframes eeo-shimmer {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+body.eeo-brand-body {
+  color: var(--eeo-text);
+  background-color: var(--eeo-green-soft);
+  background-image: linear-gradient(165deg, var(--eeo-green-soft) 0%, var(--eeo-sky) 42%, var(--eeo-water) 100%);
+  min-height: 100dvh;
+}
+
+.eeo-atmosphere-root {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.eeo-bg-sky {
+  position: absolute;
+  inset: -30% -20% auto -20%;
+  height: 70%;
+  background: radial-gradient(ellipse at 40% 0%, rgba(205, 234, 247, 0.95), transparent 72%);
+  animation: eeo-soft-drift 90s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.eeo-bg-water {
+  position: absolute;
+  inset: auto -10% -35% -10%;
+  height: 60%;
+  background: radial-gradient(ellipse at 50% 120%, rgba(143, 208, 208, 0.55), transparent 72%);
+  animation: eeo-soft-drift 110s ease-in-out infinite reverse;
+  will-change: transform, opacity;
+}
+
+.eeo-bg-vegetation {
+  position: absolute;
+  inset: auto 5% -15% auto;
+  width: min(880px, 90vw);
+  height: min(460px, 45vh);
+  background: radial-gradient(ellipse at 80% 100%, rgba(46, 139, 87, 0.18), transparent 65%);
+  animation: eeo-soft-drift 75s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.eeo-bg-shimmer {
+  position: absolute;
+  inset: 10% auto auto -5%;
+  width: 420px;
+  height: 280px;
+  background: radial-gradient(circle at 30% 30%, rgba(243, 228, 184, 0.35), transparent 70%);
+  animation: eeo-shimmer 28s ease-in-out infinite;
+  will-change: opacity;
+}
+
+.eeo-glass-card {
+  border-radius: 1.5rem;
+  border: 1px solid var(--eeo-border);
+  background: var(--eeo-surface);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 40px rgba(19, 66, 74, 0.06);
 }

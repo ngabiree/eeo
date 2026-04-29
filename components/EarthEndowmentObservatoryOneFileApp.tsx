@@ -17,21 +17,14 @@ import {
   BookOpen,
   Building2,
   CheckCircle2,
-  ChevronRight,
   ClipboardCheck,
   Database,
-  Eye,
-  FileSearch,
   Filter,
   Fingerprint,
   Globe2,
-  GitBranch,
-  Landmark,
   Layers3,
   Lock,
-  Map,
   MessageSquareWarning,
-  Network,
   ScrollText,
   Search,
   ShieldCheck,
@@ -43,10 +36,7 @@ import {
 import EeoLogo from "@/components/eeo/EeoLogo";
 
 /**
- * Earth Endowment Observatory — One-File Corridor Prototype
- * Canonical posture: controlled evidence product first, limited dashboard second.
- * This file is intentionally self-contained for design review, product critique,
- * founder demos, and implementation handoff.
+ * Earth Endowment Observatory — corridor interface (SPA sections).
  */
 
 type TabId =
@@ -70,7 +60,7 @@ type EcosystemModule = {
 };
 
 /** Single source of truth for all claim field values. */
-/* eslint-disable @typescript-eslint/no-unused-vars -- canonical enums are currently consumed by type unions */
+/* eslint-disable @typescript-eslint/no-unused-vars -- shared enums are currently consumed by type unions */
 const CLAIM_TYPES = [
   "Observed",
   "Official",
@@ -174,28 +164,24 @@ type Claim = {
 };
 
 const tabs: { id: TabId; label: string; icon: LucideIcon }[] = [
-  { id: "home", label: "Home", icon: Globe2 },
-  { id: "dossier", label: "Evidence Dossier", icon: ScrollText },
-  { id: "ownership", label: "Ownership + Control", icon: Building2 },
-  { id: "dashboard", label: "Limited Dashboard", icon: Layers3 },
-  { id: "ledger", label: "Evidence Ledger", icon: Database },
-  { id: "methods", label: "Methods + Limits", icon: BookOpen },
+  { id: "home", label: "Corridor", icon: Globe2 },
+  { id: "dossier", label: "Evidence dossier", icon: ScrollText },
+  { id: "ownership", label: "Ownership + control", icon: Building2 },
+  { id: "dashboard", label: "Corridor profile", icon: Layers3 },
+  { id: "ledger", label: "Evidence ledger", icon: Database },
+  { id: "methods", label: "Methods", icon: BookOpen },
   { id: "safeguards", label: "Safeguards", icon: ShieldCheck },
   { id: "corrections", label: "Corrections", icon: MessageSquareWarning },
-  { id: "workspace", label: "Review Workspace", icon: Workflow },
+  { id: "workspace", label: "Review & release", icon: Workflow },
 ];
 
 /** Tab order for keyboard navigation (WAI-ARIA tablist) — must match `tabs` order. */
 const SECTION_TAB_ORDER: TabId[] = tabs.map((t) => t.id);
 
-/** Design tokens (CSS custom properties) — used for future theming; layout still uses Tailwind. */
+/** Local token bridge — align one-file shell with globals.css institutional palette */
 const EEO_ROOT_TOKENS: CSSProperties = {
-  ["--eeo-ink" as string]: "#11110F",
-  ["--eeo-parchment" as string]: "#EFE8D8",
-  ["--eeo-paper" as string]: "#F8F3E8",
-  ["--eeo-blue" as string]: "#25465F",
-  ["--eeo-copper" as string]: "#B66A3C",
-  ["--eeo-gold" as string]: "#C9A24D",
+  ["--eeo-local-ink" as string]: "#0f2f33",
+  ["--eeo-local-text" as string]: "#13424a",
 };
 
 const claims: Claim[] = [
@@ -330,7 +316,7 @@ const modules: EcosystemModule[] = [
   },
   {
     title: "Claims Engine",
-    status: "Canonical core",
+    status: "Core ledger",
     icon: Fingerprint,
     body: "The claim is the smallest public assertion. Every claim carries source, method, confidence, legal posture, disclosure tier, and review status.",
   },
@@ -359,7 +345,7 @@ const releaseChecks: [string, boolean][] = [
   ["Every public claim has source + method + confidence", true],
   ["Map safety review complete", false],
   ["Named high-impact actor right-of-reply complete", false],
-  ["No composite score present", true],
+  ["No marketed composite headline index", true],
   ["Correction route live", true],
   ["Methods and limits note published", true],
   ["Restricted data excluded from public views", true],
@@ -592,45 +578,6 @@ function Chain() {
   );
 }
 
-const BRAND_DOCTRINE: { title: string; body: string; icon: LucideIcon; tone: BadgeTone }[] = [
-  {
-    title: "Reveal the chain",
-    body: "Make value pathways visible from endowment to public-benefit question.",
-    icon: Eye,
-    tone: "blue",
-  },
-  {
-    title: "Inspect the claim",
-    body: "Treat every assertion as reviewable and tied to explicit evidence.",
-    icon: FileSearch,
-    tone: "neutral",
-  },
-  {
-    title: "Understand the source",
-    body: "Show provenance, method, and conditions before interpretation.",
-    icon: Archive,
-    tone: "copper",
-  },
-  {
-    title: "Respect the limit",
-    body: "Publish with caveats and safeguards, never beyond what evidence supports.",
-    icon: AlertTriangle,
-    tone: "gold",
-  },
-  {
-    title: "Challenge the record",
-    body: "Keep correction and right-of-reply pathways open at all times.",
-    icon: MessageSquareWarning,
-    tone: "red",
-  },
-  {
-    title: "Protect the vulnerable",
-    body: "Tier, aggregate, suppress, or refuse exposure where harm is plausible.",
-    icon: ShieldCheck,
-    tone: "green",
-  },
-];
-
 function ClaimCard({ claim, compact = false }: { claim: Claim; compact?: boolean }) {
   const tone: BadgeTone =
     claim.confidence === "Official" ? "blue" : claim.confidence === "Modeled" ? "copper" : claim.confidence === "Estimated" ? "gold" : "neutral";
@@ -689,100 +636,77 @@ function ClaimCard({ claim, compact = false }: { claim: Claim; compact?: boolean
   );
 }
 
-interface IndicatorCardData {
-  name: string;
-  family: string;
-  value: string;
-  unit: string;
-  spatialScope: string;
-  temporalScope: string;
-  source: string;
-  confidence: string;
-  granularity: string;
-  interpretationType: string;
-  limitation: string;
-  misuse: string;
-  disclosureTier: string;
-}
+type DashboardMetricSpec = {
+  publicLabel: string;
+  qualitativeState: string;
+  explanation: string;
+  caution: string;
+  evidenceBasisNote: string;
+};
 
-const indicatorCards: IndicatorCardData[] = [
+const corridorDashboardMetrics: DashboardMetricSpec[] = [
   {
-    name: "Reported occupational injury rate",
-    family: "Labor",
-    value: "Sector-level proxy — not site-verified",
-    unit: "qualitative",
-    spatialScope: "National",
-    temporalScope: "Latest available year",
-    source: "ILOSTAT; ILO sectoral reports",
-    confidence: "Estimated",
-    granularity: "national-level",
-    interpretationType: "diagnostic",
-    limitation: "National or sectoral data may not reflect site-level conditions. Informal and subcontracted work is likely undercounted.",
-    misuse: "Do not use as a site-level safety finding or worker-level diagnosis.",
-    disclosureTier: "tier_1_contextual_public",
+    publicLabel: "Ecology pressure",
+    qualitativeState: "watch",
+    explanation: "Landscape and vegetation signals summarized at corridor-safe resolution.",
+    caution: "Spatial proximity does not establish causation.",
+    evidenceBasisNote: "Evidence basis appears in the Evidence Ledger and methods note.",
   },
   {
-    name: "Land disturbance signal near corridor",
-    family: "Ecology",
-    value: "Elevated — proximity signal only",
-    unit: "qualitative",
-    spatialScope: "Corridor-level buffer",
-    temporalScope: "2020–present",
-    source: "Global Forest Watch; public remote-sensing releases",
-    confidence: "Modeled",
-    granularity: "corridor-level",
-    interpretationType: "contextual",
-    limitation: "Spatial proximity does not prove causation. Sensitive ecological coordinates are generalized or withheld.",
-    misuse: "Do not use as proof that a specific operator caused a specific ecological event.",
-    disclosureTier: "tier_2_aggregated",
+    publicLabel: "Water pressure",
+    qualitativeState: "high",
+    explanation: "Water stress cues are summarized from public hydrology-style indicators.",
+    caution: "Water risk varies by basin and season.",
+    evidenceBasisNote: "Evidence basis appears in the Evidence Ledger and methods note.",
   },
   {
-    name: "Disclosed public revenue (royalties + taxes)",
-    family: "Public revenue",
-    value: "Partial EITI disclosure",
-    unit: "qualitative",
-    spatialScope: "National / subnational where public",
-    temporalScope: "Latest EITI reporting year",
-    source: "EITI country disclosure; budget documents where available",
-    confidence: "Official",
-    granularity: "national-level",
-    interpretationType: "normative question",
-    limitation: "Disclosed revenue does not prove durable public benefit. Budget-use evidence is separate.",
-    misuse: "Do not use as proof that revenue produced welfare or community development outcomes.",
-    disclosureTier: "tier_1_contextual_public",
+    publicLabel: "Evidence gaps",
+    qualitativeState: "partial",
+    explanation: "Fields where disclosures, telemetry, or field confirmation are uneven.",
+    caution: "Missing data should not be read as good practice.",
+    evidenceBasisNote: "Evidence basis appears in the Evidence Ledger and methods note.",
+  },
+  {
+    publicLabel: "Restoration pathway",
+    qualitativeState: "weak",
+    explanation: "Planned recovery and stewardship signals where available publicly.",
+    caution: "Potential does not prove delivery.",
+    evidenceBasisNote: "Evidence basis appears in the Evidence Ledger and methods note.",
+  },
+  {
+    publicLabel: "Record confidence",
+    qualitativeState: "strong",
+    explanation: "How much of the corridor record rests on repeatable, inspectable citations.",
+    caution: "Confidence is not legal certainty.",
+    evidenceBasisNote: "Evidence basis appears in the Evidence Ledger and methods note.",
   },
 ];
 
-function IndicatorCard({ card }: { card: IndicatorCardData }) {
+function qualitativePill(status: string) {
+  const s = status.toLowerCase();
+  let tone: BadgeTone = "neutral";
+  if (s === "high" || s === "strong") tone = "green";
+  if (s === "watch") tone = "copper";
+  if (s === "weak") tone = "red";
+  if (s === "partial") tone = "gold";
+  return <Badge tone={tone}>{status}</Badge>;
+}
+
+function DashboardMetricCard({ metric, compact = false }: { metric: DashboardMetricSpec; compact?: boolean }) {
   return (
-    <Card className="p-5">
-      <div className="flex items-start justify-between gap-2 mb-3">
-        <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-400">{card.family}</div>
-          <div className="mt-0.5 font-semibold text-stone-950">{card.name}</div>
+    <Card className={cls("border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.9)]", compact ? "p-4" : "p-5")}>
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div className="min-w-0">
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--eeo-muted)]">Qualitative status</div>
+          <h3 className="mt-1 font-semibold text-[color:var(--eeo-ink)]">{metric.publicLabel}</h3>
         </div>
-        <Badge tone="neutral">{card.interpretationType}</Badge>
+        {qualitativePill(metric.qualitativeState)}
       </div>
-      <div className="text-lg font-semibold text-stone-800">
-        {card.value}
-        {card.unit !== "qualitative" && <span className="ml-1 text-sm font-normal text-stone-500">{card.unit}</span>}
+      <p className={cls("mt-3 leading-relaxed text-[color:var(--eeo-text)]", compact ? "text-sm" : "text-[15px]")}>{metric.explanation}</p>
+      <div className="mt-3 rounded-2xl border border-amber-200/70 bg-amber-50/90 p-3 text-sm leading-relaxed text-amber-950">
+        <span className="font-semibold">Caution:</span> {metric.caution}
       </div>
-      <div className="mt-3 grid gap-2 text-sm md:grid-cols-2">
-        <Meta label="Source" value={card.source} />
-        <Meta label="Confidence" value={card.confidence} />
-        <Meta label="Spatial scope" value={card.spatialScope} />
-        <Meta label="Temporal scope" value={card.temporalScope} />
-        <Meta label="Granularity" value={card.granularity.replace(/-/g, " ")} />
-        <Meta label="Disclosure tier" value={TIER_LABELS[card.disclosureTier] ?? card.disclosureTier} />
-      </div>
-      <div className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950">
-        <strong>Limit: </strong>
-        {card.limitation}
-      </div>
-      <div className="mt-2 rounded-2xl border border-red-100 bg-red-50 p-3 text-sm text-red-900">
-        <strong>Do not use to: </strong>
-        {card.misuse}
-      </div>
+      <p className="mt-3 text-xs leading-relaxed text-[color:var(--eeo-muted)]">{metric.evidenceBasisNote}</p>
     </Card>
   );
 }
@@ -822,126 +746,33 @@ function handleTabKeyDown(
   onSelectSection(nextId);
 }
 
-function GlobalBodiesStrip() {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isAllOpen, setIsAllOpen] = useState(false);
-  const bodies = [
-    "UN",
-    "World Bank",
-    "UNEP",
-    "ILO",
-    "UNESCO",
-    "FAO",
-    "OECD",
-    "EITI",
-    "IPBES",
-    "UN Global Compact",
-  ];
-
+function ReferenceStandardsStrip() {
   return (
-    <div className="w-full border-b border-[#C9A24D]/30 bg-[#0F2A32]/95 text-[#EFE8D8] backdrop-blur-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 text-xs md:px-6 lg:px-8">
-        <span className="font-mono tracking-[0.18em] text-[#C9A24D]">CANONICAL GLOBAL BODIES &amp; STANDARDS</span>
-
-        <div className="hidden flex-wrap items-center gap-2 text-[#E6E1D6]/85 md:flex">
-          {bodies.map((body, idx) => (
-            <React.Fragment key={body}>
-              <span className="opacity-85 transition hover:opacity-100">{body}</span>
-              {idx < bodies.length - 1 ? <span className="text-[#C9A24D]/70">·</span> : null}
-            </React.Fragment>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            className="text-[#E6E1D6]/90 transition hover:text-[#EFE8D8] md:hidden"
-            aria-expanded={isMobileOpen}
-            aria-controls="global-bodies-mobile"
-            onClick={() => setIsMobileOpen((v) => !v)}
-          >
-            Global bodies
-          </button>
-          <button
-            type="button"
-            className="text-[#C9A24D] transition hover:underline"
-            aria-expanded={isAllOpen}
-            aria-controls="global-bodies-expanded"
-            onClick={() => setIsAllOpen((v) => !v)}
-          >
-            See all
-          </button>
-        </div>
+    <div className="w-full border-b border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.78)] text-[color:var(--eeo-muted)] backdrop-blur-sm">
+      <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-2.5 text-xs md:flex-row md:items-center md:justify-between md:px-6 lg:px-8">
+        <span className="font-mono uppercase tracking-[0.16em]">Reference Standards &amp; Data Systems</span>
+        <span className="max-w-3xl text-[13px] leading-relaxed md:text-right">
+          Used for citation, interoperability, or methodological alignment — not endorsement.
+        </span>
       </div>
-
-      {isMobileOpen ? (
-        <div id="global-bodies-mobile" className="border-t border-[#C9A24D]/20 px-4 py-2 md:hidden">
-          <div className="flex gap-2 overflow-x-auto whitespace-nowrap text-[#E6E1D6]/85">
-            {bodies.map((body) => (
-              <span key={`mobile-${body}`} className="rounded-full border border-[#C9A24D]/25 px-2.5 py-1 text-[11px]">
-                {body}
-              </span>
-            ))}
-          </div>
-        </div>
-      ) : null}
-
-      {isAllOpen ? (
-        <div id="global-bodies-expanded" className="border-t border-[#C9A24D]/20 px-4 py-3 md:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl space-y-2">
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#C9A24D]">Canonical institutions (expanded)</div>
-            <div className="flex flex-wrap gap-2 text-xs text-[#E6E1D6]/90">
-              {[
-                "United Nations",
-                "World Bank Group",
-                "UNEP",
-                "ILO",
-                "UNESCO",
-                "FAO",
-                "OECD",
-                "EITI",
-                "IPBES",
-                "UN Global Compact",
-              ].map((body) => (
-                <span key={`expanded-${body}`} className="rounded-full border border-[#C9A24D]/30 bg-[#0f2a32]/80 px-2.5 py-1">
-                  {body}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 }
 
-function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSection: (id: TabId) => void }) {
+function CorridorTabStrip({
+  active,
+  onSelectSection,
+}: {
+  active: TabId;
+  onSelectSection: (id: TabId) => void;
+}) {
   return (
-    <header className="border-b border-stone-200 bg-[#F8F3E8]/90 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 md:px-6 lg:px-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <button
-            type="button"
-            onClick={() => onSelectSection("home")}
-            className="group flex items-center gap-3 text-left"
-            aria-label="Earth Endowment Observatory, go to Home"
-          >
-            <EeoLogo decorative priority size="md" />
-            <div>
-              <div className="font-serif text-xl font-semibold tracking-tight text-stone-950">Earth Endowment Observatory</div>
-              <div className="text-xs text-stone-600">From Earth to economy, made visible.</div>
-            </div>
-          </button>
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge tone="dark" icon={ShieldCheck}>Governed visibility</Badge>
-            <Badge tone="blue" icon={FileSearch}>Evidence product first</Badge>
-            <Badge tone="copper" icon={AlertTriangle}>No scores in MVP</Badge>
-          </div>
-        </div>
+    <header className="border-b border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.86)] backdrop-blur-md shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 py-3 md:px-6 lg:px-8">
         <nav
-          className="flex gap-2 overflow-x-auto pb-1"
+          className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 pt-1"
           role="tablist"
-          aria-label="Corridor sections"
+          aria-label="Corridor workspace sections"
           aria-orientation="horizontal"
         >
           {tabs.map(({ id, label, icon: Icon }) => (
@@ -956,10 +787,10 @@ function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSecti
               onClick={() => onSelectSection(id)}
               onKeyDown={(e) => handleTabKeyDown(e, id, onSelectSection)}
               className={cls(
-                "inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-sm transition",
+                "inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2",
                 active === id
-                  ? "border-stone-950 bg-stone-950 text-white"
-                  : "border-stone-300 bg-white/60 text-stone-700 hover:border-stone-500 hover:bg-white"
+                  ? "border-[color:var(--eeo-primary)] bg-[color:var(--eeo-primary)] text-white shadow-sm"
+                  : "border-[color:var(--eeo-border)] bg-white/80 text-[color:var(--eeo-text)] hover:border-[color:var(--eeo-primary)]"
               )}
             >
               <Icon className="h-4 w-4" aria-hidden />
@@ -972,148 +803,206 @@ function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSecti
   );
 }
 
-function ReleaseSystemSurface() {
+function PublicMissionStrip() {
   return (
-    <section className="mb-5 overflow-hidden rounded-2xl border border-[#C9A24D]/30 bg-[#0F2A32]/95 text-[#EFE8D8] shadow-sm backdrop-blur-sm">
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C9A24D]/70 to-transparent" />
-      <div className="px-4 py-3 md:px-5">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-2">
-            <span className="rounded-full border border-[#C9A24D]/40 bg-[#C9A24D]/15 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[#C9A24D]">
-              Release system
-            </span>
-            <span className="rounded-full border border-[#E6E1D6]/30 px-2.5 py-1 text-xs text-[#E6E1D6]">Corridor pilot · Draft</span>
-            <span className="rounded-full border border-amber-300/40 bg-amber-300/10 px-2.5 py-1 text-xs text-amber-100">Unsigned manifest</span>
-          </div>
-          <div className="text-xs text-[#E6E1D6]/80">Status: internal review active · public correction route required at launch</div>
-        </div>
+    <section className="eeo-glass-card mb-6 px-5 py-4">
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <p className="text-sm font-medium text-[color:var(--eeo-text)]">
+          Make the chain visible · Keep the record accountable · Protect what exposure could harm
+        </p>
+        <p className="max-w-xl text-xs leading-relaxed text-[color:var(--eeo-muted)]">
+          Stewardship-aware publication; safeguards for sensitive places and rights-bearing knowledge.
+        </p>
+      </div>
+    </section>
+  );
+}
 
-        <div className="mt-3 grid gap-2 text-xs text-[#E6E1D6]/80 md:grid-cols-4">
-          <div className="rounded-xl border border-[#C9A24D]/20 bg-[#0f2a32]/75 px-3 py-2">Standards: EITI, OECD due diligence, ILO framing</div>
-          <div className="rounded-xl border border-[#C9A24D]/20 bg-[#0f2a32]/75 px-3 py-2">Governance: methods, legal, safeguards, exposure review</div>
-          <div className="rounded-xl border border-[#C9A24D]/20 bg-[#0f2a32]/75 px-3 py-2">Publication: evidence-first, no composite score</div>
-          <div className="rounded-xl border border-[#C9A24D]/20 bg-[#0f2a32]/75 px-3 py-2">Accountability: right-of-reply + corrections always open</div>
+function CorridorMapSection({ className }: { className?: string }) {
+  return (
+    <section className={cls("scroll-mt-8 space-y-4", className)} aria-labelledby="eeo-corridor-map-heading">
+      <div className="mb-6">
+        <div className="mb-2 font-mono text-xs uppercase tracking-[0.24em] text-[color:var(--eeo-muted)]">Corridor map</div>
+        <div className="flex flex-wrap items-center gap-3">
+          <h2 id="eeo-corridor-map-heading" className="text-3xl font-semibold tracking-tight text-[color:var(--eeo-ink)] md:text-4xl">
+            Corridor overview
+          </h2>
+          <span className="inline-flex rounded-full border border-[color:var(--eeo-primary)] bg-white/80 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[color:var(--eeo-primary)]">
+            Safe-resolution view
+          </span>
         </div>
+      </div>
+
+      <div className="eeo-glass-card overflow-hidden">
+        <div className="border-b border-[color:var(--eeo-border)] bg-white/85 px-4 py-4 md:flex md:items-center md:justify-between md:gap-4">
+          <h3 className="text-[15px] font-semibold text-[color:var(--eeo-ink)]">Illustrative corridor map (not authoritative geometry)</h3>
+        </div>
+        <div className="relative min-h-[340px] overflow-hidden md:min-h-[420px]" style={{ background: "linear-gradient(135deg, rgba(223,243,231,0.9), rgba(191,227,226,0.85))" }}>
+          <div className="absolute inset-0 opacity-55" aria-hidden style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(19,66,74,0.11) 1px, transparent 0)", backgroundSize: "24px 24px" }} />
+          {/* abstract arcs — non-geographic */}
+          <div className="absolute left-[12%] top-[16%] h-52 w-[46%] rotate-[-8deg] rounded-[48%] border-2 border-[color:rgba(184,137,40,0.35)] bg-[rgba(255,255,255,0.15)] md:left-[14%]" />
+          <div className="absolute right-[12%] top-[22%] h-56 w-[38%] rotate-[14deg] rounded-[52%] border-2 border-[color:rgba(31,111,120,0.35)] bg-[rgba(255,255,255,0.12)] md:right-[15%]" />
+          <div className="relative z-[1] flex h-full flex-col justify-between px-4 py-6 md:px-8">
+            <p className="max-w-xl text-sm leading-relaxed text-[color:var(--eeo-text)]">
+              Labels show inquiry themes—not verified locations, footprints, rights, or custody.
+            </p>
+            <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
+              {["Ecology", "Water pressure", "Evidence gaps", "Restoration", "Record"].map((label) => (
+                <div
+                  key={label}
+                  className="rounded-2xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.9)] px-2.5 py-2 text-center text-[11px] font-semibold leading-snug text-[color:var(--eeo-text)] md:text-xs"
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <Card className="border-[color:var(--eeo-border)] bg-white/92 p-4 text-sm leading-relaxed text-[color:var(--eeo-text)] shadow-none backdrop-blur">
+        <p>
+          <span className="font-semibold text-[color:var(--eeo-ink)]">Map safety:</span> this public map withholds or generalizes exact sensitive coordinates, community reports, sacred sites, vulnerable
+          ecological locations, and exploitable deposits.
+        </p>
+      </Card>
+    </section>
+  );
+}
+
+function CorridorDashboardSection({
+  eyebrowOverrides,
+  dense,
+}: {
+  eyebrowOverrides?: { eyebrow: string; title: string; body?: string };
+  dense?: boolean;
+}) {
+  const eyebrow = eyebrowOverrides?.eyebrow ?? "Corridor dashboard";
+  const title = eyebrowOverrides?.title ?? "Critical Minerals Corridor: Copper–Cobalt";
+  const body =
+    eyebrowOverrides?.body ??
+    "This profile brings together ecological pressure, water pressure, evidence gaps, restoration pathways, and record confidence so users can see what is known, what remains uncertain, and what must be handled carefully.";
+
+  return (
+    <section id="corridor-dashboard" className="scroll-mt-8 space-y-6">
+      <SectionTitle eyebrow={eyebrow} title={title}>
+        {body}
+      </SectionTitle>
+      <div className={cls("grid gap-4", dense ? "md:grid-cols-2 lg:grid-cols-3" : "lg:grid-cols-5")}>{corridorDashboardMetrics.map((m) => <DashboardMetricCard key={m.publicLabel} metric={m} compact={dense} />)}</div>
+    </section>
+  );
+}
+
+function GuidanceSection() {
+  const items = [
+    {
+      title: "Use for public inquiry",
+      body: "Use this profile to ask better questions about governance, stewardship, labor, revenue, and disclosure gaps.",
+    },
+    {
+      title: "Do not use as a verdict",
+      body: "This profile does not determine legal responsibility, certify supply chains, or rank countries, firms, or communities.",
+    },
+    {
+      title: "Inspect the evidence",
+      body: "Records should be read with their confidence labels, source notes, disclosure tiers, and limitations.",
+    },
+    {
+      title: "Challenge the record",
+      body: "Affected parties should be able to submit factual corrections, right-of-reply material, or exposure concerns.",
+    },
+  ];
+
+  return (
+    <section className="scroll-mt-10 space-y-6">
+      <SectionTitle eyebrow="How to read this profile" title="Evidence for inquiry, not a verdict.">
+        The Observatory makes public evidence easier to inspect while preserving uncertainty, disagreement, and disclosure limits.
+      </SectionTitle>
+      <div className="grid gap-4 md:grid-cols-2">
+        {items.map((item) => (
+          <Card key={item.title} className="border-[color:var(--eeo-border)] bg-white/90 p-5">
+            <h3 className="font-semibold text-[color:var(--eeo-ink)]">{item.title}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-[color:var(--eeo-muted)]">{item.body}</p>
+          </Card>
+        ))}
       </div>
     </section>
   );
 }
 
 function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
+  const pilotNotes = [
+    "Safe-resolution geography — Sensitive coordinates are withheld or generalized.",
+    "Traceable record — Records include confidence, context, and limits.",
+    "Rights-aware disclosure — Publication is governed by risk, consent, and public interest.",
+    "No overclaiming — no certification, adjudicated liability, asserted chain-of-custody proof, marketed rankings, or implied legal rulings.",
+  ];
+
   return (
-    <div className="space-y-16">
-      <section className="relative overflow-hidden rounded-[2rem] border border-[#C9A24D]/30 bg-[#0F2A32] text-white shadow-xl">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute left-[-10%] top-[-20%] h-80 w-80 rounded-full border border-[#C9A24D]/60" />
-          <div className="absolute right-[-5%] top-[10%] h-[32rem] w-[32rem] rounded-full border border-[#25465F]" />
-          <div className="absolute bottom-[-20%] left-[28%] h-[28rem] w-[28rem] rounded-full border border-[#B66A3C]" />
+    <div className="space-y-20 pb-12">
+      <section className="relative isolate overflow-hidden rounded-[2rem] border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.9)] px-6 py-10 shadow-sm md:px-10 md:py-12">
+        <div className="pointer-events-none absolute -right-[8%] top-[-26%] h-64 w-64 opacity-[0.07]" aria-hidden>
+          <div className="scale-150">
+            <EeoLogo decorative size="lg" />
+          </div>
         </div>
-        <div className="relative grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-12 lg:p-16">
-          <div>
-            <div className="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.22em] text-stone-200">
-              Canonical web-app systems specification v2.0
+        <div className="relative grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
+          <div className="space-y-5">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--eeo-muted)]">Public Observatory</span>
             </div>
-            <h1 className="max-w-4xl font-serif text-5xl font-semibold tracking-tight md:text-7xl">
-              See the source. Follow the value. Know the evidence.
+            <h1 className="max-w-xl font-serif text-4xl font-semibold leading-tight tracking-tight text-[color:var(--eeo-ink)] md:text-[2.75rem]">
+              A public view of Earth&apos;s endowment-to-economy chain.
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-200">
-              A governed civic intelligence system for Earth’s endowment-to-economy chain — connecting evidence about natural endowments, governance, ownership, labor, trade, ecological condition, public revenue, and value capture without claiming authority over the chain.
+            <p className="max-w-2xl text-lg leading-relaxed text-[color:var(--eeo-text)]">
+              Explore how a critical mineral corridor connects natural endowment, governance, labor, trade, ecological pressure, public revenue, and value-capture questions through a transparent public
+              record.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={() => onSelectSection("dossier")}
-                className="rounded-full bg-[#C9A24D] px-5 py-3 text-sm font-semibold text-stone-950 shadow-sm hover:brightness-105"
+                onClick={() => document.getElementById("corridor-dashboard")?.scrollIntoView({ behavior: "smooth" })}
+                className="rounded-full bg-[color:var(--eeo-primary)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-green)] focus-visible:ring-offset-2"
               >
-                Open evidence dossier
+                Explore First Corridor
               </button>
               <button
                 type="button"
                 onClick={() => onSelectSection("ledger")}
-                className="rounded-full border border-[#C9A24D]/45 bg-[#0f2a32]/40 px-5 py-3 text-sm font-semibold text-[#EFE8D8] transition hover:bg-[#C9A24D]/12"
+                className="rounded-full border border-[color:var(--eeo-primary)] px-6 py-3 text-sm font-semibold text-[color:var(--eeo-primary)] transition hover:bg-[color:var(--eeo-green-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2"
               >
-                Inspect evidence ledger
-              </button>
-              <button
-                type="button"
-                onClick={() => onSelectSection("workspace")}
-                className="rounded-full border border-[#C9A24D]/35 bg-[#0f2a32]/30 px-5 py-3 text-sm font-semibold text-[#EFE8D8] transition hover:bg-[#C9A24D]/10"
-              >
-                View review workspace
+                View Evidence Ledger
               </button>
             </div>
           </div>
-          <Card className="bg-white/10 p-5 text-white ring-1 ring-white/10">
-            <div className="mb-4 flex items-center gap-2">
-              <div className="rounded-full bg-[#B66A3C]/20 p-2"><GitBranch className="h-5 w-5 text-[#E8B08B]" /></div>
-              <div>
-                <div className="font-semibold">True MVP loop</div>
-                <div className="text-xs text-stone-300">Controlled evidence product first</div>
-              </div>
+
+          <aside className="eeo-glass-card space-y-4 border-[color:var(--eeo-border)] p-6">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--eeo-muted)]">First pilot</p>
+              <h2 className="mt-3 font-serif text-2xl font-semibold text-[color:var(--eeo-ink)]">Critical Minerals Corridor</h2>
+              <p className="mt-1 text-sm font-medium text-[color:var(--eeo-muted)]">Copper–Cobalt</p>
+              <p className="mt-4 text-sm leading-relaxed text-[color:var(--eeo-text)]">
+                A narrowed copper–cobalt profile designed to show what is known, what is uncertain, and what is intentionally withheld to prevent harm.
+              </p>
             </div>
-            <div className="space-y-2">
-              {["source", "license", "evidence", "claim", "entity resolution", "review", "exposure review", "right-of-reply", "release manifest", "public dossier", "correction route"].map((step, idx) => (
-                <div key={step} className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm">
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-white/10 font-mono text-xs">{idx + 1}</span>
-                  <span>{step}</span>
-                </div>
+            <Chain />
+            <div className="space-y-2 text-sm leading-relaxed text-[color:var(--eeo-text)]">
+              {pilotNotes.map((row) => (
+                <p key={row} className="flex gap-2">
+                  <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--eeo-primary)]" aria-hidden />
+                  <span>{row}</span>
+                </p>
               ))}
             </div>
-          </Card>
+          </aside>
         </div>
       </section>
 
-      <section>
-        <SectionTitle eyebrow="User test" title="Can a user answer who benefits, who bears cost, and why?">
-          The current release should make these three answers explicit in every high-impact domain. This lens is now part of the evidence reading flow, not a separate interpretation layer.
-        </SectionTitle>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {Object.entries(EQUITY_LENS).map(([domain]) => (
-            <BenefitCostWhyPanel key={domain} domain={domain} title={domain} />
-          ))}
-        </div>
-      </section>
+      <CorridorDashboardSection />
 
-      <section>
-        <SectionTitle eyebrow="Strategic scope freeze" title="One corridor. One evidence standard. One launch gate.">
-          The repaired build narrows ambition into an inspectable public release: one flagship evidence dossier, one limited corridor dashboard, one evidence ledger, one internal review workspace, one correction workflow, one signed release manifest.
-        </SectionTitle>
-        <div className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-stone-500">Brand design doctrine</div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {BRAND_DOCTRINE.map((item) => (
-            <Principle key={item.title} icon={item.icon} title={item.title} body={item.body} tone={item.tone} />
-          ))}
-        </div>
-      </section>
+      <CorridorMapSection />
 
-      <section>
-        <SectionTitle eyebrow="Corridor hypothesis" title="Copper-cobalt critical-minerals corridor">
-          The first pilot follows a narrowed endowment-to-economy path and proves that EEO can make strong claims inspectable while making unsafe exposure impossible.
-        </SectionTitle>
-        <Card className="p-6">
-          <Chain />
-        </Card>
-      </section>
+      <GuidanceSection />
     </div>
-  );
-}
-
-function Principle({ icon: Icon, title, body, tone = "neutral" }: { icon: LucideIcon; title: string; body: string; tone?: BadgeTone }) {
-  const iconBgByTone: Record<BadgeTone, string> = {
-    neutral: "bg-stone-900",
-    blue: "bg-blue-900",
-    green: "bg-emerald-900",
-    copper: "bg-orange-900",
-    red: "bg-red-900",
-    gold: "bg-yellow-700",
-    dark: "bg-stone-950",
-  };
-  return (
-    <Card className="p-6">
-      <div className={cls("mb-4 inline-flex rounded-2xl p-3 text-white", iconBgByTone[tone])}><Icon className="h-5 w-5" /></div>
-      <h3 className="text-lg font-semibold text-stone-950">{title}</h3>
-      <p className="mt-2 leading-7 text-stone-600">{body}</p>
-    </Card>
   );
 }
 
@@ -1127,8 +1016,8 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
   return (
     <div className="space-y-10">
-      <SectionTitle eyebrow="Public product 01" title="Flagship corridor evidence dossier">
-        Narrative-first, evidence-visible, uncertainty-labeled, map-supported. This is the first public product; the dashboard is secondary.
+      <SectionTitle eyebrow="Corridor evidence dossier" title="Flagship corridor record">
+        Narrative framing with visible evidence, labeled uncertainty, and map context where safe to publish.
       </SectionTitle>
 
       <section>
@@ -1163,7 +1052,7 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
               onClick={() => onSelectSection("dashboard")}
               className="font-semibold underline decoration-amber-800 hover:text-amber-900"
             >
-              Limited Dashboard
+              Corridor profile
             </button>{" "}
             map panel.
           </p>
@@ -1173,7 +1062,7 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
       <section>
         <SectionTitle eyebrow="Section 4" title="What this release does not claim" />
         <Card className="border-red-200 bg-red-50 p-6 text-sm leading-6 text-red-950">
-          <strong>What it does not claim:</strong> no certification, no legal finding, no global score, no traceability proof, no public community-reporting system, no universal atlas.
+          <strong>Publication limits:</strong> This dossier does not certify supply chains, adjudicate responsibility, assert physical traceability without evidence, rank countries or firms, provide a community reporting system, or serve as a universal atlas.
         </Card>
       </section>
 
@@ -1200,7 +1089,7 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
         <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
           Stub — pending structured narrative. The <strong>governance profile</strong> module in the{" "}
           <button type="button" onClick={() => onSelectSection("dashboard")} className="font-semibold underline">
-            Limited Dashboard
+            Corridor profile
           </button>{" "}
           previews the same theme at module level; full text will follow review.
         </Card>
@@ -1230,9 +1119,9 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 9" title="Labor, ecology, and public-revenue evidence" />
-        <div className="grid gap-4">
-          {indicatorCards.map((card) => (
-            <IndicatorCard key={card.name} card={card} />
+        <div className="grid gap-4 md:grid-cols-2">
+          {corridorDashboardMetrics.slice(0, 4).map((metric) => (
+            <DashboardMetricCard key={metric.publicLabel} metric={metric} compact />
           ))}
         </div>
       </section>
@@ -1308,7 +1197,9 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 15" title="Document control" />
-        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">Stub — version identifier, change log, and sign-off will attach at publication; this dossier is a draft prototype.</Card>
+        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
+          Publication metadata — versioning, accountability log, and sign-off accompany public release packaging.
+        </Card>
       </section>
     </div>
   );
@@ -1316,81 +1207,20 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
 function Dashboard() {
   return (
-    <div className="space-y-8">
-      <SectionTitle eyebrow="Signal preview — not evidence" title="Map-supported, not map-dominated">
-        The interface makes users ask: what is known, how is it known, what is uncertain, what is withheld, who can challenge it, and who benefits versus who bears cost.
+    <div className="space-y-12">
+      <SectionTitle eyebrow="Accountability lens" title="Who benefits, who bears cost, why it matters">
+        A reading aid for stewarding public inquiry — not an outcome table.
       </SectionTitle>
-      <Card className="p-5">
-        <h3 className="text-lg font-semibold text-stone-950">Benefit-Cost-Why quick read</h3>
-        <p className="mt-2 text-sm leading-6 text-stone-600">
-          Before reading map modules, users can start with a direct accountability frame for each domain.
-        </p>
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
+      <Card className="border-[color:var(--eeo-border)] p-5">
+        <div className="grid gap-3 md:grid-cols-2">
           {Object.entries(EQUITY_LENS).map(([domain]) => (
             <BenefitCostWhyPanel key={domain} domain={domain} title={domain} compact />
           ))}
         </div>
       </Card>
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <Card className="overflow-hidden">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 bg-stone-50 px-5 py-4">
-            <div>
-              <div className="font-semibold text-stone-950">Safe-resolution corridor map</div>
-              <div className="text-xs text-stone-500">Public geometry is generalized until map-safety review approves detail.</div>
-            </div>
-            <Badge tone="copper" icon={Map}>Placeholder · pending map-safety review</Badge>
-          </div>
-          <div className="relative h-[460px] overflow-hidden bg-[#DED4BF]">
-            <div className="absolute inset-0 z-0 opacity-40" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(17,17,15,.25) 1px, transparent 0)", backgroundSize: "28px 28px" }} />
-            <div className="absolute left-[10%] top-[18%] z-0 h-64 w-80 rotate-[-14deg] rounded-[45%] border-2 border-[#4B3728]/50 bg-[#4B3728]/5" />
-            <div className="absolute right-[18%] top-[22%] z-0 h-72 w-56 rotate-[18deg] rounded-[45%] border-2 border-[#3F5A45]/50 bg-[#3F5A45]/5" />
-            <div className="absolute bottom-[22%] left-[22%] z-0 h-2 w-[52%] rotate-[-5deg] rounded-full bg-[#B66A3C]/70" />
-            <div className="absolute bottom-[29%] left-[31%] z-0 h-2 w-[40%] rotate-[10deg] rounded-full bg-[#25465F]/70" />
-            {["Resource context", "Public authority", "Processing node", "Export flow", "Ecological signal"].map((label, i) => (
-              <div key={label} className="absolute z-0 rounded-full border border-stone-900 bg-white px-3 py-2 text-xs font-semibold shadow" style={{ left: `${16 + i * 14}%`, top: `${22 + (i % 2) * 34}%` }}>
-                {label}
-              </div>
-            ))}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="rounded-2xl border border-stone-300 bg-white/80 px-5 py-3 text-sm font-semibold text-stone-600 backdrop-blur shadow-sm">
-                Map geometry pending safety review
-              </div>
-            </div>
-            <div className="absolute bottom-4 left-4 right-4 z-20 rounded-2xl border border-stone-300 bg-white/90 p-4 text-sm text-stone-700 shadow">
-              <strong>Map safety notice:</strong> exact sensitive coordinates, artisanal mining locations, community reports, sacred sites, and vulnerable ecological locations are not displayed.
-            </div>
-          </div>
-        </Card>
-        <div className="space-y-4">
-          <ModuleCard title="Governance profile" icon={Landmark} items={["Jurisdiction and public authority", "License / concession records", "Contract availability", "Rights and sovereignty notes", "Disclosure gaps"]} />
-          <ModuleCard title="Value-chain view" icon={Network} items={["Extraction context", "Processing pathway", "Reported trade flows", "Downstream hypothesis", "No traceability overclaim"]} />
-          <div className="grid gap-4">
-            {indicatorCards.map((card) => (
-              <IndicatorCard key={card.name} card={card} />
-            ))}
-          </div>
-        </div>
-      </div>
+      <CorridorDashboardSection />
+      <CorridorMapSection />
     </div>
-  );
-}
-
-function ModuleCard({ title, icon: Icon, items }: { title: string; icon: LucideIcon; items: string[] }) {
-  return (
-    <Card className="p-5">
-      <div className="flex items-center gap-3">
-        <div className="rounded-2xl bg-stone-950 p-2 text-white"><Icon className="h-4 w-4" /></div>
-        <h3 className="font-semibold text-stone-950">{title}</h3>
-      </div>
-      <ul className="mt-4 space-y-2 text-sm text-stone-600">
-        {items.map((item) => (
-          <li key={item} className="flex gap-2">
-            <ChevronRight className="mt-0.5 h-4 w-4 text-stone-400" />
-            {item}
-          </li>
-        ))}
-      </ul>
-    </Card>
   );
 }
 
@@ -1422,8 +1252,8 @@ function Ledger() {
   );
   return (
     <div className="space-y-8">
-      <SectionTitle eyebrow="Public credibility engine" title="Evidence Ledger">
-        Inspectable claims, sources, methods, dates, confidence labels, legal posture, disclosure tiers, limitations, review status, and stale-after dates.
+      <SectionTitle eyebrow="Transparent public record" title="Evidence Ledger">
+        Inspectable claims with sources, methods, dates, confidence labels, legal posture, disclosure tiers, limitations, review status, and stale-after dates.
       </SectionTitle>
       <Card className="p-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -1751,8 +1581,8 @@ function Workspace() {
   const totalChecks = releaseChecks.length;
   return (
     <div className="space-y-8">
-      <SectionTitle eyebrow="Restricted workspace prototype" title="The internal control plane behind public trust">
-        This surface is not public launch material. It shows the build order and review machinery required before the dossier can publish.
+      <SectionTitle eyebrow="Review & release coordination" title="Operational workspace for stewardship checks">
+        This restricted surface supports reviewers coordinating publication readiness safeguards and release discipline.
       </SectionTitle>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {modules.map(({ title, status, icon: Icon, body }) => (
@@ -1811,75 +1641,20 @@ export default function EarthEndowmentObservatoryOneFileApp() {
   }, []);
 
   return (
-    <div
-      className="min-h-screen bg-[#EFE8D8] text-stone-950"
-      style={EEO_ROOT_TOKENS}
-    >
-      <div className="sticky top-0 z-50 shadow-[0_1px_0_rgba(201,162,77,0.2)]">
-        <GlobalBodiesStrip />
-        <ShellHeader active={active} onSelectSection={onSelectSection} />
+    <div className="flex min-h-full flex-1 flex-col bg-transparent text-[color:var(--eeo-text)]" style={EEO_ROOT_TOKENS}>
+      <div className="border-b border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.55)] shadow-sm backdrop-blur-sm">
+        <ReferenceStandardsStrip />
+        <CorridorTabStrip active={active} onSelectSection={onSelectSection} />
       </div>
       <main
         id="eeo-section-panel"
-        className="mx-auto max-w-7xl px-4 pb-8 pt-6 md:px-6 lg:px-8"
+        className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-12 pt-6 md:px-6 lg:px-8"
         role="tabpanel"
         aria-labelledby={`eeo-tab-${active}`}
       >
-        <ReleaseSystemSurface />
+        <PublicMissionStrip />
         <AppContent active={active} onSelectSection={onSelectSection} />
       </main>
-      <footer className="mt-20 border-t border-[#C9A24D]/30 bg-[#0F2A32] px-4 py-10 text-[#EFE8D8] md:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl space-y-8">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <div>
-              <div className="font-serif text-2xl font-semibold">Earth Endowment Observatory</div>
-              <p className="mt-3 max-w-3xl leading-7 text-[#E6E1D6]/85">
-                A governance-first public-interest evidence system aligned with global norms for transparency, safeguards, accountability, and correction.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-[#C9A24D]/30 bg-[#0f2a32]/80 p-5 backdrop-blur-sm">
-              <div className="font-mono text-xs uppercase tracking-[0.2em] text-[#C9A24D]">Architecture law</div>
-              <p className="mt-2 leading-7 text-[#EFE8D8]">
-                The chain must be made visible without making vulnerable people, places, species, or knowledge more vulnerable.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            <div>
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#C9A24D]">Canonical partners</div>
-              <div className="flex flex-wrap gap-2">
-                {["UN", "World Bank", "UNEP", "ILO", "UNESCO", "FAO", "OECD", "EITI", "IPBES", "UN Global Compact"].map((item) => (
-                  <span key={item} className="rounded-full border border-[#C9A24D]/25 px-2.5 py-1 text-xs text-[#E6E1D6]/85">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div>
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#C9A24D]">Contributors</div>
-              <ul className="space-y-1.5 text-sm text-[#E6E1D6]/85">
-                {["Methods reviewers", "Legal reviewers", "Safeguards reviewers", "Exposure and labor reviewers", "Editorial and release owners"].map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#C9A24D]">Standards references</div>
-              <ul className="space-y-1.5 text-sm text-[#E6E1D6]/85">
-                {["EITI disclosure practices", "UN Guiding Principles context", "ILO labor standards framing", "UNEP environmental evidence cautions", "OECD due diligence principles"].map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2 border-t border-[#C9A24D]/25 pt-4 text-xs text-[#E6E1D6]/70 md:flex-row md:items-center md:justify-between">
-            <span>Institutional prototype layer · Canonical corridor release frame</span>
-            <span>Evidence first · Dashboard second · Corrections always open</span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

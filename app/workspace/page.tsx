@@ -30,10 +30,10 @@ export default async function WorkspaceIndexPage() {
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-10 md:px-6">
         <h1 className="text-3xl font-semibold tracking-tight">Workspace</h1>
         <p className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950">
-          Prototype workspace shell — not connected to production evidence, review, release, legal, safeguards, or correction systems.
+          Internal workspace demo — not connected to production evidence, review, release, legal, safeguards, or correction systems.
         </p>
         <p className="text-sm text-stone-700">
-          Use <Link href="/review" className="underline">/review</Link> for the currently active prototype triage workspace.
+          Use <Link href="/review" className="underline">/review</Link> for the active internal review queue.
         </p>
 
         <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

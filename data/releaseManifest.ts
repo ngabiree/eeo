@@ -2,7 +2,7 @@ import type { ReleaseManifest } from "@/types/eeo";
 
 export const releaseManifest: ReleaseManifest = {
   id: "REL-CC-001",
-  title: "Public Evidence Prototype: Copper-Cobalt Corridor",
+  title: "Copper–Cobalt corridor public record",
   corridor: "Copper-Cobalt Critical Minerals Corridor",
   releaseDate: "2026-04-27",
   includedClaimIds: ["CLAIM-DRC-CO-001"],
@@ -13,9 +13,9 @@ export const releaseManifest: ReleaseManifest = {
   methodologyVersion: "0.2",
   approvedBy: ["Method review", "Exposure review"],
   publicLimitations: [
-    "This prototype does not provide chain-of-custody verification.",
-    "This prototype does not make legal findings.",
-    "This prototype does not identify specific products as containing cobalt from specific mines.",
-    "This prototype does not publish sensitive community or ecological location data.",
+    "This release does not assert chain-of-custody verification without underlying evidence.",
+    "This release does not make legal findings outside cited authorities.",
+    "This release does not identify specific products as containing cobalt from specific mines without substantiation.",
+    "This release does not publish sensitive community or ecological location data.",
   ],
 };

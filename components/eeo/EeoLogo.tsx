@@ -3,8 +3,8 @@ import Image from "next/image";
 export type EeoLogoVariant = "transparent" | "card";
 
 const VARIANT_SRC: Record<EeoLogoVariant, string> = {
-  transparent: "/branding/eeo-logo-transparent.png",
-  card: "/branding/eeo-logo-card.png",
+  transparent: "/brand/eeo-logo-transparent.png",
+  card: "/brand/eeo-logo-card.png",
 };
 
 type EeoLogoProps = {
