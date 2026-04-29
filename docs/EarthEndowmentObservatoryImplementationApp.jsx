@@ -391,7 +391,7 @@ const buildSprints = [
   ["Sprint 4", "Review control plane", "Review tasks, exposure reviews, map safety, right-of-reply, audit events."],
   ["Sprint 5", "Release machinery", "Release manifests, public released views, readiness checks, correction intake."],
   ["Sprint 6", "Evidence dossier", "Dossier, ledger, methods, safeguards, corrections."],
-  ["Sprint 7", "Limited dashboard", "Safe map, governance, value-chain, indicator cards, no score."],
+  ["Sprint 7", "Signal preview — not evidence", "Safe map, governance, value-chain, indicator cards, no score."],
   ["Sprint 8", "Launch gate", "Full review run, license check, map safety, right-of-reply, signed manifest."],
 ];
 
@@ -861,7 +861,7 @@ function Dossier() {
 function Dashboard() {
   return (
     <div className="space-y-8">
-      <SectionTitle eyebrow="Limited dashboard" title="Map-supported, not map-dominated">
+      <SectionTitle eyebrow="Signal preview — not evidence" title="Map-supported, not map-dominated">
         The interface makes users ask: what is known, how is it known, what is uncertain, what is withheld, and who can challenge it?
       </SectionTitle>
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">

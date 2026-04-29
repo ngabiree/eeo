@@ -17,11 +17,7 @@ export default function ReleaseManifestPanel() {
         <p className="md:col-span-2"><strong>Exposure review result:</strong> {releaseManifest.exposureReviewSummary}</p>
         <p className="md:col-span-2"><strong>Right-of-reply status:</strong> {rightOfReplySummary}</p>
         <p className="md:col-span-2"><strong>Known limitations:</strong> {releaseManifest.publicLimitations.join(" ")}</p>
-        <p className="md:col-span-2">
-          <strong>Prototype review status:</strong> This release demonstrates the review structure that a production dossier should pass through.
-          Formal institutional review, named reviewer signoff, and partner validation remain required before authoritative publication.
-        </p>
-        <p><strong>Prototype screens shown:</strong> {releaseManifest.approvedBy.join(", ")}</p>
+        <p><strong>Approvals:</strong> {releaseManifest.approvedBy.join(", ")}</p>
         <p><strong>Release date:</strong> {releaseManifest.releaseDate ?? "Not published"}</p>
         <p><strong>Correction route:</strong> /corrections</p>
       </div>

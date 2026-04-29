@@ -525,7 +525,7 @@ function Dossier() {
 function Dashboard() {
   return (
     <div className="space-y-8">
-      <SectionTitle eyebrow="Limited dashboard" title="Map-supported, not map-dominated">
+      <SectionTitle eyebrow="Signal preview — not evidence" title="Map-supported, not map-dominated">
         The interface makes users ask: what is known, how is it known, what is uncertain, what is withheld, and who can challenge it?
       </SectionTitle>
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">

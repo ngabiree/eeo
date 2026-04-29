@@ -38,12 +38,11 @@ export type PublicationDecision =
 
 export type ReviewStatus =
   | "draft"
-  | "prototype_release"
-  | "draft_public_example"
   | "method_review"
   | "legal_review"
   | "exposure_review"
   | "right_of_reply_pending"
+  | "approved_for_release"
   | "challenged"
   | "corrected"
   | "withdrawn";

@@ -19,6 +19,15 @@ export default function EvidencePage() {
         <EvidenceLedger />
 
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
+          <h2 className="text-xl font-semibold">Evidence roles and limitations</h2>
+          <p className="mt-2 text-sm leading-6 text-stone-700">
+            Evidence can support, limit, contradict, contextualize, or motivate review. Not all linked evidence is
+            proof of a claim. Limitations are displayed for every evidence item and should be read before drawing
+            conclusions.
+          </p>
+        </section>
+
+        <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-xl font-semibold">Source list</h2>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-stone-700">
             {sources.map((source) => (

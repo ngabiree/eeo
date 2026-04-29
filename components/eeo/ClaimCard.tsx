@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 import { evidenceItems } from "@/data/evidence";
+import { canClaimBeApprovedForRelease } from "@/lib/publicationRules";
+import { getClaimIntegrityWarnings } from "@/lib/claimUtils";
 import type { Claim } from "@/types/eeo";
 
 import {
@@ -17,6 +19,8 @@ export default function ClaimCard({ claim }: { claim: Claim }) {
     ...link,
     evidence: evidenceItems.find((item) => item.id === link.evidenceId),
   }));
+  const warnings = getClaimIntegrityWarnings(claim);
+  const releaseReady = canClaimBeApprovedForRelease(claim) && warnings.length === 0;
 
   return (
     <article className="space-y-4 rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
@@ -45,6 +49,17 @@ export default function ClaimCard({ claim }: { claim: Claim }) {
         <ReviewStatusBadge value={claim.reviewStatus} />
         <LegalPostureBadge value={claim.legalPosture} />
       </div>
+
+      {!releaseReady ? (
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">
+          <p className="font-semibold">This claim is not ready for public release.</p>
+          {warnings.length ? (
+            <p className="mt-1">Reason: {warnings.join(" ")}</p>
+          ) : (
+            <p className="mt-1">Reason: release requirements are not fully satisfied.</p>
+          )}
+        </div>
+      ) : null}
 
       <section className="space-y-3">
         <h4 className="font-semibold text-stone-950">Evidence links</h4>

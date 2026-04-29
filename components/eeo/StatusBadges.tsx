@@ -55,12 +55,11 @@ export function PublicationDecisionBadge({ value }: { value: PublicationDecision
 export function ReviewStatusBadge({ value }: { value: ReviewStatus }) {
   const map: Record<ReviewStatus, string> = {
     draft: tone.neutral,
-    prototype_release: tone.blue,
-    draft_public_example: tone.neutral,
     method_review: tone.blue,
     legal_review: tone.blue,
     exposure_review: tone.blue,
     right_of_reply_pending: tone.amber,
+    approved_for_release: tone.green,
     challenged: tone.amber,
     corrected: tone.green,
     withdrawn: tone.red,

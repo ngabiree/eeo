@@ -24,7 +24,7 @@ export const sampleClaim: Claim = {
   confidence: "high",
   exposureRisk: "low",
   publicationDecision: "publish",
-  reviewStatus: "prototype_release",
+  reviewStatus: "approved_for_release",
   rightOfReplyRequired: false,
   rightOfReplyStatus: "not_required",
   whatThisDoesNotProve: [

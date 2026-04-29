@@ -1318,7 +1318,7 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 function Dashboard() {
   return (
     <div className="space-y-8">
-      <SectionTitle eyebrow="Limited dashboard" title="Map-supported, not map-dominated">
+      <SectionTitle eyebrow="Signal preview — not evidence" title="Map-supported, not map-dominated">
         The interface makes users ask: what is known, how is it known, what is uncertain, what is withheld, who can challenge it, and who benefits versus who bears cost.
       </SectionTitle>
       <Card className="p-5">

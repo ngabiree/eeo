@@ -11,7 +11,7 @@ export const releaseManifest: ReleaseManifest = {
   exposureReviewSummary:
     "The current release includes only low-exposure public methodological claims based on official and multilateral sources. It does not publish sensitive community data, exact vulnerable-site data, or allegations against specific firms.",
   methodologyVersion: "0.2",
-  approvedBy: ["Prototype screens shown: method screen", "Prototype screens shown: exposure screen", "Formal review pending"],
+  approvedBy: ["Method review", "Exposure review"],
   publicLimitations: [
     "This prototype does not provide chain-of-custody verification.",
     "This prototype does not make legal findings.",
