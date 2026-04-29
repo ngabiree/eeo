@@ -4,6 +4,7 @@ import {
   isCorrectionCategory,
   type CorrectionSubmission,
 } from "@/lib/correctionsStore";
+import { claims } from "@/data/claims";
 
 const MAX_NAME = 300;
 const MAX_EMAIL = 320;
@@ -49,6 +50,10 @@ export async function POST(request: Request) {
   if (claimReferenceRaw && claimReferenceRaw.length > MAX_CLAIM_REFERENCE) {
     return NextResponse.json({ error: "claimReference is too long." }, { status: 400 });
   }
+  const autoLinkedClaimId =
+    !claimIdRaw && claimReferenceRaw
+      ? (claims.find((claim) => claim.id === claimReferenceRaw)?.id ?? undefined)
+      : undefined;
 
   const submittedAt = new Date().toISOString();
   const submissionId = `CORR-${Date.now().toString(36).toUpperCase()}`;
@@ -60,7 +65,7 @@ export async function POST(request: Request) {
     name,
     email,
     category,
-    claimId: claimIdRaw || undefined,
+    claimId: claimIdRaw || autoLinkedClaimId || undefined,
     claimReference: claimReferenceRaw || undefined,
     details,
     triageStatus: "queued",
