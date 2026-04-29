@@ -2,9 +2,8 @@
 
 /**
  * Design-review mirror of `components/EarthEndowmentObservatoryOneFileApp.tsx` — kept line-for-line with that file aside from this block.
- * To refresh: `cp components/EarthEndowmentObservatoryOneFileApp.tsx docs/EarthEndowmentObservatoryOneFileApp.tsx`, then restore this header.
+ * Regenerate with `pnpm sync:corridor-docs` (see `scripts/sync-corridor-docs-mirror.mjs`).
  */
-
 import React, {
   useCallback,
   useMemo,
