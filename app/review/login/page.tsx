@@ -14,7 +14,7 @@ export default async function ReviewLoginPage({
   const authEnabled = isReviewAuthEnabled();
 
   return (
-    <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
+    <main className="relative flex min-h-full flex-1 flex-col bg-transparent text-[color:var(--eeo-text)]">
       <div className="mx-auto max-w-xl space-y-5 px-4 py-12 md:px-6">
         <h1 className="text-3xl font-semibold tracking-tight">Review workspace sign-in</h1>
         {authEnabled ? (

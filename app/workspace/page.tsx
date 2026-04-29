@@ -26,7 +26,7 @@ export default async function WorkspaceIndexPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
+    <main className="relative flex min-h-full flex-1 flex-col bg-transparent text-[color:var(--eeo-text)]">
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-10 md:px-6">
         <h1 className="text-3xl font-semibold tracking-tight">Workspace</h1>
         <p className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950">
