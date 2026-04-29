@@ -47,7 +47,7 @@ export default function ReleaseManifestPanel() {
         <p className="md:col-span-2"><strong>Release governance note:</strong> This release manifest records publication status, known limitations, open correction items, and claim governance status. It does not adjudicate legal liability.</p>
         <p><strong>Approvals:</strong> {releaseManifest.approvedBy.join(", ")}</p>
         <p><strong>Release date:</strong> {releaseManifest.releaseDate ?? "Not published"}</p>
-        <p><strong>Correction route:</strong> /corrections</p>
+        <p><strong>Correction route:</strong> /pilot/corrections</p>
       </div>
     </section>
   );

@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   // Avoid picking a parent directory lockfile (e.g. home) as the workspace root.
   outputFileTracingRoot: projectRoot,
+  async redirects() {
+    return [
+      { source: "/dossier", destination: "/pilot/evidence-dossier", permanent: false },
+      { source: "/evidence", destination: "/pilot/evidence-ledger", permanent: false },
+      { source: "/methods", destination: "/pilot/methods-and-limits", permanent: false },
+      { source: "/safeguards", destination: "/pilot/safeguards", permanent: false },
+      { source: "/corrections", destination: "/pilot/corrections", permanent: false },
+      { source: "/corridor", destination: "/pilot/value-chain", permanent: false },
+    ];
+  },
 };
 
 export default nextConfig;

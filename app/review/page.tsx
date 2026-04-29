@@ -76,6 +76,9 @@ export default async function ReviewPage() {
   const correctedClaimCount = claimGovernanceSummaries.filter((s) => s.governanceStatus === "corrected").length;
   const restrictedClaimCount = claimGovernanceSummaries.filter((s) => s.governanceStatus === "restricted").length;
   const withdrawnClaimCount = claimGovernanceSummaries.filter((s) => s.governanceStatus === "withdrawn").length;
+  const hasOpenCorrections = openCorrectionCount > 0;
+  const hasRestrictedClaims = restrictedClaimCount > 0;
+  const hasWithdrawnClaims = withdrawnClaimCount > 0;
 
   return (
     <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
@@ -121,6 +124,25 @@ export default async function ReviewPage() {
               </li>
             </ul>
           ) : null}
+        </section>
+        <section className="rounded-3xl border border-stone-200 bg-white/80 p-4 text-sm text-stone-800 shadow-sm">
+          <p className="font-semibold">Release readiness checklist (internal)</p>
+          <ul className="mt-2 space-y-1 text-xs">
+            <li>
+              {hasRecentSignoff ? "Pass" : "Pending"} — Recent governance sign-off (within{" "}
+              {RELEASE_SIGNOFF_MAX_AGE_HOURS}h)
+            </li>
+            <li>{hasOpenCorrections ? "Pending" : "Pass"} — Open correction items ({openCorrectionCount})</li>
+            <li>{hasRestrictedClaims ? "Pending" : "Pass"} — Restricted claims ({restrictedClaimCount})</li>
+            <li>{hasWithdrawnClaims ? "Pending" : "Pass"} — Withdrawn claims ({withdrawnClaimCount})</li>
+            <li>
+              Info — Challenged/under-review claims ({challengedClaimCount + underReviewClaimCount}), corrected claims (
+              {correctedClaimCount})
+            </li>
+          </ul>
+          <p className="mt-2 text-xs text-stone-600">
+            This checklist supports publication discipline and does not adjudicate legal liability.
+          </p>
         </section>
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-stone-950">Release governance review log</h2>
@@ -210,7 +232,7 @@ export default async function ReviewPage() {
                   </div>
                   {submission.claimId ? (
                     <p className="mt-2 text-xs text-stone-500">
-                      <Link className="underline" href="/dossier">
+                      <Link className="underline" href="/pilot/evidence-dossier">
                         Open dossier claims
                       </Link>
                     </p>

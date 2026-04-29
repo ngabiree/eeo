@@ -11,7 +11,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0 --cache --cache-location .eslintcache",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:pilot-routes": "node scripts/check-pilot-routes.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.475.0",

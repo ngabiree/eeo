@@ -20,6 +20,17 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000). Use the top navigation to move between **Home**, **Evidence Dossier**, **Limited Dashboard**, **Evidence Ledger**, **Methods + Limits**, **Safeguards**, **Corrections**, and **Review Workspace** (in-app state; no separate routes in this MVP).
 
+### npm fallback
+
+This repository is standardized on `pnpm`, but npm can be used if needed:
+
+```bash
+npm install
+npm run dev
+```
+
+If you use npm locally, keep committed lockfile/package-manager conventions unchanged (`pnpm-lock.yaml` remains canonical for CI and team consistency).
+
 ## Scripts
 
 | Command             | Purpose                    |
@@ -29,6 +40,9 @@ Open [http://localhost:3000](http://localhost:3000). Use the top navigation to m
 | `pnpm start`        | Run production build       |
 | `pnpm lint`         | ESLint CLI (`next/core-web-vitals` + `next/typescript` via `eslint.config.mjs`) |
 | `pnpm typecheck`    | TypeScript (`tsc --noEmit`) |
+| `pnpm check:pilot-routes` | Fails if legacy public routes are referenced instead of canonical `/pilot/*` routes |
+
+This route-discipline check also runs in CI on pushes and pull requests.
 
 ## Package manager
 
@@ -51,12 +65,12 @@ For the **static prototype**, you do not need a `.env` file. See `.env.example` 
 
 ## Deployment (Vercel)
 
-The app is set up for **[Vercel](https://vercel.com/)** (CLI: `vercel whoami` — signed in as **engabire**; project scope: **uwanjye** team). Local link metadata lives in **`.vercel/`** (gitignored).
+The app is set up for **[Vercel](https://vercel.com/)**. Local link metadata lives in **`.vercel/`** (gitignored).
 
-- **Project dashboard:** [vercel.com/uwanjye/eeo](https://vercel.com/uwanjye/eeo)  
-- **Production URL:** [eeo-ten.vercel.app](https://eeo-ten.vercel.app) (and per-deployment preview URLs on each deploy)
+- **Project dashboard:** use your team/project dashboard in Vercel  
+- **Production URL:** use the domain configured for your deployment
 
-**Connect GitHub for auto-deploys:** in the [Git settings](https://vercel.com/uwanjye/eeo/settings/git) for the project, connect **https://github.com/ngabiree/eeo**. If the link fails, install the [Vercel GitHub app](https://vercel.com/docs/git/vercel-for-github) for the **ngabiree** org (or your account) and ensure the Vercel team has access to that repo, then try **Connect** again (or import the repo from the Vercel dashboard). CLI: `vercel link --yes --scope uwanjye` (already run once) / `vercel deploy --yes`.
+**Connect GitHub for auto-deploys:** in your project Git settings, connect this repository. If the link fails, install the [Vercel GitHub app](https://vercel.com/docs/git/vercel-for-github) for your org/account and ensure the Vercel team has repo access, then retry connect (or import from the Vercel dashboard). CLI examples: `vercel link --yes` and `vercel deploy --yes`.
 
 ## Security
 
@@ -65,3 +79,28 @@ See `SECURITY.md`. Do not commit secrets, credentials, raw evidence, or sensitiv
 ## Specification
 
 The canonical build document is maintained outside this path as **Earth Endowment Observatory — Institutional Constitution and Systems Specification** (v2.x). Align new features with that doctrine and the MVP loop (dossier → limited dashboard → ledger → review → corrections) before expanding scope.
+
+## Canonical Specification
+
+The controlling source of truth is now checked into this repository at:
+
+- `docs/canonical/eeo_institutional_constitution_and_systems_specification-final.md`
+
+This canonical specification governs:
+
+- product scope and MVP boundaries;
+- evidence discipline and claim-level provenance;
+- source/license/evidence/claim/review/release workflow;
+- disclosure tiers and rights-aware publication constraints;
+- map safety and geospatial exposure limits;
+- right-of-reply expectations;
+- correction workflow posture;
+- no-score/no-ranking/no-certification doctrine;
+- no-blockchain/no-AI-authority doctrine;
+- prototype-only implementation boundaries.
+
+### MVP evidence loop (visibility rule)
+
+```text
+source -> license -> evidence -> claim -> entity resolution -> review -> exposure review -> right-of-reply if needed -> release manifest -> public evidence dossier -> correction route
+```

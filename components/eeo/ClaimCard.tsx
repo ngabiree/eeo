@@ -154,7 +154,7 @@ export default function ClaimCard({
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-stone-100 pt-3">
         <span className="text-xs text-stone-500">Last updated: {claim.lastUpdated}</span>
         <Link
-          href="/corrections"
+          href="/pilot/corrections"
           className="rounded-full border border-stone-900 bg-stone-900 px-4 py-2 text-sm font-semibold text-white hover:bg-stone-800"
         >
           Challenge or correct this claim

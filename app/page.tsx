@@ -29,11 +29,14 @@ export default function HomePage() {
             Prototype scope: one copper-cobalt corridor, one evidence standard, one public release gate.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link href="/dossier" className="rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white">
+            <Link href="/pilot" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-semibold text-stone-800">
+              Open Pilot Overview
+            </Link>
+            <Link href="/pilot/evidence-dossier" className="rounded-full bg-stone-950 px-5 py-3 text-sm font-semibold text-white">
               View Pilot Dossier
             </Link>
             <Link
-              href="/evidence"
+              href="/pilot/evidence-ledger"
               className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-semibold text-stone-800"
             >
               Inspect Evidence Ledger
@@ -70,10 +73,10 @@ export default function HomePage() {
             Public evidence appears only in claim cards, evidence records, release manifests, and reviewed source notes.
           </p>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
-            <Link href="/methods" className="underline">
+            <Link href="/pilot/methods-and-limits" className="underline">
               Methods and limits
             </Link>
-            <Link href="/safeguards" className="underline">
+            <Link href="/pilot/safeguards" className="underline">
               Safeguards
             </Link>
           </div>

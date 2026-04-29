@@ -72,8 +72,8 @@ export default function EvidenceLedger() {
       </div>
 
       <p className="text-sm text-stone-600">
-        Trace forward from evidence to claims in the <Link href="/dossier" className="underline">corridor dossier</Link>.
-        Trace corrections in the <Link href="/corrections" className="underline">correction route</Link>.
+        Trace forward from evidence to claims in the <Link href="/pilot/evidence-dossier" className="underline">corridor dossier</Link>.
+        Trace corrections in the <Link href="/pilot/corrections" className="underline">correction route</Link>.
       </p>
 
       <p className="text-xs text-stone-500">
