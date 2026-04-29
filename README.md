@@ -57,7 +57,7 @@ Do not commit `package-lock.json` (it is in `.gitignore`). CI uses **`pnpm insta
 - `docs/eeo_one_file_corridor_app.jsx` — small one-file corridor snapshot (reference; uses `lucide-react`)
 - `docs/eeo_one_file_corridor_app_data_reactive.jsx` — curated repaired data-reactive atmospheric/public-evidence variant imported from local download
 - `docs/EarthEndowmentObservatoryImplementationApp.jsx` — broader implementation blueprint: extra tabs, static contracts, self-contained SVG icons (no `lucide` dependency for sandbox-style builds)
-- `docs/EarthEndowmentObservatoryOneFileApp.tsx` — optional TypeScript snapshot for archival design review (**may lag** `components/`; do not rely on it for current UX).
+- `docs/EarthEndowmentObservatoryOneFileApp.tsx` — TypeScript mirror of the corridor UI for design review (**line-for-line** with `components/EarthEndowmentObservatoryOneFileApp.tsx`; refresh via the `cp` command in the file header if the component drifts).
 
 ## Environment
 
