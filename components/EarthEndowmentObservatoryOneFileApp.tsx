@@ -40,6 +40,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import EeoLogo from "@/components/eeo/EeoLogo";
+
 /**
  * Earth Endowment Observatory — One-File Corridor Prototype
  * Canonical posture: controlled evidence product first, limited dashboard second.
@@ -924,10 +926,7 @@ function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSecti
             className="group flex items-center gap-3 text-left"
             aria-label="Earth Endowment Observatory, go to Home"
           >
-            <div className="relative grid h-12 w-12 place-items-center rounded-full border border-stone-900 bg-stone-950 text-[#EFE8D8] shadow-sm">
-              <div className="absolute inset-2 rounded-full border border-[#C9A24D]/60" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#C9A24D] shadow-[0_0_0_5px_rgba(201,162,77,0.16)]" />
-            </div>
+            <EeoLogo decorative priority size="md" />
             <div>
               <div className="font-serif text-xl font-semibold tracking-tight text-stone-950">Earth Endowment Observatory</div>
               <div className="text-xs text-stone-600">From Earth to economy, made visible.</div>

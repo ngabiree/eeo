@@ -32,6 +32,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import EeoLogo from "@/components/eeo/EeoLogo";
+
 /**
  * Earth Endowment Observatory — One-File Corridor Prototype
  * Step 1 earth-color update: deep-ocean blue, forest green, mineral gold palette.
@@ -844,30 +846,7 @@ function ShellHeader({ active, onSelectSection }: { active: TabId; onSelectSecti
             className="group flex items-center gap-3 text-left"
             aria-label="Earth Endowment Observatory, go to Home"
           >
-            {/* Logo: deep ocean shell with green inner ring and gold center */}
-            <div
-              className="relative grid h-12 w-12 place-items-center rounded-full shadow-sm"
-              style={{ backgroundColor: EARTH.deepOcean, border: `2px solid ${EARTH.deepOcean}` }}
-            >
-              {/* Green orbit ring */}
-              <div
-                className="absolute inset-1.5 rounded-full"
-                style={{ border: `1.5px solid ${EARTH.canopy}90` }}
-              />
-              {/* Outer atmospheric ring */}
-              <div
-                className="absolute inset-0 rounded-full"
-                style={{ border: `1px solid ${EARTH.sky}40` }}
-              />
-              {/* Gold mineral core */}
-              <div
-                className="h-2.5 w-2.5 rounded-full"
-                style={{
-                  backgroundColor: EARTH.savanna,
-                  boxShadow: `0 0 0 4px ${EARTH.savanna}22`,
-                }}
-              />
-            </div>
+            <EeoLogo decorative priority size="md" />
             <div>
               <div className="font-serif text-xl font-semibold tracking-tight text-stone-950">
                 Earth Endowment Observatory
