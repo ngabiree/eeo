@@ -21,6 +21,7 @@ function formatActivityLine(activity: {
   createdAt: string;
   fromStatus?: string;
   toStatus?: string;
+  note?: string;
   actor: string;
   reviewerLabel?: string;
 }): string {
@@ -43,6 +44,11 @@ function formatActivityLine(activity: {
   }
   if (activity.type === "submitted") {
     return `${at} — Submitted by public user`;
+  }
+  if (activity.type === "governance_outcome_changed") {
+    const reviewer = activity.reviewerLabel ? ` by ${activity.reviewerLabel}` : "";
+    const outcome = activity.note ? activity.note.replace(/_/g, " ") : "not set";
+    return `${at} — Governance outcome updated to ${outcome}${reviewer}`;
   }
   return `${at} — ${activity.type.replace(/_/g, " ")} (${activity.actor.replace(/_/g, " ")})`;
 }
@@ -110,6 +116,12 @@ export default async function ReviewPage() {
                   <div className="grid gap-1 text-sm text-stone-700 md:grid-cols-2">
                     <p><strong>Current status:</strong> {submission.triageStatus.replace(/_/g, " ")}</p>
                     <p><strong>Latest triage note:</strong> {submission.triageNote || "No note added"}</p>
+                    <p>
+                      <strong>Governance outcome:</strong>{" "}
+                      {submission.triageGovernanceOutcome
+                        ? submission.triageGovernanceOutcome.replace(/_/g, " ")
+                        : "Not set"}
+                    </p>
                     <p><strong>Category:</strong> {submission.category}</p>
                     <p><strong>Claim:</strong> {submission.claimId || "No linked claim"}</p>
                     {submission.claimReference ? (
@@ -147,6 +159,7 @@ export default async function ReviewPage() {
                     submissionId={submission.id}
                     currentStatus={submission.triageStatus}
                     initialNote={submission.triageNote}
+                    initialGovernanceOutcome={submission.triageGovernanceOutcome}
                   />
                   <div className="mt-3 rounded-2xl border border-stone-200 bg-white p-3">
                     <h3 className="text-sm font-semibold text-stone-900">Activity history</h3>

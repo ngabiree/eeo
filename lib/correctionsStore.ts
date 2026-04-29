@@ -31,11 +31,18 @@ export function isCorrectionCategory(value: unknown): value is CorrectionCategor
 
 /** Prototype-only triage states for the review workspace */
 export type CorrectionTriageStatus = "queued" | "in_review" | "needs_review" | "resolved";
+export type CorrectionGovernanceOutcome =
+  | "requires_claim_review"
+  | "claim_unchanged"
+  | "claim_corrected"
+  | "claim_restricted"
+  | "claim_withdrawn";
 export type CorrectionActivityType =
   | "submitted"
   | "triage_status_changed"
   | "triage_note_added"
   | "triage_note_updated"
+  | "governance_outcome_changed"
   | "reviewed"
   | "resolved"
   | "withdrawn";
@@ -63,6 +70,7 @@ export interface CorrectionSubmission {
   claimReference?: string;
   details: string;
   triageStatus: CorrectionTriageStatus;
+  triageGovernanceOutcome?: CorrectionGovernanceOutcome;
   /** Last time status or reviewer note changed (prototype; in-memory only). ISO string. */
   triageUpdatedAt: string;
   /** Optional reviewer note (prototype workspace only). */
@@ -98,6 +106,7 @@ export function getCorrectionSubmissionById(id: string): CorrectionSubmission | 
 
 export interface CorrectionTriagePatch {
   triageStatus?: CorrectionTriageStatus;
+  triageGovernanceOutcome?: CorrectionGovernanceOutcome | null;
   /** Omit to leave unchanged; `null` clears the note */
   triageNote?: string | null;
   reviewerId?: string;
@@ -158,6 +167,22 @@ export function patchCorrectionSubmission(id: string, patch: CorrectionTriagePat
       entry.triageNote = normalized;
       appendActivity(entry, {
         type: prev ? "triage_note_updated" : "triage_note_added",
+        note: normalized,
+        actor: "reviewer",
+        reviewerId: patch.reviewerId,
+        reviewerLabel: patch.reviewerLabel,
+        createdAt: now,
+      });
+      touched = true;
+    }
+  }
+
+  if (patch.triageGovernanceOutcome !== undefined) {
+    const normalized = patch.triageGovernanceOutcome ?? undefined;
+    if (entry.triageGovernanceOutcome !== normalized) {
+      entry.triageGovernanceOutcome = normalized;
+      appendActivity(entry, {
+        type: "governance_outcome_changed",
         note: normalized,
         actor: "reviewer",
         reviewerId: patch.reviewerId,

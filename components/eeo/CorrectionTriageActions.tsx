@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { patchCorrectionTriage } from "@/app/review/actions";
-import type { CorrectionTriageStatus } from "@/lib/correctionsStore";
+import type { CorrectionGovernanceOutcome, CorrectionTriageStatus } from "@/lib/correctionsStore";
 
 const STATUSES: { value: CorrectionTriageStatus; label: string }[] = [
   { value: "queued", label: "Queued" },
@@ -12,19 +12,31 @@ const STATUSES: { value: CorrectionTriageStatus; label: string }[] = [
   { value: "needs_review", label: "Needs review" },
   { value: "resolved", label: "Resolved" },
 ];
+const GOVERNANCE_OUTCOMES: { value: CorrectionGovernanceOutcome; label: string }[] = [
+  { value: "requires_claim_review", label: "Requires claim review" },
+  { value: "claim_unchanged", label: "Claim unchanged" },
+  { value: "claim_corrected", label: "Claim corrected" },
+  { value: "claim_restricted", label: "Claim restricted" },
+  { value: "claim_withdrawn", label: "Claim withdrawn" },
+];
 
 export default function CorrectionTriageActions({
   submissionId,
   currentStatus,
   initialNote,
+  initialGovernanceOutcome,
 }: {
   submissionId: string;
   currentStatus: CorrectionTriageStatus;
   initialNote?: string;
+  initialGovernanceOutcome?: CorrectionGovernanceOutcome;
 }) {
   const router = useRouter();
   const [status, setStatus] = useState<CorrectionTriageStatus>(currentStatus);
   const [note, setNote] = useState(initialNote ?? "");
+  const [governanceOutcome, setGovernanceOutcome] = useState<CorrectionGovernanceOutcome | "">(
+    initialGovernanceOutcome ?? ""
+  );
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,6 +48,10 @@ export default function CorrectionTriageActions({
     setNote(initialNote ?? "");
   }, [initialNote]);
 
+  useEffect(() => {
+    setGovernanceOutcome(initialGovernanceOutcome ?? "");
+  }, [initialGovernanceOutcome]);
+
   async function apply(next: CorrectionTriageStatus) {
     if (next === status) return;
     setPending(true);
@@ -45,6 +61,7 @@ export default function CorrectionTriageActions({
       const result = await patchCorrectionTriage(submissionId, {
         triageStatus: next,
         triageNote: trimmed.length > 0 ? trimmed : null,
+        triageGovernanceOutcome: governanceOutcome || undefined,
       });
       if (!result.ok) {
         setError(result.error);
@@ -69,6 +86,26 @@ export default function CorrectionTriageActions({
       const trimmed = note.trim();
       const result = await patchCorrectionTriage(submissionId, {
         triageNote: trimmed.length > 0 ? trimmed : null,
+        triageGovernanceOutcome: governanceOutcome || undefined,
+      });
+      if (!result.ok) {
+        setError(result.error);
+        return;
+      }
+      router.refresh();
+    } catch {
+      setError("Something went wrong. Try again.");
+    } finally {
+      setPending(false);
+    }
+  }
+
+  async function saveGovernanceOutcome() {
+    setPending(true);
+    setError(null);
+    try {
+      const result = await patchCorrectionTriage(submissionId, {
+        triageGovernanceOutcome: governanceOutcome || null,
       });
       if (!result.ok) {
         setError(result.error);
@@ -124,6 +161,34 @@ export default function CorrectionTriageActions({
           className="mt-2 rounded-full border border-stone-300 bg-white px-4 py-1.5 text-xs font-semibold text-stone-800 hover:border-stone-900 disabled:opacity-50"
         >
           Save note only
+        </button>
+      </div>
+      <div>
+        <label htmlFor={`triage-governance-${submissionId}`} className="text-xs font-semibold text-stone-600">
+          Claim governance outcome{" "}
+          <span className="font-normal text-stone-400">(internal review signal)</span>
+        </label>
+        <select
+          id={`triage-governance-${submissionId}`}
+          value={governanceOutcome}
+          disabled={pending}
+          onChange={(e) => setGovernanceOutcome(e.target.value as CorrectionGovernanceOutcome | "")}
+          className="mt-1 w-full rounded-2xl border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-stone-900 disabled:opacity-60"
+        >
+          <option value="">Not set</option>
+          {GOVERNANCE_OUTCOMES.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          disabled={pending}
+          onClick={() => void saveGovernanceOutcome()}
+          className="mt-2 rounded-full border border-stone-300 bg-white px-4 py-1.5 text-xs font-semibold text-stone-800 hover:border-stone-900 disabled:opacity-50"
+        >
+          Save governance outcome
         </button>
       </div>
 

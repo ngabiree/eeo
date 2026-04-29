@@ -73,26 +73,35 @@ export function getClaimCorrectionSummary(
     .sort((a, b) => b.localeCompare(a))[0];
 
   const hasWithdrawal = linkedCorrections.some((correction) => correction.category === "Withdrawal request");
+  const hasGovernanceWithdrawn = linkedCorrections.some(
+    (correction) => correction.triageGovernanceOutcome === "claim_withdrawn"
+  );
   const hasRestriction = linkedCorrections.some(
     (correction) =>
       correction.category === "Harm-risk restriction request" ||
       correction.category === "Indigenous or community-sensitive review"
   );
+  const hasGovernanceRestricted = linkedCorrections.some(
+    (correction) => correction.triageGovernanceOutcome === "claim_restricted"
+  );
   const hasUnderReview = linkedCorrections.some((correction) => correction.triageStatus === "in_review");
   const hasChallenged = linkedCorrections.some(
     (correction) => correction.triageStatus === "queued" || correction.triageStatus === "needs_review"
   );
+  const hasGovernanceCorrected = linkedCorrections.some(
+    (correction) => correction.triageGovernanceOutcome === "claim_corrected"
+  );
 
   let governanceStatus: ClaimGovernanceStatus = "stable";
-  if (hasWithdrawal) {
+  if (hasWithdrawal || hasGovernanceWithdrawn) {
     governanceStatus = "withdrawn";
-  } else if (hasRestriction) {
+  } else if (hasRestriction || hasGovernanceRestricted) {
     governanceStatus = "restricted";
   } else if (hasUnderReview) {
     governanceStatus = "under_review";
   } else if (hasChallenged) {
     governanceStatus = "challenged";
-  } else if (resolvedCorrections.length > 0) {
+  } else if (hasGovernanceCorrected || resolvedCorrections.length > 0) {
     governanceStatus = "corrected";
   }
 
