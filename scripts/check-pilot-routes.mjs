@@ -6,6 +6,12 @@ const TARGET_DIRS = ["app", "components"];
 const FILE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx"]);
 const LEGACY_SEGMENTS = ["dossier", "evidence", "methods", "safeguards", "corrections", "corridor"];
 const legacyRoutePattern = new RegExp(`["']\\/(${LEGACY_SEGMENTS.join("|")})(?:["'/?#])`, "g");
+/**
+ * Optional path-prefix allowlist for intentional legacy-route references.
+ * Keep this list short and explicit; default stays strict.
+ * Example: ["app/legacy-notices/"]
+ */
+const ALLOWED_FILE_PREFIXES = [];
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -33,6 +39,9 @@ for (const dir of TARGET_DIRS) {
   const files = await walk(absoluteDir);
   for (const file of files) {
     const relPath = path.relative(ROOT, file);
+    if (ALLOWED_FILE_PREFIXES.some((prefix) => relPath.startsWith(prefix))) {
+      continue;
+    }
     const content = await readFile(file, "utf8");
     const matches = [...content.matchAll(legacyRoutePattern)];
     for (const match of matches) {
