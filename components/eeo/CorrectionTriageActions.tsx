@@ -61,7 +61,6 @@ export default function CorrectionTriageActions({
       const result = await patchCorrectionTriage(submissionId, {
         triageStatus: next,
         triageNote: trimmed.length > 0 ? trimmed : null,
-        triageGovernanceOutcome: governanceOutcome || undefined,
       });
       if (!result.ok) {
         setError(result.error);
@@ -86,7 +85,6 @@ export default function CorrectionTriageActions({
       const trimmed = note.trim();
       const result = await patchCorrectionTriage(submissionId, {
         triageNote: trimmed.length > 0 ? trimmed : null,
-        triageGovernanceOutcome: governanceOutcome || undefined,
       });
       if (!result.ok) {
         setError(result.error);
