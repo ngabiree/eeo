@@ -46,21 +46,21 @@ export default function ClaimCard({
   const releaseReady = canClaimBeApprovedForRelease(claim) && warnings.length === 0;
 
   return (
-    <article className="space-y-4 rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
+    <article className="space-y-4 rounded-3xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.9)] p-6 shadow-sm backdrop-blur-sm">
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-[0.18em] text-stone-500">{claim.id}</div>
-        <h3 className="text-2xl font-semibold text-stone-950">{claim.title}</h3>
-        <p className="leading-7 text-stone-700">{claim.plainLanguageClaim}</p>
+        <div className="font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--eeo-muted)]">{claim.id}</div>
+        <h3 className="text-2xl font-semibold text-[color:var(--eeo-ink)]">{claim.title}</h3>
+        <p className="leading-7 text-[color:var(--eeo-text)]">{claim.plainLanguageClaim}</p>
       </div>
 
       <div className="grid gap-2 md:grid-cols-2">
-        <p className="text-sm text-stone-700">
+        <p className="text-sm text-[color:var(--eeo-text)]">
           <strong>Claim type:</strong> {claim.claimType}
         </p>
-        <p className="text-sm text-stone-700">
+        <p className="text-sm text-[color:var(--eeo-text)]">
           <strong>Corridor node:</strong> {claim.corridorNode}
         </p>
-        <p className="text-sm text-stone-700 md:col-span-2">
+        <p className="text-sm text-[color:var(--eeo-text)] md:col-span-2">
           <strong>Right-of-reply status:</strong> {claim.rightOfReplyStatus}
         </p>
       </div>
@@ -109,12 +109,12 @@ export default function ClaimCard({
         </div>
       ) : null}
 
-      <section className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
-        <h4 className="font-semibold text-stone-950">Claim governance</h4>
+      <section className="rounded-2xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.75)] p-4">
+        <h4 className="font-semibold text-[color:var(--eeo-ink)]">Claim governance</h4>
         <div className="mt-2 flex flex-wrap gap-2">
           <GovernanceStatusBadge value={correctionSummary.governanceStatus} />
         </div>
-        <div className="mt-2 space-y-1 text-sm text-stone-700">
+        <div className="mt-2 space-y-1 text-sm text-[color:var(--eeo-text)]">
           <p>
             <strong>Linked corrections:</strong> {correctionSummary.linkedCorrections.length}
           </p>
@@ -129,16 +129,16 @@ export default function ClaimCard({
       </section>
 
       <section className="space-y-3">
-        <h4 className="font-semibold text-stone-950">Evidence links</h4>
+        <h4 className="font-semibold text-[color:var(--eeo-ink)]">Evidence links</h4>
         <div className="space-y-2">
           {linkedEvidence.map(({ evidenceId, role, note, evidence }) => (
-            <div key={evidenceId} className="rounded-2xl border border-stone-200 bg-stone-50 p-3">
+            <div key={evidenceId} className="rounded-2xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.75)] p-3">
               <div className="mb-2 flex flex-wrap gap-2">
-                <span className="font-mono text-xs text-stone-600">{evidenceId}</span>
+                <span className="font-mono text-xs text-[color:var(--eeo-muted)]">{evidenceId}</span>
                 <EvidenceRoleBadge value={role} />
               </div>
-              <p className="text-sm text-stone-700">{evidence?.summary ?? "Evidence item not found in current release."}</p>
-              {note ? <p className="mt-1 text-xs text-stone-500">note: {note}</p> : null}
+              <p className="text-sm text-[color:var(--eeo-text)]">{evidence?.summary ?? "Evidence item not found in current release."}</p>
+              {note ? <p className="mt-1 text-xs text-[color:var(--eeo-muted)]">note: {note}</p> : null}
             </div>
           ))}
         </div>
@@ -163,11 +163,11 @@ export default function ClaimCard({
         </div>
       </section>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-stone-100 pt-3">
-        <span className="text-xs text-stone-500">Last updated: {claim.lastUpdated}</span>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[color:var(--eeo-border)] pt-3">
+        <span className="text-xs text-[color:var(--eeo-muted)]">Last updated: {claim.lastUpdated}</span>
         <Link
           href="/pilot/corrections"
-          className="rounded-full border border-stone-900 bg-stone-900 px-4 py-2 text-sm font-semibold text-white hover:bg-stone-800"
+          className="rounded-full bg-[color:var(--eeo-primary)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2"
         >
           Challenge or correct this claim
         </Link>

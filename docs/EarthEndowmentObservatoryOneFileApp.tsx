@@ -1,5 +1,7 @@
 "use client";
 
+// Archival design snapshot — may lag ../components/EarthEndowmentObservatoryOneFileApp.tsx (canonical shipping UI).
+
 import React, { useCallback, useMemo, useState, type KeyboardEvent, type ReactNode } from "react";
 import {
   AlertTriangle,

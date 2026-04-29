@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   title: "Earth Endowment Observatory",
   description:
     "A public-interest observatory for natural endowment, governance, stewardship, and accountability along critical mineral corridors.",
+  icons: {
+    icon: [{ url: "/brand/eeo-logo-transparent.png", type: "image/png", sizes: "any" }],
+  },
   robots: { index: true, follow: true },
   openGraph: {
     images: [
