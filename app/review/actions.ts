@@ -1,12 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 import {
   patchCorrectionSubmission,
   type CorrectionTriagePatch,
   type CorrectionTriageStatus,
 } from "@/lib/correctionsStore";
+import { isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
 const MAX_TRIAGE_NOTE = 8_000;
 const VALID_TRIAGE: CorrectionTriageStatus[] = ["queued", "in_review", "resolved"];
@@ -15,6 +17,11 @@ export async function patchCorrectionTriage(
   submissionId: string,
   patch: CorrectionTriagePatch
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const cookieStore = await cookies();
+  if (!isReviewAuthorizedFromCookies(cookieStore)) {
+    return { ok: false, error: "Unauthorized review session." };
+  }
+
   if (typeof submissionId !== "string" || !submissionId.trim()) {
     return { ok: false, error: "Invalid submission id." };
   }

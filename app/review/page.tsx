@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import CorrectionTriageActions from "@/components/eeo/CorrectionTriageActions";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
+import { isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +14,12 @@ function maskEmail(email: string): string {
   return `${visible}${"*".repeat(Math.max(2, name.length - 2))}@${domain}`;
 }
 
-export default function ReviewPage() {
+export default async function ReviewPage() {
+  const cookieStore = await cookies();
+  if (!isReviewAuthorizedFromCookies(cookieStore)) {
+    redirect("/review/login");
+  }
+
   const submissions = listCorrectionSubmissions();
 
   return (

@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import {
   getCorrectionSubmissionById,
   patchCorrectionSubmission,
   type CorrectionTriageStatus,
 } from "@/lib/correctionsStore";
+import { isReviewAuthorizedCookieValue, REVIEW_AUTH_COOKIE_NAME } from "@/lib/reviewAuth";
 
 const VALID: CorrectionTriageStatus[] = ["queued", "in_review", "resolved"];
 const MAX_TRIAGE_NOTE = 8_000;
@@ -19,9 +20,13 @@ type PatchBody = {
 };
 
 export async function PATCH(
-  request: Request,
+  request: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
+  if (!isReviewAuthorizedCookieValue(request.cookies.get(REVIEW_AUTH_COOKIE_NAME)?.value)) {
+    return NextResponse.json({ error: "Unauthorized review session." }, { status: 401 });
+  }
+
   const { id: rawId } = await context.params;
   const id = decodeURIComponent(rawId);
 
