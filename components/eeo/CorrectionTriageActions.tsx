@@ -9,6 +9,7 @@ import type { CorrectionTriageStatus } from "@/lib/correctionsStore";
 const STATUSES: { value: CorrectionTriageStatus; label: string }[] = [
   { value: "queued", label: "Queued" },
   { value: "in_review", label: "In review" },
+  { value: "needs_review", label: "Needs review" },
   { value: "resolved", label: "Resolved" },
 ];
 

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 import {
+  getCorrectionSubmissionById,
   patchCorrectionSubmission,
   type CorrectionTriagePatch,
   type CorrectionTriageStatus,
@@ -11,7 +12,7 @@ import {
 import { isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
 const MAX_TRIAGE_NOTE = 8_000;
-const VALID_TRIAGE: CorrectionTriageStatus[] = ["queued", "in_review", "resolved"];
+const VALID_TRIAGE: CorrectionTriageStatus[] = ["queued", "in_review", "needs_review", "resolved"];
 
 export async function patchCorrectionTriage(
   submissionId: string,
@@ -50,6 +51,22 @@ export async function patchCorrectionTriage(
   }
 
   const id = decodeURIComponent(submissionId.trim());
+  const current = getCorrectionSubmissionById(id);
+  if (!current) {
+    return { ok: false, error: "Correction request not found." };
+  }
+  const normalizedIncomingNote =
+    patch.triageNote === undefined || patch.triageNote === null || patch.triageNote.trim() === ""
+      ? undefined
+      : patch.triageNote.trim();
+  const noStatusChange =
+    patch.triageStatus === undefined || patch.triageStatus === current.triageStatus;
+  const noNoteChange =
+    patch.triageNote === undefined || (current.triageNote ?? "") === (normalizedIncomingNote ?? "");
+  if (noStatusChange && noNoteChange) {
+    return { ok: false, error: "Patch must include at least one actual change." };
+  }
+
   const ok = patchCorrectionSubmission(id, patch);
   if (!ok) {
     return { ok: false, error: "Correction request not found." };

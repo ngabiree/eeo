@@ -46,9 +46,11 @@ export async function POST(request: Request) {
   }
 
   const submittedAt = new Date().toISOString();
+  const submissionId = `CORR-${Date.now().toString(36).toUpperCase()}`;
+  const activityId = `ACT-${Date.now().toString(36).toUpperCase()}-SUB`;
 
   const submission: CorrectionSubmission = {
-    id: `CORR-${Date.now().toString(36).toUpperCase()}`,
+    id: submissionId,
     submittedAt,
     name,
     email,
@@ -57,6 +59,15 @@ export async function POST(request: Request) {
     details,
     triageStatus: "queued",
     triageUpdatedAt: submittedAt,
+    activities: [
+      {
+        id: activityId,
+        correctionId: submissionId,
+        type: "submitted",
+        actor: "public_submitter",
+        createdAt: submittedAt,
+      },
+    ],
   };
 
   addCorrectionSubmission(submission);

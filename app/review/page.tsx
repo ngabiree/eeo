@@ -14,6 +14,33 @@ function maskEmail(email: string): string {
   return `${visible}${"*".repeat(Math.max(2, name.length - 2))}@${domain}`;
 }
 
+function formatActivityLine(activity: {
+  type: string;
+  createdAt: string;
+  fromStatus?: string;
+  toStatus?: string;
+  actor: string;
+}): string {
+  const at = new Date(activity.createdAt).toLocaleString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  if (activity.type === "triage_status_changed") {
+    return `${at} — Status changed from ${activity.fromStatus ?? "unknown"} to ${activity.toStatus ?? "unknown"}`;
+  }
+  if (activity.type === "triage_note_added") {
+    return `${at} — Reviewer note added`;
+  }
+  if (activity.type === "triage_note_updated") {
+    return `${at} — Reviewer note updated`;
+  }
+  if (activity.type === "submitted") {
+    return `${at} — Submitted by public user`;
+  }
+  return `${at} — ${activity.type.replace(/_/g, " ")} (${activity.actor.replace(/_/g, " ")})`;
+}
+
 export default async function ReviewPage() {
   const cookieStore = await cookies();
   if (!isReviewAuthorizedFromCookies(cookieStore)) {
@@ -64,6 +91,8 @@ export default async function ReviewPage() {
                     <p>Last triage update {new Date(submission.triageUpdatedAt).toLocaleString()}</p>
                   </div>
                   <div className="grid gap-1 text-sm text-stone-700 md:grid-cols-2">
+                    <p><strong>Current status:</strong> {submission.triageStatus.replace(/_/g, " ")}</p>
+                    <p><strong>Latest triage note:</strong> {submission.triageNote || "No note added"}</p>
                     <p><strong>Category:</strong> {submission.category}</p>
                     <p><strong>Claim:</strong> {submission.claimId || "Not specified"}</p>
                     <p><strong>Submitted by:</strong> {submission.name}</p>
@@ -77,6 +106,20 @@ export default async function ReviewPage() {
                     currentStatus={submission.triageStatus}
                     initialNote={submission.triageNote}
                   />
+                  <div className="mt-3 rounded-2xl border border-stone-200 bg-white p-3">
+                    <h3 className="text-sm font-semibold text-stone-900">Activity history</h3>
+                    <ul className="mt-2 space-y-1 text-xs text-stone-600">
+                      {submission.activities.length === 0 ? (
+                        <li>No activity recorded.</li>
+                      ) : (
+                        [...submission.activities]
+                          .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+                          .map((activity) => (
+                            <li key={activity.id}>{formatActivityLine(activity)}</li>
+                          ))
+                      )}
+                    </ul>
+                  </div>
                 </article>
               ))}
             </div>

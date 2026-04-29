@@ -30,7 +30,26 @@ export function isCorrectionCategory(value: unknown): value is CorrectionCategor
 }
 
 /** Prototype-only triage states for the review workspace */
-export type CorrectionTriageStatus = "queued" | "in_review" | "resolved";
+export type CorrectionTriageStatus = "queued" | "in_review" | "needs_review" | "resolved";
+export type CorrectionActivityType =
+  | "submitted"
+  | "triage_status_changed"
+  | "triage_note_added"
+  | "triage_note_updated"
+  | "reviewed"
+  | "resolved"
+  | "withdrawn";
+
+export type CorrectionActivity = {
+  id: string;
+  correctionId: string;
+  type: CorrectionActivityType;
+  note?: string;
+  fromStatus?: CorrectionTriageStatus;
+  toStatus?: CorrectionTriageStatus;
+  actor: "public_submitter" | "reviewer" | "system";
+  createdAt: string;
+};
 
 export interface CorrectionSubmission {
   id: string;
@@ -45,6 +64,7 @@ export interface CorrectionSubmission {
   triageUpdatedAt: string;
   /** Optional reviewer note (prototype workspace only). */
   triageNote?: string;
+  activities: CorrectionActivity[];
 }
 
 /** In-memory only: resets between server cold starts — OK for prototype triage demos. */
@@ -68,6 +88,10 @@ export interface CorrectionTriagePatch {
   triageNote?: string | null;
 }
 
+function activityId(): string {
+  return `ACT-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+}
+
 /**
  * Applies a partial triage patch. Updates `triageUpdatedAt` when anything changes.
  * Returns false if submission id does not exist.
@@ -83,7 +107,17 @@ export function patchCorrectionSubmission(id: string, patch: CorrectionTriagePat
     patch.triageStatus !== undefined &&
     patch.triageStatus !== entry.triageStatus
   ) {
+    const fromStatus = entry.triageStatus;
     entry.triageStatus = patch.triageStatus;
+    entry.activities.push({
+      id: activityId(),
+      correctionId: entry.id,
+      type: "triage_status_changed",
+      fromStatus,
+      toStatus: patch.triageStatus,
+      actor: "reviewer",
+      createdAt: now,
+    });
     touched = true;
   }
 
@@ -96,6 +130,14 @@ export function patchCorrectionSubmission(id: string, patch: CorrectionTriagePat
     const next = normalized ?? "";
     if (prev !== next) {
       entry.triageNote = normalized;
+      entry.activities.push({
+        id: activityId(),
+        correctionId: entry.id,
+        type: prev ? "triage_note_updated" : "triage_note_added",
+        note: normalized,
+        actor: "reviewer",
+        createdAt: now,
+      });
       touched = true;
     }
   }
