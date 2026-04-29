@@ -6,10 +6,14 @@ import ReviewGovernanceSignoff from "@/components/eeo/ReviewGovernanceSignoff";
 import { claims } from "@/data/claims";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
-import { listReleaseGovernanceLogEntries } from "@/lib/releaseGovernanceLogStore";
+import {
+  hasRecentReleaseGovernanceSignoff,
+  listReleaseGovernanceLogEntries,
+} from "@/lib/releaseGovernanceLogStore";
 import { isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
 export const dynamic = "force-dynamic";
+const RELEASE_SIGNOFF_MAX_AGE_HOURS = 24;
 
 function maskEmail(email: string): string {
   const [name = "", domain = ""] = email.split("@");
@@ -63,6 +67,7 @@ export default async function ReviewPage() {
 
   const submissions = listCorrectionSubmissions();
   const governanceLog = listReleaseGovernanceLogEntries();
+  const hasRecentSignoff = hasRecentReleaseGovernanceSignoff(RELEASE_SIGNOFF_MAX_AGE_HOURS);
   const claimById = new Map(claims.map((claim) => [claim.id, claim]));
 
   return (
@@ -83,6 +88,21 @@ export default async function ReviewPage() {
           Open release manifest
         </Link>
         <ReviewGovernanceSignoff />
+        <section
+          className={
+            hasRecentSignoff
+              ? "rounded-3xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900"
+              : "rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900"
+          }
+        >
+          <p className="font-semibold">
+            Release governance recency check: {hasRecentSignoff ? "Pass" : "Pending"}
+          </p>
+          <p className="mt-1">
+            Release readiness requires a governance sign-off recorded within the last{" "}
+            {RELEASE_SIGNOFF_MAX_AGE_HOURS} hours.
+          </p>
+        </section>
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-stone-950">Release governance review log</h2>
           <p className="mt-1 text-xs text-stone-600">

@@ -39,3 +39,14 @@ export function listReleaseGovernanceLogEntries(): ReleaseGovernanceLogEntry[] {
     .map(cloneEntry)
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
+
+export function getLatestReleaseGovernanceLogEntry(): ReleaseGovernanceLogEntry | null {
+  return listReleaseGovernanceLogEntries()[0] ?? null;
+}
+
+export function hasRecentReleaseGovernanceSignoff(maxAgeHours: number): boolean {
+  const latest = getLatestReleaseGovernanceLogEntry();
+  if (!latest) return false;
+  const ageMs = Date.now() - new Date(latest.createdAt).getTime();
+  return ageMs <= maxAgeHours * 60 * 60 * 1000;
+}
