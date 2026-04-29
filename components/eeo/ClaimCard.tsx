@@ -91,6 +91,18 @@ export default function ClaimCard({
           the claim limitations and current governance status.
         </div>
       ) : null}
+      {correctionSummary.governanceStatus === "corrected" ? (
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">
+          This claim has been corrected following review. Read the current claim text and limitations as the active
+          public record.
+        </div>
+      ) : null}
+      {correctionSummary.governanceStatus === "restricted" ? (
+        <div className="rounded-2xl border border-orange-200 bg-orange-50 p-4 text-sm text-orange-900">
+          This claim is under publication restriction for harm, rights, or legal-sensitivity reasons. This is a
+          protective publication decision, not a legal finding.
+        </div>
+      ) : null}
       {correctionSummary.governanceStatus === "withdrawn" ? (
         <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">
           This claim is marked withdrawn and should not be relied upon in its previous form. This is not a legal determination.

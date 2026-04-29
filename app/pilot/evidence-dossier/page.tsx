@@ -11,6 +11,13 @@ import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function PilotEvidenceDossierPage() {
   const corrections = listCorrectionSubmissions();
+  const governanceSummaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
+  const challengedOrUnderReview = governanceSummaries.filter(
+    (summary) => summary.governanceStatus === "challenged" || summary.governanceStatus === "under_review"
+  );
+  const corrected = governanceSummaries.filter((summary) => summary.governanceStatus === "corrected");
+  const restricted = governanceSummaries.filter((summary) => summary.governanceStatus === "restricted");
+  const withdrawn = governanceSummaries.filter((summary) => summary.governanceStatus === "withdrawn");
 
   return (
     <main className="min-h-screen bg-[#EFE8D8] text-stone-950">
@@ -24,6 +31,29 @@ export default function PilotEvidenceDossierPage() {
             distinctions.
           </p>
         </header>
+
+        <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
+          <h2 className="text-xl font-semibold">Claim governance states in this release</h2>
+          <div className="mt-3 grid gap-2 text-sm text-stone-700 md:grid-cols-2">
+            <p>
+              <strong>Challenged / under review:</strong>{" "}
+              {challengedOrUnderReview.map((summary) => summary.claimId).join(", ") || "None"}
+            </p>
+            <p>
+              <strong>Corrected:</strong> {corrected.map((summary) => summary.claimId).join(", ") || "None"}
+            </p>
+            <p>
+              <strong>Restricted:</strong> {restricted.map((summary) => summary.claimId).join(", ") || "None"}
+            </p>
+            <p>
+              <strong>Withdrawn:</strong> {withdrawn.map((summary) => summary.claimId).join(", ") || "None"}
+            </p>
+          </div>
+          <p className="mt-2 text-xs text-stone-600">
+            Governance states summarize correction-linked review outcomes and publication posture; they are not legal
+            determinations.
+          </p>
+        </section>
 
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">Claim cards</h2>

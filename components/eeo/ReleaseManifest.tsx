@@ -21,6 +21,9 @@ export default function ReleaseManifestPanel() {
   const openCorrectionIds = corrections
     .filter((correction) => correction.triageStatus !== "resolved")
     .map((correction) => correction.id);
+  const linkedCorrectionCount = corrections.filter((correction) => Boolean(correction.claimId)).length;
+  const governanceSignalCount =
+    challengedClaimIds.length + correctedClaimIds.length + restrictedClaimIds.length + withdrawnClaimIds.length;
   const lastCorrectionReviewAt = corrections
     .map((correction) => correction.triageUpdatedAt || correction.submittedAt)
     .sort((a, b) => b.localeCompare(a))[0];
@@ -45,6 +48,12 @@ export default function ReleaseManifestPanel() {
         <p className="md:col-span-2"><strong>Right-of-reply status:</strong> {rightOfReplySummary}</p>
         <p className="md:col-span-2"><strong>Known limitations:</strong> {releaseManifest.publicLimitations.join(" ")}</p>
         <p className="md:col-span-2"><strong>Release governance note:</strong> This release manifest records publication status, known limitations, open correction items, and claim governance status. It does not adjudicate legal liability.</p>
+        <p className="md:col-span-2">
+          <strong>Correction/governance summary:</strong> {corrections.length} total correction submissions,{" "}
+          {linkedCorrectionCount} linked to known claims, {openCorrectionIds.length} currently open, and{" "}
+          {governanceSignalCount} claim governance signals recorded across challenged, corrected, restricted, and
+          withdrawn states.
+        </p>
         <p><strong>Approvals:</strong> {releaseManifest.approvedBy.join(", ")}</p>
         <p><strong>Release date:</strong> {releaseManifest.releaseDate ?? "Not published"}</p>
         <p><strong>Correction route:</strong> /pilot/corrections</p>
