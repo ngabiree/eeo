@@ -5,7 +5,11 @@ import {
   patchCorrectionSubmission,
   type CorrectionTriageStatus,
 } from "@/lib/correctionsStore";
-import { isReviewAuthorizedCookieValue, REVIEW_AUTH_COOKIE_NAME } from "@/lib/reviewAuth";
+import {
+  getReviewerIdentity,
+  isReviewAuthorizedCookieValue,
+  REVIEW_AUTH_COOKIE_NAME,
+} from "@/lib/reviewAuth";
 
 const VALID: CorrectionTriageStatus[] = ["queued", "in_review", "needs_review", "resolved"];
 const MAX_TRIAGE_NOTE = 8_000;
@@ -97,7 +101,12 @@ export async function PATCH(
     );
   }
 
-  const ok = patchCorrectionSubmission(id, patch);
+  const reviewer = getReviewerIdentity();
+  const ok = patchCorrectionSubmission(id, {
+    ...patch,
+    reviewerId: reviewer.reviewerId,
+    reviewerLabel: reviewer.reviewerLabel,
+  });
   if (!ok) {
     return NextResponse.json({ error: "Correction request not found." }, { status: 404 });
   }

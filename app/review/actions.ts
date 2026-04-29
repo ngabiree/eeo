@@ -9,7 +9,7 @@ import {
   type CorrectionTriagePatch,
   type CorrectionTriageStatus,
 } from "@/lib/correctionsStore";
-import { isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
+import { getReviewerIdentity, isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
 const MAX_TRIAGE_NOTE = 8_000;
 const VALID_TRIAGE: CorrectionTriageStatus[] = ["queued", "in_review", "needs_review", "resolved"];
@@ -67,7 +67,12 @@ export async function patchCorrectionTriage(
     return { ok: false, error: "Patch must include at least one actual change." };
   }
 
-  const ok = patchCorrectionSubmission(id, patch);
+  const reviewer = getReviewerIdentity();
+  const ok = patchCorrectionSubmission(id, {
+    ...patch,
+    reviewerId: reviewer.reviewerId,
+    reviewerLabel: reviewer.reviewerLabel,
+  });
   if (!ok) {
     return { ok: false, error: "Correction request not found." };
   }

@@ -48,6 +48,8 @@ export type CorrectionActivity = {
   fromStatus?: CorrectionTriageStatus;
   toStatus?: CorrectionTriageStatus;
   actor: "public_submitter" | "reviewer" | "system";
+  reviewerId?: string;
+  reviewerLabel?: string;
   createdAt: string;
 };
 
@@ -70,26 +72,49 @@ export interface CorrectionSubmission {
 /** In-memory only: resets between server cold starts — OK for prototype triage demos. */
 const correctionsStore: CorrectionSubmission[] = [];
 
+function cloneSubmission(submission: CorrectionSubmission): CorrectionSubmission {
+  const activities = submission.activities ?? [];
+  return {
+    ...submission,
+    activities: activities.map((activity) => ({ ...activity })),
+  };
+}
+
 export function addCorrectionSubmission(submission: CorrectionSubmission) {
   correctionsStore.push(submission);
 }
 
 export function listCorrectionSubmissions(): CorrectionSubmission[] {
-  return [...correctionsStore].sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));
+  return correctionsStore
+    .map(cloneSubmission)
+    .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));
 }
 
 export function getCorrectionSubmissionById(id: string): CorrectionSubmission | undefined {
-  return correctionsStore.find((s) => s.id === id);
+  const match = correctionsStore.find((s) => s.id === id);
+  return match ? cloneSubmission(match) : undefined;
 }
 
 export interface CorrectionTriagePatch {
   triageStatus?: CorrectionTriageStatus;
   /** Omit to leave unchanged; `null` clears the note */
   triageNote?: string | null;
+  reviewerId?: string;
+  reviewerLabel?: string;
 }
 
 function activityId(): string {
   return `ACT-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+}
+
+/** Single append-only entry point for activity log records. */
+function appendActivity(entry: CorrectionSubmission, activity: Omit<CorrectionActivity, "id" | "correctionId">) {
+  entry.activities = entry.activities ?? [];
+  entry.activities.push({
+    id: activityId(),
+    correctionId: entry.id,
+    ...activity,
+  });
 }
 
 /**
@@ -109,13 +134,13 @@ export function patchCorrectionSubmission(id: string, patch: CorrectionTriagePat
   ) {
     const fromStatus = entry.triageStatus;
     entry.triageStatus = patch.triageStatus;
-    entry.activities.push({
-      id: activityId(),
-      correctionId: entry.id,
+    appendActivity(entry, {
       type: "triage_status_changed",
       fromStatus,
       toStatus: patch.triageStatus,
       actor: "reviewer",
+      reviewerId: patch.reviewerId,
+      reviewerLabel: patch.reviewerLabel,
       createdAt: now,
     });
     touched = true;
@@ -130,12 +155,12 @@ export function patchCorrectionSubmission(id: string, patch: CorrectionTriagePat
     const next = normalized ?? "";
     if (prev !== next) {
       entry.triageNote = normalized;
-      entry.activities.push({
-        id: activityId(),
-        correctionId: entry.id,
+      appendActivity(entry, {
         type: prev ? "triage_note_updated" : "triage_note_added",
         note: normalized,
         actor: "reviewer",
+        reviewerId: patch.reviewerId,
+        reviewerLabel: patch.reviewerLabel,
         createdAt: now,
       });
       touched = true;

@@ -20,6 +20,7 @@ function formatActivityLine(activity: {
   fromStatus?: string;
   toStatus?: string;
   actor: string;
+  reviewerLabel?: string;
 }): string {
   const at = new Date(activity.createdAt).toLocaleString(undefined, {
     month: "short",
@@ -27,13 +28,16 @@ function formatActivityLine(activity: {
     year: "numeric",
   });
   if (activity.type === "triage_status_changed") {
-    return `${at} — Status changed from ${activity.fromStatus ?? "unknown"} to ${activity.toStatus ?? "unknown"}`;
+    const reviewer = activity.reviewerLabel ? ` by ${activity.reviewerLabel}` : "";
+    return `${at} — Status changed from ${activity.fromStatus ?? "unknown"} to ${activity.toStatus ?? "unknown"}${reviewer}`;
   }
   if (activity.type === "triage_note_added") {
-    return `${at} — Reviewer note added`;
+    const reviewer = activity.reviewerLabel ? ` by ${activity.reviewerLabel}` : "";
+    return `${at} — Reviewer note added${reviewer}`;
   }
   if (activity.type === "triage_note_updated") {
-    return `${at} — Reviewer note updated`;
+    const reviewer = activity.reviewerLabel ? ` by ${activity.reviewerLabel}` : "";
+    return `${at} — Reviewer note updated${reviewer}`;
   }
   if (activity.type === "submitted") {
     return `${at} — Submitted by public user`;
@@ -71,6 +75,9 @@ export default async function ReviewPage() {
           <h2 className="text-2xl font-semibold">Correction intake queue</h2>
           <p className="text-sm leading-6 text-stone-600">
             Prototype triage view for correction requests submitted through the public correction route.
+          </p>
+          <p className="text-xs leading-5 text-stone-500">
+            This workflow helps EEO review corrections, challenges, source updates, harm-risk concerns, and methodological disputes. It does not adjudicate legal liability.
           </p>
 
           {submissions.length === 0 ? (

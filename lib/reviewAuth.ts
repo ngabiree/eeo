@@ -33,3 +33,15 @@ export function getReviewAuthCookieOptions() {
     maxAge: ONE_DAY_SECONDS,
   };
 }
+
+/**
+ * Lightweight reviewer identity for audit attribution.
+ * Uses optional env overrides to avoid exposing secret cookie values.
+ */
+export function getReviewerIdentity() {
+  return {
+    reviewerId: process.env.REVIEW_WORKSPACE_REVIEWER_ID?.trim() || "reviewer_session",
+    reviewerLabel:
+      process.env.REVIEW_WORKSPACE_REVIEWER_LABEL?.trim() || "Authenticated reviewer",
+  };
+}
