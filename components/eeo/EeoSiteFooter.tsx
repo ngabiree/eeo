@@ -1,108 +1,140 @@
+import Image from "next/image";
 import Link from "next/link";
 
-import EeoLogo from "@/components/eeo/EeoLogo";
+const EEO_LOGO_SRC = "/brand/eeo-logo-transparent.png";
 
-const REFERENCE_TAGS = ["UN Comtrade", "USGS", "EITI", "Open Ownership", "ResourceContracts", "Global Forest Watch", "ILOSTAT", "SEEA", "OECD", "IPBES"];
-const OBSERVATORY_LINKS = [
-  { href: "/", label: "Mission" },
-  { href: "/pilot/methods-and-limits", label: "Governance" },
-  { href: "/pilot/safeguards", label: "Stewardship" },
-  { href: "/pilot/safeguards", label: "Safeguards" },
+const footerColumns = [
+  {
+    title: "Observatory",
+    links: [
+      { label: "Mission", href: "/observatory" },
+      { label: "Governance", href: "/governance" },
+      { label: "Stewardship", href: "/stewardship" },
+      { label: "Safeguards", href: "/safeguards" },
+    ],
+  },
+  {
+    title: "Evidence",
+    links: [
+      { label: "Evidence Ledger", href: "/evidence-ledger" },
+      { label: "Source Registry", href: "/source-registry" },
+      { label: "Methods", href: "/methods" },
+      { label: "Corrections", href: "/corrections" },
+    ],
+  },
+  {
+    title: "First Corridor",
+    links: [
+      { label: "Critical Minerals Corridor", href: "/pilot" },
+      { label: "Corridor Map", href: "/pilot/map" },
+      { label: "Value Chain", href: "/pilot/value-chain" },
+      { label: "Public Revenue", href: "/pilot/public-revenue" },
+    ],
+  },
+  {
+    title: "Accountability",
+    links: [
+      { label: "Disclosure Policy", href: "/disclosure-policy" },
+      { label: "Correction Process", href: "/corrections" },
+      { label: "Right of Reply", href: "/right-of-reply" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
 ] as const;
-const EVIDENCE_LINKS = [
-  { href: "/pilot/evidence-ledger", label: "Evidence Ledger" },
-  { href: "/pilot/evidence-dossier", label: "Source Registry" },
-  { href: "/pilot/methods-and-limits", label: "Methods" },
-  { href: "/pilot/corrections", label: "Corrections" },
-] as const;
-const CORRIDOR_LINKS = [
-  { href: "/pilot/corridor", label: "Critical Minerals Corridor" },
-  { href: "/pilot/corridor", label: "Corridor Map" },
-  { href: "/pilot/value-chain", label: "Value Chain" },
-  { href: "/pilot/labor-ecology-revenue", label: "Public Revenue" },
+
+const referenceSystems = [
+  "UN Comtrade",
+  "USGS",
+  "EITI",
+  "Open Ownership",
+  "ResourceContracts",
+  "Global Forest Watch",
+  "ILOSTAT",
+  "SEEA",
+  "OECD Guidance",
 ] as const;
 
 export default function EeoSiteFooter() {
   return (
-    <footer className="mt-auto border-t border-[color:var(--eeo-border)] bg-[color:var(--eeo-sky)]/45 px-4 py-10 text-[color:var(--eeo-text)] md:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl space-y-8">
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
-          <div className="flex max-w-xl items-start gap-4 lg:col-span-1">
-            <EeoLogo decorative size="sm" />
-            <div>
-              <div className="font-serif text-lg font-semibold text-[color:var(--eeo-ink)]">
-                Earth Endowment Observatory
+    <footer className="relative overflow-hidden border-t border-[#CFE3DA] bg-gradient-to-br from-[#EAF5F0] via-[#E3F2FB] to-[#DFF3E7] text-[#13424A]">
+      <div className="pointer-events-none absolute inset-0 opacity-70">
+        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-[#BFE3E2]/50 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-[#2E8B57]/15 blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-40 w-40 -translate-x-1/2 rounded-full bg-[#F3E4B8]/50 blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-5 py-12 md:px-8 lg:py-16">
+        <div className="mb-10 rounded-2xl border border-[#CFE3DA] bg-white/55 px-5 py-4 text-sm font-semibold tracking-wide text-[#144E55] backdrop-blur">
+          Public record · Stewardship · Accountability · Safeguards
+        </div>
+
+        <div className="grid gap-10 lg:grid-cols-[1.15fr_2fr]">
+          <div>
+            <div className="flex items-center gap-4">
+              <Image src={EEO_LOGO_SRC} alt="" width={1254} height={1254} className="h-20 w-20 shrink-0 object-contain" />
+
+              <div>
+                <div className="font-serif text-2xl font-semibold leading-tight text-[#0F2F33]">Earth Endowment Observatory</div>
+                <div className="mt-1 text-xs font-extrabold uppercase tracking-[0.16em] text-[#B88928]">From Earth to economy, made visible.</div>
               </div>
-              <p className="mt-1 text-sm text-[color:var(--eeo-muted)]">From Earth to economy, made visible.</p>
-              <p className="mt-2 max-w-prose leading-7">
-                A public observatory for natural wealth, stewardship, and accountability.
-              </p>
             </div>
-          </div>
-          <FooterLinkColumn title="Observatory" links={OBSERVATORY_LINKS} />
-          <FooterLinkColumn title="Evidence" links={EVIDENCE_LINKS} />
-          <FooterLinkColumn title="First Corridor" links={CORRIDOR_LINKS} />
-        </div>
 
-        <div className="grid gap-4 lg:grid-cols-[1.3fr_1fr]">
-          <div className="rounded-3xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.78)] px-5 py-4 shadow-sm backdrop-blur">
-            <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-[color:var(--eeo-muted)]">
-              Reference Standards &amp; Data Systems
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
-              Used for citation, interoperability, or methodological alignment — not endorsement.
+            <p className="mt-6 max-w-md text-sm leading-7 text-[#4F6F75]">A public observatory for natural wealth, stewardship, and accountability.</p>
+
+            <p className="mt-5 max-w-md rounded-2xl border border-[#CFE3DA] bg-white/55 p-4 text-xs leading-6 text-[#4F6F75] backdrop-blur">
+              EEO content is informational and does not constitute legal, financial, investment, certification, or traceability advice.
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {REFERENCE_TAGS.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-[color:var(--eeo-border)] bg-white/70 px-2.5 py-1 text-xs text-[color:var(--eeo-text)]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
-          <div className="rounded-3xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.85)] px-5 py-4 text-sm leading-6 text-[color:var(--eeo-muted)] shadow-sm backdrop-blur">
-            EEO content is informational and does not constitute legal, financial, investment, certification, or traceability advice.
+
+          <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-5">
+            {footerColumns.map((column) => (
+              <nav key={column.title} aria-label={column.title}>
+                <h2 className="text-sm font-extrabold text-[#0F2F33]">{column.title}</h2>
+
+                <ul className="mt-4 space-y-2.5">
+                  {column.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="text-sm leading-6 text-[#4F6F75] transition hover:text-[#1F6F78] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6F78] focus-visible:ring-offset-2 focus-visible:ring-offset-[#EAF5F0]"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+
+            <section aria-labelledby="reference-systems">
+              <h2 id="reference-systems" className="text-sm font-extrabold text-[#0F2F33]">
+                Reference Standards &amp; Data Systems
+              </h2>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {referenceSystems.map((name) => (
+                  <span
+                    key={name}
+                    className="rounded-full border border-[#CFE3DA] bg-white/60 px-2.5 py-1 text-xs font-semibold text-[#144E55] backdrop-blur"
+                  >
+                    {name}
+                  </span>
+                ))}
+              </div>
+
+              <p className="mt-4 text-xs leading-6 text-[#4F6F75]">Used for citation, interoperability, or methodological alignment — not endorsement.</p>
+            </section>
           </div>
         </div>
+      </div>
 
-        <div className="flex flex-col gap-2 border-t border-[color:var(--eeo-border)] pt-6 text-sm text-[color:var(--eeo-muted)] md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-4">
-          <p className="max-w-prose leading-relaxed">
-            Make the chain visible. Keep the record accountable. Protect what exposure could harm.
-          </p>
-          <Link href="/pilot/evidence-ledger" className="font-medium underline decoration-[color:var(--eeo-primary)] underline-offset-2 hover:text-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] rounded">
-            Evidence Ledger
-          </Link>
+      <div className="relative border-t border-[#CFE3DA] bg-white/45 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-5 text-xs leading-6 text-[#4F6F75] md:flex-row md:items-center md:justify-between md:px-8">
+          <div>© 2026 Earth Endowment Observatory. All rights reserved.</div>
+
+          <div className="font-semibold text-[#144E55]">Make the chain visible. Keep the record accountable. Protect what exposure could harm.</div>
         </div>
       </div>
     </footer>
-  );
-}
-
-function FooterLinkColumn({
-  title,
-  links,
-}: {
-  title: string;
-  links: readonly { href: string; label: string }[];
-}) {
-  return (
-    <nav aria-label={title}>
-      <h3 className="font-mono text-[11px] uppercase tracking-[0.16em] text-[color:var(--eeo-muted)]">{title}</h3>
-      <ul className="mt-3 space-y-2 text-sm">
-        {links.map((link) => (
-          <li key={`${title}-${link.label}`}>
-            <Link
-              href={link.href}
-              className="text-[color:var(--eeo-text)] hover:text-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] rounded"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
   );
 }

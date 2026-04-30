@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 
+import { EeoFooter } from "@/components/EeoFooter";
 import PublicChrome from "@/components/eeo/PublicChrome";
 
 const siteUrl =
@@ -55,7 +56,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Skip to main content
         </a>
-        <PublicChrome>{children}</PublicChrome>
+        <>
+          <PublicChrome>{children}</PublicChrome>
+          <EeoFooter />
+        </>
       </body>
     </html>
   );
