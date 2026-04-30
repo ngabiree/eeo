@@ -20,6 +20,8 @@ Navigation pills use **`lib/pilotPublicNav.ts`** — a deliberate **subset** for
 
 ## Canonical pilot URLs (`app/pilot/`)
 
+Programmatic index (for the **`/pilot`** hub UI): **`lib/pilotHubRoutes.ts`**.
+
 | Path | Notes |
 |------|--------|
 | `/pilot` | Pilot overview + MVP chain panel |

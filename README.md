@@ -70,6 +70,7 @@ Do not commit `package-lock.json` (it is in `.gitignore`). CI uses **`pnpm insta
 ## Project layout
 
 - `app/` — Next.js App Router (`layout.tsx`, `page.tsx`, `globals.css`)
+- `lib/pilotPublicNav.ts` — header shortcut pilot links; **`lib/pilotHubRoutes.ts`** — full **`/pilot`** exploration index (surfaced on **`/pilot`**).
 - `components/EarthEndowmentObservatoryOneFileApp.tsx` — **canonical** corridor workspace UI (client component); treat this as the source of shipped behavior.
 - `docs/eeo_one_file_corridor_app.jsx` — small one-file corridor snapshot (reference; uses `lucide-react`)
 - `docs/eeo_one_file_corridor_app_data_reactive.jsx` — curated repaired data-reactive atmospheric/public-evidence variant imported from local download

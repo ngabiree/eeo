@@ -1,4 +1,5 @@
 import EvidenceLoopPanel from "@/components/eeo/EvidenceLoopPanel";
+import PilotHubRouteList from "@/components/eeo/PilotHubRouteList";
 import PilotRouteNav from "@/components/eeo/PilotRouteNav";
 
 export default function PilotOverviewPage() {
@@ -14,6 +15,7 @@ export default function PilotOverviewPage() {
           no legal finding.
         </p>
         <EvidenceLoopPanel />
+        <PilotHubRouteList />
       </div>
     </main>
   );

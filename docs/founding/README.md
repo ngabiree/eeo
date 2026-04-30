@@ -71,7 +71,7 @@ Executive summary: **Earth endowments → shared human capability** as an eviden
 ## How to cite
 
 - For **product and institutional scope**, cite the **canonical specification** path above.
-- For **MVP route and redirect discipline**, cite **mvp-evidence-loop** and `lib/pilotPublicNav.ts` (if documenting navigation).
+- For **MVP route and redirect discipline**, cite **mvp-evidence-loop**, `lib/pilotPublicNav.ts` (header shortcuts), and `lib/pilotHubRoutes.ts` (complete **`/pilot`** hub index).
 - For **security and data boundaries**, cite **SECURITY** and **DATA_POLICY** first.
 
 ---
