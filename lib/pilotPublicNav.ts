@@ -11,6 +11,7 @@ export const PILOT_PUBLIC_NAV: readonly { href: string; label: string }[] = [
   { href: "/pilot/governance-profile", label: "Governance profile" },
   { href: "/pilot/value-chain", label: "Value chain" },
   { href: "/pilot/labor-ecology-revenue", label: "Labor · ecology · revenue" },
+  { href: "/pilot/human-capability", label: "Human capability" },
   { href: "/pilot/methods-and-limits", label: "Methods" },
   { href: "/pilot/safeguards", label: "Safeguards" },
   { href: "/pilot/corrections", label: "Corrections" },

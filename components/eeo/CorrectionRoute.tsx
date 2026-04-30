@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import type { CorrectionCategory } from "@/lib/correctionsStore";
-import { CORRECTION_CATEGORIES } from "@/lib/correctionsStore";
+import type { CorrectionCategory } from "@/lib/correctionsSchema";
+import { CORRECTION_CATEGORIES } from "@/lib/correctionsSchema";
 
 export default function CorrectionRoute() {
   const [form, setForm] = useState<{

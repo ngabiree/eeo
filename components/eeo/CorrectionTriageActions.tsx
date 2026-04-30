@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { patchCorrectionTriage } from "@/app/review/actions";
-import type { CorrectionGovernanceOutcome, CorrectionTriageStatus } from "@/lib/correctionsStore";
+import type { CorrectionGovernanceOutcome, CorrectionTriageStatus } from "@/lib/correctionsSchema";
 
 const STATUSES: { value: CorrectionTriageStatus; label: string }[] = [
   { value: "queued", label: "Queued" },
