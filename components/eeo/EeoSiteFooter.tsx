@@ -129,10 +129,22 @@ export default function EeoSiteFooter() {
       </div>
 
       <div className="relative border-t border-[#CFE3DA] bg-white/45 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-5 text-xs leading-6 text-[#4F6F75] md:flex-row md:items-center md:justify-between md:px-8">
-          <div>© 2026 Earth Endowment Observatory. All rights reserved.</div>
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-5 text-xs leading-6 text-[#4F6F75] md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-6 md:px-8">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
+            <span className="text-[#13424A]">© 2026 Earth Endowment Observatory. All rights reserved.</span>
+            <nav aria-label="Legal and accessibility" className="flex gap-4 font-medium">
+              <Link href="/privacy" className="text-[#144E55] underline-offset-2 transition hover:text-[#1F6F78] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6F78] rounded">
+                Privacy
+              </Link>
+              <Link href="/accessibility" className="text-[#144E55] underline-offset-2 transition hover:text-[#1F6F78] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6F78] rounded">
+                Accessibility
+              </Link>
+            </nav>
+          </div>
 
-          <div className="font-semibold text-[#144E55]">Make the chain visible. Keep the record accountable. Protect what exposure could harm.</div>
+          <div className="max-w-prose font-semibold text-[#144E55] md:text-right">
+            Make the chain visible. Keep the record accountable. Protect what exposure could harm.
+          </div>
         </div>
       </div>
     </footer>
