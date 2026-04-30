@@ -93,6 +93,14 @@ Access-governance decisions should be rehearsed internally before runtime enforc
 
 The corridor dossier remains the core public product object. Access decisions govern whether dossier-related objects may be collected, held, analyzed, published, aggregated, restricted, or refused.
 
+## Release-gate integration requirements (`v1.1`)
+
+A release gate should be satisfied before public publication or press amplification. Release readiness depends on evidence linkage, source limitations, access-governance decision, map-safety review, right-of-reply review where required, correction status, language safety, and release-manifest alignment.
+
+The release gate does not adjudicate truth, wrongdoing, or liability. It assesses whether publication conditions have been satisfied.
+
+Internal release-gate blockers must not be exposed publicly unless translated into public-safe limitations.
+
 ## Prototype persistence boundary
 
 Correction submissions, triage state, reviewer notes, and activity logs currently use prototype storage and may not be durable across process restarts unless persistent storage is configured. Production deployment requires persistent storage, migration design, backup policy, retention rules, access controls, and security review.

@@ -15,7 +15,8 @@
 | v0.7 | Evidence population + dossier release gate | Current |
 | v0.8 | Monitoring signal registry contract (type + docs only) | Current |
 | v0.9 | Access governance + research-to-publication protocol (type + docs only) | Shipped |
-| v1.0 | Internal access decision review preview (inert examples + docs only) | Current |
+| v1.0 | Internal access decision review preview (inert examples + docs only) | Shipped |
+| v1.1 | Release gate integration design (internal type/helper/docs only) | Current |
 
 ## Core sequence
 
@@ -25,7 +26,7 @@
 4. **v0.8** — monitoring signal registry contract (type + docs only; no dashboard/feed/alerts/forecast/scenario UI)  
 5. **v0.9** — access governance + research-to-publication protocol (type + docs only)  
 6. **v1.0** — internal access decision review preview (inert examples + docs only; no public UI, monitoring runtime, forecasting, scoring, or persistence changes)  
-7. **v1.1** — partner review package  
+7. **v1.1** — release gate integration design (internal type/helper/docs only; no public release-gate dashboard)  
 8. **v1.2** — funding dossier  
 9. **v1.3+** — temporal/monitoring/scenario activation under governance gates
 
@@ -52,6 +53,12 @@ No monitoring runtime, signal review preview, or foresight work should proceed u
 v1.0 rehearses access-governance decisions using inert examples and documentation before runtime enforcement, public dashboards, or monitoring expansion.
 
 Boundary: no public UI, no monitoring runtime, no forecasting, no scoring, no database persistence, and no public signal display.
+
+## v1.1 boundary
+
+v1.1 connects access governance, evidence completeness, map safety, right-of-reply, corrections, language safety, press discipline, and release-manifest alignment into an internal release-readiness model.
+
+Boundary: no public UI, no monitoring runtime, no forecasting, no scoring, no database persistence, and no public release-gate dashboard.
 
 ## Temporal dormancy
 

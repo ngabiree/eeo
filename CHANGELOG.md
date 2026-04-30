@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### v1.1 — Release Gate Integration Design
+
+- Added release-gate type contract (`types/releaseGate.ts`).
+- Added internal release-gate helper logic (`lib/releaseGate.ts`).
+- Added release-gate integration documentation (`docs/release-gate-integration.md`).
+- Preserved no-public-UI, no-monitoring-runtime, no-forecasting, and no-public-internal-blocker boundaries.
+
 ### v1.0 — Internal Access Decision Review Preview
 
 - Added inert access-decision examples (`data/accessDecisionExamples.ts`).
