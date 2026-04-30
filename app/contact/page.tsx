@@ -20,11 +20,15 @@ export default function ContactPage() {
         This page does not solicit sensitive personal narratives that could identify vulnerable people at actionable resolution unless you are using the Corrections pathway with stewardship-aware guidance.
       </p>
       <p>
-        Policies:{" "}
+        Policies &amp; trust index:{" "}
+        <Link href="/trust" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+          Trust materials
+        </Link>
+        {" · "}
         <Link href="/privacy" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Privacy notice
         </Link>
-        ·{" "}
+        {" · "}
         <Link href="/accessibility" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Accessibility statement
         </Link>

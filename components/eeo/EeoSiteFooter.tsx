@@ -132,7 +132,10 @@ export default function EeoSiteFooter() {
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-5 text-xs leading-6 text-[#4F6F75] md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-6 md:px-8">
           <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
             <span className="text-[#13424A]">© 2026 Earth Endowment Observatory. All rights reserved.</span>
-            <nav aria-label="Legal and accessibility" className="flex gap-4 font-medium">
+            <nav aria-label="Trust, privacy, and accessibility" className="flex flex-wrap gap-x-4 gap-y-2 font-medium">
+              <Link href="/trust" className="text-[#144E55] underline-offset-2 transition hover:text-[#1F6F78] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6F78] rounded">
+                Trust
+              </Link>
               <Link href="/privacy" className="text-[#144E55] underline-offset-2 transition hover:text-[#1F6F78] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6F78] rounded">
                 Privacy
               </Link>

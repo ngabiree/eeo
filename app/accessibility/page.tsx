@@ -36,7 +36,11 @@ export default function AccessibilityPage() {
         </p>
         <p>
           When a formal audit is completed, maintainership should link the report (or an equivalent public summary with scope, date, and
-          contact) from this page or from an adjacent &ldquo;Trust&rdquo; index without removing this historical boundary language.
+          contact) from this page or from the{" "}
+          <Link href="/trust" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+            Trust
+          </Link>{" "}
+          index without removing this historical boundary language.
         </p>
       </section>
 

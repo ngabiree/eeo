@@ -10,7 +10,11 @@ export default function PrivacyPage() {
       <p className="rounded-xl border border-[color:var(--eeo-border)] bg-white/60 px-4 py-3 text-xs leading-relaxed text-[color:var(--eeo-muted)]">
         This notice summarizes high-level expectations for the current public web surface. It is <strong>informational</strong> and not
         tailored legal advice for your jurisdiction. Production-scale processing requires a fuller record: retention tables, subprocessors,
-        lawful bases, international transfer mechanisms, and escalation contacts—published when that program exists.
+        lawful bases, international transfer mechanisms, and escalation contacts—indexed from the{" "}
+        <Link href="/trust" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+          Trust
+        </Link>{" "}
+        materials when published.
       </p>
 
       <section className="space-y-3" aria-labelledby="privacy-scope">
