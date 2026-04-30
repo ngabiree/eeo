@@ -34,7 +34,7 @@ pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The site header lists **shortcut links** defined in **`lib/pilotPublicNav.ts`** — Observatory home, First Corridor, Evidence Ledger, Methods, Safeguards, and Corrections — to keep navigation compact. **`/pilot`** surfaces additional corridor prototype pages (overview, evidence dossier and ledger, governance profile, claim lifecycle, human capability, labor/ecology/revenue, value-chain view, and others); see **`docs/mvp-evidence-loop.md`** for paths. Corridor workspace tabs live inside `/pilot/corridor`; **`/trust`** exposes the public Trust index; internal reviewer routes under **`/review`** and **`/workspace`** omit the public chrome.
+Open [http://localhost:3000](http://localhost:3000). The site header lists **shortcut links** from **`lib/pilotPublicNav.ts`** — Observatory, **Pilot hub** (`/pilot`), First Corridor, Evidence Ledger, Methods, Safeguards, and Corrections — to keep navigation compact. **`/pilot`** surfaces additional corridor prototype pages (overview, evidence dossier and ledger, governance profile, claim lifecycle, human capability, labor/ecology/revenue, value-chain view, and others); see **`docs/mvp-evidence-loop.md`** for paths. Corridor workspace tabs live inside `/pilot/corridor`; **`/trust`** exposes the public Trust index; internal reviewer routes under **`/review`** and **`/workspace`** omit the public chrome.
 
 ### npm fallback
 
@@ -57,7 +57,7 @@ If you use npm locally, keep committed lockfile/package-manager conventions unch
 | `pnpm lint`         | ESLint CLI (`next/core-web-vitals` + `next/typescript` via `eslint.config.mjs`) |
 | `pnpm typecheck`    | TypeScript (`tsc --noEmit`) |
 | `pnpm check:pilot-routes` | Fails if legacy public routes are referenced instead of canonical `/pilot/*` routes |
-| `pnpm check:pilot-hub-routes` | Fails if **`lib/pilotHubRoutes.ts`** drifts from **`app/pilot/<segment>/page.tsx`**, or **`lib/pilotPublicNav.ts`** **`/pilot/...`** shortcuts miss a matching segment page |
+| `pnpm check:pilot-hub-routes` | Fails if **`app/pilot/page.tsx`** is missing, **`lib/pilotHubRoutes.ts`** drifts from segment **`page.tsx`** files, or **`lib/pilotPublicNav.ts`** **`/pilot/...`** shortcuts miss a matching segment |
 | `pnpm verify`       | Same sequence as CI: `check:pilot-routes`, lint, typecheck, test, build |
 
 `pnpm check:pilot-routes`, `pnpm check:pilot-hub-routes`, and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths (for example `/dossier` → `/pilot/evidence-dossier`) are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.ts`.

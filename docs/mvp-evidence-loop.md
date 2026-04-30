@@ -16,7 +16,7 @@ This is a **visibility rule** for governance-first alignment — not an executab
 
 ## Header shortcuts vs full pilot surface
 
-Navigation pills use **`lib/pilotPublicNav.ts`** — a deliberate **subset** for clarity. The full set of shipped pilot `page.tsx` routes under **`app/pilot/`** is listed below; use **`/pilot`** in the app as the hub for deep links not repeated in the header.
+Navigation shortcuts use **`lib/pilotPublicNav.ts`** — including **`/pilot`** (Pilot hub) and a deliberate **subset** of segment routes for clarity. The full set of shipped pilot `page.tsx` routes under **`app/pilot/`** is listed below; use **`/pilot`** in the app as the hub for deep links not repeated in the header.
 
 ## Canonical pilot URLs (`app/pilot/`)
 

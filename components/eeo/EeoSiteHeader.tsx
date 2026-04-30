@@ -4,15 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import EeoLogo from "@/components/eeo/EeoLogo";
-
-const PRIMARY_NAV = [
-  { href: "/", label: "Observatory" },
-  { href: "/pilot/corridor", label: "First Corridor" },
-  { href: "/pilot/evidence-ledger", label: "Evidence Ledger" },
-  { href: "/pilot/methods-and-limits", label: "Methods" },
-  { href: "/pilot/safeguards", label: "Safeguards" },
-  { href: "/pilot/corrections", label: "Corrections" },
-] as const;
+import { PILOT_PUBLIC_NAV } from "@/lib/pilotPublicNav";
 
 export default function EeoSiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -62,7 +54,7 @@ export default function EeoSiteHeader() {
             aria-label="Primary navigation"
             className={`${menuOpen ? "flex" : "hidden"} w-full flex-col gap-2 md:flex md:w-auto md:flex-row md:flex-wrap md:items-center`}
           >
-            {PRIMARY_NAV.map((item) => (
+            {PILOT_PUBLIC_NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

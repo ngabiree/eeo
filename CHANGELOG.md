@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### UX / navigation hygiene
+
+- **`EeoSiteHeader`** reads **`PILOT_PUBLIC_NAV`** (removes duplicated inline nav constants).
+- **`pilotPublicNav`** adds **`/pilot`** as **Pilot hub** next to Observatory.
+
 ### Documentation
 
 - Added **`docs/founding/README.md`** as the single hub for constitution, policies, protocols, roadmap, changelog, governance, GitHub housekeeping, canonical code pointers, and a **north-star / doctrine anchor** cross-link to **`README`**; **`docs/README.md`** links there first; **`CONTRIBUTING`** and **`docs/mvp-evidence-loop`** point newcomers at the hub.

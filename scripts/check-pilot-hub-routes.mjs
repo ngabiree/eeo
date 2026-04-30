@@ -8,7 +8,7 @@ const HUB_FILE = path.join(ROOT, "lib", "pilotHubRoutes.ts");
 const NAV_FILE = path.join(ROOT, "lib", "pilotPublicNav.ts");
 
 /** @param {string} source */
-function extractPilotHrefs(source) {
+function extractPilotSegmentHrefs(source) {
   return [...source.matchAll(/\{\s*href:\s*"(\/pilot\/[^"]+)"\s*,/g)].map((m) => m[1]);
 }
 
@@ -35,7 +35,7 @@ async function collectFilesystemRoutes() {
 }
 
 function collectDeclaredHubRoutes(source) {
-  const routes = extractPilotHrefs(source);
+  const routes = extractPilotSegmentHrefs(source);
   const set = new Set(routes);
   if (routes.length !== set.size) {
     console.error("pilotHubRoutes.ts contains duplicate href entries.");
@@ -69,7 +69,7 @@ if (missingInHub.length > 0 || extraInHub.length > 0) {
 }
 
 const navSource = await readFile(NAV_FILE, "utf8");
-const shortcutHrefs = extractPilotHrefs(navSource);
+const shortcutHrefs = extractPilotSegmentHrefs(navSource);
 const badShortcuts = shortcutHrefs.filter((r) => !fsRoutes.has(r));
 if (badShortcuts.length > 0) {
   console.error(
@@ -78,6 +78,12 @@ if (badShortcuts.length > 0) {
   for (const route of [...new Set(badShortcuts)].sort()) {
     console.error(`  - ${route}`);
   }
+  process.exit(1);
+}
+
+const hubOverviewPath = path.join(PILOT_APP, "page.tsx");
+if (!(await fileExists(hubOverviewPath))) {
+  console.error("Missing app/pilot/page.tsx — required for the /pilot hub and pilotPublicNav shortcuts.");
   process.exit(1);
 }
 
