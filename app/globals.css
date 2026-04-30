@@ -23,9 +23,63 @@
   --eeo-surface: rgba(255, 255, 255, 0.82);
 }
 
+html {
+  width: 100%;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Lock background scroll when mobile nav sheet is open */
+@media (max-width: 767.98px) {
+  html.eeo-nav-open,
+  html.eeo-nav-open body {
+    overflow: hidden;
+  }
+}
+
 html,
 body {
   @apply antialiased;
+}
+
+body {
+  width: 100%;
+  overflow-x: clip;
+  text-size-adjust: 100%;
+}
+
+/* Horizontal page gutters + safe areas (mobile notches, tablets, foldables) */
+.eeo-page-gutter-x {
+  padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+}
+
+@media (min-width: 768px) {
+  .eeo-page-gutter-x {
+    padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+  }
+}
+
+@media (min-width: 1024px) {
+  .eeo-page-gutter-x {
+    padding-left: max(2rem, env(safe-area-inset-left, 0px));
+    padding-right: max(2rem, env(safe-area-inset-right, 0px));
+  }
+}
+
+.eeo-pt-safe-header {
+  padding-top: max(0.625rem, env(safe-area-inset-top, 0px));
+}
+
+.eeo-pb-safe-ground {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
 }
 
 @media (prefers-reduced-motion: reduce) {

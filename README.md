@@ -1,20 +1,65 @@
 # Earth Endowment Observatory — public web app
 
-**Local** civic intelligence surface: stewarded evidence, transparent public record, and safeguards-first publication. This public repository contains application code, public documentation, schema/migration scaffolding, methods, and synthetic sample data.
+## Public Evidence Prototype: Copper-Cobalt Corridor
 
-The operational EEO system is designed to support live source registries, restricted review workspaces, raw evidence preservation, verified reporting, private evidence files, and controlled geospatial analysis through governed databases, private storage, RLS, audit logs, and release-gated public views.
+**Local** civic intelligence surface: stewarded evidence, transparent public record, and safeguards-first publication. This public repository contains application code, public documentation, corridor dossier typing, source-map planning records, schema/migration scaffolding, methods language, and **synthetic sample data only** unless governed elsewhere.
 
-Do not commit raw evidence, restricted files, sensitive geospatial data, partner-confidential data, personal data, production database dumps, legal review notes, secrets, or right-of-reply packets to this repository. Live evidence work belongs in governed databases and private storage, not in GitHub.
+**Baseline shipped in-repo:** **`v0.3`** evidence core · **`v0.4`** review activity log · **`v0.5`** claim governance + release consequences · **password-gated** review workspace · working corrections intake/triage · **Temporal profile types remain a dormant boundary marker** (`types/temporalProfile.ts`) — **not activated** as UI or monitoring.
 
-The product is framed as a public observatory, not a court, atlas, certification scheme, composite headline index, blockchain layer, or automated decision authority.
+Live evidence work belongs in governed databases and private storage, not GitHub — do **not** commit raw evidence, restricted geospatial payloads, confidential partner packs, identities, dumps, secrets, legal review notes, or right-of-reply packets.
+
+## Core identity & governing doctrine
+
+EEO is **not** a headline dashboard SKU, VC-style startup app, composite ESG score, campaign NGO, consulting portal, blockchain project, or generic open-data platform. It is **public-interest evidence infrastructure** for **endowment-to-economy chains**.
+
+**Governing mantra:** *Reveal systems. Protect peoples. Trace value. Respect sovereignty. Publish with evidence. Scale only after trust.*
+
+The Observatory helps societies interpret how Earth’s endowments enter economic life: **what exists; where governance applies; how labor, capital, technology, ecology, ownership, concessions, extraction, processing, trade, public revenue, and value capture interconnect; where benefit reaches communities or fails to; where evidence is missing.** It does **not** substitute for courts, registries that assert universal truth, atlas fantasies that expose everyone everywhere, blockchain trust layers, or AI judgment.
+
+## Anchored analytic chain
+
+```text
+Endowment → Governance → Concession / Permit → Operator → Ownership / Control
+→ Extraction / Production → Processing / Trade → Labor Risk → Ecological Signal
+→ Public Revenue → Public Benefit → Evidence Gap
+```
+
+## Strategic posture: dossier-first
+
+Move **from architecture-first to dossier-first**. Enough evidence/review scaffolding exists for the current corridor pilot; **`v0.6`–`v0.7`** focus on documenting doctrine, dossier typing, source humility, methods language, safeguards, release discipline — **then populating corridor evidence**.
+
+**Do-not-build list:** global atlas ambitions, public composite scores/index systems, temporal profile **UI**, monitoring dashboards/feeds/registries, scenario/forecast UI, accusatory company pages framed as adjudication, SKU-level traceability claims, adjudicated legal findings, speculative new commodities/regions beyond pilot scope — see **`GOVERNANCE.md`**.
+
+Temporal, monitoring, and scenario features belong to **`v1.3+`** after the corridor dossier is trustworthy.
+
+## Definition — Earth’s endowments
+
+Earth’s endowments are the **biophysical, ecological, spatial, atmospheric, geological, hydrological, biological, human-cultivated, knowledge-mediated, and capability-bearing conditions** that precede, enable, constrain, or sustain economic life.
+
+They include:
+
+- **Natural stocks:** minerals, soils, aquifers, forests, fisheries, biodiversity, genetic resources.  
+- **Natural flows:** sunlight, wind, rainfall, river flows, ocean currents, carbon cycling, pollination.  
+- **Ecological functions:** fertility, habitat, filtration, carbon storage, flood regulation, disease buffering.  
+- **Spatial potentials:** arable land, transport corridors, ports, renewable-energy zones, settlement geography.  
+- **Regenerative endowments:** forests, fisheries, soils, watersheds, biodiversity when maintained inside renewal bounds.  
+- **Non-regenerative endowments:** minerals, fossil fuels, ancient groundwater, some geological formations.  
+- **Human-maintained endowments:** terraces, irrigation networks, seed diversity, working landscapes, agroforestry, restored ecosystems.  
+- **Animal-mediated endowments:** pollination, grazing systems, seed dispersal, soil aeration, aquatic webs.  
+- **Knowledge-mediated & community-governed capacities:** Indigenous ecological knowledge, agronomic practice, stewardship traditions, technological know-how — **only where authority, consent, context, and the rights of knowledge holders permit reference**.  
+- **Human capability & stewardship capacities:** labor, skill, ingenuity, care, stewardship practice, ecological relationship, institutional memory — **relational**, not inventories of “talent stocks.”  
+
+**Humans are not endowments to be inventoried.** Capabilities describe **relational stewardship** roles.
+
+**Conceptual anchor:** Endowments are **capacities in relation** connecting nature, labor, knowledge, law, ecology, infrastructure, and time.
+
+**Exposure guardrail:** EEO maintains **universal analytical concern**, not universal exposure — we may inquire globally but must **not expose every ecosystem or community hazard everywhere**.
 
 ## Doctrine anchor (north star)
 
-EEO is the **evidence institution** for how Earth’s endowments become — or fail to become — **shared human capability** over time. That is intentional scope: **not** an atlas fantasy, **not** a generic dashboard product, **not** a campaign surface, and **not** a universal ownership registry.
+Evidence institution posture: steward how **Earth endowments ↔ shared human capability** without collapsing into dashboards, campaigning, or speculative planetary surveillance. Temporal futures remain **explicitly deferred** until corridor trust is demonstrated (**`ROADMAP.md`**).
 
-**Demonstrated today in the prototype:** a governed publication loop — claim ↔ evidence ↔ correction ↔ review ↔ governance status ↔ release manifest.
-
-**Ahead (full corridor intelligence, still under-built in the shipped surface):** the longer arc runs endowment → governance → labor → trade → ecology → revenue → value capture → public benefit → **temporal future**. Temporal Endowment Profile work (**`v0.6`**, schema and data-model only — see **`GOVERNANCE.md`** / **`ROADMAP.md`**) anchors that temporal step in evidence-bound contracts before any monitoring-style UI.
+**Demonstrated prototype loop:** claim ↔ evidence ↔ correction ↔ review ↔ governance status ↔ release manifest.
 
 ## Founding documents
 
@@ -58,7 +103,7 @@ If you use npm locally, keep committed lockfile/package-manager conventions unch
 | `pnpm typecheck`    | TypeScript (`tsc --noEmit`) |
 | `pnpm check:pilot-routes` | Fails if legacy public routes are referenced instead of canonical `/pilot/*` routes |
 | `pnpm check:pilot-hub-routes` | Fails if **`app/pilot/page.tsx`** is missing, **`lib/pilotHubRoutes.ts`** drifts from segment **`page.tsx`** files, or **`lib/pilotPublicNav.ts`** **`/pilot/...`** shortcuts miss a matching segment |
-| `pnpm verify`       | Same sequence as CI: `check:pilot-routes`, lint, typecheck, test, build |
+| `pnpm verify`       | Same sequence as CI: `check:pilot-routes`, `check:pilot-hub-routes`, lint, typecheck, test, build |
 
 `pnpm check:pilot-routes`, `pnpm check:pilot-hub-routes`, and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths (for example `/dossier` → `/pilot/evidence-dossier`) are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.ts`.
 
@@ -71,7 +116,9 @@ Do not commit `package-lock.json` (it is in `.gitignore`). CI uses **`pnpm insta
 ## Project layout
 
 - `app/` — Next.js App Router (`layout.tsx`, `page.tsx`, `globals.css`)
-- `lib/pilotPublicNav.ts` — header shortcut pilot links; **`lib/pilotHubRoutes.ts`** — full **`/pilot`** exploration index (surfaced on **`/pilot`**).
+- `types/corridorDossier.ts` · `types/mapSafety.ts` · `types/temporalProfile.ts` (**dormant temporal stub**)  
+- `data/corridorDossier.ts` — copper–cobalt dossier skeleton; **`data/sourceMap.ts`** — pilot source / non-duplication map  
+- `lib/pilotPublicNav.ts` — header shortcuts; **`lib/pilotHubRoutes.ts`** — full **`/pilot`** exploration list  
 - `components/EarthEndowmentObservatoryOneFileApp.tsx` — **canonical** corridor workspace UI (client component); treat this as the source of shipped behavior.
 - `docs/eeo_one_file_corridor_app.jsx` — small one-file corridor snapshot (reference; uses `lucide-react`)
 - `docs/eeo_one_file_corridor_app_data_reactive.jsx` — curated repaired data-reactive atmospheric/public-evidence variant imported from local download

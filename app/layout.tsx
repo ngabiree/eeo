@@ -11,9 +11,12 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Earth Endowment Observatory",
+  title: {
+    default: "Public Evidence Prototype: Copper-Cobalt Corridor",
+    template: "%s · Copper-Cobalt Pilot",
+  },
   description:
-    "A public-interest observatory for natural endowment, governance, stewardship, and accountability along critical mineral corridors.",
+    "Earth Endowment Observatory — public-interest evidence infrastructure for copper–cobalt corridor endowment-to-economy chains (prototype). Not a dashboard, atlas, score, or registry.",
   icons: {
     icon: [{ url: "/brand/eeo-logo-transparent.png", type: "image/png", sizes: "any" }],
   },
@@ -38,12 +41,15 @@ export const viewport: Viewport = {
   themeColor: "#dff3e7",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
+  /** Preserve user zoom on mobile — important for accessibility. */
+  maximumScale: 5,
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="eeo-brand-body flex min-h-dvh flex-col">
+      <body className="eeo-brand-body isolate flex min-h-dvh w-full flex-col overflow-x-clip">
         <div className="eeo-atmosphere-root" aria-hidden>
           <span className="eeo-bg-sky" />
           <span className="eeo-bg-water" />
@@ -51,15 +57,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <span className="eeo-bg-shimmer" />
         </div>
         <a
-          href="#eeo-section-panel"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[color:var(--eeo-primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[color:var(--eeo-green-soft)]"
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-[max(1rem,env(safe-area-inset-left,0px))] focus:top-[max(1rem,env(safe-area-inset-top,0px))] focus:z-[100] focus:rounded-lg focus:bg-[color:var(--eeo-primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[color:var(--eeo-green-soft)]"
         >
           Skip to main content
         </a>
-        <>
+        <div className="relative z-[1] flex min-h-0 w-full min-w-0 flex-1 flex-col">
           <PublicChrome>{children}</PublicChrome>
           <ConditionalEeoFooter />
-        </>
+        </div>
       </body>
     </html>
   );

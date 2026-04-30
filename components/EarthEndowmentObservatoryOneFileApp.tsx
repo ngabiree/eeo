@@ -1644,14 +1644,14 @@ export default function EarthEndowmentObservatoryOneFileApp() {
   }, []);
 
   return (
-    <div className="flex min-h-full flex-1 flex-col bg-transparent text-[color:var(--eeo-text)]" style={EEO_ROOT_TOKENS}>
-      <div className="border-b border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.55)] shadow-sm backdrop-blur-sm">
+    <div className="flex min-h-0 min-w-0 w-full flex-1 flex-col bg-transparent text-[color:var(--eeo-text)]" style={EEO_ROOT_TOKENS}>
+      <div className="min-w-0 border-b border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.55)] shadow-sm backdrop-blur-sm">
         <ReferenceStandardsStrip />
         <CorridorTabStrip active={active} onSelectSection={onSelectSection} />
       </div>
       <main
         id="eeo-section-panel"
-        className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-12 pt-6 md:px-6 lg:px-8"
+        className="eeo-page-gutter-x mx-auto flex w-full max-w-7xl min-w-0 flex-1 flex-col pb-[max(3rem,env(safe-area-inset-bottom,0px))] pt-6"
         role="tabpanel"
         aria-labelledby={`eeo-tab-${active}`}
       >

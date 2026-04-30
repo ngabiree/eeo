@@ -4,7 +4,7 @@ Single index for institutional constitution, governance rules, disclosure and se
 
 ## Doctrine anchor (north star)
 
-Executive summary: **Earth endowments → shared human capability** as an evidence institution _(not atlas / dashboard / campaign / registry)_; prototype publication loop vs full corridor‑intelligence arc. See **[README](../../README.md)** (**Doctrine anchor (north star)**), plus **[GOVERNANCE](../../GOVERNANCE.md)** and **[ROADMAP](../../ROADMAP.md)** for version alignment.
+Executive summary: **Earth endowments → relational stewardship and human capability** (people are not inventory items) as an evidence institution _(not atlas / dashboard / campaign / registry)_; **dossier-first**: one corridor before meta-systems. See **[README](../../README.md)** (endowment definition, exposure guardrail), plus **[GOVERNANCE](../../GOVERNANCE.md)** and **[ROADMAP](../../ROADMAP.md)**. **`types/temporalProfile.ts`** stays **dormant** until post-pilot (**`v1.3+`**).
 
 ## Primary specification (constitutional)
 
@@ -28,8 +28,9 @@ Executive summary: **Earth endowments → shared human capability** as an eviden
 | Document | Purpose |
 |----------|---------|
 | [Evidence standard](../evidence-standard.md) | Evidence and claim discipline |
-| [Map safety protocol](../map-safety-protocol.md) | Geospatial exposure guardrails |
-| [Right-of-reply protocol](../right-of-reply-protocol.md) | ROR expectations (design-level) |
+| [Map safety protocol](../map-safety-protocol.md) | Geospatial exposure guardrails; **`types/mapSafety.ts`** |
+| [Right of reply (publication discipline)](../right-of-reply.md) | When ROR applies, safe framing, exclusions |
+| [Right-of-reply protocol](../right-of-reply-protocol.md) | Prototype workflow sketch; see also **right-of-reply.md** |
 | [Live-data definition of done](../live-data-definition-of-done.md) | Checklist before governed live-data merges |
 | [Architecture](../architecture.md) | System / app architecture reference |
 
@@ -37,7 +38,7 @@ Executive summary: **Earth endowments → shared human capability** as an eviden
 
 | Document | Purpose |
 |----------|---------|
-| [GOVERNANCE](../../GOVERNANCE.md) | Version sequencing + **`v0.6`** temporal/schema lock; doctrine anchor section |
+| [GOVERNANCE](../../GOVERNANCE.md) | Version sequencing; **`v0.6`** doctrine + dossier schema + source map; knowledge governance; ROR |
 | [ROADMAP](../../ROADMAP.md) | Staged releases; north star and construction arc vs prototype loop |
 | [CHANGELOG](../../CHANGELOG.md) | Repository release and posture notes |
 
@@ -67,6 +68,9 @@ Executive summary: **Earth endowments → shared human capability** as an eviden
 |----------|--------|
 | `components/EarthEndowmentObservatoryOneFileApp.tsx` | **Canonical** corridor workspace UI in this repo |
 | `docs/EarthEndowmentObservatoryOneFileApp.tsx` | TypeScript mirror for review; refresh with `pnpm sync:corridor-docs` |
+| `types/corridorDossier.ts` | Corridor dossier section + status contracts (**structure only** in **`v0.6`**) |
+| `data/corridorDossier.ts` | Copper–cobalt pilot **skeleton** dossier record |
+| `data/sourceMap.ts` | Source / non-duplication map (cite, evaluate, defer; not full integration claims) |
 
 ## How to cite
 

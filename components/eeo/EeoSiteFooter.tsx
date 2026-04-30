@@ -63,8 +63,8 @@ export default function EeoSiteFooter() {
         <div className="absolute left-1/2 top-0 h-40 w-40 -translate-x-1/2 rounded-full bg-[#F3E4B8]/50 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 py-12 md:px-8 lg:py-16">
-        <div className="mb-10 rounded-2xl border border-[#CFE3DA] bg-white/55 px-5 py-4 text-sm font-semibold tracking-wide text-[#144E55] backdrop-blur">
+      <div className="relative eeo-page-gutter-x mx-auto max-w-7xl min-w-0 pt-12 pb-[max(3rem,env(safe-area-inset-bottom,0px))] lg:pt-16 lg:pb-[max(4rem,env(safe-area-inset-bottom,0px))]">
+        <div className="mb-10 rounded-2xl border border-[#CFE3DA] bg-white/55 px-4 py-4 text-sm font-semibold tracking-wide text-[#144E55] backdrop-blur sm:px-5">
           Public record · Stewardship · Accountability · Safeguards
         </div>
 
@@ -129,7 +129,7 @@ export default function EeoSiteFooter() {
       </div>
 
       <div className="relative border-t border-[#CFE3DA] bg-white/45 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-5 text-xs leading-6 text-[#4F6F75] md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-6 md:px-8">
+        <div className="eeo-page-gutter-x mx-auto flex max-w-7xl min-w-0 flex-col gap-4 pb-[max(1.25rem,env(safe-area-inset-bottom,0px))] pt-5 text-xs leading-6 text-[#4F6F75] md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-6">
           <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
             <span className="text-[#13424A]">© 2026 Earth Endowment Observatory. All rights reserved.</span>
             <nav aria-label="Trust, privacy, and accessibility" className="flex flex-wrap gap-x-4 gap-y-2 font-medium">

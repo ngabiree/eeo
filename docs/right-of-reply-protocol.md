@@ -1,5 +1,7 @@
 # Right-of-Reply Protocol (Prototype)
 
+See also **[Right of reply publication discipline](./right-of-reply.md)** (`docs/right-of-reply.md`) for when review should be considered, safe framing language, and what may not trigger right-of-reply.
+
 ## Purpose
 
 Provide a structured path for named parties to challenge factual framing, interpretation limits, or potential harm from publication.

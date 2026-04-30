@@ -10,9 +10,9 @@ export default function HomePage() {
   const corrections = listCorrectionSubmissions();
   const sampleClaimCorrectionSummary = getClaimCorrectionSummary(sampleClaim.id, corrections);
   return (
-    <main className="relative flex flex-1 flex-col text-[color:var(--eeo-text)]">
-      <div className="relative flex flex-1 flex-col py-10 md:py-14">
-        <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-4 md:px-6 lg:gap-14">
+    <main className="relative flex min-h-0 min-w-0 flex-1 flex-col text-[color:var(--eeo-text)]">
+      <div className="relative flex min-h-0 flex-1 flex-col py-10 pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] md:py-14">
+        <div className="eeo-page-gutter-x mx-auto flex w-full max-w-6xl min-w-0 flex-1 flex-col gap-10 lg:gap-14">
           <header className="eeo-glass-card space-y-5 border-[color:var(--eeo-border)] p-8 shadow-md md:p-10">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--eeo-muted)]">Public Observatory</p>
             <h1 className="max-w-3xl font-serif text-4xl font-semibold leading-tight tracking-tight text-[color:var(--eeo-ink)] md:text-5xl">

@@ -5,9 +5,13 @@ import type {
 } from "./eeo";
 
 /**
- * Future v0.6 contract only.
+ * Dormant type stub — future v1.3+ boundary only.
  *
- * Temporal Endowment Profiles are intended to help EEO describe:
+ * Per GOVERNANCE.md / ROADMAP.md: temporal, monitoring, and scenario surfaces are **deferred**
+ * until a trustworthy **corridor dossier** ships. `v0.6` advances **dossier schema + source map doctrine**,
+ * not temporal activation.
+ *
+ * Temporal Endowment Profiles (when eventually used) describe:
  * - what an endowment was;
  * - what it is now;
  * - how it is changing;
