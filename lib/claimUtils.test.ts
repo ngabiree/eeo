@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type { CorrectionSubmission } from "@/lib/correctionsStore";
+import type { CorrectionSubmission } from "@/lib/correctionsSchema";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 
 const CLAIM = "CLAIM-DRC-CO-001";

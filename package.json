@@ -11,12 +11,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0 --cache --cache-location .eslintcache",
+    "verify": "pnpm run check:pilot-routes && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "check:pilot-routes": "node scripts/check-pilot-routes.mjs",
     "sync:corridor-docs": "node scripts/sync-corridor-docs-mirror.mjs"
   },
   "dependencies": {
+    "server-only": "^0.0.1",
     "lucide-react": "^0.475.0",
     "next": "15.5.15",
     "react": "^19.0.0",

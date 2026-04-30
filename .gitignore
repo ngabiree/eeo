@@ -7,6 +7,9 @@
 *.crt
 
 node_modules/
+
+# Local durable JSON stores (corrections + governance log)
+.eeo/
 # Use pnpm only — avoid committing npm’s lockfile
 package-lock.json
 .next/

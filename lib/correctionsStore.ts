@@ -1,92 +1,44 @@
-export type CorrectionCategory =
-  | "Factual correction"
-  | "Source update"
-  | "Right of reply"
-  | "Harm-risk restriction request"
-  | "Indigenous or community-sensitive review"
-  | "Defamation or legal concern"
-  | "Methodological dispute"
-  | "Data freshness concern"
-  | "Withdrawal request";
+import "server-only";
+import { join } from "path";
 
-/** Canonical list for forms and API validation (must stay aligned with CorrectionCategory). */
-export const CORRECTION_CATEGORIES: readonly CorrectionCategory[] = [
-  "Factual correction",
-  "Source update",
-  "Right of reply",
-  "Harm-risk restriction request",
-  "Indigenous or community-sensitive review",
-  "Defamation or legal concern",
-  "Methodological dispute",
-  "Data freshness concern",
-  "Withdrawal request",
-];
+import type { CorrectionActivity, CorrectionSubmission, CorrectionTriagePatch } from "@/lib/correctionsSchema";
+import { atomicWriteJsonSync, getEeoDataDir, readJsonFileSync } from "@/lib/eeoJsonPersistence";
 
-export function isCorrectionCategory(value: unknown): value is CorrectionCategory {
-  return (
-    typeof value === "string" &&
-    (CORRECTION_CATEGORIES as readonly string[]).includes(value)
-  );
-}
+export type {
+  CorrectionActivity,
+  CorrectionActivityType,
+  CorrectionCategory,
+  CorrectionGovernanceOutcome,
+  CorrectionSubmission,
+  CorrectionTriagePatch,
+  CorrectionTriageStatus,
+} from "@/lib/correctionsSchema";
+export { CORRECTION_CATEGORIES, isCorrectionCategory } from "@/lib/correctionsSchema";
 
-/** Prototype-only triage states for the review workspace */
-export type CorrectionTriageStatus = "queued" | "in_review" | "needs_review" | "resolved";
-export type CorrectionGovernanceOutcome =
-  | "requires_claim_review"
-  | "claim_unchanged"
-  | "claim_corrected"
-  | "claim_restricted"
-  | "claim_withdrawn";
-export type CorrectionActivityType =
-  | "submitted"
-  | "triage_status_changed"
-  | "triage_note_added"
-  | "triage_note_updated"
-  | "governance_outcome_changed"
-  | "reviewed"
-  | "resolved"
-  | "withdrawn";
+const CORRECTIONS_SCHEMA_VERSION = 1 as const;
 
-export type CorrectionActivity = {
-  id: string;
-  correctionId: string;
-  type: CorrectionActivityType;
-  note?: string;
-  fromStatus?: CorrectionTriageStatus;
-  toStatus?: CorrectionTriageStatus;
-  actor: "public_submitter" | "reviewer" | "system";
-  reviewerId?: string;
-  reviewerLabel?: string;
-  createdAt: string;
-};
-
-export interface CorrectionSubmission {
-  id: string;
-  submittedAt: string;
-  name: string;
-  email: string;
-  category: CorrectionCategory;
-  claimId?: string;
-  claimReference?: string;
-  details: string;
-  triageStatus: CorrectionTriageStatus;
-  triageGovernanceOutcome?: CorrectionGovernanceOutcome;
-  /** Last time status or reviewer note changed (prototype; in-memory only). ISO string. */
-  triageUpdatedAt: string;
-  /** Optional reviewer note (prototype workspace only). */
-  triageNote?: string;
-  activities: CorrectionActivity[];
-}
-
-/** In-memory only: resets between server cold starts — OK for prototype triage demos. */
+/** Working set mirrored to disk for single-node deploys (see `.eeo/`). */
 const correctionsStore: CorrectionSubmission[] = [];
 
-/** Clears the in-memory store. Vitest only — prevents cross-test leakage. */
-export function resetCorrectionsStoreForTests(): void {
-  if (process.env.VITEST !== "true") {
-    throw new Error("resetCorrectionsStoreForTests is only available under Vitest.");
-  }
-  correctionsStore.length = 0;
+let correctionsLoaded = false;
+
+function getCorrectionsStorePath(): string {
+  const env = process.env.CORRECTIONS_STORE_PATH?.trim();
+  if (env) return env;
+  return join(getEeoDataDir(), "corrections.json");
+}
+
+function correctionsPersistenceEnabled(): boolean {
+  if (process.env.VITEST === "true") return false;
+  if (process.env.DISABLE_EEO_FILE_PERSISTENCE === "true") return false;
+  return true;
+}
+
+function normalizeSubmission(s: CorrectionSubmission): CorrectionSubmission {
+  return {
+    ...s,
+    activities: Array.isArray(s.activities) ? s.activities : [],
+  };
 }
 
 function cloneSubmission(submission: CorrectionSubmission): CorrectionSubmission {
@@ -97,28 +49,72 @@ function cloneSubmission(submission: CorrectionSubmission): CorrectionSubmission
   };
 }
 
+function parsePersistedCorrections(data: unknown): CorrectionSubmission[] | null {
+  if (!data || typeof data !== "object") return null;
+  const o = data as Record<string, unknown>;
+  if (o.schemaVersion !== CORRECTIONS_SCHEMA_VERSION) return null;
+  if (!Array.isArray(o.submissions)) return null;
+  return o.submissions as CorrectionSubmission[];
+}
+
+function ensureCorrectionsLoadedSync(): void {
+  if (correctionsLoaded) return;
+  correctionsLoaded = true;
+  if (!correctionsPersistenceEnabled()) return;
+
+  const path = getCorrectionsStorePath();
+  try {
+    const raw = readJsonFileSync<unknown>(path);
+    if (!raw) return;
+    const parsed = parsePersistedCorrections(raw);
+    if (!parsed) {
+      console.error("[eeo] Invalid corrections store JSON; ignoring file:", path);
+      return;
+    }
+    correctionsStore.push(...parsed.map(normalizeSubmission));
+  } catch (e) {
+    console.error("[eeo] Failed to load corrections store:", e);
+  }
+}
+
+function persistCorrectionsSync(): void {
+  if (!correctionsPersistenceEnabled()) return;
+  try {
+    atomicWriteJsonSync(getCorrectionsStorePath(), {
+      schemaVersion: CORRECTIONS_SCHEMA_VERSION,
+      submissions: correctionsStore.map((s) => cloneSubmission(s)),
+    });
+  } catch (e) {
+    console.error("[eeo] Failed to persist corrections store:", e);
+  }
+}
+
+/** Clears the in-memory store. Vitest only — prevents cross-test leakage. */
+export function resetCorrectionsStoreForTests(): void {
+  if (process.env.VITEST !== "true") {
+    throw new Error("resetCorrectionsStoreForTests is only available under Vitest.");
+  }
+  correctionsStore.length = 0;
+  correctionsLoaded = true;
+}
+
 export function addCorrectionSubmission(submission: CorrectionSubmission) {
+  ensureCorrectionsLoadedSync();
   correctionsStore.push(submission);
+  persistCorrectionsSync();
 }
 
 export function listCorrectionSubmissions(): CorrectionSubmission[] {
+  ensureCorrectionsLoadedSync();
   return correctionsStore
     .map(cloneSubmission)
     .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));
 }
 
 export function getCorrectionSubmissionById(id: string): CorrectionSubmission | undefined {
+  ensureCorrectionsLoadedSync();
   const match = correctionsStore.find((s) => s.id === id);
   return match ? cloneSubmission(match) : undefined;
-}
-
-export interface CorrectionTriagePatch {
-  triageStatus?: CorrectionTriageStatus;
-  triageGovernanceOutcome?: CorrectionGovernanceOutcome | null;
-  /** Omit to leave unchanged; `null` clears the note */
-  triageNote?: string | null;
-  reviewerId?: string;
-  reviewerLabel?: string;
 }
 
 function activityId(): string {
@@ -140,6 +136,7 @@ function appendActivity(entry: CorrectionSubmission, activity: Omit<CorrectionAc
  * Returns false if submission id does not exist.
  */
 export function patchCorrectionSubmission(id: string, patch: CorrectionTriagePatch): boolean {
+  ensureCorrectionsLoadedSync();
   const entry = correctionsStore.find((s) => s.id === id);
   if (!entry) return false;
 
@@ -203,6 +200,10 @@ export function patchCorrectionSubmission(id: string, patch: CorrectionTriagePat
 
   if (touched) {
     entry.triageUpdatedAt = now;
+  }
+
+  if (touched) {
+    persistCorrectionsSync();
   }
 
   return true;

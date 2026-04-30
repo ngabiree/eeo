@@ -1,6 +1,6 @@
 import type { Claim } from "@/types/eeo";
 import type { ClaimGovernanceStatus } from "@/types/eeo";
-import type { CorrectionSubmission } from "@/lib/correctionsStore";
+import type { CorrectionSubmission } from "@/lib/correctionsSchema";
 
 import { hasContradictoryEvidence, isContextualOnly } from "./evidenceUtils";
 import { validateClaimRequiredFields } from "./validation";
