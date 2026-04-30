@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### v1.0 — Internal Access Decision Review Preview
+
+- Added inert access-decision examples (`data/accessDecisionExamples.ts`).
+- Added access-decision review preview documentation (`docs/access-decision-review-preview.md`).
+- Preserved access-governance, map-safety, right-of-reply, language-safety, release-manifest, and press-management boundaries.
+- No public UI, monitoring runtime, forecasting, scenario notes, scoring, database persistence, or new public data surface added.
+
 ### v0.9 — Access Governance + Research-to-Publication Protocol
 
 - Added access-governance type contract (`types/accessGovernance.ts`).

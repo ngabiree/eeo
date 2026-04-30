@@ -87,6 +87,12 @@ Public communication is part of governance, not an afterthought.
 
 Access governance includes retention/deletion and emergency takedown pathways.
 
+## Internal rehearsal before enforcement (`v1.0`)
+
+Access-governance decisions should be rehearsed internally before runtime enforcement or public dashboards are introduced. The review preview demonstrates how EEO classifies claims, sources, map layers, monitoring signals, reviewer notes, community-sensitive information, and press material as public, aggregated, internal, restricted, or not_collected.
+
+The corridor dossier remains the core public product object. Access decisions govern whether dossier-related objects may be collected, held, analyzed, published, aggregated, restricted, or refused.
+
 ## Prototype persistence boundary
 
 Correction submissions, triage state, reviewer notes, and activity logs currently use prototype storage and may not be durable across process restarts unless persistent storage is configured. Production deployment requires persistent storage, migration design, backup policy, retention rules, access controls, and security review.
