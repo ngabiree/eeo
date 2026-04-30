@@ -56,10 +56,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <span className="eeo-bg-vegetation" />
           <span className="eeo-bg-shimmer" />
         </div>
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-[max(1rem,env(safe-area-inset-left,0px))] focus:top-[max(1rem,env(safe-area-inset-top,0px))] focus:z-[100] focus:rounded-lg focus:bg-[color:var(--eeo-primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[color:var(--eeo-green-soft)]"
-        >
+        <a href="#main-content" className="eeo-skip-link">
           Skip to main content
         </a>
         <div className="relative z-[1] flex min-h-0 w-full min-w-0 flex-1 flex-col">

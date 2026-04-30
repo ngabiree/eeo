@@ -82,6 +82,33 @@ body {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
 }
 
+.eeo-skip-link {
+  position: fixed;
+  left: max(1rem, env(safe-area-inset-left, 0px));
+  top: max(1rem, env(safe-area-inset-top, 0px));
+  z-index: 1000;
+  border-radius: 0.5rem;
+  background: var(--eeo-primary);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: 0.5rem 1rem;
+  transform: translateY(-140%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 140ms ease, opacity 140ms ease;
+}
+
+.eeo-skip-link:focus,
+.eeo-skip-link:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  outline: 2px solid var(--eeo-green-soft);
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .eeo-bg-sky,
   .eeo-bg-water,
