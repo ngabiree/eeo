@@ -81,6 +81,14 @@ export interface CorrectionSubmission {
 /** In-memory only: resets between server cold starts — OK for prototype triage demos. */
 const correctionsStore: CorrectionSubmission[] = [];
 
+/** Clears the in-memory store. Vitest only — prevents cross-test leakage. */
+export function resetCorrectionsStoreForTests(): void {
+  if (process.env.VITEST !== "true") {
+    throw new Error("resetCorrectionsStoreForTests is only available under Vitest.");
+  }
+  correctionsStore.length = 0;
+}
+
 function cloneSubmission(submission: CorrectionSubmission): CorrectionSubmission {
   const activities = submission.activities ?? [];
   return {
