@@ -15,6 +15,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "check:pilot-routes": "node scripts/check-pilot-routes.mjs",
+    "check:brand-assets": "node scripts/verify-brand-assets.mjs",
     "sync:corridor-docs": "node scripts/sync-corridor-docs-mirror.mjs"
   },
   "dependencies": {

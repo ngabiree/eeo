@@ -1,0 +1,89 @@
+{
+  "logo_name": "EARTH Endowment Observatory",
+  "version": "fixed_transparent_master_v2",
+  "canvas_px": [
+    2048,
+    2048
+  ],
+  "color_profile": "sRGB",
+  "background": "true alpha transparency in PNG; no checkerboard pattern baked into image",
+  "source_assets": {
+    "base_logo": "EEO_logo_image_Apr-29, 2026, 03_02_16 PM.png",
+    "original_imana_star": "Imana Star Image Feb 12, 2026, 01_38_40 AM.png",
+    "repair_reference": "a_clean_vector_illustration_style_circular_emblem.png"
+  },
+  "deterministic_edit_parameters": {
+    "imana_star_source_crop_bbox_px": [
+      291,
+      543,
+      1047,
+      1234
+    ],
+    "imana_star_target_size_px": [
+      226,
+      207
+    ],
+    "imana_star_target_top_left_px": [
+      906,
+      218
+    ],
+    "donor_inpaint_star_mask_ellipse_px": [
+      865,
+      185,
+      1185,
+      445
+    ],
+    "repair_composite_mask_ellipse_px": [
+      820,
+      205,
+      1230,
+      505
+    ],
+    "repair_mask_bounds_y_px": [
+      190,
+      500
+    ],
+    "repair_mask_feather_blur_radius_px": 20,
+    "alpha_matte": {
+      "background_sample": [
+        240.0,
+        229.0,
+        219.0
+      ],
+      "delta_start": 35,
+      "delta_width": 45,
+      "saturation_start": 35,
+      "saturation_width": 55,
+      "value_dark_start": 190,
+      "value_dark_width": 80,
+      "canny_edges": [
+        50,
+        150
+      ],
+      "edge_dilation_iterations": 2,
+      "edge_alpha_min": 0.75,
+      "alpha_gamma": 0.9,
+      "alpha_floor_cutoff": 0.07
+    }
+  },
+  "qa_checks": {
+    "transparent_file_mode": "RGBA",
+    "transparent_file_size_px": [
+      2048,
+      2048
+    ],
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "fully_transparent_pixel_ratio": 0.634981,
+    "fully_opaque_pixel_ratio": 0.310883,
+    "checkerboard_baked_in": false,
+    "original_imana_star_retained": true,
+    "repair_area_between_globe_and_star": "cleaned",
+    "imana_star_interior": "cleaned"
+  },
+  "files": {
+    "EEO_logo_fixed_transparent_master.png": "2342ebed8fdb7144f05d37cde0b0408b717cc2b215a636cbdd6c3243a82c53ca",
+    "EEO_logo_fixed_cream_master.png": "880abc54bdb29ebd7d952f7aa11e9fbd7eab5fbc3a536c22229fdbbc86db485b",
+    "EEO_logo_fixed_QA_preview.png": "1628756546e29a44cdf379f8bdcfdeb2c864e5d08be2e40be11584a78e61963f"
+  }
+}

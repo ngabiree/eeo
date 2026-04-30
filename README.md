@@ -1,6 +1,10 @@
 # Earth Endowment Observatory — public web app
 
-**Local** civic intelligence surface: stewarded evidence, transparent public record, and safeguards-first publication. **Synthetic sample data only** — no live databases, APIs, or restricted files in this repo.
+**Local** civic intelligence surface: stewarded evidence, transparent public record, and safeguards-first publication. This public repository contains application code, public documentation, schema/migration scaffolding, methods, and synthetic sample data.
+
+The operational EEO system is designed to support live source registries, restricted review workspaces, raw evidence preservation, verified reporting, private evidence files, and controlled geospatial analysis through governed databases, private storage, RLS, audit logs, and release-gated public views.
+
+Do not commit raw evidence, restricted files, sensitive geospatial data, partner-confidential data, personal data, production database dumps, legal review notes, secrets, or right-of-reply packets to this repository. Live evidence work belongs in governed databases and private storage, not in GitHub.
 
 The product is framed as a public observatory, not a court, atlas, certification scheme, composite headline index, blockchain layer, or automated decision authority.
 
@@ -18,7 +22,7 @@ pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The site header lists primary routes (**Corridors**, **Evidence Ledger**, **Methods**, **Safeguards**, **Corrections**). Deeper corridor workspace tabs (dossier, ledger, review tools) live inside `/pilot/corridor`; internal reviewer routes under `/review` and `/workspace` omit the public chrome.
+Open [http://localhost:3000](http://localhost:3000). The site header lists the canonical **pilot routes** (overview, corridors, evidence dossier and ledger, governance profile, value chain, labor/ecology/revenue, human capability, methods, safeguards, corrections). Corridor workspace tabs live inside `/pilot/corridor`; internal reviewer routes under `/review` and `/workspace` omit the public chrome.
 
 ### npm fallback
 
@@ -41,8 +45,9 @@ If you use npm locally, keep committed lockfile/package-manager conventions unch
 | `pnpm lint`         | ESLint CLI (`next/core-web-vitals` + `next/typescript` via `eslint.config.mjs`) |
 | `pnpm typecheck`    | TypeScript (`tsc --noEmit`) |
 | `pnpm check:pilot-routes` | Fails if legacy public routes are referenced instead of canonical `/pilot/*` routes |
+| `pnpm verify`       | Same sequence as CI: `check:pilot-routes`, lint, typecheck, test, build |
 
-This route-discipline check also runs in CI on pushes and pull requests.
+`pnpm check:pilot-routes` and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths (for example `/dossier` → `/pilot/evidence-dossier`) are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.ts`.
 
 ## Package manager
 
@@ -76,15 +81,30 @@ The app is set up for **[Vercel](https://vercel.com/)**. Local link metadata liv
 
 See `SECURITY.md`. Do not commit secrets, credentials, raw evidence, or sensitive geospatial files.
 
-## Specification
+## Human Capability and Live Evidence Boundary
 
-The canonical build document is maintained outside this path as **Earth Endowment Observatory — Institutional Constitution and Systems Specification** (v2.x). Align new features with that doctrine and the MVP loop (dossier → limited dashboard → ledger → review → corrections) before expanding scope.
+The Human Capability, Labor, Stewardship, and Relationship layer treats people as rights-bearing agents in relation to endowments, not as endowments, resources, or talent inventory. Public implementation uses only synthetic, aggregated, non-sensitive sample data until governed live evidence workflows are available.
+
+Core rule: EEO should be live where evidence is governed, and restrained where evidence is exposed.
+
+Supabase-backed live-data tables for this layer are deferred until RLS, private buckets, audit logs, release views, and review workflows are ready. **Live data is allowed** in governed backends; **uncontrolled public exposure** is not.
+
+## Live-Data Delivery Checklist
+
+Before merging any live-data feature, run the reusable checklist in
+`docs/live-data-definition-of-done.md`.
+
+## Changelog
+
+Release posture and routing notes for this prototype are summarized in `CHANGELOG.md`.
 
 ## Canonical Specification
 
-The controlling source of truth is now checked into this repository at:
+The controlling institutional and systems specification for product scope and engineering posture is checked into this repository at:
 
 - `docs/canonical/eeo_institutional_constitution_and_systems_specification-final.md`
+
+Align new features with that doctrine before expanding runtime scope. A short companion summary of the MVP publication chain is in `docs/mvp-evidence-loop.md`.
 
 This canonical specification governs:
 
@@ -100,6 +120,8 @@ This canonical specification governs:
 - prototype-only implementation boundaries.
 
 ### MVP evidence loop (visibility rule)
+
+Also echoed on the `/pilot` overview page (static panel). Full text: `docs/mvp-evidence-loop.md`.
 
 ```text
 source -> license -> evidence -> claim -> entity resolution -> review -> exposure review -> right-of-reply if needed -> release manifest -> public evidence dossier -> correction route
