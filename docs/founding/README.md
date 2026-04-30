@@ -11,7 +11,7 @@ Executive summary: **Earth endowments → shared human capability** as an eviden
 | Document | Purpose |
 |----------|---------|
 | [Canonical institutional constitution and systems specification](../canonical/eeo_institutional_constitution_and_systems_specification-final.md) | **Operating doctrine**: product scope, evidence discipline, workflow, disclosure tiers, map safety, right-of-reply, corrections posture, MVP boundaries |
-| [MVP evidence loop (visibility rule)](../mvp-evidence-loop.md) | Short publication-chain reference plus canonical **`/pilot/*`** routes and legacy redirects |
+| [MVP evidence loop (visibility rule)](../mvp-evidence-loop.md) | Publication-chain reference; **`/pilot/*`** path table vs header shortcuts (**`lib/pilotPublicNav.ts`**); legacy redirect map |
 
 ## Policies (root — contributor and maintainer norms)
 

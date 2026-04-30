@@ -34,7 +34,7 @@ pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The site header lists the canonical **pilot routes** (overview, corridors, evidence dossier and ledger, governance profile, value chain, labor/ecology/revenue, human capability, methods, safeguards, corrections). Corridor workspace tabs live inside `/pilot/corridor`; internal reviewer routes under `/review` and `/workspace` omit the public chrome.
+Open [http://localhost:3000](http://localhost:3000). The site header lists **shortcut links** defined in **`lib/pilotPublicNav.ts`** — Observatory home, First Corridor, Evidence Ledger, Methods, Safeguards, and Corrections — to keep navigation compact. **`/pilot`** surfaces additional corridor prototype pages (overview, evidence dossier and ledger, governance profile, claim lifecycle, human capability, labor/ecology/revenue, value-chain view, and others); see **`docs/mvp-evidence-loop.md`** for paths. Corridor workspace tabs live inside `/pilot/corridor`; **`/trust`** exposes the public Trust index; internal reviewer routes under **`/review`** and **`/workspace`** omit the public chrome.
 
 ### npm fallback
 

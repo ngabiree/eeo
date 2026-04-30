@@ -18,7 +18,8 @@ export default function PilotRouteNav() {
           Pilot routes (same list as the site header)
         </p>
         <p className="mb-3 text-xs leading-relaxed text-[color:var(--eeo-muted)]">
-          Pilot preview · Demonstration data may be used for interface review. Not a public data release.
+          Header shortcuts only — open <Link href="/pilot" className="underline">/pilot</Link> for the full corridor
+          prototype route list. Demonstration data · not a public data release.
         </p>
         <div className="flex flex-wrap gap-2 text-sm">
           {PILOT_PUBLIC_NAV.map((route) => (

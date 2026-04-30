@@ -2,14 +2,12 @@
 
 ## Unreleased
 
-### Documentation / doctrine anchor
-
-- Documented the **north star**: EEO as an **evidence institution** linking **Earth endowments** to **shared human capability** — explicitly not an atlas fantasy, dashboard product, campaign surface, or registry.
-- Distinguished what the prototype already demonstrates (**governed publication loop**) from the **full corridor-intelligence arc** (including temporal future) staged across **`GOVERNANCE.md`** / **`ROADMAP.md`** (**`v0.6`** = Temporal Endowment Profile schema/model only).
-
 ### Documentation
 
 - Added **`docs/founding/README.md`** as the single hub for constitution, policies, protocols, roadmap, changelog, governance, GitHub housekeeping, canonical code pointers, and a **north-star / doctrine anchor** cross-link to **`README`**; **`docs/README.md`** links there first; **`CONTRIBUTING`** and **`docs/mvp-evidence-loop`** point newcomers at the hub.
+- **Doctrine anchor:** north star (**Earth endowments → shared human capability**); prototype publication loop vs full corridor‑intelligence arc; **`v0.6`** Temporal Endowment Profile schema/model only (**`GOVERNANCE.md`** / **`ROADMAP.md`**).
+- **Pilot navigation docs:** **`README`** “Run locally” matches **`lib/pilotPublicNav.ts`** header shortcuts vs full **`/pilot`** hub; **`docs/mvp-evidence-loop`** lists all **`app/pilot/`** URLs, legacy redirects, and CI check; **`PilotRouteNav`** links **`/pilot`** for the full list; **`docs/founding`** blurb updated for **`mvp-evidence-loop`** scope.
+- **`EeoSiteFooter`:** Safeguards / Methods / Corrections links use **`/pilot/*`** canonical paths (**`pnpm check:pilot-routes`**).
 
 ### Governance
 

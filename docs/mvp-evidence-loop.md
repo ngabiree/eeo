@@ -13,3 +13,47 @@ source -> license -> evidence -> claim -> entity resolution -> review -> exposur
 ```
 
 This is a **visibility rule** for governance-first alignment — not an executable workflow promise in the static build.
+
+## Header shortcuts vs full pilot surface
+
+Navigation pills use **`lib/pilotPublicNav.ts`** — a deliberate **subset** for clarity. The full set of shipped pilot `page.tsx` routes under **`app/pilot/`** is listed below; use **`/pilot`** in the app as the hub for deep links not repeated in the header.
+
+## Canonical pilot URLs (`app/pilot/`)
+
+| Path | Notes |
+|------|--------|
+| `/pilot` | Pilot overview + MVP chain panel |
+| `/pilot/corridor` | Corridor workspace UI |
+| `/pilot/evidence-dossier` | Evidence dossier / claim cards |
+| `/pilot/evidence-ledger` | Evidence ledger |
+| `/pilot/governance-profile` | Governance profile |
+| `/pilot/value-chain` | Corridor / value-chain framing |
+| `/pilot/labor-ecology-revenue` | Labor, ecology, revenue |
+| `/pilot/human-capability` | Human capability layer (prototype) |
+| `/pilot/claim-lifecycle` | Claim lifecycle explainer |
+| `/pilot/methods-and-limits` | Methods and limits |
+| `/pilot/safeguards` | Safeguards |
+| `/pilot/corrections` | Corrections route |
+
+Adjacent public routes: **`/trust`** (Trust index), **`/`** (Observatory landing).
+
+## Legacy public URLs → redirects
+
+Implemented in **`next.config.ts`** (and mirrored in some `app/*/page.tsx` redirects).
+
+| Legacy path | Destination |
+|-------------|-------------|
+| `/dossier` | `/pilot/evidence-dossier` |
+| `/evidence` | `/pilot/evidence-ledger` |
+| `/methods` | `/pilot/methods-and-limits` |
+| `/safeguards` | `/pilot/safeguards` |
+| `/corrections` | `/pilot/corrections` |
+| `/corridor` | `/pilot/value-chain` |
+| `/evidence-ledger` | `/pilot/evidence-ledger` |
+| `/source-registry` | `/pilot/evidence-dossier` |
+| `/pilot/map` | `/pilot/corridor` |
+| `/pilot/public-revenue` | `/pilot/labor-ecology-revenue` |
+
+## CI: pilot route discipline
+
+`pnpm check:pilot-routes` scans `app/` and `components/` for legacy top-level path string references. It runs in **`pnpm verify`** and GitHub Actions.

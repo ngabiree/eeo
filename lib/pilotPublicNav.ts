@@ -1,6 +1,6 @@
 /**
- * Canonical public pilot routes — single source for header and in-page pilot navigation.
- * Keep labels aligned to avoid competing terminology.
+ * Header + in-page **shortcut** pilot links (single source for labels).
+ * Deeper pilots still exist under `/pilot/*` — see `/pilot` overview and `docs/mvp-evidence-loop.md`.
  */
 export const PILOT_PUBLIC_NAV: readonly { href: string; label: string }[] = [
   { href: "/", label: "Observatory" },

@@ -10,7 +10,7 @@ const footerColumns = [
       { label: "Mission", href: "/observatory" },
       { label: "Governance", href: "/governance" },
       { label: "Stewardship", href: "/stewardship" },
-      { label: "Safeguards", href: "/safeguards" },
+      { label: "Safeguards", href: "/pilot/safeguards" },
     ],
   },
   {
@@ -18,8 +18,8 @@ const footerColumns = [
     links: [
       { label: "Evidence Ledger", href: "/evidence-ledger" },
       { label: "Source Registry", href: "/source-registry" },
-      { label: "Methods", href: "/methods" },
-      { label: "Corrections", href: "/corrections" },
+      { label: "Methods", href: "/pilot/methods-and-limits" },
+      { label: "Corrections", href: "/pilot/corrections" },
     ],
   },
   {
@@ -35,7 +35,7 @@ const footerColumns = [
     title: "Accountability",
     links: [
       { label: "Disclosure Policy", href: "/disclosure-policy" },
-      { label: "Correction Process", href: "/corrections" },
+      { label: "Correction Process", href: "/pilot/corrections" },
       { label: "Right of Reply", href: "/right-of-reply" },
       { label: "Contact", href: "/contact" },
     ],
