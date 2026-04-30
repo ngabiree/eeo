@@ -9,7 +9,7 @@
 
 ### Documentation
 
-- Added **`docs/founding/README.md`** as the single hub for constitution, policies, protocols, roadmap, changelog, governance, GitHub housekeeping, and canonical code pointers; **`docs/README.md`** links there first.
+- Added **`docs/founding/README.md`** as the single hub for constitution, policies, protocols, roadmap, changelog, governance, GitHub housekeeping, canonical code pointers, and a **north-star / doctrine anchor** cross-link to **`README`**; **`docs/README.md`** links there first; **`CONTRIBUTING`** and **`docs/mvp-evidence-loop`** point newcomers at the hub.
 
 ### Governance
 

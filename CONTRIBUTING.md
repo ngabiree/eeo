@@ -1,5 +1,7 @@
 # Contributing
 
+Institutional constitution, policies (security, data, disclosure), protocols, and governance are indexed for discoverability in **[docs/founding/README.md](./docs/founding/README.md)**.
+
 ## Development
 
 - Use Node.js 20+.
