@@ -9,7 +9,7 @@
 - **Pilot navigation docs:** **`README`** “Run locally” matches **`lib/pilotPublicNav.ts`** header shortcuts vs full **`/pilot`** hub; **`docs/mvp-evidence-loop`** lists all **`app/pilot/`** URLs, legacy redirects, and CI check; **`PilotRouteNav`** links **`/pilot`** for the full list; **`docs/founding`** blurb updated for **`mvp-evidence-loop`** scope.
 - **`EeoSiteFooter`:** Safeguards / Methods / Corrections links use **`/pilot/*`** canonical paths (**`pnpm check:pilot-routes`**).
 - **`lib/pilotHubRoutes.ts`** + **`PilotHubRouteList`:** single source for every shipped **`/pilot`** child page; **`/pilot`** hub renders the full exploration list (**`docs/mvp-evidence-loop`** cross-reference).
-- **`pnpm check:pilot-hub-routes`:** CI + **`pnpm verify`** guard so **`pilotHubRoutes`** cannot drift from **`app/pilot/<segment>/page.tsx`** layouts.
+- **`pnpm check:pilot-hub-routes`:** CI + **`pnpm verify`** guard so **`pilotHubRoutes`** cannot drift from **`app/pilot/<segment>/page.tsx`** layouts and **`pilotPublicNav`** **`/pilot`** shortcuts stay valid.
 
 ### Governance
 

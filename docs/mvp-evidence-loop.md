@@ -60,6 +60,6 @@ Implemented in **`next.config.ts`** (and mirrored in some `app/*/page.tsx` redir
 
 `pnpm check:pilot-routes` scans `app/` and `components/` for legacy top-level path string references.
 
-`pnpm check:pilot-hub-routes` ensures **`lib/pilotHubRoutes.ts`** stays aligned with direct child segments under **`app/pilot/`** that ship a **`page.tsx`**.
+`pnpm check:pilot-hub-routes` ensures **`lib/pilotHubRoutes.ts`** stays aligned with direct child segments under **`app/pilot/`** that ship a **`page.tsx`**, and that every **`/pilot/...`** shortcut in **`lib/pilotPublicNav.ts`** resolves to one of those pages.
 
 Both run in **`pnpm verify`** and GitHub Actions.

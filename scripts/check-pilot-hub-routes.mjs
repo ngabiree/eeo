@@ -5,6 +5,12 @@ import path from "node:path";
 const ROOT = process.cwd();
 const PILOT_APP = path.join(ROOT, "app", "pilot");
 const HUB_FILE = path.join(ROOT, "lib", "pilotHubRoutes.ts");
+const NAV_FILE = path.join(ROOT, "lib", "pilotPublicNav.ts");
+
+/** @param {string} source */
+function extractPilotHrefs(source) {
+  return [...source.matchAll(/\{\s*href:\s*"(\/pilot\/[^"]+)"\s*,/g)].map((m) => m[1]);
+}
 
 async function fileExists(candidate) {
   try {
@@ -28,9 +34,8 @@ async function collectFilesystemRoutes() {
   return routes;
 }
 
-function collectDeclaredRoutes(source) {
-  const matches = [...source.matchAll(/\{\s*href:\s*"(\/pilot\/[^"]+)"\s*,/g)];
-  const routes = matches.map((m) => m[1]);
+function collectDeclaredHubRoutes(source) {
+  const routes = extractPilotHrefs(source);
   const set = new Set(routes);
   if (routes.length !== set.size) {
     console.error("pilotHubRoutes.ts contains duplicate href entries.");
@@ -41,7 +46,7 @@ function collectDeclaredRoutes(source) {
 
 const fsRoutes = await collectFilesystemRoutes();
 const hubSource = await readFile(HUB_FILE, "utf8");
-const declared = collectDeclaredRoutes(hubSource);
+const declared = collectDeclaredHubRoutes(hubSource);
 
 const missingInHub = [...fsRoutes].filter((r) => !declared.has(r)).sort();
 const extraInHub = [...declared].filter((r) => !fsRoutes.has(r)).sort();
@@ -63,4 +68,19 @@ if (missingInHub.length > 0 || extraInHub.length > 0) {
   process.exit(1);
 }
 
-console.log("Pilot hub route check passed: pilotHubRoutes aligns with app/pilot segments.");
+const navSource = await readFile(NAV_FILE, "utf8");
+const shortcutHrefs = extractPilotHrefs(navSource);
+const badShortcuts = shortcutHrefs.filter((r) => !fsRoutes.has(r));
+if (badShortcuts.length > 0) {
+  console.error(
+    "pilotPublicNav.ts references /pilot paths with no matching app/pilot/<segment>/page.tsx:",
+  );
+  for (const route of [...new Set(badShortcuts)].sort()) {
+    console.error(`  - ${route}`);
+  }
+  process.exit(1);
+}
+
+console.log(
+  "Pilot hub route check passed: pilotHubRoutes aligns with app/pilot; pilotPublicNav /pilot shortcuts resolve.",
+);

@@ -57,7 +57,7 @@ If you use npm locally, keep committed lockfile/package-manager conventions unch
 | `pnpm lint`         | ESLint CLI (`next/core-web-vitals` + `next/typescript` via `eslint.config.mjs`) |
 | `pnpm typecheck`    | TypeScript (`tsc --noEmit`) |
 | `pnpm check:pilot-routes` | Fails if legacy public routes are referenced instead of canonical `/pilot/*` routes |
-| `pnpm check:pilot-hub-routes` | Fails if **`lib/pilotHubRoutes.ts`** drifts from **`app/pilot/<segment>/page.tsx`** segments |
+| `pnpm check:pilot-hub-routes` | Fails if **`lib/pilotHubRoutes.ts`** drifts from **`app/pilot/<segment>/page.tsx`**, or **`lib/pilotPublicNav.ts`** **`/pilot/...`** shortcuts miss a matching segment page |
 | `pnpm verify`       | Same sequence as CI: `check:pilot-routes`, lint, typecheck, test, build |
 
 `pnpm check:pilot-routes`, `pnpm check:pilot-hub-routes`, and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths (for example `/dossier` → `/pilot/evidence-dossier`) are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.ts`.
