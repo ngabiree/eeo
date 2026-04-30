@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 
-import { EeoFooter } from "@/components/EeoFooter";
+import ConditionalEeoFooter from "@/components/eeo/ConditionalEeoFooter";
 import PublicChrome from "@/components/eeo/PublicChrome";
 
 const siteUrl =
@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </a>
         <>
           <PublicChrome>{children}</PublicChrome>
-          <EeoFooter />
+          <ConditionalEeoFooter />
         </>
       </body>
     </html>
