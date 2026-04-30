@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### v0.6.1 — Dossier governance repair pass
+
+- Added roadmap **Milestone Register** and gate rule clarifying `v0.5` partial, `v0.6.1` current, and the sequencing constraint before `v0.7`.
+- Added `/dossier` runtime page powered by `data/corridorDossier.ts` with explicit prototype-structure labels and public-safe governance summaries.
+- Strengthened source-map operational fields in `data/sourceMap.ts` (sourceId/publisher/sourceType/usedFor/claim-link slots/source limitations/access/licensing/map-safety relevance support).
+- Added map-safety enforcement utility in `lib/mapSafety.ts`.
+- Added right-of-reply applicability helper in `lib/publicationRules.ts` and surfaced applicability language on public claim cards.
+- Added prototype persistence boundary language in `README.md` and `GOVERNANCE.md`.
+- Added manual legal-language risk checklist in `docs/language-safety.md`.
+
 ### v0.6 — Endowment doctrine + corridor dossier schema + source map
 
 - **Doctrine:** Canonical definition of Earth’s endowments, human capability vs inventorying people, relational “capacities in relation,” and universal analytical concern / not universal exposure — **`README.md`**, **`GOVERNANCE.md`**, **`ROADMAP.md`**, **`app/pilot/methods-and-limits`**, **`app/pilot/safeguards`**.

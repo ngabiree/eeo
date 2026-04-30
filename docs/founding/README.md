@@ -31,6 +31,7 @@ Executive summary: **Earth endowments → relational stewardship and human capab
 | [Map safety protocol](../map-safety-protocol.md) | Geospatial exposure guardrails; **`types/mapSafety.ts`** |
 | [Right of reply (publication discipline)](../right-of-reply.md) | When ROR applies, safe framing, exclusions |
 | [Right-of-reply protocol](../right-of-reply-protocol.md) | Prototype workflow sketch; see also **right-of-reply.md** |
+| [Language safety checklist](../language-safety.md) | Public-language guardrails for non-adjudicatory evidence publication |
 | [Live-data definition of done](../live-data-definition-of-done.md) | Checklist before governed live-data merges |
 | [Architecture](../architecture.md) | System / app architecture reference |
 
@@ -68,8 +69,8 @@ Executive summary: **Earth endowments → relational stewardship and human capab
 |----------|--------|
 | `components/EarthEndowmentObservatoryOneFileApp.tsx` | **Canonical** corridor workspace UI in this repo |
 | `docs/EarthEndowmentObservatoryOneFileApp.tsx` | TypeScript mirror for review; refresh with `pnpm sync:corridor-docs` |
-| `types/corridorDossier.ts` | Corridor dossier section + status contracts (**structure only** in **`v0.6`**) |
-| `data/corridorDossier.ts` | Copper–cobalt pilot **skeleton** dossier record |
+| `types/corridorDossier.ts` | Corridor dossier section + status contracts |
+| `data/corridorDossier.ts` | Copper–cobalt pilot dossier skeleton (runtime-rendered at `/dossier`) |
 | `data/sourceMap.ts` | Source / non-duplication map (cite, evaluate, defer; not full integration claims) |
 
 ## How to cite

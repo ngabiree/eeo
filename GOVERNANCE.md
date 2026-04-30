@@ -4,7 +4,11 @@
 
 EEO is **public-interest evidence infrastructure** for **endowment-to-economy chains** — not a dashboard product, startup SKU, ESG score surface, campaign NGO layer, consulting portal, blockchain system, or generic open-data dumping ground.
 
-**Temporal profile types** in `types/temporalProfile.ts` remain a **dormant boundary marker** until after a trustworthy **corridor dossier** and **release discipline** posture are complete; they are **not** part of active `v0.6` shipping goals and must not drive UI, monitoring feeds, or forecasting behavior (see **`ROADMAP.md`** for deferral to **`v1.3+`**).
+**Temporal profile types** in `types/temporalProfile.ts` remain a **dormant boundary marker** until after a trustworthy **corridor dossier** and **release discipline** posture are complete; they are **not** part of active `v0.6`/`v0.6.1` shipping goals and must not drive UI, monitoring feeds, or forecasting behavior (see **`ROADMAP.md`** for deferral to **`v1.3+`**).
+
+Temporal profiles are intended for disciplined foresight, not prediction.
+
+EEO studies human labor, knowledge, stewardship, rights, harm, and capability. It does **not** classify people as natural resources, assets, or inventory.
 
 ## Knowledge-governance caution
 
@@ -49,17 +53,30 @@ Full guidance: **`docs/right-of-reply.md`** (and legacy design notes in **`docs/
 
 - **`v0.3`** — Evidence core  
 - **`v0.4`** — Review activity logging  
-- **`v0.5`** — Claim governance + release consequences  
+- **`v0.5`** — Claim governance + release consequences (partial; being consolidated in `v0.6.1`)  
 
 ## Safety-first sequencing
 
 - **`v0.6`** — Endowment doctrine articulation + corridor dossier **schema** + **source / non-duplication map** (typing + documentation; no full dossier assertions, no temporal/monitoring/scenario UI).  
-- **`v0.7`** — Corridor **evidence content** population for the dossier sections.  
-- **`v0.8`** — Release hardening (persistence where appropriate, map-safety gates, right-of-reply workflow depth, partner review).  
+- **`v0.6.1`** — Dossier governance repair pass (claim-correction linking, public/private boundary checks, safety utilities, operational staging).  
+- **`v0.7`** — Corridor dossier runtime + claim governance integration, then monitoring signal registry.  
+- **`v0.8`** — Scenario notes / disciplined foresight (only after prior governance gates).  
 - **`v1.0`** — Public evidence pilot **release candidate**.  
 - **`v1.1`** — Partner review package.  
 - **`v1.2`** — Funding dossier.  
 - **`v1.3+`** — Temporal profiles, monitoring signals, scenario notes (**only after** pilot trust is earned).
+
+`v0.7` must not begin until claim governance, corridor dossier runtime, map-safety enforcement, source limitations, right-of-reply handling, and release-manifest consequences are connected.
+
+## Prototype persistence boundary
+
+Correction submissions, triage state, reviewer notes, and activity logs currently use prototype storage and may not be durable across process restarts unless persistent storage is configured. Production deployment requires persistent storage, migration design, backup policy, retention rules, access controls, and security review.
+
+## Public/private boundary
+
+Public surfaces may disclose governance status labels (stable/challenged/under_review/corrected/restricted/withdrawn), public-safe correction counts, source limitations, and publication limitations.
+
+Public surfaces must not disclose reviewer notes, internal activity logs, reviewer identity, submitter email, private triage reasoning, sensitive harm-review details, restricted map coordinates, or whistleblower-identifying information.
 
 ## `v0.6` scope guard (do not regress)
 

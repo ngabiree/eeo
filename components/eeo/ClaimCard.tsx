@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { evidenceItems } from "@/data/evidence";
-import { canClaimBeApprovedForRelease } from "@/lib/publicationRules";
+import { canClaimBeApprovedForRelease, requiresRightOfReply } from "@/lib/publicationRules";
 import { getClaimIntegrityWarnings, type ClaimCorrectionSummary } from "@/lib/claimUtils";
 import type { Claim } from "@/types/eeo";
 
@@ -44,6 +44,7 @@ export default function ClaimCard({
   }));
   const warnings = getClaimIntegrityWarnings(claim);
   const releaseReady = canClaimBeApprovedForRelease(claim) && warnings.length === 0;
+  const rightOfReplyApplies = requiresRightOfReply(claim);
 
   return (
     <article className="space-y-4 rounded-3xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.9)] p-6 shadow-sm backdrop-blur-sm">
@@ -62,6 +63,10 @@ export default function ClaimCard({
         </p>
         <p className="text-sm text-[color:var(--eeo-text)] md:col-span-2">
           <strong>Right-of-reply status:</strong> {claim.rightOfReplyStatus}
+        </p>
+        <p className="text-sm text-[color:var(--eeo-text)] md:col-span-2">
+          <strong>Right-of-reply applicability:</strong>{" "}
+          {rightOfReplyApplies ? "may apply for materially affected identifiable actors" : "not required for this claim form"}
         </p>
       </div>
 

@@ -37,7 +37,7 @@ Programmatic index (for the **`/pilot`** hub UI): **`lib/pilotHubRoutes.ts`**.
 | `/pilot/safeguards` | Safeguards |
 | `/pilot/corrections` | Corrections route |
 
-Adjacent public routes: **`/trust`** (Trust index), **`/`** (Observatory landing).
+Adjacent public routes: **`/dossier`** (runtime dossier object view), **`/trust`** (Trust index), **`/`** (Observatory landing).
 
 ## Legacy public URLs → redirects
 
@@ -45,7 +45,6 @@ Implemented in **`next.config.ts`** (and mirrored in some `app/*/page.tsx` redir
 
 | Legacy path | Destination |
 |-------------|-------------|
-| `/dossier` | `/pilot/evidence-dossier` |
 | `/evidence` | `/pilot/evidence-ledger` |
 | `/methods` | `/pilot/methods-and-limits` |
 | `/safeguards` | `/pilot/safeguards` |

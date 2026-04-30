@@ -50,6 +50,7 @@ They include:
 - **Human capability & stewardship capacities:** labor, skill, ingenuity, care, stewardship practice, ecological relationship, institutional memory — **relational**, not inventories of “talent stocks.”  
 
 **Humans are not endowments to be inventoried.** Capabilities describe **relational stewardship** roles.
+EEO studies human labor, knowledge, stewardship, rights, harm, and capability. It does not classify people as natural resources, assets, or inventory.
 
 **Conceptual anchor:** Endowments are **capacities in relation** connecting nature, labor, knowledge, law, ecology, infrastructure, and time.
 
@@ -105,7 +106,7 @@ If you use npm locally, keep committed lockfile/package-manager conventions unch
 | `pnpm check:pilot-hub-routes` | Fails if **`app/pilot/page.tsx`** is missing, **`lib/pilotHubRoutes.ts`** drifts from segment **`page.tsx`** files, or **`lib/pilotPublicNav.ts`** **`/pilot/...`** shortcuts miss a matching segment |
 | `pnpm verify`       | Same sequence as CI: `check:pilot-routes`, `check:pilot-hub-routes`, lint, typecheck, test, build |
 
-`pnpm check:pilot-routes`, `pnpm check:pilot-hub-routes`, and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths (for example `/dossier` → `/pilot/evidence-dossier`) are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.ts`.
+`pnpm check:pilot-routes`, `pnpm check:pilot-hub-routes`, and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.ts`.
 
 ## Package manager
 
@@ -128,6 +129,10 @@ Do not commit `package-lock.json` (it is in `.gitignore`). CI uses **`pnpm insta
 ## Environment
 
 For the **static prototype**, you do not need a `.env` file. See `.env.example` for future Supabase/Vercel placeholders (service role **never** client-side).
+
+## Prototype persistence boundary
+
+Correction submissions, triage state, reviewer notes, and activity logs currently use prototype storage and may not be durable across process restarts unless persistent storage has been separately configured. Production deployment requires persistent storage, migration design, backup policy, retention rules, access controls, and security review.
 
 ## Deployment (Vercel)
 

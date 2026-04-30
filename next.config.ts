@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: projectRoot,
   async redirects() {
     return [
-      { source: "/dossier", destination: "/pilot/evidence-dossier", permanent: false },
       { source: "/evidence", destination: "/pilot/evidence-ledger", permanent: false },
       { source: "/methods", destination: "/pilot/methods-and-limits", permanent: false },
       { source: "/safeguards", destination: "/pilot/safeguards", permanent: false },

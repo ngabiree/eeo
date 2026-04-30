@@ -28,15 +28,27 @@ export type SourceMapUse =
   | "do_not_duplicate";
 
 export interface SourceMapEntry {
+  sourceId?: string;
   id: string;
   domain: SourceDomain;
   name: string;
   institution?: string;
+  publisher?: string;
+  sourceType?: Source["sourceType"] | "standard" | "framework";
   url?: string;
   intendedUse: SourceMapUse;
+  usedFor?: string[];
   whatItHelpsAnswer: string;
+  linkedClaimIds?: string[];
+  limitsClaimIds?: string[];
   limitations: string[];
+  sourceLimitations?: string[];
+  accessedDate?: string;
+  freshnessStatus?: "current" | "review_due" | "unknown";
   licenseOrAccessNote: string;
+  licenseStatus?: "open" | "restricted" | "permission_required" | "unknown";
+  publicationStatus?: "public" | "restricted" | "permission_based";
+  mapSafetyRelevance?: "none" | "context_only" | "requires_review_before_mapping";
   confidenceUse:
     | "high_for_context"
     | "medium_for_context"
@@ -51,7 +63,38 @@ export interface SourceMapEntry {
   notes?: string;
 }
 
-export const copperCobaltPilotSourceMap: SourceMapEntry[] = [
+function inferSourceType(domain: SourceDomain): SourceMapEntry["sourceType"] {
+  if (domain === "methods" || domain === "safeguards" || domain === "human_rights") return "framework";
+  return "other";
+}
+
+function withOperationalFields(entry: SourceMapEntry): SourceMapEntry {
+  const publicationStatus: SourceMapEntry["publicationStatus"] =
+    entry.exposureRisk === "restricted"
+      ? "restricted"
+      : entry.licenseStatus === "permission_required"
+        ? "permission_based"
+        : "public";
+  return {
+    sourceId: entry.id,
+    publisher: entry.institution ?? "Unknown institution",
+    sourceType: inferSourceType(entry.domain),
+    usedFor: entry.usedFor ?? [entry.whatItHelpsAnswer],
+    sourceLimitations: entry.sourceLimitations ?? entry.limitations,
+    accessedDate: entry.accessedDate ?? "2026-04-30",
+    freshnessStatus: entry.freshnessStatus ?? "review_due",
+    licenseStatus: entry.licenseStatus ?? "unknown",
+    publicationStatus,
+    mapSafetyRelevance:
+      entry.mapSafetyRelevance ??
+      (entry.domain === "geospatial" || entry.domain === "ecology_environment"
+        ? "requires_review_before_mapping"
+        : "none"),
+    ...entry,
+  };
+}
+
+const SOURCE_MAP_BASE: SourceMapEntry[] = [
   {
     id: "SM-USGS-MM",
     domain: "mineral_context",
@@ -61,6 +104,9 @@ export const copperCobaltPilotSourceMap: SourceMapEntry[] = [
     intendedUse: "cite",
     linkedSourceIds: ["SRC-USGS-CO-001"],
     whatItHelpsAnswer: "Reserve, production, and mineral-system context — not custody or origin proof.",
+    linkedClaimIds: ["CLAIM-DRC-CO-001"],
+    limitsClaimIds: ["CLAIM-DRC-CO-001"],
+    usedFor: ["production context", "method limitation"],
     limitations: ["National/regional aggregates; no product-level linkage."],
     licenseOrAccessNote: "Public federal materials; citation required.",
     confidenceUse: "high_for_context",
@@ -117,6 +163,9 @@ export const copperCobaltPilotSourceMap: SourceMapEntry[] = [
     linkedSourceIds: ["SRC-UNCOMTRADE-CO-001"],
     whatItHelpsAnswer:
       "Reported trade direction and aggregates — informs processing/trade hypotheses; not physical chain-of-custody.",
+    linkedClaimIds: ["CLAIM-DRC-CO-001"],
+    limitsClaimIds: ["CLAIM-DRC-CO-001"],
+    usedFor: ["trade-flow context", "method limitation"],
     limitations: ["Mirror statistics diverge.", "HS codes imperfect for mineral specificity."],
     licenseOrAccessNote: "Public query terms; uphold UN redistribution rules.",
     confidenceUse: "high_for_context",
@@ -257,3 +306,5 @@ export const copperCobaltPilotSourceMap: SourceMapEntry[] = [
     notes: "Non-duplication discipline — complements defer/cite posture on SM-RESOURCE-CONTRACTS.",
   },
 ];
+
+export const copperCobaltPilotSourceMap: SourceMapEntry[] = SOURCE_MAP_BASE.map(withOperationalFields);

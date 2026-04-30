@@ -4,67 +4,53 @@
 
 **Public Evidence Prototype: Copper-Cobalt Corridor**
 
-## North star & core identity
+## Milestone Register
 
-Deliver **public-interest evidence infrastructure** that helps societies trace how **Earth’s endowments** become economic value — what exists, where it sits, who governs and transforms it, who captures benefit, who bears cost, what public revenue arises, what reaches communities and future generations, and what remains unknown, disputed, hidden, or unsafe to publish.
+| Milestone | Actual content | Status |
+|---|---|---|
+| v0.4 | Corrections intake, protected review, triage notes, review activity log | Shipped |
+| v0.5 | Claim governance and release-manifest integration | Partial |
+| v0.6 | Endowment doctrine, corridor dossier foundation, source map, map-safety protocol, right-of-reply documentation | Shipped |
+| v0.6.1 | Dossier governance repair pass | Current |
+| v0.7 | Monitoring signal registry | Not started |
+| v0.8 | Scenario notes / disciplined foresight | Not started |
 
-**Governing mantra:** *Reveal systems. Protect peoples. Trace value. Respect sovereignty. Publish with evidence. Scale only after trust.*
+## Core sequence
 
-EEO is intentionally **not** a dashboard fantasy, ESG scoreboard, campaign tool, consulting portal, blockchain layer, or unconstrained open-data platform.
+1. **v0.6** — doctrine + dossier schema + source map  
+2. **v0.6.1** — governance and safety coherence repair  
+3. **v0.7** — corridor dossier runtime + claim governance integration, then monitoring signal registry  
+4. **v0.8** — scenario notes / disciplined foresight  
+5. **v1.0** — public evidence pilot release candidate  
+6. **v1.1** — partner review package  
+7. **v1.2** — funding dossier  
+8. **v1.3+** — temporal/monitoring/scenario activation under governance gates
 
-## Strategic correction: dossier-first
+## Gate rule before v0.7 starts
 
-The Observatory already ships enough **evidence / review / release** scaffolding for the current phase. **`v0.6`–`v0.7`** pivot to **one concrete corridor dossier** before expanding meta-systems. **Do not continue building meta-architecture before the corridor dossier earns trust.**
+`v0.7` must not begin until claim governance, corridor dossier runtime, map-safety enforcement, source limitations, right-of-reply handling, and release-manifest consequences are connected.
 
-## Anchored analysis chain (design law)
+## Dossier-first rule
 
-```text
-Endowment
-→ Governance
-→ Concession / Permit
-→ Operator
-→ Ownership / Control
-→ Extraction / Production
-→ Processing / Trade
-→ Labor Risk
-→ Ecological Signal
-→ Public Revenue
-→ Public Benefit
-→ Evidence Gap
-```
+The corridor dossier is the core product unit. Dashboard views, map outputs, correction queues, and review workspace routes are supporting systems.
 
-## Shipped today (reference)
+## Temporal dormancy
 
-- **`v0.3`** — Evidence core  
-- **`v0.4`** — Review activity log  
-- **`v0.5`** — Claim governance + release consequences  
-- **Temporal types** — dormant marker in `types/temporalProfile.ts` (no UI, no activation)  
+`TemporalEndowmentProfile` types remain dormant until the designated milestone. They must not be imported into runtime routes, dashboards, monitoring tools, scenario UI, or forecasting features beforehand.
 
-## Ordered releases
+**Temporal profiles are intended for disciplined foresight, not prediction.**
 
-1. **`v0.6`** — Endowment doctrine + Critical Minerals **corridor dossier schema** + **source / non-duplication map** + public methods language (this milestone; **no full dossier assertions**).  
-2. **`v0.7`** — **Copper–cobalt corridor evidence content** begins populating dossier sections (governance, concessions, ownership/control, labor, ecology, public revenue, value capture, stewardship, evidence gaps, etc.).  
-3. **`v0.8`** — **Release hardening:** persistence as needed, **map-safety** gates, **right-of-reply** operational depth, partner review.  
-4. **`v1.0`** — **Public evidence pilot release candidate.**  
-5. **`v1.1`** — Partner review package.  
-6. **`v1.2`** — Funding dossier.  
-7. **`v1.3+`** — Temporal profiles, monitoring signals, scenario notes — **deferred** until the public evidence pilot is credible in **one corridor**.
+## Nine-month pilot success metrics
 
-## Nine-month pilot success metrics (funding / delivery bar)
-
-- one **complete corridor dossier** published when evidence allows;  
-- **100%** of public claims linked to evidence;  
-- **100%** of public claims include limitations;  
-- one public **evidence ledger**;  
-- one **source + non-duplication map**;  
-- one safeguards + **map-safety** note bundle;  
-- one **correction** pathway exercised end-to-end in the pilot;  
-- one **release manifest** published alongside the dossier;  
-- three to five external **expert reviews** completed;  
-- at least five institutional datasets / standards / platforms **integrated, cited, evaluated, or explicitly deferred**;  
-- at least **three stakeholder classes** can use the output;  
-- **zero** unresolved high-risk exposure incidents.
-
-## Reminder
-
-The Observatory becomes planetary only after it becomes **trustworthy in one corridor**.
+- one complete corridor dossier published;
+- 100% of public claims linked to evidence;
+- 100% of public claims include limitations;
+- one public evidence ledger;
+- one source and non-duplication map;
+- one safeguards and map-safety note;
+- one correction pathway tested;
+- one release manifest published;
+- three to five external expert reviews completed;
+- at least five institutional datasets, standards, or platforms integrated, cited, evaluated, or explicitly deferred;
+- at least three stakeholder classes able to use the output;
+- zero unresolved high-risk exposure incidents.
