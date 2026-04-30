@@ -3,15 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-/** Pilot-only deep dives — primary routes (Corridors, Evidence Ledger, Methods, Safeguards, Corrections) sit in `EeoSiteHeader`. */
-const ROUTES: { href: string; label: string }[] = [
-  { href: "/pilot", label: "Overview" },
-  { href: "/pilot/corridor", label: "Corridor workspace" },
-  { href: "/pilot/evidence-dossier", label: "Evidence dossier" },
-  { href: "/pilot/governance-profile", label: "Governance profile" },
-  { href: "/pilot/value-chain", label: "Value-chain" },
-  { href: "/pilot/labor-ecology-revenue", label: "Labor / ecology / revenue" },
-];
+import { PILOT_PUBLIC_NAV } from "@/lib/pilotPublicNav";
 
 export default function PilotRouteNav() {
   const pathname = usePathname();
@@ -19,15 +11,17 @@ export default function PilotRouteNav() {
   return (
     <div className="space-y-3">
       <nav
-        aria-label="Pilot deep-dive navigation"
+        aria-label="Pilot route index"
         className="rounded-2xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.88)] p-3 shadow-sm backdrop-blur-sm"
       >
-        <p className="mb-1 text-xs font-mono uppercase tracking-[0.14em] text-[color:var(--eeo-muted)]">Pilot deep dives</p>
+        <p className="mb-1 text-xs font-mono uppercase tracking-[0.14em] text-[color:var(--eeo-muted)]">
+          Pilot routes (same list as the site header)
+        </p>
         <p className="mb-3 text-xs leading-relaxed text-[color:var(--eeo-muted)]">
-          Primary routes (Corridors, Evidence Ledger, Methods, Safeguards, Corrections) are in the site header above.
+          Limited corridor prototype — synthetic sample data only; not the full EEO platform.
         </p>
         <div className="flex flex-wrap gap-2 text-sm">
-          {ROUTES.map((route) => (
+          {PILOT_PUBLIC_NAV.map((route) => (
             <Link
               key={route.href}
               href={route.href}
