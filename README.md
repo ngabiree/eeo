@@ -8,6 +8,18 @@ Do not commit raw evidence, restricted files, sensitive geospatial data, partner
 
 The product is framed as a public observatory, not a court, atlas, certification scheme, composite headline index, blockchain layer, or automated decision authority.
 
+## Doctrine anchor (north star)
+
+EEO is the **evidence institution** for how Earth’s endowments become — or fail to become — **shared human capability** over time. That is intentional scope: **not** an atlas fantasy, **not** a generic dashboard product, **not** a campaign surface, and **not** a universal ownership registry.
+
+**Demonstrated today in the prototype:** a governed publication loop — claim ↔ evidence ↔ correction ↔ review ↔ governance status ↔ release manifest.
+
+**Ahead (full corridor intelligence, still under-built in the shipped surface):** the longer arc runs endowment → governance → labor → trade → ecology → revenue → value capture → public benefit → **temporal future**. Temporal Endowment Profile work (**`v0.6`**, schema and data-model only — see **`GOVERNANCE.md`** / **`ROADMAP.md`**) anchors that temporal step in evidence-bound contracts before any monitoring-style UI.
+
+## Founding documents
+
+Doctrine, institutional policies, protocols, governance, roadmap, and how to cite them: **[docs/founding/README.md](./docs/founding/README.md)**. The [**docs/README.md**](./docs/README.md) landing page opens with the same hub.
+
 ## Requirements
 
 - Node.js **20+** (LTS recommended)
@@ -82,6 +94,8 @@ The app is set up for **[Vercel](https://vercel.com/)**. Local link metadata liv
 See `SECURITY.md`. Do not commit secrets, credentials, raw evidence, or sensitive geospatial files.
 
 ## Human Capability and Live Evidence Boundary
+
+The north star (**Earth endowments → shared human capability**) is implemented through layers that treat **people as rights-bearing agents** in relation to endowments — never as extractive inventory.
 
 The Human Capability, Labor, Stewardship, and Relationship layer treats people as rights-bearing agents in relation to endowments, not as endowments, resources, or talent inventory. Public implementation uses only synthetic, aggregated, non-sensitive sample data until governed live evidence workflows are available.
 

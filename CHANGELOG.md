@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Documentation / doctrine anchor
+
+- Documented the **north star**: EEO as an **evidence institution** linking **Earth endowments** to **shared human capability** — explicitly not an atlas fantasy, dashboard product, campaign surface, or registry.
+- Distinguished what the prototype already demonstrates (**governed publication loop**) from the **full corridor-intelligence arc** (including temporal future) staged across **`GOVERNANCE.md`** / **`ROADMAP.md`** (**`v0.6`** = Temporal Endowment Profile schema/model only).
+
+### Documentation
+
+- Added **`docs/founding/README.md`** as the single hub for constitution, policies, protocols, roadmap, changelog, governance, GitHub housekeeping, and canonical code pointers; **`docs/README.md`** links there first.
+
 ### Governance
 
 - Locked the release sequence to:

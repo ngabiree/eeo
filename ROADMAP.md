@@ -2,6 +2,14 @@
 
 The build sequence is intentionally staged to keep public claims governed before adding any monitoring-style surfaces.
 
+## North star
+
+Deliver an **evidence institution** for how **Earth endowments** become — or fail to become — **shared human capability**, without mistaking the build for an atlas fantasy, headline dashboard SKU, outreach campaign layer, or universal registry.
+
+**Shipped posture today:** the governed evidence loop (claim → evidence → correction → review → governance status → release manifest).
+
+**Longer corridor-intelligence arc (construction target, not fully demonstrated yet):** endowment → governance → labor → trade → ecology → revenue → value capture → public benefit → temporal future. **`v0.6`** names and constrains only the **temporal / profile** slice of that arc (schemas and contracts — see **`GOVERNANCE.md`**).
+
 ## Ordered releases
 
 1. `v0.5` — Claim governance and release consequences
