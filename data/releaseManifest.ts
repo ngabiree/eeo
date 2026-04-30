@@ -18,4 +18,16 @@ export const releaseManifest: ReleaseManifest = {
     "This release does not identify specific products as containing cobalt from specific mines without substantiation.",
     "This release does not publish sensitive community or ecological location data.",
   ],
+  mapSafetyRestrictions: [
+    "Geographic detail is generalized for public release.",
+    "Restricted or do_not_publish map layers are not publicly rendered.",
+  ],
+  sourceLimitationsSummary: [
+    "USGS production and reserve data contextualize mineral scale but do not establish mine-to-product chain-of-custody.",
+    "UN Comtrade reported trade flows contextualize cross-border reporting but do not prove product origin or specific shipment responsibility.",
+  ],
+  rightOfReplySummary:
+    "Right-of-reply applies when a claim may materially affect an identifiable institution, company, agency, operator, or contested relationship. This is a publication discipline, not legal adjudication.",
+  evidenceCompletenessSummary:
+    "This release includes one fully inspectable methodological claim with linked evidence, linked sources, and explicit source limitations.",
 };

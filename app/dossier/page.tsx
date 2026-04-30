@@ -3,13 +3,22 @@ import Link from "next/link";
 import { claims } from "@/data/claims";
 import { copperCobaltCorridorPilotSkeleton } from "@/data/corridorDossier";
 import { copperCobaltPilotSourceMap } from "@/data/sourceMap";
-import { getClaimCorrectionSummary } from "@/lib/claimUtils";
+import { evidenceItems } from "@/data/evidence";
+import { sources } from "@/data/sources";
+import { canRenderPublicMapLayer } from "@/lib/mapSafety";
+import { getClaimCorrectionSummary, getClaimEvidenceCompleteness } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function DossierPage() {
   const dossier = copperCobaltCorridorPilotSkeleton;
   const corrections = listCorrectionSubmissions();
   const governance = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
+  const claimCompleteness = claims.map((claim) =>
+    getClaimEvidenceCompleteness(claim, evidenceItems, sources, copperCobaltPilotSourceMap)
+  );
+  const completeClaims = claimCompleteness.filter((row) => row.isComplete).length;
+  const mapSafetyClassification = "generalized" as const;
+  const mapLayerRenderable = canRenderPublicMapLayer(mapSafetyClassification);
 
   return (
     <main className="relative flex min-h-full flex-1 flex-col bg-transparent text-[color:var(--eeo-text)]">
@@ -32,6 +41,9 @@ export default function DossierPage() {
               <strong>Corridor:</strong> {dossier.corridor}
             </p>
             <p>
+              <strong>Endowment category:</strong> Non-regenerative critical mineral endowment (copper, cobalt)
+            </p>
+            <p>
               <strong>Commodity focus:</strong> {dossier.commodityFocus.join(", ")}
             </p>
             <p className="md:col-span-2">
@@ -45,8 +57,10 @@ export default function DossierPage() {
             </p>
           </div>
           <p className="mt-4 text-xs text-stone-600">
-            Map-safety posture: location detail may be restricted because publication could increase risk to communities,
-            ecosystems, sensitive sites, or rights-protected knowledge.
+            Map-safety posture: geographic detail is {mapSafetyClassification} for public release.{" "}
+            {mapLayerRenderable
+              ? "Location detail remains generalized to reduce exposure risk."
+              : "Location detail restricted because publication could increase risk to communities, ecosystems, sensitive sites, or rights-protected knowledge."}
           </p>
         </section>
 
@@ -80,13 +94,37 @@ export default function DossierPage() {
             EEO does not replace source hosts. It integrates, cites, compares, evaluates, defers, or explicitly does not
             duplicate.
           </p>
+          <ul className="mt-3 space-y-2 text-sm text-stone-700">
+            {copperCobaltPilotSourceMap
+              .filter((entry) => (entry.linkedClaimIds ?? []).includes("CLAIM-DRC-CO-001"))
+              .map((entry) => (
+                <li key={entry.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-3">
+                  <p className="font-medium text-stone-900">{entry.name}</p>
+                  <p className="text-xs text-stone-600">
+                    Used for: {(entry.usedFor ?? []).join("; ") || entry.whatItHelpsAnswer}
+                  </p>
+                  <p className="text-xs text-stone-600">
+                    Source limitations: {(entry.sourceLimitations ?? entry.limitations).join(" ")}
+                  </p>
+                  <p className="text-xs text-stone-600">
+                    Accessed: {entry.accessedDate ?? "Unknown"} · License: {entry.licenseStatus ?? "unknown"} · Publication:{" "}
+                    {entry.publicationStatus ?? "unknown"}
+                  </p>
+                </li>
+              ))}
+          </ul>
         </section>
 
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-xl font-semibold">Claim list and governance posture</h2>
+          <p className="mt-2 text-sm text-stone-700">
+            Evidence completeness: {completeClaims}/{claims.length} claims have linked evidence, linked sources, and
+            source limitations.
+          </p>
           <ul className="mt-3 space-y-2 text-sm text-stone-700">
-            {claims.map((claim) => {
+            {claims.map((claim, idx) => {
               const summary = governance.find((row) => row.claimId === claim.id);
+              const completeness = claimCompleteness[idx];
               return (
                 <li key={claim.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-3">
                   <p className="font-medium text-stone-900">{claim.id}</p>
@@ -95,6 +133,17 @@ export default function DossierPage() {
                     Governance: {summary?.governanceStatus.replaceAll("_", " ") ?? "stable"} · Linked corrections:{" "}
                     {summary?.linkedCorrections.length ?? 0}
                   </p>
+                  <p className="text-xs text-stone-600">
+                    {completeness.isComplete
+                      ? "Evidence-populated: This section has linked evidence and source limitations."
+                      : "Partially evidence-populated: This section has some linked evidence but remains incomplete."}
+                  </p>
+                  {!completeness.isComplete ? (
+                    <p className="mt-1 text-xs text-stone-600">
+                      This claim is not evidence-complete. It should not be treated as a substantive finding until linked
+                      evidence and source limitations are provided.
+                    </p>
+                  ) : null}
                 </li>
               );
             })}
@@ -102,7 +151,29 @@ export default function DossierPage() {
         </section>
 
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
+          <h2 className="text-xl font-semibold">Evidence completeness status by dossier section</h2>
+          <ul className="mt-3 space-y-2 text-sm text-stone-700">
+            {dossier.sections.map((section) => (
+              <li key={section.id}>
+                <strong>{section.title}:</strong>{" "}
+                {section.linkedEvidenceIds.length > 0
+                  ? "Evidence-populated: This section has linked evidence and source limitations."
+                  : "Structure-only: This section is structurally defined but not yet evidence-populated. It should not be treated as a substantive finding."}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-xl font-semibold">Known exclusions and limitations</h2>
+          <p className="mt-2 text-sm text-stone-700">
+            Includes: one low-exposure methodological claim path with linked evidence, linked sources, source
+            limitations, correction route, governance status, and release-manifest context.
+          </p>
+          <p className="mt-1 text-sm text-stone-700">
+            Excludes: product-level traceability findings, legal adjudication, sensitive location disclosure, new
+            commodities, and new geographies.
+          </p>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-stone-700">
             {dossier.nonGoals.map((goal) => (
               <li key={goal}>{goal}</li>

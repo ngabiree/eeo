@@ -1,6 +1,9 @@
 import { claims } from "@/data/claims";
+import { evidenceItems } from "@/data/evidence";
 import { releaseManifest } from "@/data/releaseManifest";
-import { getClaimCorrectionSummary } from "@/lib/claimUtils";
+import { copperCobaltPilotSourceMap } from "@/data/sourceMap";
+import { sources } from "@/data/sources";
+import { getClaimCorrectionSummary, getClaimEvidenceCompleteness } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function ReleaseManifestPanel() {
@@ -28,6 +31,13 @@ export default function ReleaseManifestPanel() {
     .map((correction) => correction.triageUpdatedAt || correction.submittedAt)
     .sort((a, b) => b.localeCompare(a))[0];
   const rightOfReplySummary = claims.map((c) => `${c.id}: ${c.rightOfReplyStatus}`).join("; ");
+  const completenessRows = claims.map((claim) =>
+    getClaimEvidenceCompleteness(claim, evidenceItems, sources, copperCobaltPilotSourceMap)
+  );
+  const completeClaimCount = completenessRows.filter((row) => row.isComplete).length;
+  const evidenceCompletenessSummary =
+    releaseManifest.evidenceCompletenessSummary ??
+    `${completeClaimCount}/${claims.length} claims are evidence-complete for this release.`;
 
   return (
     <section className="space-y-4 rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
@@ -46,6 +56,22 @@ export default function ReleaseManifestPanel() {
         <p><strong>Unresolved disputes:</strong> {releaseManifest.unresolvedDisputes.join(", ") || "None"}</p>
         <p className="md:col-span-2"><strong>Exposure review result:</strong> {releaseManifest.exposureReviewSummary}</p>
         <p className="md:col-span-2"><strong>Right-of-reply status:</strong> {rightOfReplySummary}</p>
+        <p className="md:col-span-2">
+          <strong>Right-of-reply applicability:</strong>{" "}
+          {releaseManifest.rightOfReplySummary ??
+            "Right-of-reply applies where claims may materially affect identifiable institutions; this is not legal adjudication."}
+        </p>
+        <p className="md:col-span-2">
+          <strong>Evidence completeness:</strong> {evidenceCompletenessSummary}
+        </p>
+        <p className="md:col-span-2">
+          <strong>Source limitations summary:</strong>{" "}
+          {(releaseManifest.sourceLimitationsSummary ?? []).join(" ") || "None recorded."}
+        </p>
+        <p className="md:col-span-2">
+          <strong>Map-safety restrictions:</strong>{" "}
+          {(releaseManifest.mapSafetyRestrictions ?? []).join(" ") || "No explicit map restrictions noted."}
+        </p>
         <p className="md:col-span-2"><strong>Known limitations:</strong> {releaseManifest.publicLimitations.join(" ")}</p>
         <p className="md:col-span-2"><strong>Release governance note:</strong> This release manifest records publication status, known limitations, open correction items, and claim governance status. It does not adjudicate legal liability.</p>
         <p className="md:col-span-2">

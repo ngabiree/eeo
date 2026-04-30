@@ -12,19 +12,21 @@
 | v0.5 | Claim governance and release-manifest integration | Partial |
 | v0.6 | Endowment doctrine, corridor dossier foundation, source map, map-safety protocol, right-of-reply documentation | Shipped |
 | v0.6.1 | Dossier governance repair pass | Current |
-| v0.7 | Monitoring signal registry | Not started |
-| v0.8 | Scenario notes / disciplined foresight | Not started |
+| v0.7 | Evidence population + dossier release gate | Current |
+| v0.8 | Monitoring signal registry design | Not started |
+| v0.9 | Scenario notes / disciplined foresight | Not started |
 
 ## Core sequence
 
 1. **v0.6** — doctrine + dossier schema + source map  
 2. **v0.6.1** — governance and safety coherence repair  
-3. **v0.7** — corridor dossier runtime + claim governance integration, then monitoring signal registry  
-4. **v0.8** — scenario notes / disciplined foresight  
-5. **v1.0** — public evidence pilot release candidate  
-6. **v1.1** — partner review package  
-7. **v1.2** — funding dossier  
-8. **v1.3+** — temporal/monitoring/scenario activation under governance gates
+3. **v0.7** — evidence population + dossier release gate  
+4. **v0.8** — monitoring signal registry design  
+5. **v0.9** — scenario notes / disciplined foresight  
+6. **v1.0** — public evidence pilot release candidate  
+7. **v1.1** — partner review package  
+8. **v1.2** — funding dossier  
+9. **v1.3+** — temporal/monitoring/scenario activation under governance gates
 
 ## Gate rule before v0.7 starts
 

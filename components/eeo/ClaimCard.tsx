@@ -1,8 +1,15 @@
 import Link from "next/link";
 
 import { evidenceItems } from "@/data/evidence";
+import { copperCobaltPilotSourceMap } from "@/data/sourceMap";
+import { sources } from "@/data/sources";
 import { canClaimBeApprovedForRelease, requiresRightOfReply } from "@/lib/publicationRules";
-import { getClaimIntegrityWarnings, type ClaimCorrectionSummary } from "@/lib/claimUtils";
+import {
+  getClaimEvidenceCompleteness,
+  getClaimIntegrityWarnings,
+  getSourceLimitationsForClaim,
+  type ClaimCorrectionSummary,
+} from "@/lib/claimUtils";
 import type { Claim } from "@/types/eeo";
 
 import {
@@ -45,6 +52,8 @@ export default function ClaimCard({
   const warnings = getClaimIntegrityWarnings(claim);
   const releaseReady = canClaimBeApprovedForRelease(claim) && warnings.length === 0;
   const rightOfReplyApplies = requiresRightOfReply(claim);
+  const completeness = getClaimEvidenceCompleteness(claim, evidenceItems, sources, copperCobaltPilotSourceMap);
+  const sourceLimitations = getSourceLimitationsForClaim(claim.id, evidenceItems, sources, copperCobaltPilotSourceMap);
 
   return (
     <article className="space-y-4 rounded-3xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.9)] p-6 shadow-sm backdrop-blur-sm">
@@ -62,7 +71,7 @@ export default function ClaimCard({
           <strong>Corridor node:</strong> {claim.corridorNode}
         </p>
         <p className="text-sm text-[color:var(--eeo-text)] md:col-span-2">
-          <strong>Right-of-reply status:</strong> {claim.rightOfReplyStatus}
+          <strong>Right of reply:</strong> {claim.rightOfReplyStatus.replaceAll("_", " ")}
         </p>
         <p className="text-sm text-[color:var(--eeo-text)] md:col-span-2">
           <strong>Right-of-reply applicability:</strong>{" "}
@@ -86,6 +95,12 @@ export default function ClaimCard({
           ) : (
             <p className="mt-1">Reason: release requirements are not fully satisfied.</p>
           )}
+        </div>
+      ) : null}
+      {!completeness.isComplete ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          This claim is not evidence-complete. It should not be treated as a substantive finding until linked evidence
+          and source limitations are provided.
         </div>
       ) : null}
 
@@ -147,6 +162,17 @@ export default function ClaimCard({
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+        <h4 className="font-semibold text-stone-900">Source limitations in this claim path</h4>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-stone-700">
+          {sourceLimitations.length > 0 ? (
+            sourceLimitations.map((limitation) => <li key={limitation}>{limitation}</li>)
+          ) : (
+            <li>No source limitations linked yet for this claim.</li>
+          )}
+        </ul>
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">

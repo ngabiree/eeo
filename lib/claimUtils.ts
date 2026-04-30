@@ -1,6 +1,8 @@
 import type { Claim } from "@/types/eeo";
 import type { ClaimGovernanceStatus } from "@/types/eeo";
+import type { EvidenceItem, Source } from "@/types/eeo";
 import type { CorrectionSubmission } from "@/lib/correctionsSchema";
+import type { SourceMapEntry } from "@/data/sourceMap";
 
 import { hasContradictoryEvidence, isContextualOnly } from "./evidenceUtils";
 import { validateClaimRequiredFields } from "./validation";
@@ -112,5 +114,84 @@ export function getClaimCorrectionSummary(
     resolvedCorrections,
     latestCorrectionAt,
     governanceStatus,
+  };
+}
+
+export function getEvidenceForClaim(claimId: string, evidenceItems: EvidenceItem[]): EvidenceItem[] {
+  return evidenceItems.filter((item) => item.claimLinks.some((link) => link.claimId === claimId));
+}
+
+export function getSourcesForClaim(
+  claimId: string,
+  evidenceItems: EvidenceItem[],
+  sources: Source[]
+): Source[] {
+  const sourceIds = new Set(getEvidenceForClaim(claimId, evidenceItems).map((item) => item.sourceId));
+  return sources.filter((source) => sourceIds.has(source.id));
+}
+
+export function getSourceLimitationsForClaim(
+  claimId: string,
+  evidenceItems: EvidenceItem[],
+  sources: Source[],
+  sourceMap: SourceMapEntry[]
+): string[] {
+  const sourceIds = new Set(getEvidenceForClaim(claimId, evidenceItems).map((item) => item.sourceId));
+  const sourceNotes = sources
+    .filter((source) => sourceIds.has(source.id))
+    .flatMap((source) => (source.notes ? [source.notes] : []));
+  const mappedLimitations = sourceMap
+    .filter((entry) => (entry.linkedSourceIds ?? []).some((linkedId) => sourceIds.has(linkedId)))
+    .flatMap((entry) => entry.sourceLimitations ?? entry.limitations);
+  return [...new Set([...sourceNotes, ...mappedLimitations])];
+}
+
+export type ClaimEvidenceCompleteness = {
+  hasEvidence: boolean;
+  hasSources: boolean;
+  hasSourceLimitations: boolean;
+  hasWhatThisDoesNotProve: boolean;
+  hasWhatWouldReviseThisClaim: boolean;
+  isComplete: boolean;
+  missing: string[];
+};
+
+export function getClaimEvidenceCompleteness(
+  claim: Claim,
+  evidenceItems: EvidenceItem[],
+  sources: Source[],
+  sourceMap: SourceMapEntry[]
+): ClaimEvidenceCompleteness {
+  const linkedEvidence = getEvidenceForClaim(claim.id, evidenceItems);
+  const linkedSources = getSourcesForClaim(claim.id, evidenceItems, sources);
+  const sourceLimitations = getSourceLimitationsForClaim(claim.id, evidenceItems, sources, sourceMap);
+
+  const hasEvidence = linkedEvidence.length > 0;
+  const hasSources = linkedSources.length > 0;
+  const hasSourceLimitations = sourceLimitations.length > 0;
+  const hasWhatThisDoesNotProve = claim.whatThisDoesNotProve.length > 0;
+  const hasWhatWouldReviseThisClaim = claim.whatWouldReviseThisClaim.length > 0;
+  const isComplete =
+    hasEvidence &&
+    hasSources &&
+    hasSourceLimitations &&
+    hasWhatThisDoesNotProve &&
+    hasWhatWouldReviseThisClaim;
+
+  const missing: string[] = [];
+  if (!hasEvidence) missing.push("linked evidence");
+  if (!hasSources) missing.push("linked sources");
+  if (!hasSourceLimitations) missing.push("source limitations");
+  if (!hasWhatThisDoesNotProve) missing.push("claim limitations");
+  if (!hasWhatWouldReviseThisClaim) missing.push("revision conditions");
+
+  return {
+    hasEvidence,
+    hasSources,
+    hasSourceLimitations,
+    hasWhatThisDoesNotProve,
+    hasWhatWouldReviseThisClaim,
+    isComplete,
+    missing,
   };
 }

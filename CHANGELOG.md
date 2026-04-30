@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### v0.7 — Evidence population + dossier release gate
+
+- Connected one complete inspectable methodological claim loop: dossier → claim (`CLAIM-DRC-CO-001`) → evidence (`EVID-USGS-CO-001`, `EVID-UNCOMTRADE-CO-001`) → sources (`SRC-*`) → source limitations → claim governance / correction link → release manifest.
+- Added claim-evidence-source helpers and completeness checks in `lib/claimUtils.ts`.
+- Enhanced public claim cards with evidence completeness warning and source-limitations panel.
+- Extended release manifest surface to include map-safety restrictions, source limitations summary, right-of-reply applicability context, and evidence completeness summary.
+- Strengthened `/dossier` with evidence completeness statuses, source-map claim linkage display, and section-level structure-only warnings.
+
 ### v0.6.1 — Dossier governance repair pass
 
 - Added roadmap **Milestone Register** and gate rule clarifying `v0.5` partial, `v0.6.1` current, and the sequencing constraint before `v0.7`.

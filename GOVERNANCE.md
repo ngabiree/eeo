@@ -59,14 +59,15 @@ Full guidance: **`docs/right-of-reply.md`** (and legacy design notes in **`docs/
 
 - **`v0.6`** — Endowment doctrine articulation + corridor dossier **schema** + **source / non-duplication map** (typing + documentation; no full dossier assertions, no temporal/monitoring/scenario UI).  
 - **`v0.6.1`** — Dossier governance repair pass (claim-correction linking, public/private boundary checks, safety utilities, operational staging).  
-- **`v0.7`** — Corridor dossier runtime + claim governance integration, then monitoring signal registry.  
-- **`v0.8`** — Scenario notes / disciplined foresight (only after prior governance gates).  
+- **`v0.7`** — Evidence population + dossier release gate (claim → evidence → source → limitation chain visible in public dossier and release manifest).  
+- **`v0.8`** — Monitoring signal registry design (no monitoring dashboard).  
+- **`v0.9`** — Scenario notes / disciplined foresight (only after prior governance gates).  
 - **`v1.0`** — Public evidence pilot **release candidate**.  
 - **`v1.1`** — Partner review package.  
 - **`v1.2`** — Funding dossier.  
 - **`v1.3+`** — Temporal profiles, monitoring signals, scenario notes (**only after** pilot trust is earned).
 
-`v0.7` must not begin until claim governance, corridor dossier runtime, map-safety enforcement, source limitations, right-of-reply handling, and release-manifest consequences are connected.
+`v0.8` must not begin until `v0.7` evidence population and dossier release-gate coherence are complete.
 
 ## Prototype persistence boundary
 

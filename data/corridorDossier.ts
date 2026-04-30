@@ -44,9 +44,13 @@ function mkSectionRecord(s: CorridorDossierSection, title: string, status: Dossi
       s === "source_map"
         ? "Indexing planned sources and non-duplication posture; see data/sourceMap.ts."
         : "Placeholder — substantive drafting awaits v0.7 evidence content milestones.",
-    linkedClaimIds: [],
-    linkedEvidenceIds: [],
-    sourceIds: [],
+    linkedClaimIds: s === "processing_trade_profile" ? ["CLAIM-DRC-CO-001"] : [],
+    linkedEvidenceIds:
+      s === "processing_trade_profile" ? ["EVID-USGS-CO-001", "EVID-UNCOMTRADE-CO-001"] : [],
+    sourceIds:
+      s === "source_map" || s === "processing_trade_profile"
+        ? ["SM-USGS-MM", "SM-UNCOMTRADE"]
+        : [],
     publicLimitations: [baseLimit],
     exposureNotes: [],
     lastUpdated: STUB_UPDATED,

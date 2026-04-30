@@ -198,4 +198,8 @@ export interface ReleaseManifest {
   withdrawnClaimIds?: string[];
   openCorrectionIds?: string[];
   lastCorrectionReviewAt?: string;
+  mapSafetyRestrictions?: string[];
+  sourceLimitationsSummary?: string[];
+  rightOfReplySummary?: string;
+  evidenceCompletenessSummary?: string;
 }
