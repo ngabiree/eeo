@@ -30,6 +30,10 @@ The contract is defined in `types/monitoringSignal.ts` and includes:
 ## Relationship to claims
 
 A monitoring signal may later support, limit, or motivate review of a claim. A signal does not become a claim by itself.
+Signals must receive an access-governance decision before any public use.
+A signal may be public, aggregated, internal, restricted, or not collected.
+Signals do not become public claims unless they pass ordinary claim governance.
+Monitoring signals must not bypass map-safety, publication-decision, right-of-reply, language-safety, or access-governance review.
 
 ## Relationship to evidence
 

@@ -77,6 +77,16 @@ A signal cannot become a public claim unless it passes ordinary EEO evidence dis
 
 Monitoring signals preserve the same public/private boundary as claims. Internal review notes, sensitive locations, restricted community data, and raw harm-review details must not be exposed publicly.
 
+## Access governance requirements (`v0.9`)
+
+Every major object should receive an access-governance decision before publication or public use (claim, evidence, source, map layer, monitoring signal, correction output, release artifact, and press material).
+
+`not_collected` is a valid and sometimes required governance outcome. It is not a failure condition.
+
+Public communication is part of governance, not an afterthought.
+
+Access governance includes retention/deletion and emergency takedown pathways.
+
 ## Prototype persistence boundary
 
 Correction submissions, triage state, reviewer notes, and activity logs currently use prototype storage and may not be durable across process restarts unless persistent storage is configured. Production deployment requires persistent storage, migration design, backup policy, retention rules, access controls, and security review.

@@ -1,6 +1,7 @@
 # Right-of-reply — publication discipline (pilot)
 
 Right-of-reply is a **governance and publication** practice, not an admission that a claim is false. It ensures materially affected actors receive a fair opportunity to introduce **evidence, correction, context, or objection**.
+Right-of-reply is part of publication governance.
 
 ## When review is indicated
 
@@ -21,6 +22,9 @@ Right-of-reply may **not** be required for:
 - neutral source limitations;
 - broad educational claims;
 - claims that **do not identify** or **materially affect** an actor.
+
+It does not apply to every internal observation, draft note, or monitoring signal.
+It becomes relevant when information is used in a public claim or public communication that may materially affect an identifiable company, agency, operator, concession holder, or contested relationship.
 
 ## Safe language
 

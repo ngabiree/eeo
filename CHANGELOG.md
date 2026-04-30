@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### v0.9 — Access Governance + Research-to-Publication Protocol
+
+- Added access-governance type contract (`types/accessGovernance.ts`).
+- Added access-governance documentation (`docs/access-governance.md`).
+- Added research-to-publication workflow (`docs/research-publication-workflow.md`).
+- Added press-management protocol (`docs/press-management.md`).
+- Updated roadmap/governance and linked documentation for access-governance alignment.
+- No runtime access dashboard, monitoring UI, forecasting, scoring, or new public data surfaces added.
+
 ### v0.8 — Monitoring Signal Registry Contract
 
 - Added type-only monitoring signal contract (`types/monitoringSignal.ts`).

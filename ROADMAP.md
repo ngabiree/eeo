@@ -14,7 +14,7 @@
 | v0.6.1 | Dossier governance repair pass | Current |
 | v0.7 | Evidence population + dossier release gate | Current |
 | v0.8 | Monitoring signal registry contract (type + docs only) | Current |
-| v0.9 | Scenario notes / disciplined foresight | Not started |
+| v0.9 | Access governance + research-to-publication protocol (type + docs only) | Current |
 
 ## Core sequence
 
@@ -22,7 +22,7 @@
 2. **v0.6.1** — governance and safety coherence repair  
 3. **v0.7** — evidence population + dossier release gate  
 4. **v0.8** — monitoring signal registry contract (type + docs only; no dashboard/feed/alerts/forecast/scenario UI)  
-5. **v0.9** — scenario notes / disciplined foresight  
+5. **v0.9** — access governance + research-to-publication protocol (type + docs only)  
 6. **v1.0** — public evidence pilot release candidate  
 7. **v1.1** — partner review package  
 8. **v1.2** — funding dossier  
@@ -44,7 +44,7 @@ A signal cannot become a public claim unless it passes ordinary EEO evidence dis
 
 Monitoring signals preserve the same public/private boundary as claims. Internal review notes, sensitive locations, restricted community data, and raw harm-review details must not be exposed publicly.
 
-`v0.9` must not begin until the Monitoring Signal Registry contract is reviewed for map-safety, evidence discipline, right-of-reply implications, public/private boundary, and non-prediction language.
+No monitoring runtime, signal review preview, or foresight work should proceed until access governance, research workflow, and press protocol are documented.
 
 ## Temporal dormancy
 

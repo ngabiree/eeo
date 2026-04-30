@@ -10,6 +10,9 @@ Runtime gate helpers now live in `lib/mapSafety.ts` (`canRenderPublicMapLayer`, 
 ## Core rule
 
 Map utility must not increase harm to people, places, species, or sensitive knowledge.
+Map safety is a specialized access-governance decision for spatial information.
+Spatial precision should never exceed the safety of the context.
+A map layer may be public, generalized, aggregated, restricted, or not collected.
 
 ## MVP defaults
 

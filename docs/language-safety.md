@@ -40,3 +40,5 @@ These terms are not permanently banned, but they require authoritative legal, re
 ## Rule
 
 EEO should not use adjudicatory or accusatory language unless supported by authoritative legal or regulatory findings and approved through publication review.
+
+Press copy must be reviewed for overclaiming because media summaries can amplify weaker language into stronger public conclusions.
