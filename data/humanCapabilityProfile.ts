@@ -3,11 +3,11 @@ import type { HumanCapabilityProfile } from "@/types/humanLayer";
 export const humanCapabilityProfile: HumanCapabilityProfile = {
   id: "HCP-CM-0001",
   title: "Human Capability, Labor, Stewardship, and Relationship Layer",
-  corridor: "Critical minerals corridor prototype",
+  corridor: "Critical minerals corridor pilot",
   doctrine:
     "Human beings are not Earth endowments. They are rights-bearing, knowledge-bearing, laboring, creative, governing, ecological, cultural, and intergenerational agents within endowment systems.",
   publicSummary:
-    "This synthetic prototype shows how EEO can describe human capability, labor, ingenuity, ecological relationship, harm exposure, public benefit, and stewardship without reducing people to resources or publishing sensitive community data.",
+    "This pilot profile shows how EEO can describe human capability, labor, ingenuity, ecological relationship, harm exposure, public benefit, and stewardship without reducing people to resources or publishing sensitive community data.",
   operatingPrinciple:
     "EEO should be live where evidence is governed, and restrained where evidence is exposed.",
   redLines: [
@@ -28,8 +28,8 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
       valueStatement:
         "Synthetic placeholder for local technical skills relevant to extraction, repair, monitoring, logistics, and processing.",
       geography: "corridor-level",
-      temporalScope: "prototype",
-      sourceSummary: "Synthetic sample data only.",
+      temporalScope: "pilot",
+      sourceSummary: "Pilot preview demonstration data.",
       confidence: "insufficient",
       exposureRisk: "low",
       publicationDecision: "publish",
@@ -43,8 +43,8 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
       valueStatement:
         "Synthetic placeholder for seasonal, land, water, and place-based knowledge that may sustain or warn about endowment condition.",
       geography: "aggregated corridor context",
-      temporalScope: "prototype",
-      sourceSummary: "Synthetic sample data only.",
+      temporalScope: "pilot",
+      sourceSummary: "Pilot preview demonstration data.",
       confidence: "insufficient",
       exposureRisk: "restricted",
       publicationDecision: "publish_aggregated",
@@ -58,8 +58,8 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
       valueStatement:
         "Synthetic placeholder for whether workers and nearby communities have safe channels to contest harm, correct claims, and influence outcomes.",
       geography: "corridor-level",
-      temporalScope: "prototype",
-      sourceSummary: "Synthetic sample data only.",
+      temporalScope: "pilot",
+      sourceSummary: "Pilot preview demonstration data.",
       confidence: "insufficient",
       exposureRisk: "medium",
       publicationDecision: "publish_aggregated",
@@ -75,7 +75,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
       publicSummary:
         "People transform endowments through extraction, transport, processing, monitoring, repair, administration, and care work.",
       disclosureRule: "contextual_public",
-      authorityOrConsentStatus: "Not applicable to synthetic prototype.",
+      authorityOrConsentStatus: "Not applicable in this pilot preview.",
       limitation:
         "Labor claims require wage, safety, informality, coercion-risk, and worker-voice evidence before public use.",
     },
@@ -109,7 +109,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
       publicSummary:
         "Children and future generations inherit either strengthened capability, restored ecosystems, depleted endowments, or unresolved liabilities.",
       disclosureRule: "contextual_public",
-      authorityOrConsentStatus: "Not applicable to synthetic prototype.",
+      authorityOrConsentStatus: "Not applicable in this pilot preview.",
       limitation:
         "Future-generation claims should remain normative and analytical, not legal adjudications.",
     },

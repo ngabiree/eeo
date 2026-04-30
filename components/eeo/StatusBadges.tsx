@@ -12,6 +12,12 @@ function badgeClass(color: string) {
   return `inline-flex rounded-full border px-2.5 py-1 text-xs font-medium ${color}`;
 }
 
+function toLabel(value: string) {
+  return value
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 const tone = {
   neutral: "border-stone-300 bg-stone-50 text-stone-700",
   blue: "border-blue-200 bg-blue-50 text-blue-900",
@@ -28,7 +34,7 @@ export function ConfidenceBadge({ value }: { value: ConfidenceLevel }) {
     insufficient: tone.neutral,
     disputed: tone.red,
   };
-  return <span className={badgeClass(map[value])}>confidence: {value}</span>;
+  return <span className={badgeClass(map[value])}>Confidence: {toLabel(value)}</span>;
 }
 
 export function ExposureRiskBadge({ value }: { value: ExposureRisk }) {
@@ -39,7 +45,7 @@ export function ExposureRiskBadge({ value }: { value: ExposureRisk }) {
     restricted: tone.neutral,
     do_not_publish: tone.red,
   };
-  return <span className={badgeClass(map[value])}>exposure risk: {value}</span>;
+  return <span className={badgeClass(map[value])}>Exposure risk: {toLabel(value)}</span>;
 }
 
 export function PublicationDecisionBadge({ value }: { value: PublicationDecision }) {
@@ -50,7 +56,7 @@ export function PublicationDecisionBadge({ value }: { value: PublicationDecision
     withhold: tone.neutral,
     do_not_collect: tone.red,
   };
-  return <span className={badgeClass(map[value])}>publication: {value}</span>;
+  return <span className={badgeClass(map[value])}>Publication: {toLabel(value)}</span>;
 }
 
 export function ReviewStatusBadge({ value }: { value: ReviewStatus }) {
@@ -65,11 +71,11 @@ export function ReviewStatusBadge({ value }: { value: ReviewStatus }) {
     corrected: tone.green,
     withdrawn: tone.red,
   };
-  return <span className={badgeClass(map[value])}>review: {value}</span>;
+  return <span className={badgeClass(map[value])}>Review status: {toLabel(value)}</span>;
 }
 
 export function LegalPostureBadge({ value }: { value: LegalPosture }) {
-  return <span className={badgeClass(tone.neutral)}>legal posture: {value}</span>;
+  return <span className={badgeClass(tone.neutral)}>Legal posture: {toLabel(value)}</span>;
 }
 
 export function EvidenceRoleBadge({ value }: { value: EvidenceRole }) {
@@ -80,7 +86,7 @@ export function EvidenceRoleBadge({ value }: { value: EvidenceRole }) {
     contextualizes: tone.blue,
     motivates_review: tone.neutral,
   };
-  return <span className={badgeClass(map[value])}>evidence role: {value}</span>;
+  return <span className={badgeClass(map[value])}>Evidence role: {toLabel(value)}</span>;
 }
 
 export function GovernanceStatusBadge({ value }: { value: ClaimGovernanceStatus }) {
@@ -92,5 +98,5 @@ export function GovernanceStatusBadge({ value }: { value: ClaimGovernanceStatus 
     restricted: tone.neutral,
     withdrawn: tone.red,
   };
-  return <span className={badgeClass(map[value])}>governance: {value}</span>;
+  return <span className={badgeClass(map[value])}>Governance: {toLabel(value)}</span>;
 }

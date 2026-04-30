@@ -20,10 +20,10 @@ export interface CorridorNodeData {
 }
 
 const DEFAULT_DETAIL = {
-  known: "Not yet established in this prototype.",
-  unknown: "Pending source integration.",
-  evidence: "Not yet linked.",
-  risk: "Avoid inference without evidence.",
+  known: "No public record released yet.",
+  unknown: "Pending reviewed source integration.",
+  evidence: "Evidence not yet released.",
+  risk: "Not available in this pilot release.",
 };
 
 export const corridorNodes: CorridorNodeData[] = [

@@ -8,7 +8,7 @@ import { releaseManifest } from "@/data/releaseManifest";
 import { sources } from "@/data/sources";
 
 /**
- * Illustrative trace for one public claim using synthetic repo data only.
+ * Illustrative trace for one public claim using demonstration data.
  * Not a workflow engine, dashboard, or live evidence system.
  */
 export default function ClaimLifecyclePanel() {
@@ -16,7 +16,7 @@ export default function ClaimLifecyclePanel() {
   if (!claim) {
     return (
       <p className="text-sm text-[color:var(--eeo-muted)]">
-        No sample claims are loaded in this prototype build.
+        No demonstration claims are currently loaded in this pilot build.
       </p>
     );
   }
@@ -41,7 +41,7 @@ export default function ClaimLifecyclePanel() {
       id: "source",
       title: "Source",
       illustrativeNote:
-        "Stewarded bibliographic records for official or third-party materials (prototype sample rows only).",
+        "Stewarded bibliographic records for official or third-party materials (demonstration rows only).",
       body: (
         <ul className="mt-2 space-y-2 text-sm text-[color:var(--eeo-text)]">
           {linkedSources.map((src) => (
@@ -165,7 +165,7 @@ export default function ClaimLifecyclePanel() {
     {
       id: "manifest",
       title: "Release manifest",
-      illustrativeNote: "Bundle of what this prototype release includes and its stated limitations.",
+      illustrativeNote: "Bundle of what this pilot release includes and its stated limitations.",
       body: (
         <div className="mt-2 rounded-xl border border-[color:var(--eeo-border)] bg-white/70 px-3 py-2 text-sm">
           <div className="font-mono text-xs text-[color:var(--eeo-muted)]">{releaseManifest.id}</div>
@@ -199,7 +199,7 @@ export default function ClaimLifecyclePanel() {
     {
       id: "corrections",
       title: "Correction route",
-      illustrativeNote: "Public intake for challenges and corrections — triage is prototype-only.",
+      illustrativeNote: "Public intake for challenges and corrections — triage is pilot-build only.",
       body: (
         <p className="mt-2 text-sm">
           <Link
@@ -220,12 +220,12 @@ export default function ClaimLifecyclePanel() {
     >
       <div>
         <h2 id="claim-lifecycle-heading" className="text-xl font-semibold text-[color:var(--eeo-ink)]">
-          Mock-data claim lifecycle (one reviewed public claim)
+          Demonstration-data claim lifecycle (one reviewed public claim)
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
-          Synthetic sample only: shows how identifiers chain from stewarded sources through evidence and review-shaped
-          fields to the public dossier and correction route. No Supabase, no evidence vault, no production signing — not
-          the full EEO platform or a global atlas.
+          Pilot preview: demonstration data shows how identifiers chain from stewarded sources through evidence and
+          review-shaped fields to the public dossier and correction route. This is not a public data release, legal
+          finding surface, or global atlas.
         </p>
       </div>
 

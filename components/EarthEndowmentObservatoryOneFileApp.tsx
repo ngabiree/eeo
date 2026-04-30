@@ -172,7 +172,7 @@ const tabs: { id: TabId; label: string; icon: LucideIcon }[] = [
   { id: "methods", label: "Methods", icon: BookOpen },
   { id: "safeguards", label: "Safeguards", icon: ShieldCheck },
   { id: "corrections", label: "Corrections", icon: MessageSquareWarning },
-  { id: "workspace", label: "Review & release", icon: Workflow },
+  { id: "workspace", label: "Publication posture", icon: Workflow },
 ];
 
 /** Tab order for keyboard navigation (WAI-ARIA tablist) — must match `tabs` order. */
@@ -973,6 +973,9 @@ function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
                 View Evidence Ledger
               </button>
             </div>
+            <div className="rounded-2xl border border-[color:var(--eeo-border)] bg-white/65 px-4 py-3 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
+              Pilot preview · Demonstration data may be used for interface review. Not a public data release.
+            </div>
           </div>
 
           <aside className="eeo-glass-card space-y-4 border-[color:var(--eeo-border)] p-6">
@@ -1138,22 +1141,22 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 12" title="Review and release posture" />
-        <Card className="border-[#C9A24D]/40 bg-[#0F2A32] p-6 text-sm text-[#EFE8D8]">
+        <Card className="border-[color:var(--eeo-border)] bg-white/90 p-6 text-sm text-[color:var(--eeo-text)]">
           <div className="mb-3 flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-[#C9A24D]/40 bg-[#C9A24D]/15 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#C9A24D]">
+            <span className="rounded-full border border-[color:var(--eeo-border)] bg-[color:var(--eeo-gold-soft)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--eeo-clay)]">
               Release manifest checkpoint
             </span>
-            <span className="rounded-full border border-amber-300/40 bg-amber-300/10 px-2.5 py-1 text-xs text-amber-100">Unsigned</span>
+            <span className="rounded-full border border-amber-300/60 bg-amber-50 px-2.5 py-1 text-xs text-amber-900">Unsigned</span>
           </div>
-          <p className="leading-7 text-[#E6E1D6]/90">
+          <p className="leading-7">
             Publication cannot proceed until launch-gate blockers clear and the corridor release manifest is signed by the release owner.
           </p>
           <button
             type="button"
             onClick={() => onSelectSection("workspace")}
-            className="mt-4 rounded-full border border-[#C9A24D]/40 px-4 py-2 font-semibold text-[#C9A24D] transition hover:bg-[#C9A24D]/10"
+            className="mt-4 rounded-full border border-[color:var(--eeo-primary)] px-4 py-2 font-semibold text-[color:var(--eeo-primary)] transition hover:bg-[color:var(--eeo-green-soft)]"
           >
-            Open launch gate workspace
+            View publication posture
           </button>
         </Card>
       </section>
@@ -1581,8 +1584,8 @@ function Workspace() {
   const totalChecks = releaseChecks.length;
   return (
     <div className="space-y-8">
-      <SectionTitle eyebrow="Review & release coordination" title="Operational workspace for stewardship checks">
-        This restricted surface supports reviewers coordinating publication readiness safeguards and release discipline.
+      <SectionTitle eyebrow="Publication safeguards" title="Publication posture and stewardship checks">
+        This section summarizes publication readiness safeguards and release discipline for corridor disclosures.
       </SectionTitle>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {modules.map(({ title, status, icon: Icon, body }) => (

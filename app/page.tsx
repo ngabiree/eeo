@@ -37,9 +37,15 @@ export default function HomePage() {
             </div>
             <div className="rounded-2xl border border-[color:var(--eeo-border)] bg-white/60 px-4 py-4 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
               <p className="font-medium text-[color:var(--eeo-text)]">
-                Stewardship-aware publication · Uncertainty-preserving disclosures · Accountability for corrections
+                Pilot preview · Demonstration data may be used for interface review. Not a public data release.
+              </p>
+              <p className="mt-2 border-t border-[color:var(--eeo-border)] pt-2 font-medium text-[color:var(--eeo-text)]">
+                A public observatory for natural wealth, stewardship, and accountability.
               </p>
               <p className="mt-2">
+                The Observatory helps users see how natural endowment becomes economic value: who governs it, who transforms it, who benefits, who bears risk, and what remains uncertain.
+              </p>
+              <p className="font-medium text-[color:var(--eeo-text)]">
                 The Observatory articulates stewardship and governance questions—it does not assert authority over land, communities, sovereign institutions, firms, or title.
               </p>
             </div>
@@ -55,22 +61,23 @@ export default function HomePage() {
 
           <CorridorChain />
 
-          <section className="eeo-glass-card space-y-3 border-[color:var(--eeo-border)] p-6">
-            <h2 className="text-xl font-semibold text-[color:var(--eeo-ink)]">Reading the visual language</h2>
+          <section className="eeo-glass-card space-y-5 border-[color:var(--eeo-border)] p-6">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--eeo-muted)]">How to read this profile</p>
+            <h2 className="text-2xl font-semibold text-[color:var(--eeo-ink)]">Evidence for inquiry, not a verdict.</h2>
             <p className="leading-relaxed text-[color:var(--eeo-text)]">
-              Earth, water, forest, and mineral tones support orientation. They are atmosphere only — not findings, rankings, legal conclusions, or corridor metrics. Substantive evidence appears in claim cards,
-              ledgers, release notes, and reviewed source documentation.
+              The Observatory makes public evidence easier to inspect while preserving uncertainty, disagreement, and disclosure limits.
             </p>
-            <div className="flex flex-wrap gap-3 pt-2 text-sm">
-              <Link href="/pilot/methods-and-limits" className="font-medium underline decoration-[color:var(--eeo-primary)] underline-offset-2">
-                Methods
-              </Link>
-              <Link href="/pilot/safeguards" className="font-medium underline decoration-[color:var(--eeo-primary)] underline-offset-2">
-                Safeguards
-              </Link>
-              <Link href="/pilot/corrections" className="font-medium underline decoration-[color:var(--eeo-primary)] underline-offset-2">
-                Corrections
-              </Link>
+            <div className="grid gap-3 md:grid-cols-2">
+              {[
+                "Use for public inquiry",
+                "Do not use as a verdict",
+                "Inspect the evidence",
+                "Challenge the record",
+              ].map((item) => (
+                <div key={item} className="rounded-2xl border border-[color:var(--eeo-border)] bg-white/75 px-4 py-3 text-sm text-[color:var(--eeo-text)]">
+                  {item}
+                </div>
+              ))}
             </div>
           </section>
         </div>
