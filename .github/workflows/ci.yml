@@ -36,6 +36,9 @@ jobs:
       - name: Pilot route discipline
         run: pnpm run check:pilot-routes
 
+      - name: Pilot hub route alignment
+        run: pnpm run check:pilot-hub-routes
+
       - name: Lint
         run: pnpm run lint
 

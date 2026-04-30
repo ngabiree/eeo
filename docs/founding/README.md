@@ -59,7 +59,7 @@ Executive summary: **Earth endowments → shared human capability** as an eviden
 |----------|---------|
 | [.github/pull_request_template.md](../../.github/pull_request_template.md) | PR expectations |
 | [.github/CODEOWNERS](../../.github/CODEOWNERS) | Ownership routing |
-| [.github/workflows/ci.yml](../../.github/workflows/ci.yml) | CI (includes `check:pilot-routes`, lint, typecheck, test, build) |
+| [.github/workflows/ci.yml](../../.github/workflows/ci.yml) | CI (includes `check:pilot-routes`, `check:pilot-hub-routes`, lint, typecheck, test, build) |
 
 ## Canonical code references (not prose, but binding for shipped UI)
 

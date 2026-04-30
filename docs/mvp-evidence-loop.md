@@ -58,4 +58,8 @@ Implemented in **`next.config.ts`** (and mirrored in some `app/*/page.tsx` redir
 
 ## CI: pilot route discipline
 
-`pnpm check:pilot-routes` scans `app/` and `components/` for legacy top-level path string references. It runs in **`pnpm verify`** and GitHub Actions.
+`pnpm check:pilot-routes` scans `app/` and `components/` for legacy top-level path string references.
+
+`pnpm check:pilot-hub-routes` ensures **`lib/pilotHubRoutes.ts`** stays aligned with direct child segments under **`app/pilot/`** that ship a **`page.tsx`**.
+
+Both run in **`pnpm verify`** and GitHub Actions.

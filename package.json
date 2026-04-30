@@ -11,10 +11,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0 --cache --cache-location .eslintcache",
-    "verify": "pnpm run check:pilot-routes && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
+    "verify": "pnpm run check:pilot-routes && pnpm run check:pilot-hub-routes && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "check:pilot-routes": "node scripts/check-pilot-routes.mjs",
+    "check:pilot-hub-routes": "node scripts/check-pilot-hub-routes.mjs",
     "check:brand-assets": "node scripts/verify-brand-assets.mjs",
     "sync:corridor-docs": "node scripts/sync-corridor-docs-mirror.mjs"
   },
