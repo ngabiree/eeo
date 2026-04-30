@@ -87,6 +87,8 @@ The Human Capability, Labor, Stewardship, and Relationship layer treats people a
 
 Core rule: EEO should be live where evidence is governed, and restrained where evidence is exposed.
 
+Supabase-backed live-data tables for this layer are deferred until RLS, private buckets, audit logs, release views, and review workflows are ready. **Live data is allowed** in governed backends; **uncontrolled public exposure** is not.
+
 ## Changelog
 
 Release posture and routing notes for this prototype are summarized in `CHANGELOG.md`.

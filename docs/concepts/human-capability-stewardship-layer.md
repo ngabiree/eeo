@@ -17,8 +17,8 @@ ultimate test of whether endowment use is legitimate.
 ## Live evidence principle
 
 EEO should allow live data work, verified reporting, restricted evidence
-handling, and raw source preservation inside governed systems. What must not be
-live by default is uncontrolled public exposure.
+handling, and raw source preservation inside governed systems.
+**Live data is allowed; uncontrolled public exposure is not.**
 
 Core rule:
 
@@ -85,4 +85,6 @@ benefit, and leaves future generations with more capability rather than less.
 2. Add typed model and synthetic sample data.
 3. Add `/pilot/human-capability` route.
 4. Wire route into public navigation.
-5. Later, add Supabase tables for governed live data after RLS, buckets, audit logs, and release views are ready.
+5. **Later**, add Supabase-backed live-data tables for this layer only once **RLS**, **private (evidence and restricted) buckets**, **audit logs**, **release views**, and **review workflows** are in place. Until then the public surface stays synthetic. Live governed data belongs in Postgres and storage—not in this Git repository.
+
+The same posture applies elsewhere in EEO: operational systems may hold rich live evidence; **default public pages** expose only release-gated, reviewed artifacts.
