@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### v0.8 — Monitoring Signal Registry Contract
+
+- Added type-only monitoring signal contract (`types/monitoringSignal.ts`).
+- Added monitoring signal registry documentation (`docs/monitoring-signal-registry.md`).
+- Updated roadmap and governance boundaries for v0.8/v0.9 gating and non-prediction posture.
+- No monitoring UI, live feeds, alerts, forecasts, scenario notes, or temporal runtime activation added.
+
 ### v0.7 — Evidence population + dossier release gate
 
 - Connected one complete inspectable methodological claim loop: dossier → claim (`CLAIM-DRC-CO-001`) → evidence (`EVID-USGS-CO-001`, `EVID-UNCOMTRADE-CO-001`) → sources (`SRC-*`) → source limitations → claim governance / correction link → release manifest.

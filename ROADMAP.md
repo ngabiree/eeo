@@ -13,7 +13,7 @@
 | v0.6 | Endowment doctrine, corridor dossier foundation, source map, map-safety protocol, right-of-reply documentation | Shipped |
 | v0.6.1 | Dossier governance repair pass | Current |
 | v0.7 | Evidence population + dossier release gate | Current |
-| v0.8 | Monitoring signal registry design | Not started |
+| v0.8 | Monitoring signal registry contract (type + docs only) | Current |
 | v0.9 | Scenario notes / disciplined foresight | Not started |
 
 ## Core sequence
@@ -21,7 +21,7 @@
 1. **v0.6** — doctrine + dossier schema + source map  
 2. **v0.6.1** — governance and safety coherence repair  
 3. **v0.7** — evidence population + dossier release gate  
-4. **v0.8** — monitoring signal registry design  
+4. **v0.8** — monitoring signal registry contract (type + docs only; no dashboard/feed/alerts/forecast/scenario UI)  
 5. **v0.9** — scenario notes / disciplined foresight  
 6. **v1.0** — public evidence pilot release candidate  
 7. **v1.1** — partner review package  
@@ -35,6 +35,16 @@
 ## Dossier-first rule
 
 The corridor dossier is the core product unit. Dashboard views, map outputs, correction queues, and review workspace routes are supporting systems.
+
+## v0.8 boundary
+
+`v0.8` defines the Monitoring Signal Registry contract. It does not introduce monitoring dashboards, live feeds, alerts, forecasts, scenario notes, scores, or public signal displays.
+
+A signal cannot become a public claim unless it passes ordinary EEO evidence discipline: source linkage, evidence role, source limitations, confidence, exposure risk, publication decision, map-safety review where relevant, and correction/review pathway.
+
+Monitoring signals preserve the same public/private boundary as claims. Internal review notes, sensitive locations, restricted community data, and raw harm-review details must not be exposed publicly.
+
+`v0.9` must not begin until the Monitoring Signal Registry contract is reviewed for map-safety, evidence discipline, right-of-reply implications, public/private boundary, and non-prediction language.
 
 ## Temporal dormancy
 
