@@ -89,6 +89,11 @@ Core rule: EEO should be live where evidence is governed, and restrained where e
 
 Supabase-backed live-data tables for this layer are deferred until RLS, private buckets, audit logs, release views, and review workflows are ready. **Live data is allowed** in governed backends; **uncontrolled public exposure** is not.
 
+## Live-Data Delivery Checklist
+
+Before merging any live-data feature, run the reusable checklist in
+`docs/live-data-definition-of-done.md`.
+
 ## Changelog
 
 Release posture and routing notes for this prototype are summarized in `CHANGELOG.md`.
