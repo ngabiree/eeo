@@ -16,7 +16,8 @@
 | v0.8 | Monitoring signal registry contract (type + docs only) | Current |
 | v0.9 | Access governance + research-to-publication protocol (type + docs only) | Shipped |
 | v1.0 | Internal access decision review preview (inert examples + docs only) | Shipped |
-| v1.1 | Release gate integration design (internal type/helper/docs only) | Current |
+| v1.1 | Release gate integration design (internal type/helper/docs only) | Shipped |
+| v1.2 | Internal release readiness preview (protected `/review` workspace only) | Current |
 
 ## Core sequence
 
@@ -27,8 +28,9 @@
 5. **v0.9** — access governance + research-to-publication protocol (type + docs only)  
 6. **v1.0** — internal access decision review preview (inert examples + docs only; no public UI, monitoring runtime, forecasting, scoring, or persistence changes)  
 7. **v1.1** — release gate integration design (internal type/helper/docs only; no public release-gate dashboard)  
-8. **v1.2** — funding dossier  
-9. **v1.3+** — temporal/monitoring/scenario activation under governance gates
+8. **v1.2** — internal release readiness preview (protected `/review` workspace only; no public release-gate UI)  
+9. **v1.3** — funding dossier  
+10. **v1.4+** — temporal/monitoring/scenario activation under governance gates
 
 ## Gate rule before v0.7 starts
 
@@ -59,6 +61,12 @@ Boundary: no public UI, no monitoring runtime, no forecasting, no scoring, no da
 v1.1 connects access governance, evidence completeness, map safety, right-of-reply, corrections, language safety, press discipline, and release-manifest alignment into an internal release-readiness model.
 
 Boundary: no public UI, no monitoring runtime, no forecasting, no scoring, no database persistence, and no public release-gate dashboard.
+
+## v1.2 boundary
+
+v1.2 adds an internal release-readiness preview inside the protected review workspace. It does not create public release-gate UI, runtime enforcement, monitoring, scoring, forecasting, public access-decision display, or database persistence.
+
+Boundary: previews support reviewer judgment only; publication status for public audiences remains represented through the release manifest and other public-safe limitations.
 
 ## Temporal dormancy
 

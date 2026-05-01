@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CorrectionTriageActions from "@/components/eeo/CorrectionTriageActions";
+import ReleaseReadinessPreview from "@/components/eeo/ReleaseReadinessPreview";
 import ReviewGovernanceSignoff from "@/components/eeo/ReviewGovernanceSignoff";
 import { claims } from "@/data/claims";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
@@ -273,6 +274,8 @@ export default async function ReviewPage() {
             </div>
           )}
         </section>
+
+        <ReleaseReadinessPreview />
       </div>
     </main>
   );

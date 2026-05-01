@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### v1.2 — Internal Release Readiness Preview
+
+- Added protected review-workspace release-readiness preview.
+- Used release-gate helpers to assess the sample claim (`CLAIM-DRC-CO-001`).
+- Preserved release manifest as public boundary — preview is reviewer-only (`/review`).
+- No public UI, monitoring runtime, forecasting, scoring, or database persistence added.
+
 ### v1.1 — Release Gate Integration Design
 
 - Added release-gate type contract (`types/releaseGate.ts`).

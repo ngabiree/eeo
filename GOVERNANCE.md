@@ -101,6 +101,8 @@ The release gate does not adjudicate truth, wrongdoing, or liability. It assesse
 
 Internal release-gate blockers must not be exposed publicly unless translated into public-safe limitations.
 
+Internal release-readiness previews may support reviewer judgment, but public-facing release status must continue to be represented through the release manifest and public-safe limitations.
+
 ## Prototype persistence boundary
 
 Correction submissions, triage state, reviewer notes, and activity logs currently use prototype storage and may not be durable across process restarts unless persistent storage is configured. Production deployment requires persistent storage, migration design, backup policy, retention rules, access controls, and security review.

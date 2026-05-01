@@ -1,4 +1,4 @@
-# Release Gate Integration Design (v1.1)
+# Release Gate Integration Design (v1.1+)
 
 ## Purpose
 
@@ -82,4 +82,6 @@ Internal blockers, reviewer notes, and internal rationales must not be exposed p
 
 ## Next implementation step
 
-Internal release readiness preview can compose these checks into non-public summaries before any future runtime enforcement.
+v1.2 adds an internal release-readiness preview inside the protected review workspace. It applies release-gate helpers to the pilot sample claim and release package context without public UI, runtime enforcement, monitoring, scoring, forecasting, database persistence, or public access-decision display.
+
+Later milestones may derive public-safe readiness signals for release-manifest alignment without leaking internal blocker detail.
