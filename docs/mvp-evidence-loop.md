@@ -41,7 +41,7 @@ Adjacent public routes: **`/dossier`** (runtime dossier object view), **`/trust`
 
 ## Legacy public URLs → redirects
 
-Implemented in **`next.config.ts`** (and mirrored in some `app/*/page.tsx` redirects).
+Implemented in **`next.config.mjs`** (and mirrored in some `app/*/page.tsx` redirects).
 
 | Legacy path | Destination |
 |-------------|-------------|

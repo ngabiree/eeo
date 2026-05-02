@@ -106,7 +106,7 @@ If you use npm locally, keep committed lockfile/package-manager conventions unch
 | `pnpm check:pilot-hub-routes` | Fails if **`app/pilot/page.tsx`** is missing, **`lib/pilotHubRoutes.ts`** drifts from segment **`page.tsx`** files, or **`lib/pilotPublicNav.ts`** **`/pilot/...`** shortcuts miss a matching segment |
 | `pnpm verify`       | Same sequence as CI: `check:pilot-routes`, `check:pilot-hub-routes`, lint, typecheck, test, build |
 
-`pnpm check:pilot-routes`, `pnpm check:pilot-hub-routes`, and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.ts`.
+`pnpm check:pilot-routes`, `pnpm check:pilot-hub-routes`, and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.mjs`.
 
 ## Package manager
 
