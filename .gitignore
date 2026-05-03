@@ -55,3 +55,7 @@ supabase/.temp/
 
 # ESLint
 .eslintcache
+
+# Local patch bundles / backups (not typechecked as app source)
+.local-backups/
+patches/

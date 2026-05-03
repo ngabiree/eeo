@@ -56,10 +56,10 @@ export default function ClaimCard({
   const sourceLimitations = getSourceLimitationsForClaim(claim.id, evidenceItems, sources, copperCobaltPilotSourceMap);
 
   return (
-    <article className="space-y-4 rounded-3xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.9)] p-6 shadow-sm backdrop-blur-sm">
+    <article className="eeo-claim-card space-y-4 p-6 backdrop-blur-sm md:p-7">
       <div className="space-y-2">
         <div className="font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--eeo-muted)]">{claim.id}</div>
-        <h3 className="text-2xl font-semibold text-[color:var(--eeo-ink)]">{claim.title}</h3>
+        <h3 className="text-xl font-semibold tracking-tight text-[color:var(--eeo-ink)] md:text-2xl">{claim.title}</h3>
         <p className="leading-7 text-[color:var(--eeo-text)]">{claim.plainLanguageClaim}</p>
       </div>
 
@@ -99,28 +99,23 @@ export default function ClaimCard({
       ) : null}
       {!completeness.isComplete ? (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-          This claim is not evidence-complete. It should not be treated as a substantive finding until linked evidence
-          and source limitations are provided.
+          This claim is not evidence-complete. It should not be treated as a substantive finding until linked evidence and source limitations are provided.
         </div>
       ) : null}
 
-      {(correctionSummary.governanceStatus === "challenged" ||
-        correctionSummary.governanceStatus === "under_review") ? (
+      {(correctionSummary.governanceStatus === "challenged" || correctionSummary.governanceStatus === "under_review") ? (
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-          This claim has an active correction or review item. Public text remains available, but users should review
-          the claim limitations and current governance status.
+          This claim has an active correction or review item. Public text remains available, but users should review the claim limitations and current governance status.
         </div>
       ) : null}
       {correctionSummary.governanceStatus === "corrected" ? (
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">
-          This claim has been corrected following review. Read the current claim text and limitations as the active
-          public record.
+          This claim has been corrected following review. Read the current claim text and limitations as the active public record.
         </div>
       ) : null}
       {correctionSummary.governanceStatus === "restricted" ? (
         <div className="rounded-2xl border border-orange-200 bg-orange-50 p-4 text-sm text-orange-900">
-          This claim is under publication restriction for harm, rights, or legal-sensitivity reasons. This is a
-          protective publication decision, not a legal finding.
+          This claim is under publication restriction for harm, rights, or legal-sensitivity reasons. This is a protective publication decision, not a legal finding.
         </div>
       ) : null}
       {correctionSummary.governanceStatus === "withdrawn" ? (
@@ -164,9 +159,9 @@ export default function ClaimCard({
         </div>
       </section>
 
-      <section className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
-        <h4 className="font-semibold text-stone-900">Source limitations in this claim path</h4>
-        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-stone-700">
+      <section className="rounded-2xl border border-[color:var(--eeo-border)] bg-[rgba(223,243,231,0.35)] p-4">
+        <h4 className="font-semibold text-[color:var(--eeo-ink)]">Source limitations in this claim path</h4>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[color:var(--eeo-text)]">
           {sourceLimitations.length > 0 ? (
             sourceLimitations.map((limitation) => <li key={limitation}>{limitation}</li>)
           ) : (

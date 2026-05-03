@@ -207,3 +207,73 @@ body.eeo-brand-body {
   backdrop-filter: blur(10px);
   box-shadow: 0 12px 40px rgba(19, 66, 74, 0.06);
 }
+/* =============================================================================
+   EEO design polish — append entire block to the end of app/globals.css
+   ============================================================================= */
+
+/* Section rhythm + observatory “editorial” surfaces */
+.eeo-section {
+  scroll-margin-top: 5rem;
+}
+
+.eeo-hero-title {
+  font-size: clamp(1.75rem, 2.8vw + 1rem, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.eeo-surface-elevated {
+  border: 1px solid var(--eeo-border);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.82) 100%);
+  box-shadow:
+    0 1px 0 rgba(19, 66, 74, 0.04),
+    0 18px 48px rgba(19, 66, 74, 0.07);
+}
+
+.eeo-prose-tight p + p {
+  margin-top: 0.75rem;
+}
+
+/* Claim card: subtle depth without heavy chrome */
+.eeo-claim-card {
+  border-radius: 1.5rem;
+  border: 1px solid var(--eeo-border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.88) 100%);
+  box-shadow:
+    0 1px 0 rgba(19, 66, 74, 0.05),
+    0 14px 36px rgba(19, 66, 74, 0.06);
+}
+
+/* Corridor chain: node rail accent */
+.eeo-chain-node {
+  position: relative;
+  border-radius: 1.25rem;
+  border: 1px solid var(--eeo-border);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 10px 28px rgba(19, 66, 74, 0.05);
+}
+
+.eeo-chain-node::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 0.65rem;
+  bottom: 0.65rem;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--eeo-primary) 0%, var(--eeo-water-deep) 100%);
+  opacity: 0.85;
+}
+
+.eeo-chain-node-inner {
+  padding-left: 1.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eeo-surface-elevated,
+  .eeo-claim-card,
+  .eeo-chain-node {
+    box-shadow: none;
+  }
+}
+
