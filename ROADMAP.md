@@ -17,7 +17,8 @@
 | v0.9 | Access governance + research-to-publication protocol (type + docs only) | Shipped |
 | v1.0 | Internal access decision review preview (inert examples + docs only) | Shipped |
 | v1.1 | Release gate integration design (internal type/helper/docs only) | Shipped |
-| v1.2 | Internal release readiness preview (protected `/review` workspace only) | Current |
+| v1.2 | Internal release readiness preview (protected `/review` workspace only) | Shipped |
+| v1.3 | Formal review sign-off contract (types + inert examples + docs only) | Current |
 
 ## Core sequence
 
@@ -29,8 +30,9 @@
 6. **v1.0** — internal access decision review preview (inert examples + docs only; no public UI, monitoring runtime, forecasting, scoring, or persistence changes)  
 7. **v1.1** — release gate integration design (internal type/helper/docs only; no public release-gate dashboard)  
 8. **v1.2** — internal release readiness preview (protected `/review` workspace only; no public release-gate UI)  
-9. **v1.3** — funding dossier  
-10. **v1.4+** — temporal/monitoring/scenario activation under governance gates
+9. **v1.3** — formal review sign-off contract (types + inert examples + docs; no public UI, no persistence, no manifest enforcement)  
+10. **v1.4** — funding dossier  
+11. **v1.5+** — temporal/monitoring/scenario activation under governance gates
 
 ## Gate rule before v0.7 starts
 
@@ -67,6 +69,12 @@ Boundary: no public UI, no monitoring runtime, no forecasting, no scoring, no da
 v1.2 adds an internal release-readiness preview inside the protected review workspace. It does not create public release-gate UI, runtime enforcement, monitoring, scoring, forecasting, public access-decision display, or database persistence.
 
 Boundary: previews support reviewer judgment only; publication status for public audiences remains represented through the release manifest and other public-safe limitations.
+
+## v1.3 boundary
+
+v1.3 introduces explicit **review sign-off** types and protocol documentation so “completed reviews” can be recorded as first-class objects before release-manifest derivation becomes authoritative.
+
+Boundary: no public sign-off UI, no reviewer-name publicity, no database persistence, no monitoring runtime, no forecasting, no scoring, no global atlas, and **no release-manifest enforcement** in this milestone.
 
 ## Temporal dormancy
 

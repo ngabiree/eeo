@@ -84,4 +84,6 @@ Internal blockers, reviewer notes, and internal rationales must not be exposed p
 
 v1.2 adds an internal release-readiness preview inside the protected review workspace. It applies release-gate helpers to the pilot sample claim and release package context without public UI, runtime enforcement, monitoring, scoring, forecasting, database persistence, or public access-decision display.
 
+**v1.3** introduces formal **review sign-off** types and protocol (`docs/review-signoff-protocol.md`) so required-review completion can be recorded explicitly before release-manifest derivation or enforcement—still without public sign-off surfaces or persistence in the prototype contract milestone.
+
 Later milestones may derive public-safe readiness signals for release-manifest alignment without leaking internal blocker detail.

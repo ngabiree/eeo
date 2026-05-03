@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### v1.3 — Formal Review Sign-Off Contract
+
+- Added formal review sign-off types (`types/reviewSignoff.ts`).
+- Added inert sign-off rehearsal examples (`data/reviewSignoffExamples.ts`).
+- Added review sign-off protocol (`docs/review-signoff-protocol.md`).
+- No public sign-off UI, database persistence, monitoring runtime, forecasting, scoring, global atlas, or release-manifest enforcement.
+
 ### v1.2 — Internal Release Readiness Preview
 
 - Added protected review-workspace release-readiness preview.

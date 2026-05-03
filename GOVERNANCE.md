@@ -103,6 +103,12 @@ Internal release-gate blockers must not be exposed publicly unless translated in
 
 Internal release-readiness previews may support reviewer judgment, but public-facing release status must continue to be represented through the release manifest and public-safe limitations.
 
+## Formal review sign-offs (`v1.3`)
+
+Required reviews described by access governance or release-gate checks should eventually be satisfied by **explicit review sign-off records** (who/what lane, which object, outcome, conditions, public-safe summary, optional expiry, optional supersession)—not by inferred completion alone.
+
+Sign-offs record publication-condition review; they do not adjudicate truth, liability, or wrongdoing. Internal notes and non-public summaries must stay off public surfaces unless translated into public-safe limitations.
+
 ## Prototype persistence boundary
 
 Correction submissions, triage state, reviewer notes, and activity logs currently use prototype storage and may not be durable across process restarts unless persistent storage is configured. Production deployment requires persistent storage, migration design, backup policy, retention rules, access controls, and security review.
