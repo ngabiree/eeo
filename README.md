@@ -30,7 +30,7 @@ Move **from architecture-first to dossier-first**. Enough evidence/review scaffo
 
 **Do-not-build list:** global atlas ambitions, public composite scores/index systems, temporal profile **UI**, monitoring dashboards/feeds/registries, scenario/forecast UI, accusatory company pages framed as adjudication, SKU-level traceability claims, adjudicated legal findings, speculative new commodities/regions beyond pilot scope — see **`GOVERNANCE.md`**.
 
-`v0.8` defines a Monitoring Signal Registry contract (type + docs only). It does not ship monitoring UI, live feeds, alerts, forecasts, or scenario notes. Temporal, monitoring, and scenario runtime features belong to **`v1.3+`** after the corridor dossier is trustworthy.
+`v0.8` defines a Monitoring Signal Registry contract (type + docs only). It does not ship monitoring UI, live feeds, alerts, forecasts, or scenario notes. Temporal, monitoring, and scenario runtime features belong to **`v1.5+`** after the corridor dossier is trustworthy.
 
 ## Definition — Earth’s endowments
 
