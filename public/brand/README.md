@@ -10,6 +10,10 @@ This directory contains canonical EEO logo outputs and reproducibility artifacts
 - `EEO_logo_repro_manifest.json` - deterministic parameters + checksums.
 - `EEO_logo_rebuild_script.py` - reproducible generation pipeline for masters.
 
+## Brand doctrine
+
+For public voice, design posture, language boundaries, and symbolic discipline, see [`docs/brand-identity.md`](../../docs/brand-identity.md).
+
 ## Usage policy
 
 - Treat `*_master.png` files as source-of-truth outputs.

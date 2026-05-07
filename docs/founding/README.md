@@ -4,7 +4,7 @@ Single index for institutional constitution, governance rules, disclosure and se
 
 ## Doctrine anchor (north star)
 
-Executive summary: **Earth endowments → relational stewardship and human capability** (people are not inventory items) as an evidence institution _(not atlas / dashboard / campaign / registry)_; **dossier-first**: one corridor before meta-systems. See **[README](../../README.md)** (endowment definition, exposure guardrail), plus **[GOVERNANCE](../../GOVERNANCE.md)** and **[ROADMAP](../../ROADMAP.md)**. **`types/temporalProfile.ts`** stays **dormant** until post-pilot (**`v1.3+`**).
+Executive summary: **Earth endowments → relational stewardship and human capability** (people are not inventory items) as an evidence institution _(not atlas / dashboard / campaign / registry)_; **dossier-first**: one corridor before meta-systems. See **[README](../../README.md)** (endowment definition, exposure guardrail), plus **[GOVERNANCE](../../GOVERNANCE.md)** and **[ROADMAP](../../ROADMAP.md)**. **`types/temporalProfile.ts`** stays **dormant** until post-pilot (**`v1.5+`**).
 
 ## Primary specification (constitutional)
 
@@ -53,6 +53,7 @@ Executive summary: **Earth endowments → relational stewardship and human capab
 
 | Document | Purpose |
 |----------|---------|
+| [Brand identity doctrine](../brand-identity.md) | Public voice, design posture, language boundaries, and symbolic discipline |
 | [Brand asset README](../../public/brand/README.md) | Logo masters, rebuild script, usage policy |
 
 ## GitHub housekeeping

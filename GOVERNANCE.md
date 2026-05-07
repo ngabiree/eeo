@@ -4,7 +4,7 @@
 
 EEO is **public-interest evidence infrastructure** for **endowment-to-economy chains** — not a dashboard product, startup SKU, ESG score surface, campaign NGO layer, consulting portal, blockchain system, or generic open-data dumping ground.
 
-**Temporal profile types** in `types/temporalProfile.ts` remain a **dormant boundary marker** until after a trustworthy **corridor dossier** and **release discipline** posture are complete; they are **not** part of active `v0.6`/`v0.6.1` shipping goals and must not drive UI, monitoring feeds, or forecasting behavior (see **`ROADMAP.md`** for deferral to **`v1.3+`**).
+**Temporal profile types** in `types/temporalProfile.ts` remain a **dormant boundary marker** until after a trustworthy **corridor dossier** and **release discipline** posture are complete; they are **not** part of active `v0.6`/`v0.6.1` shipping goals and must not drive UI, monitoring feeds, or forecasting behavior (see **`ROADMAP.md`** for deferral to **`v1.5+`**).
 
 Temporal profiles are intended for disciplined foresight, not prediction.
 
@@ -61,17 +61,19 @@ Full guidance: **`docs/right-of-reply.md`** (and legacy design notes in **`docs/
 - **`v0.6.1`** — Dossier governance repair pass (claim-correction linking, public/private boundary checks, safety utilities, operational staging).  
 - **`v0.7`** — Evidence population + dossier release gate (claim → evidence → source → limitation chain visible in public dossier and release manifest).  
 - **`v0.8`** — Monitoring Signal Registry contract (type + docs only; no monitoring dashboard/feed/alerts/forecast/scenario UI).  
-- **`v0.9`** — Scenario notes / disciplined foresight (only after prior governance gates).  
-- **`v1.0`** — Public evidence pilot **release candidate**.  
-- **`v1.1`** — Partner review package.  
-- **`v1.2`** — Funding dossier.  
-- **`v1.3+`** — Temporal profiles, monitoring signals, scenario notes (**only after** pilot trust is earned).
+- **`v0.9`** — Access governance + research-to-publication protocol (type + docs only; no runtime access dashboard, monitoring UI, forecasting, scoring, or new public data surfaces).  
+- **`v1.0`** — Internal access decision review preview (inert examples + docs only; no public UI, monitoring runtime, forecasting, scoring, or persistence changes).  
+- **`v1.1`** — Release gate integration design (internal type/helper/docs only; no public release-gate dashboard).  
+- **`v1.2`** — Internal release readiness preview (protected `/review` workspace only; no public release-gate UI).  
+- **`v1.3`** — Formal review sign-off contract (types + inert examples + docs only; no public UI, no persistence, no manifest enforcement).  
+- **`v1.4`** — Funding dossier.  
+- **`v1.5+`** — Temporal profiles, monitoring runtime, and scenario/foresight activation only under governance gates.
 
 `v0.8` must not begin until `v0.7` evidence population and dossier release-gate coherence are complete.
 
-`v0.9` must not begin until the Monitoring Signal Registry contract is reviewed for map-safety, evidence discipline, right-of-reply implications, public/private boundary, and non-prediction language.
+`v1.5+` temporal, monitoring, and scenario work must not begin until access governance, research workflow, press protocol, release-gate discipline, and formal review sign-off posture are coherent.
 
-Monitoring signals may eventually support Temporal Endowment Profiles, but `TemporalEndowmentProfile` remains dormant until the designated milestone.
+Monitoring signals may eventually support Temporal Endowment Profiles, but `TemporalEndowmentProfile` remains dormant until the designated `v1.5+` milestone.
 
 A signal cannot become a public claim unless it passes ordinary EEO evidence discipline: source linkage, evidence role, source limitations, confidence, exposure risk, publication decision, map-safety review where relevant, and correction/review pathway.
 
