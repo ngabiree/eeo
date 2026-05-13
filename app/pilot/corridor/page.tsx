@@ -1,6 +1,5 @@
-import EarthEndowmentObservatoryOneFileApp from "@/components/EarthEndowmentObservatoryOneFileApp";
+import CorridorSystemView from "@/components/CorridorSystemView";
 
-/** Full one-file corridor interface (tabs, dossier tooling, footer). Separate from narrower pilot pages. */
-export default function PilotCorridorShellPage() {
-  return <EarthEndowmentObservatoryOneFileApp />;
+export default function CorridorPage() {
+  return <CorridorSystemView />;
 }
