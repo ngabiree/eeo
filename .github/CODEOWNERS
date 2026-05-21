@@ -1,0 +1,53 @@
+# CODEOWNERS — Earth Endowment Observatory
+#
+# Assigns required reviewers by path. GitHub requires at least one
+# approved review from each matching owner before merging to main.
+#
+# Replace placeholder team names with real GitHub teams or usernames
+# once the team is established. Until then, @ngabiree covers all paths.
+#
+# Role definitions (from institutional spec §26.3):
+#   platform lead   — app, deployment, auth, CI
+#   data lead       — schema, migrations, claims, evidence
+#   legal/safeguards lead — disclosure, exposure, right-of-reply logic
+#   product lead    — public-facing pages and UI
+#   release owner   — production release logic and manifests
+
+# Default: all changes require platform lead review
+*                                   @ngabiree
+
+# Application code and deployment
+/app/                               @ngabiree
+/next.config.mjs                    @ngabiree
+/vercel.json                        @ngabiree
+/.github/workflows/                 @ngabiree
+
+# Data schema, migrations, claims, evidence
+/supabase/                          @ngabiree
+/lib/                               @ngabiree
+/data/                              @ngabiree
+/types/                             @ngabiree
+
+# Public-facing pages — product/design lead
+/app/(public)/                      @ngabiree
+/components/                        @ngabiree
+
+# Disclosure, exposure, and right-of-reply logic — legal/safeguards lead
+/lib/publicationRules.ts            @ngabiree
+/lib/mapSafety.ts                   @ngabiree
+/lib/releaseGate.ts                 @ngabiree
+/types/accessGovernance.ts          @ngabiree
+/types/mapSafety.ts                 @ngabiree
+
+# Release and manifest logic — release owner
+/types/releaseGate.ts               @ngabiree
+/types/reviewSignoff.ts             @ngabiree
+
+# Documentation — all changes
+/docs/                              @ngabiree
+/README.md                          @ngabiree
+/GOVERNANCE.md                      @ngabiree
+/SECURITY.md                        @ngabiree
+/DATA_POLICY.md                     @ngabiree
+/DISCLOSURE_POLICY.md               @ngabiree
+/AI_USE_POLICY.md                   @ngabiree

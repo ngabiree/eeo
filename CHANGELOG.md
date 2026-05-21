@@ -1,5 +1,7 @@
 # Changelog
 
+> **Version convention:** This project is pre-release. All milestone code is merged to `main` and running in the prototype. "Shipped" in `ROADMAP.md` means *development milestone complete*; "Unreleased" here means *no formal public release tag has been cut yet*. A formal versioned release will be tagged once the public launch gate conditions in `docs/release-process.md` are satisfied.
+
 ## Unreleased
 
 ### v1.3 — Formal Review Sign-Off Contract

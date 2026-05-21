@@ -4,11 +4,7 @@ Please do not report security vulnerabilities or sensitive data exposure concern
 
 Do not post secrets, credentials, personal data, restricted source files, community reports, whistleblower information, right-of-reply packets, legal materials, or precise sensitive geospatial coordinates in this repository.
 
-For security issues, contact: security@example.com
-
-For sensitive data exposure concerns, contact: disclosure@example.com
-
-**Maintainers:** replace the addresses above with project-controlled inboxes before publicizing this policy.
+For security issues and sensitive data exposure concerns, contact: Admin@clubout.club
 
 If you accidentally submitted sensitive information, notify us immediately and do not discuss the details publicly.
 

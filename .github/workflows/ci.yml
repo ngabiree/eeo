@@ -39,6 +39,9 @@ jobs:
       - name: Pilot hub route alignment
         run: pnpm run check:pilot-hub-routes
 
+      - name: Temporal profile dormancy
+        run: pnpm run check:temporal-dormancy
+
       - name: Lint
         run: pnpm run lint
 

@@ -6,6 +6,8 @@
 
 ## Milestone Register
 
+> **Status key:** "Shipped" = development milestone code is merged and running in the prototype. "Current" = actively being developed. No formal public release tag has been cut yet — see `CHANGELOG.md`.
+
 | Milestone | Actual content | Status |
 |---|---|---|
 | v0.4 | Corrections intake, protected review, triage notes, review activity log | Shipped |

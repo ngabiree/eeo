@@ -7,9 +7,12 @@ Institutional constitution, policies (security, data, disclosure), protocols, an
 - Use Node.js 20+.
 - Preferred package manager: `pnpm`.
 - Run checks before opening PRs:
-  - `pnpm exec tsc --noEmit`
-  - `pnpm lint`
-  - `pnpm build`
+  ```
+  pnpm verify
+  ```
+  This runs pilot-route checks, lint, typecheck, tests, and build in one step (same sequence as CI).
+
+  Individual commands if needed: `pnpm typecheck` · `pnpm lint` · `pnpm test` · `pnpm build`
 
 ## Scope discipline
 

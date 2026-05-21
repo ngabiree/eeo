@@ -146,6 +146,27 @@ export function makeReleaseGateCheck(params: {
   };
 }
 
+/**
+ * Strips internal-only fields before any serialization to public routes or API responses.
+ * Call this before returning a ReleaseGateCheck or ReleaseGateAssessment in a public handler.
+ */
+export function toPublicReleaseGateCheck(
+  check: ReleaseGateCheck
+): Omit<ReleaseGateCheck, "internalNotes"> {
+  const { internalNotes: _internal, ...publicCheck } = check;
+  return publicCheck;
+}
+
+export function toPublicReleaseGateAssessment(
+  assessment: ReleaseGateAssessment
+): Omit<ReleaseGateAssessment, "internalSummary"> & { checks: Omit<ReleaseGateCheck, "internalNotes">[] } {
+  const { internalSummary: _internal, ...publicAssessment } = assessment;
+  return {
+    ...publicAssessment,
+    checks: assessment.checks.map(toPublicReleaseGateCheck),
+  };
+}
+
 export function assessReleaseGate(params: {
   id: string;
   releaseManifestId?: string;
