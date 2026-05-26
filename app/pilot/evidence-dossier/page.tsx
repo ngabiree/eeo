@@ -6,10 +6,12 @@ import OwnershipControlNotice from "@/components/eeo/OwnershipControlNotice";
 import PilotRouteNav from "@/components/eeo/PilotRouteNav";
 import ReleaseManifestPanel from "@/components/eeo/ReleaseManifest";
 import { claims } from "@/data/claims";
+import { copperCobaltCorridorPilotSkeleton } from "@/data/corridorDossier";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function PilotEvidenceDossierPage() {
+  const dossier = copperCobaltCorridorPilotSkeleton;
   const corrections = listCorrectionSubmissions();
   const governanceSummaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
   const challengedOrUnderReview = governanceSummaries.filter(
@@ -52,6 +54,58 @@ export default function PilotEvidenceDossierPage() {
             Governance states summarize correction-linked review outcomes and publication posture; they are not legal
             determinations.
           </p>
+        </section>
+
+        <section className="space-y-4">
+          <div>
+            <h2 className="text-2xl font-semibold">Corridor dossier sections</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-700">
+              These sections document available evidence, public-safe limits, deferred questions, and safeguard posture. They do not make legal findings, approve publication, or establish chain-of-custody.
+            </p>
+          </div>
+          <div className="grid gap-4">
+            {dossier.sections.map((section) => {
+              const evidenceLayer =
+                section.linkedEvidenceIds.length > 0
+                  ? `${section.linkedEvidenceIds.length} evidence reference${section.linkedEvidenceIds.length === 1 ? "" : "s"}`
+                  : "evidence linkage deferred";
+              const claimLayer =
+                section.linkedClaimIds.length > 0
+                  ? `${section.linkedClaimIds.length} claim link${section.linkedClaimIds.length === 1 ? "" : "s"}`
+                  : "no public claim link";
+              const sourceLayer =
+                section.sourceIds.length > 0
+                  ? `${section.sourceIds.length} source or source-map reference${section.sourceIds.length === 1 ? "" : "s"}`
+                  : "source posture deferred";
+
+              return (
+                <article key={section.id} className="rounded-3xl border border-stone-200 bg-white/80 p-5 shadow-sm">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-lg font-semibold text-stone-950">{section.title}</h3>
+                      <p className="mt-1 text-xs uppercase tracking-[0.08em] text-stone-500">
+                        {section.status.replaceAll("_", " ")}
+                      </p>
+                    </div>
+                    <p className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs text-stone-600">
+                      {claimLayer} · {evidenceLayer}
+                    </p>
+                  </div>
+                  <p className="mt-3 text-sm leading-7 text-stone-700">{section.summary}</p>
+                  <p className="mt-3 text-xs text-stone-600">
+                    <strong>Evidence layer:</strong> {sourceLayer}. Trade data is contextual, not chain-of-custody proof. Public revenue is a question, not proof of public benefit.
+                  </p>
+                  {section.publicLimitations.length > 0 ? (
+                    <ul className="mt-3 list-disc space-y-1 pl-5 text-xs leading-5 text-stone-600">
+                      {section.publicLimitations.map((limitation) => (
+                        <li key={limitation}>{limitation}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </article>
+              );
+            })}
+          </div>
         </section>
 
         <section className="space-y-4">

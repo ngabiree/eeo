@@ -20,10 +20,10 @@ export default function PilotLaborEcologyRevenuePage() {
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-xl font-semibold">Interpretation guardrails</h2>
           <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-stone-700">
-            <li>Trade and production context does not prove product-level traceability.</li>
+            <li>Trade and production context does not establish product-level traceability.</li>
             <li>Labor indicators can be sectoral or national and may undercount informal work.</li>
             <li>Ecological proximity does not establish causation without additional evidence.</li>
-            <li>Disclosed public revenue does not prove durable public benefit outcomes.</li>
+            <li>Disclosed public revenue does not establish durable public benefit outcomes.</li>
           </ul>
         </section>
 

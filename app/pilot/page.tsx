@@ -11,7 +11,7 @@ export default function PilotOverviewPage() {
         <p className="leading-7 text-[color:var(--eeo-text)]">
           This public-interest observatory pilot walks a governance-first publication chain: stewarded sources through
           evidence and claims into review, release, and corrections. It is a limited corridor dashboard and evidence
-          dossier — not a global atlas, certification platform, marketing ranking surface, or legal tribunal. EEO makes
+          dossier — not a global atlas, supply-chain assurance platform, marketing comparison surface, or legal tribunal. EEO makes
           no legal finding.
         </p>
         <EvidenceLoopPanel />
