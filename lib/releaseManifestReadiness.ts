@@ -1,12 +1,56 @@
 import type { CorridorDossier } from "@/types/corridorDossier";
 import type { Claim, EvidenceItem, Source } from "@/types/eeo";
+import type { MapSafetyClassification, MapSafetyReview } from "@/types/mapSafety";
 import { assessDossierReadiness } from "@/lib/dossierReadiness";
 import { assessEvidenceIntegrity } from "@/lib/evidenceIntegrity";
+import { canRenderPublicMapLayer } from "@/lib/mapSafety";
 import { canClaimBeApprovedForRelease } from "@/lib/publicationRules";
+import { assessRightOfReplyReadiness } from "@/lib/rightOfReplyReadiness";
 import { assessSourceReadiness } from "@/lib/sourceReadiness";
 
 const PUBLIC_SAFE_SUMMARY =
-  "This is an internal structural readiness check only. It does not sign a release manifest, approve publication, validate factual truth, determine legal status, or clear source rights.";
+  "This is an internal structural readiness check only. It does not sign a release manifest, approve publication, validate factual truth, determine legal status, clear source rights, determine legal sufficiency, determine notice adequacy, determine fairness, or grant publication approval. This is a structural map-safety readiness check only. It does not validate geospatial accuracy, exposure safety, rights-holder consent, ecological sensitivity, legal adequacy, or publication approval.";
+
+export type ReleaseManifestMapSafetyClassification =
+  | MapSafetyClassification
+  | "unsafe";
+
+export type ReleaseManifestMapSafetyDisposition =
+  | "release_bound"
+  | "withheld"
+  | "suppressed";
+
+export interface ReleaseManifestMapSafetyObject {
+  id: string;
+  title: string;
+  reviewId?: string;
+  disposition?: ReleaseManifestMapSafetyDisposition;
+}
+
+export type ReleaseManifestMapSafetyReview = Omit<
+  MapSafetyReview,
+  "classification"
+> & {
+  classification: ReleaseManifestMapSafetyClassification;
+};
+
+type ReleaseManifestMapSafetyObjectSummary = Pick<
+  ReleaseManifestMapSafetyObject,
+  "id" | "title"
+> & {
+  disposition: ReleaseManifestMapSafetyDisposition;
+};
+
+type ReleaseManifestMapSafetyBlockedObjectSummary =
+  ReleaseManifestMapSafetyObjectSummary & {
+    classification: ReleaseManifestMapSafetyClassification;
+  };
+
+interface MapSafetyReadinessAssessment {
+  passes: boolean;
+  missingReviewObjects: ReleaseManifestMapSafetyObjectSummary[];
+  blockedObjects: ReleaseManifestMapSafetyBlockedObjectSummary[];
+}
 
 export type ReleaseManifestBlockingIssueType =
   | "dossier_release_not_ready"
@@ -18,7 +62,11 @@ export type ReleaseManifestBlockingIssueType =
   | "evidence_references_missing_sources"
   | "evidence_without_claim_links"
   | "reciprocal_link_mismatches"
-  | "sources_missing_accessed_date";
+  | "sources_missing_accessed_date"
+  | "right_of_reply_pending"
+  | "right_of_reply_inconsistent"
+  | "map_safety_review_missing"
+  | "map_safety_blocked_classification";
 
 export type ReleaseManifestReviewFlagType =
   | "non_approvable_claims"
@@ -26,7 +74,8 @@ export type ReleaseManifestReviewFlagType =
   | "sources_with_unknown_license"
   | "sources_permission_required"
   | "sources_restricted"
-  | "sources_unused_by_evidence";
+  | "sources_unused_by_evidence"
+  | "right_of_reply_missing_reason";
 
 export interface ReleaseManifestReadinessItem<TType extends string> {
   type: TType;
@@ -42,6 +91,18 @@ export interface ReleaseManifestReadinessAssessment {
   dossierReady: boolean;
   evidenceIntegrityPasses: boolean;
   sourceReadinessPasses: boolean;
+  mapSafetyReadinessPasses: boolean;
+  mapSafetyMissingReviewObjects: ReleaseManifestMapSafetyObjectSummary[];
+  mapSafetyBlockedObjects: ReleaseManifestMapSafetyBlockedObjectSummary[];
+  rightOfReplyPendingClaims: ReturnType<
+    typeof assessRightOfReplyReadiness
+  >["claimsPending"];
+  rightOfReplyInconsistentClaims: ReturnType<
+    typeof assessRightOfReplyReadiness
+  >["claimsWithInconsistentStatus"];
+  rightOfReplyMissingReasonClaims: ReturnType<
+    typeof assessRightOfReplyReadiness
+  >["claimsMissingReason"];
   blockingStructuralIssues: ReleaseManifestReadinessItem<ReleaseManifestBlockingIssueType>[];
   reviewFlags: ReleaseManifestReadinessItem<ReleaseManifestReviewFlagType>[];
   publicSafeSummary: string;
@@ -52,6 +113,8 @@ export function assessReleaseManifestReadiness(params: {
   claims: Claim[];
   evidenceItems: EvidenceItem[];
   sources: Source[];
+  mapSafetyObjects?: ReleaseManifestMapSafetyObject[];
+  mapSafetyReviews?: ReleaseManifestMapSafetyReview[];
 }): ReleaseManifestReadinessAssessment {
   const dossierReadiness = assessDossierReadiness(params.dossier);
   const evidenceIntegrity = assessEvidenceIntegrity({
@@ -62,6 +125,11 @@ export function assessReleaseManifestReadiness(params: {
   const sourceReadiness = assessSourceReadiness({
     sources: params.sources,
     evidenceItems: params.evidenceItems,
+  });
+  const rightOfReplyReadiness = assessRightOfReplyReadiness(params.claims);
+  const mapSafetyReadiness = assessMapSafetyReadiness({
+    mapSafetyObjects: params.mapSafetyObjects ?? [],
+    mapSafetyReviews: params.mapSafetyReviews ?? [],
   });
 
   const approvableClaims = params.claims.filter(
@@ -92,6 +160,10 @@ export function assessReleaseManifestReadiness(params: {
   const sourceReadinessPasses =
     sourceReadiness.sourcesMissingAccessedDate.length === 0 &&
     sourceReadiness.evidenceUsingMissingSources.length === 0;
+  const rightOfReplyStatusInconsistencies =
+    rightOfReplyReadiness.claimsWithInconsistentStatus.filter(
+      (claim) => claim.issue !== "marked_required_missing_reason"
+    );
 
   const blockingStructuralIssues: ReleaseManifestReadinessAssessment["blockingStructuralIssues"] =
     [];
@@ -157,6 +229,30 @@ export function assessReleaseManifestReadiness(params: {
     sourceReadiness.sourcesMissingAccessedDate.length,
     "One or more source records are missing an accessed date."
   );
+  addReadinessItem(
+    blockingStructuralIssues,
+    "right_of_reply_pending",
+    rightOfReplyReadiness.claimsPending.length,
+    "One or more claims have unresolved right-of-reply posture."
+  );
+  addReadinessItem(
+    blockingStructuralIssues,
+    "right_of_reply_inconsistent",
+    rightOfReplyStatusInconsistencies.length,
+    "One or more claims have inconsistent right-of-reply status."
+  );
+  addReadinessItem(
+    blockingStructuralIssues,
+    "map_safety_review_missing",
+    mapSafetyReadiness.missingReviewObjects.length,
+    "One or more release-bound map or geospatial objects are missing map-safety review."
+  );
+  addReadinessItem(
+    blockingStructuralIssues,
+    "map_safety_blocked_classification",
+    mapSafetyReadiness.blockedObjects.length,
+    "One or more release-bound map or geospatial objects have blocked map-safety classification."
+  );
 
   addReadinessItem(
     reviewFlags,
@@ -194,6 +290,12 @@ export function assessReleaseManifestReadiness(params: {
     sourceReadiness.sourcesUnusedByEvidence.length,
     "One or more source records are not linked from current evidence records."
   );
+  addReadinessItem(
+    reviewFlags,
+    "right_of_reply_missing_reason",
+    rightOfReplyReadiness.claimsMissingReason.length,
+    "One or more explicitly required right-of-reply records are missing a structural reason."
+  );
 
   return {
     releaseReadiness: params.dossier.releaseReadiness,
@@ -203,10 +305,87 @@ export function assessReleaseManifestReadiness(params: {
     dossierReady,
     evidenceIntegrityPasses,
     sourceReadinessPasses,
+    mapSafetyReadinessPasses: mapSafetyReadiness.passes,
+    mapSafetyMissingReviewObjects: mapSafetyReadiness.missingReviewObjects,
+    mapSafetyBlockedObjects: mapSafetyReadiness.blockedObjects,
+    rightOfReplyPendingClaims: rightOfReplyReadiness.claimsPending,
+    rightOfReplyInconsistentClaims: rightOfReplyStatusInconsistencies,
+    rightOfReplyMissingReasonClaims: rightOfReplyReadiness.claimsMissingReason,
     blockingStructuralIssues,
     reviewFlags,
     publicSafeSummary: PUBLIC_SAFE_SUMMARY,
   };
+}
+
+function assessMapSafetyReadiness(params: {
+  mapSafetyObjects: ReleaseManifestMapSafetyObject[];
+  mapSafetyReviews: ReleaseManifestMapSafetyReview[];
+}): MapSafetyReadinessAssessment {
+  const reviewsById = new Map(
+    params.mapSafetyReviews.map((review) => [review.id, review])
+  );
+  const missingReviewObjects: ReleaseManifestMapSafetyObjectSummary[] = [];
+  const blockedObjects: ReleaseManifestMapSafetyBlockedObjectSummary[] = [];
+
+  for (const mapSafetyObject of params.mapSafetyObjects) {
+    const summary = toMapSafetyObjectSummary(mapSafetyObject);
+
+    if (!isReleaseBoundMapSafetyObject(summary)) {
+      continue;
+    }
+
+    const review = mapSafetyObject.reviewId
+      ? reviewsById.get(mapSafetyObject.reviewId)
+      : undefined;
+
+    if (!review) {
+      missingReviewObjects.push(summary);
+      continue;
+    }
+
+    if (isBlockedMapSafetyClassification(review.classification)) {
+      blockedObjects.push({
+        ...summary,
+        classification: review.classification,
+      });
+    }
+  }
+
+  return {
+    passes: missingReviewObjects.length === 0 && blockedObjects.length === 0,
+    missingReviewObjects,
+    blockedObjects,
+  };
+}
+
+function toMapSafetyObjectSummary(
+  mapSafetyObject: ReleaseManifestMapSafetyObject
+): ReleaseManifestMapSafetyObjectSummary {
+  return {
+    id: mapSafetyObject.id,
+    title: mapSafetyObject.title,
+    disposition: mapSafetyObject.disposition ?? "release_bound",
+  };
+}
+
+function isReleaseBoundMapSafetyObject(
+  mapSafetyObject: ReleaseManifestMapSafetyObjectSummary
+): boolean {
+  return mapSafetyObject.disposition === "release_bound";
+}
+
+function isBlockedMapSafetyClassification(
+  classification: ReleaseManifestMapSafetyClassification
+): boolean {
+  if (classification === "unsafe") {
+    return true;
+  }
+
+  if (classification === "restricted" || classification === "do_not_publish") {
+    return true;
+  }
+
+  return classification !== "blurred" && !canRenderPublicMapLayer(classification);
 }
 
 function addReadinessItem<TType extends string>(

@@ -6,6 +6,10 @@ import { evidenceItems as currentEvidenceItems } from "@/data/evidence";
 import { sources as currentSources } from "@/data/sources";
 import { canClaimBeApprovedForRelease } from "@/lib/publicationRules";
 import { assessReleaseManifestReadiness } from "@/lib/releaseManifestReadiness";
+import type {
+  ReleaseManifestMapSafetyObject,
+  ReleaseManifestMapSafetyReview,
+} from "@/lib/releaseManifestReadiness";
 import type { CorridorDossier } from "@/types/corridorDossier";
 import type { Claim, EvidenceItem, Source } from "@/types/eeo";
 
@@ -80,6 +84,23 @@ const baseDossier: CorridorDossier = {
   releaseReadiness: "release_candidate",
   publicLimitations: ["Prototype test limitation."],
   lastUpdated: "2026-05-25T00:00:00.000Z",
+};
+
+const baseMapSafetyObject: ReleaseManifestMapSafetyObject = {
+  id: "MAP-TEST-001",
+  title: "Test map object",
+  reviewId: "MSR-TEST-001",
+};
+
+const baseMapSafetyReview: ReleaseManifestMapSafetyReview = {
+  id: "MSR-TEST-001",
+  layerName: "Test map layer",
+  classification: "generalized",
+  publicRationale: "Generalized test fixture.",
+  risksConsidered: ["Sensitive location exposure risk."],
+  mitigation: ["Generalize location detail."],
+  reviewedAt: "2026-05-25T00:00:00.000Z",
+  reviewerRole: "exposure",
 };
 
 function claimWith(overrides: Partial<Claim>): Claim {
@@ -232,6 +253,154 @@ describe("assessReleaseManifestReadiness", () => {
     );
   });
 
+  it("does not create a map-safety blocker when there are no map-sensitive objects", () => {
+    const assessment = assessReleaseManifestReadiness({
+      dossier: baseDossier,
+      claims: [baseClaim],
+      evidenceItems: [baseEvidenceItem],
+      sources: [baseSource],
+    });
+
+    expect(assessment.mapSafetyReadinessPasses).toBe(true);
+    expect(assessment.mapSafetyMissingReviewObjects).toEqual([]);
+    expect(assessment.mapSafetyBlockedObjects).toEqual([]);
+    expect(issueTypes(assessment)).not.toContain("map_safety_review_missing");
+    expect(issueTypes(assessment)).not.toContain(
+      "map_safety_blocked_classification"
+    );
+  });
+
+  it("creates a structural blocker for a map-sensitive object without review", () => {
+    const assessment = assessReleaseManifestReadiness({
+      dossier: baseDossier,
+      claims: [baseClaim],
+      evidenceItems: [baseEvidenceItem],
+      sources: [baseSource],
+      mapSafetyObjects: [
+        {
+          id: "MAP-TEST-MISSING-REVIEW",
+          title: "Map object missing review",
+        },
+      ],
+      mapSafetyReviews: [],
+    });
+
+    expect(assessment.mapSafetyReadinessPasses).toBe(false);
+    expect(assessment.mapSafetyMissingReviewObjects).toEqual([
+      {
+        id: "MAP-TEST-MISSING-REVIEW",
+        title: "Map object missing review",
+        disposition: "release_bound",
+      },
+    ]);
+    expect(issueTypes(assessment)).toContain("map_safety_review_missing");
+  });
+
+  it("creates a structural blocker for restricted and do_not_publish map-safety classifications", () => {
+    const restrictedObject: ReleaseManifestMapSafetyObject = {
+      id: "MAP-TEST-RESTRICTED",
+      title: "Restricted map object",
+      reviewId: "MSR-TEST-RESTRICTED",
+    };
+    const doNotPublishObject: ReleaseManifestMapSafetyObject = {
+      id: "MAP-TEST-DO-NOT-PUBLISH",
+      title: "Do-not-publish map object",
+      reviewId: "MSR-TEST-DO-NOT-PUBLISH",
+    };
+
+    const assessment = assessReleaseManifestReadiness({
+      dossier: baseDossier,
+      claims: [baseClaim],
+      evidenceItems: [baseEvidenceItem],
+      sources: [baseSource],
+      mapSafetyObjects: [restrictedObject, doNotPublishObject],
+      mapSafetyReviews: [
+        {
+          ...baseMapSafetyReview,
+          id: "MSR-TEST-RESTRICTED",
+          classification: "restricted",
+        },
+        {
+          ...baseMapSafetyReview,
+          id: "MSR-TEST-DO-NOT-PUBLISH",
+          classification: "do_not_publish",
+        },
+      ],
+    });
+
+    expect(assessment.mapSafetyReadinessPasses).toBe(false);
+    expect(assessment.mapSafetyBlockedObjects).toEqual([
+      {
+        id: "MAP-TEST-RESTRICTED",
+        title: "Restricted map object",
+        disposition: "release_bound",
+        classification: "restricted",
+      },
+      {
+        id: "MAP-TEST-DO-NOT-PUBLISH",
+        title: "Do-not-publish map object",
+        disposition: "release_bound",
+        classification: "do_not_publish",
+      },
+    ]);
+    expect(issueTypes(assessment)).toContain(
+      "map_safety_blocked_classification"
+    );
+  });
+
+  it("does not create a map-safety blocker for generalized, aggregated, or blurred classifications with review", () => {
+    const mapSafetyObjects: ReleaseManifestMapSafetyObject[] = [
+      {
+        id: "MAP-TEST-GENERALIZED",
+        title: "Generalized map object",
+        reviewId: "MSR-TEST-GENERALIZED",
+      },
+      {
+        id: "MAP-TEST-AGGREGATED",
+        title: "Aggregated map object",
+        reviewId: "MSR-TEST-AGGREGATED",
+      },
+      {
+        id: "MAP-TEST-BLURRED",
+        title: "Blurred map object",
+        reviewId: "MSR-TEST-BLURRED",
+      },
+    ];
+
+    const assessment = assessReleaseManifestReadiness({
+      dossier: baseDossier,
+      claims: [baseClaim],
+      evidenceItems: [baseEvidenceItem],
+      sources: [baseSource],
+      mapSafetyObjects,
+      mapSafetyReviews: [
+        {
+          ...baseMapSafetyReview,
+          id: "MSR-TEST-GENERALIZED",
+          classification: "generalized",
+        },
+        {
+          ...baseMapSafetyReview,
+          id: "MSR-TEST-AGGREGATED",
+          classification: "aggregated",
+        },
+        {
+          ...baseMapSafetyReview,
+          id: "MSR-TEST-BLURRED",
+          classification: "blurred",
+        },
+      ],
+    });
+
+    expect(assessment.mapSafetyReadinessPasses).toBe(true);
+    expect(assessment.mapSafetyMissingReviewObjects).toEqual([]);
+    expect(assessment.mapSafetyBlockedObjects).toEqual([]);
+    expect(issueTypes(assessment)).not.toContain("map_safety_review_missing");
+    expect(issueTypes(assessment)).not.toContain(
+      "map_safety_blocked_classification"
+    );
+  });
+
   it("creates review flags, not automatic blockers, for unknown, restricted, and permission-required source posture", () => {
     const sourceWithUnknownLicense = sourceWith({
       id: "SRC-UNKNOWN",
@@ -295,6 +464,103 @@ describe("assessReleaseManifestReadiness", () => {
     );
   });
 
+  it("creates a structural blocker for unresolved right-of-reply posture", () => {
+    const claim = claimWith({
+      rightOfReplyRequired: true,
+      rightOfReplyReason: "Materially affects an identifiable actor.",
+      rightOfReplyStatus: "requested",
+    });
+
+    const assessment = assessReleaseManifestReadiness({
+      dossier: baseDossier,
+      claims: [claim],
+      evidenceItems: [baseEvidenceItem],
+      sources: [baseSource],
+    });
+
+    expect(assessment.rightOfReplyPendingClaims).toHaveLength(1);
+    expect(issueTypes(assessment)).toContain("right_of_reply_pending");
+  });
+
+  it("creates a structural blocker for inconsistent right-of-reply status", () => {
+    const claim = claimWith({
+      corridorNode: "labor_risk",
+      rightOfReplyRequired: false,
+      rightOfReplyStatus: "not_required",
+    });
+
+    const assessment = assessReleaseManifestReadiness({
+      dossier: baseDossier,
+      claims: [claim],
+      evidenceItems: [baseEvidenceItem],
+      sources: [baseSource],
+    });
+
+    expect(assessment.rightOfReplyInconsistentClaims).toHaveLength(1);
+    expect(issueTypes(assessment)).toContain("right_of_reply_inconsistent");
+  });
+
+  it("creates a review flag for explicit missing rightOfReplyReason", () => {
+    const claim = claimWith({
+      rightOfReplyRequired: true,
+      rightOfReplyReason: " ",
+      rightOfReplyStatus: "received",
+    });
+
+    const assessment = assessReleaseManifestReadiness({
+      dossier: baseDossier,
+      claims: [claim],
+      evidenceItems: [baseEvidenceItem],
+      sources: [baseSource],
+    });
+
+    expect(assessment.rightOfReplyMissingReasonClaims).toHaveLength(1);
+    expect(reviewFlagTypes(assessment)).toContain(
+      "right_of_reply_missing_reason"
+    );
+    expect(issueTypes(assessment)).not.toContain("right_of_reply_inconsistent");
+  });
+
+  it("treats received and declined right-of-reply status as structurally satisfied for that layer", () => {
+    const receivedClaim = claimWith({
+      id: "CLAIM-TEST-RECEIVED",
+      rightOfReplyRequired: true,
+      rightOfReplyReason: "Materially affects an identifiable actor.",
+      rightOfReplyStatus: "received",
+      evidenceLinks: [{ evidenceId: "EVID-TEST-RECEIVED", role: "supports" }],
+    });
+    const declinedClaim = claimWith({
+      id: "CLAIM-TEST-DECLINED",
+      rightOfReplyRequired: true,
+      rightOfReplyReason: "Materially affects an identifiable actor.",
+      rightOfReplyStatus: "declined",
+      evidenceLinks: [{ evidenceId: "EVID-TEST-DECLINED", role: "supports" }],
+    });
+    const receivedEvidence = evidenceItemWith({
+      id: "EVID-TEST-RECEIVED",
+      claimLinks: [{ claimId: "CLAIM-TEST-RECEIVED", role: "supports" }],
+    });
+    const declinedEvidence = evidenceItemWith({
+      id: "EVID-TEST-DECLINED",
+      claimLinks: [{ claimId: "CLAIM-TEST-DECLINED", role: "supports" }],
+    });
+
+    const assessment = assessReleaseManifestReadiness({
+      dossier: dossierWith({
+        linkedClaimIds: ["CLAIM-TEST-RECEIVED", "CLAIM-TEST-DECLINED"],
+        linkedEvidenceIds: ["EVID-TEST-RECEIVED", "EVID-TEST-DECLINED"],
+      }),
+      claims: [receivedClaim, declinedClaim],
+      evidenceItems: [receivedEvidence, declinedEvidence],
+      sources: [baseSource],
+    });
+
+    expect(assessment.rightOfReplyPendingClaims).toEqual([]);
+    expect(assessment.rightOfReplyInconsistentClaims).toEqual([]);
+    expect(issueTypes(assessment)).not.toContain("right_of_reply_pending");
+    expect(issueTypes(assessment)).not.toContain("right_of_reply_inconsistent");
+  });
+
   it("includes the internal-only, no-signing, and no-clearance limitation in the publicSafeSummary", () => {
     const assessment = assessReleaseManifestReadiness({
       dossier: baseDossier,
@@ -311,5 +577,55 @@ describe("assessReleaseManifestReadiness", () => {
     );
     expect(assessment.publicSafeSummary).toContain("determine legal status");
     expect(assessment.publicSafeSummary).toContain("clear source rights");
+    expect(assessment.publicSafeSummary).toContain(
+      "determine legal sufficiency"
+    );
+    expect(assessment.publicSafeSummary).toContain(
+      "determine notice adequacy"
+    );
+    expect(assessment.publicSafeSummary).toContain("determine fairness");
+    expect(assessment.publicSafeSummary).toContain("publication approval");
+    expect(assessment.publicSafeSummary).toContain(
+      "This is a structural map-safety readiness check only."
+    );
+    expect(assessment.publicSafeSummary).toContain(
+      "It does not validate geospatial accuracy"
+    );
+    expect(assessment.publicSafeSummary).toContain("exposure safety");
+    expect(assessment.publicSafeSummary).toContain("rights-holder consent");
+    expect(assessment.publicSafeSummary).toContain("ecological sensitivity");
+    expect(assessment.publicSafeSummary).toContain("legal adequacy");
+  });
+
+  it("does not return internal notes or sensitive location tokens from map-safety inputs", () => {
+    const mapSafetyObjectWithInternalFields = {
+      ...baseMapSafetyObject,
+      internalNotes: "SECRET_INTERNAL_NOTE_SHOULD_NOT_APPEAR",
+      sensitiveLocationToken: "SENSITIVE_LOCATION_TOKEN_SHOULD_NOT_APPEAR",
+    };
+
+    const assessment = assessReleaseManifestReadiness({
+      dossier: baseDossier,
+      claims: [baseClaim],
+      evidenceItems: [baseEvidenceItem],
+      sources: [baseSource],
+      mapSafetyObjects: [mapSafetyObjectWithInternalFields],
+      mapSafetyReviews: [
+        {
+          ...baseMapSafetyReview,
+          classification: "restricted",
+          risksConsidered: ["SENSITIVE_LOCATION_TOKEN_SHOULD_NOT_APPEAR"],
+          mitigation: ["SECRET_INTERNAL_NOTE_SHOULD_NOT_APPEAR"],
+        },
+      ],
+    });
+
+    expect(assessment.mapSafetyBlockedObjects).toHaveLength(1);
+    expect(JSON.stringify(assessment)).not.toContain(
+      "SECRET_INTERNAL_NOTE_SHOULD_NOT_APPEAR"
+    );
+    expect(JSON.stringify(assessment)).not.toContain(
+      "SENSITIVE_LOCATION_TOKEN_SHOULD_NOT_APPEAR"
+    );
   });
 });
