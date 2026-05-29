@@ -275,7 +275,7 @@ const claims: Claim[] = [
     granularity: "corridor-level",
     posture: "no legal claim",
     limitation:
-      "Spatial proximity does not prove causation; sensitive ecological locations are generalized or withheld.",
+      "Spatial proximity does not establish causation; sensitive ecological locations are generalized or withheld.",
     status: "Exposure reviewed",
     stale: "2026-08-01",
     right_of_reply_status: "not_required",
@@ -294,7 +294,7 @@ const claims: Claim[] = [
     granularity: "national-level",
     posture: "no legal claim",
     limitation:
-      "Disclosed revenue does not prove durable public benefit; budget-use evidence is separate.",
+      "Disclosed revenue does not establish durable public benefit; budget-use evidence is separate.",
     status: "Editorial reviewed",
     stale: "2026-12-31",
     right_of_reply_status: "not_required",
@@ -442,7 +442,7 @@ const LEVERAGE_PATHWAYS: Record<string, { use: string; limit: string }> = {
   },
   Trade: {
     use: "Public-interest inquiry, trade-context research, due-diligence questions.",
-    limit: "Reported trade flows do not prove physical chain-of-custody or verified origin.",
+    limit: "Reported trade flows do not establish physical chain-of-custody or product origin.",
   },
   Labor: {
     use: "Labor-risk inquiry, union organizing, procurement screening, research.",
@@ -454,7 +454,7 @@ const LEVERAGE_PATHWAYS: Record<string, { use: string; limit: string }> = {
   },
   "Public revenue": {
     use: "Budget oversight, parliamentary monitoring, public-finance research.",
-    limit: "Disclosed revenue does not prove durable public benefit. Budget-use evidence is separate.",
+    limit: "Disclosed revenue does not establish durable public benefit. Budget-use evidence is separate.",
   },
 };
 
@@ -670,7 +670,7 @@ const corridorDashboardMetrics: DashboardMetricSpec[] = [
     publicLabel: "Restoration pathway",
     qualitativeState: "weak",
     explanation: "Planned recovery and stewardship signals where available publicly.",
-    caution: "Potential does not prove delivery.",
+    caution: "Potential does not establish delivery.",
     evidenceBasisNote: "Evidence basis appears in the Evidence Ledger and methods note.",
   },
   {
@@ -900,7 +900,7 @@ function GuidanceSection() {
     },
     {
       title: "Do not use as a verdict",
-      body: "This profile does not determine legal responsibility, certify supply chains, or rank countries, firms, or communities.",
+      body: "This profile does not determine legal responsibility, provide supply-chain assurance, or compare countries, firms, or communities through composite indicators.",
     },
     {
       title: "Inspect the evidence",
@@ -934,7 +934,7 @@ function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
     "Safe-resolution geography — Sensitive coordinates are withheld or generalized.",
     "Traceable record — Records include confidence, context, and limits.",
     "Rights-aware disclosure — Publication is governed by risk, consent, and public interest.",
-    "No overclaiming — no certification, adjudicated liability, asserted chain-of-custody proof, marketed rankings, or implied legal rulings.",
+    "No overclaiming — no supply-chain assurance, adjudicated liability, asserted chain-of-custody proof, composite comparison claims, or implied legal rulings.",
   ];
 
   return (
@@ -1049,7 +1049,7 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
         <SectionTitle eyebrow="Section 3" title="Corridor boundary" />
         <Card className="border-amber-200 bg-amber-50 p-6">
           <p className="text-sm leading-7 text-amber-950">
-            Corridor geometry is <strong>pending map-safety review</strong> before any precise or interactive boundary can publish. For the generalized map placeholder and safety framing, open the{" "}
+            Corridor geometry is <strong>pending map-safety review</strong> before any precise or interactive boundary can publish. For the generalized map framing and safety notes, open the{" "}
             <button
               type="button"
               onClick={() => onSelectSection("dashboard")}
@@ -1065,7 +1065,7 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
       <section>
         <SectionTitle eyebrow="Section 4" title="What this release does not claim" />
         <Card className="border-red-200 bg-red-50 p-6 text-sm leading-6 text-red-950">
-          <strong>Publication limits:</strong> This dossier does not certify supply chains, adjudicate responsibility, assert physical traceability without evidence, rank countries or firms, provide a community reporting system, or serve as a universal atlas.
+          <strong>Publication limits:</strong> This dossier does not provide supply-chain assurance, adjudicate responsibility, assert physical traceability without evidence, compare countries or firms through composite indicators, provide a community reporting system, or serve as a universal atlas.
         </Card>
       </section>
 
@@ -1089,19 +1089,19 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 6" title="Governance and authority profile" />
-        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
-          Stub — pending structured narrative. The <strong>governance profile</strong> module in the{" "}
+        <Card className="border-amber-200 bg-amber-50 p-6 text-sm leading-7 text-amber-950">
+          This section documents available governance context as public-record evidence, not as a finding that rules are enforced, sufficient, or consent-based in any specific place. It depends on legal, transparency, and source-limitation layers; concession-level governance, customary authority, and actor-specific right-of-reply remain deferred. The{" "}
           <button type="button" onClick={() => onSelectSection("dashboard")} className="font-semibold underline">
             Corridor profile
           </button>{" "}
-          previews the same theme at module level; full text will follow review.
+          keeps the same theme at module level.
         </Card>
       </section>
 
       <section>
         <SectionTitle eyebrow="Section 7" title="Ownership and control profile" />
-        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
-          Stub — requires entity resolution and named-actor right-of-reply before publish. A dedicated{" "}
+        <Card className="border-amber-200 bg-amber-50 p-6 text-sm leading-7 text-amber-950">
+          This section documents beneficial-ownership and control visibility as a transparency question. It does not publish named ownership chains, infer control, or make actor-affecting claims in this draft. Entity resolution, exposure review, correction route, and right-of-reply posture are required before any named actor material can be released. The dedicated{" "}
           <button type="button" onClick={() => onSelectSection("ownership")} className="font-semibold underline">
             Ownership + Control
           </button>{" "}
@@ -1136,7 +1136,9 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 11" title="Source registry snapshot" />
-        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">Stub — per-source license, update cadence, and sensitivity notes (pending import from registry build).</Card>
+        <Card className="border-amber-200 bg-amber-50 p-6 text-sm leading-7 text-amber-950">
+          This snapshot documents source identity, intended use, license or use-basis posture, update cadence, and sensitivity limits where they are available. It supports citation and public-safe review, but it does not approve legal reuse, validate source quality, or make publication clearance decisions. Restricted or permission-based materials remain outside public dossier output.
+        </Card>
       </section>
 
       <section>
@@ -1163,12 +1165,12 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
 
       <section>
         <SectionTitle eyebrow="Section 13" title="Correction and challenge path" />
-        <Card className="border-amber-200 bg-amber-50 p-6 text-sm text-amber-950">
-          Stub — live correction route and intake form: open the{" "}
+        <Card className="border-amber-200 bg-amber-50 p-6 text-sm leading-7 text-amber-950">
+          This section documents the correction and challenge path for factual updates, disclosure concerns, source limitations, stale information, and right-of-reply updates. It does not expose reviewer notes, private correspondence, or actor contact data. Open the{" "}
           <button type="button" onClick={() => onSelectSection("corrections")} className="font-semibold underline">
             Corrections
           </button>{" "}
-          tab.
+          tab for the public-safe route.
         </Card>
       </section>
 
@@ -1291,10 +1293,10 @@ function Ledger() {
 
 function Methods() {
   const guardrails = [
-    ["Trade", "Reported trade flows do not prove physical chain-of-custody or verified origin."],
+    ["Trade", "Reported trade flows do not establish physical chain-of-custody or product origin."],
     ["Labor", "Labor data may be national, sectoral, or modeled rather than site-specific; informal work may be undercounted."],
-    ["Public revenue", "Disclosed public revenue does not prove durable public benefit."],
-    ["Ecology", "Spatial proximity does not prove causation without additional evidence."],
+    ["Public revenue", "Disclosed public revenue does not establish durable public benefit."],
+    ["Ecology", "Spatial proximity does not establish causation without additional evidence."],
     ["Legal", "EEO makes no legal finding unless citing a competent authority’s finding."],
   ];
   return (
@@ -1348,7 +1350,7 @@ function Safeguards() {
       </div>
       <Card className="border-red-200 bg-red-50 p-6">
         <h3 className="flex items-center gap-2 text-lg font-semibold text-red-950"><AlertTriangle className="h-5 w-5" /> Sensitive map defaults</h3>
-        <p className="mt-3 leading-7 text-red-950">Presume sensitivity for sacred sites, indigenous or community-held knowledge, endangered species locations, vulnerable habitats, artisanal mining settlements, whistleblower or grievance locations, community reports, critical infrastructure, illegal extraction targets, and locations where publication could trigger retaliation, speculation, poaching, or land grabbing.</p>
+        <p className="mt-3 leading-7 text-red-950">Presume sensitivity for sacred sites, indigenous or community-held knowledge, endangered species locations, vulnerable habitats, artisanal mining settlements, whistleblower or grievance locations, community reports, critical infrastructure, unreviewed extraction locations, and locations where publication could trigger retaliation, speculation, poaching, or land grabbing.</p>
       </Card>
     </div>
   );

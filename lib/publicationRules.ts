@@ -1,9 +1,12 @@
 import type { Claim } from "@/types/eeo";
 
 export function canClaimBeApprovedForRelease(claim: Claim): boolean {
+  const publicationDecisionAllowsRelease =
+    claim.publicationDecision === "publish" || claim.publicationDecision === "publish_aggregated";
+
   return (
     claim.reviewStatus === "approved_for_release" &&
-    claim.publicationDecision === "publish" &&
+    publicationDecisionAllowsRelease &&
     claim.exposureRisk !== "high" &&
     claim.exposureRisk !== "do_not_publish"
   );

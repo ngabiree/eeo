@@ -18,6 +18,22 @@ An internal readiness check over publication conditions for release objects.
 
 The release gate does not make a claim true. It determines whether the conditions for public release have been satisfied.
 
+## Structural readiness helpers
+
+`lib/releaseManifestReadiness.ts` and related helpers are internal structural readiness checks. They summarize whether prototype records have the expected linkage and posture fields before any future release-manifest review.
+
+They check only structural conditions such as:
+
+- claim/evidence/source linkage presence and reciprocal consistency;
+- dossier section completeness and linked claim/evidence references;
+- source license or use-basis posture as recorded fields;
+- right-of-reply posture as recorded claim fields and helper-inferred applicability;
+- map-safety review presence and recorded classification posture for release-bound geospatial objects.
+
+They do not determine factual truth, legal sufficiency, source quality, exposure safety, rights-holder consent, ecological sensitivity, notice adequacy, fairness, or publication approval. They do not sign, assemble, publish, or enforce a release manifest.
+
+Internal readiness output must remain inside review and workspace contexts. If any concern is later described publicly, it must be translated into public-safe limitations and must not expose reviewer notes, internal rationales, actor contact details, right-of-reply packets, restricted evidence, sensitive coordinates, or other non-public material.
+
 ## Relationship to the corridor dossier
 
 The corridor dossier remains the core public product object. The release gate protects the dossier from unsupported claims, unsafe exposure, unresolved corrections, and overclaiming.

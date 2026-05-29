@@ -10,7 +10,7 @@ export default function PilotMethodsLimitsPage() {
           Public Evidence Prototype: Copper-Cobalt Corridor
         </p>
         <p className="leading-7 text-stone-700">
-          This page frames how the pilot may reason — not what it has already proven. For the full definition of
+          This page frames how the pilot may reason, not what it has already established. For the full definition of
           Earth&apos;s endowments, human capability vs inventorying people, and exposure guardrails, see the root{" "}
           <span className="font-mono text-xs">README.md</span> (sections on core identity and endowment definition).
         </p>
@@ -20,11 +20,11 @@ export default function PilotMethodsLimitsPage() {
           supported by authoritative legal or regulatory sources.
         </p>
         <section className="rounded-2xl border border-stone-200 bg-white/80 p-5 text-sm leading-6 text-stone-800 shadow-sm">
-          <h2 className="text-base font-semibold text-stone-900">What this copper–cobalt pilot will not prove</h2>
+          <h2 className="text-base font-semibold text-stone-900">What this copper–cobalt pilot does not establish</h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>Product-level physical chain-of-custody or mine-to-gadget traceability.</li>
             <li>That a named consumer good contains copper or cobalt from a specific mine or jurisdiction.</li>
-            <li>Legal liability, adjudicated harm, or certification of good/bad actors.</li>
+            <li>Legal liability, adjudicated harm, or good/bad actor status.</li>
             <li>Completeness of community, Indigenous, worker, or whistleblower knowledge without consent pathways.</li>
             <li>Planetary coverage or &ldquo;atlas&rdquo; completeness — analytical concern is wide; exposure is tiered.</li>
           </ul>
