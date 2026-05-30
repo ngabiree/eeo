@@ -33,13 +33,14 @@ Programmatic index (for the **`/pilot`** hub UI): **`lib/pilotHubRoutes.ts`**.
 | `/pilot/labor-ecology-revenue` | Labor, ecology, revenue |
 | `/pilot/human-capability` | Human capability layer (prototype) |
 | `/pilot/claim-lifecycle` | Claim lifecycle explainer |
+| `/pilot/implementation-readiness` | Completion, launch-gate, and maintenance control plane |
 | `/pilot/methods-and-limits` | Methods and limits |
 | `/pilot/safeguards` | Safeguards |
 | `/pilot/corrections` | Corrections route |
 
 Adjacent public routes: **`/dossier`** (runtime dossier object view), **`/trust`** (Trust index), **`/`** (Observatory landing).
 
-## Legacy public URLs → redirects
+## Legacy public URLs -> redirects
 
 Implemented in **`next.config.mjs`** (and mirrored in some `app/*/page.tsx` redirects).
 

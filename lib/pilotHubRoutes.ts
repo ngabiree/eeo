@@ -9,6 +9,7 @@ export const PILOT_HUB_ROUTES: readonly { href: string; label: string }[] = [
   { href: "/pilot/governance-profile", label: "Governance profile" },
   { href: "/pilot/human-capability", label: "Human capability" },
   { href: "/pilot/claim-lifecycle", label: "Claim lifecycle" },
+  { href: "/pilot/implementation-readiness", label: "Implementation readiness" },
   { href: "/pilot/labor-ecology-revenue", label: "Labor · ecology · revenue" },
   { href: "/pilot/value-chain", label: "Value chain" },
   { href: "/pilot/methods-and-limits", label: "Methods and limits" },
