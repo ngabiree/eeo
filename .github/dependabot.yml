@@ -10,8 +10,6 @@ updates:
     open-pull-requests-limit: 10
     reviewers:
       - "ngabiree"
-    labels:
-      - "dependencies"
     ignore:
       # Pin major version upgrades for review — these may require code changes
       - dependency-name: "next"
@@ -28,6 +26,3 @@ updates:
       timezone: "UTC"
     reviewers:
       - "ngabiree"
-    labels:
-      - "dependencies"
-      - "github-actions"
