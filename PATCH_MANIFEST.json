@@ -1,0 +1,41 @@
+{
+  "patch": "EEO Patch 01 \u2014 MVP Foundation, Evidence Discipline, and Safe UX",
+  "created_at": "2026-05-31",
+  "status": "repo-ready package; not committed because the requested repository was not accessible through the connected GitHub tools",
+  "safe_scope": [
+    "documentation",
+    "TypeScript domain model",
+    "synthetic sample data",
+    "static public UI routes",
+    "release-readiness helpers"
+  ],
+  "intentionally_excluded": [
+    "real corridor data",
+    "admin auth",
+    "database migrations",
+    "public reporting backend",
+    "AI authority",
+    "rankings",
+    "certifications",
+    "blockchain"
+  ],
+  "files": [
+    "README.md",
+    "docs/eeo/EVIDENCE_AND_DISCLOSURE_POLICY.md",
+    "docs/eeo/IMPLEMENTATION_RUNBOOK.md",
+    "docs/eeo/RELEASE_MANIFEST_TEMPLATE.md",
+    "docs/eeo/RIGHT_OF_REPLY_CORRECTIONS_AND_MAINTENANCE.md",
+    "scripts/eeo-release-readiness-check.mjs",
+    "src/app/eeo/corrections/page.tsx",
+    "src/app/eeo/evidence-ledger/page.tsx",
+    "src/app/eeo/methodology/page.tsx",
+    "src/app/eeo/page.tsx",
+    "src/app/eeo/release-readiness/page.tsx",
+    "src/components/eeo/Eeo.module.css",
+    "src/components/eeo/EeoCards.tsx",
+    "src/eeo/canonical.ts",
+    "src/eeo/sample-data.ts",
+    "src/eeo/types.ts",
+    "src/eeo/validation.ts"
+  ]
+}
