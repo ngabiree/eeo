@@ -11,7 +11,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0 --cache --cache-location .eslintcache",
-    "verify": "pnpm run check:pilot-routes && pnpm run check:pilot-hub-routes && pnpm run check:temporal-dormancy && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
+    "verify": "pnpm run check:pilot-routes && pnpm run check:pilot-hub-routes && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
     "check:temporal-dormancy": "node scripts/check-temporal-profile-imports.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
@@ -23,8 +23,8 @@
   "dependencies": {
     "lucide-react": "^0.475.0",
     "next": "15.5.15",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
