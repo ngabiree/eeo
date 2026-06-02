@@ -39,6 +39,30 @@ export function CorridorOverview({ profile }: { profile: CorridorProfile }) {
   );
 }
 
+export function CorridorReasoningSystem({ profile }: { profile: CorridorProfile }) {
+  return (
+    <section className={styles.card} aria-labelledby="corridor-reasoning-title">
+      <div className={styles.eyebrow}>Reasoning system</div>
+      <h2 id="corridor-reasoning-title" className={styles.cardTitle}>Endowment-to-economy chain</h2>
+      <p className={styles.muted}>
+        EEO differentiates through the missing layer: connecting endowments, governance, ownership, labor, trade, ecology, public revenue, and value capture into one evidence-led public-interest reasoning system.
+      </p>
+      <div className={styles.metaGrid}>
+        {profile.reasoningDimensions.map((dimension) => (
+          <div key={dimension.id} className={styles.metaItem}>
+            <span className={styles.metaLabel}>{dimension.label}</span>
+            <p className={styles.muted}>{dimension.question}</p>
+            <div className={styles.badgeRow}>
+              <EeoBadge label={dimension.disclosureTier} tone={disclosureTone(dimension.disclosureTier)} />
+            </div>
+            <small>Evidence claims: {dimension.evidenceClaimIds.join(", ")}</small>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function EvidenceClaimCard({ claim }: { claim: EvidenceClaim }) {
   return (
     <article className={`${styles.card} ${styles.claim}`} aria-labelledby={`${claim.id}-title`}>
