@@ -1,6 +1,16 @@
 import styles from "../../../components/eeo/Eeo.module.css";
 import { DISCLOSURE_TIER_HELP } from "../../../eeo/canonical";
 
+const PILOT_SELECTION_GATES = [
+  "one commodity, one geography, one complete endowment-to-economy chain",
+  "public or consent-cleared sources before evidence drafting",
+  "indigenous data governance and rights-holder review where applicable",
+  "sovereignty and jurisdiction-specific legal-posture review",
+  "exposure ethics review for labor, community, ecological, ownership, and geospatial risks",
+  "right-of-reply status before high-impact actor-specific claims",
+  "release manifest and correction path before public beta",
+] as const;
+
 export default function MethodologyPage() {
   return (
     <main className={styles.shell}>
@@ -11,6 +21,15 @@ export default function MethodologyPage() {
           EEO separates factual description, analytical inference, normative questions, and legal posture. Public pages
           must show uncertainty, source basis, and correction routes.
         </p>
+      </section>
+      <section className={styles.card}>
+        <h2 className={styles.cardTitle}>Pilot selection gates</h2>
+        <p className={styles.muted}>
+          A real pilot corridor must pass governance and disclosure gates before EEO drafts public claims.
+        </p>
+        <ul className={styles.list}>
+          {PILOT_SELECTION_GATES.map((gate) => <li key={gate}>{gate}</li>)}
+        </ul>
       </section>
       <section className={styles.card}>
         <h2 className={styles.cardTitle}>Disclosure tiers</h2>
