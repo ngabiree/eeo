@@ -60,6 +60,14 @@ export interface CorridorStep {
   disclosureTier: DisclosureTier;
 }
 
+export interface CorridorReasoningDimension {
+  id: string;
+  label: string;
+  question: string;
+  evidenceClaimIds: string[];
+  disclosureTier: DisclosureTier;
+}
+
 export interface CorridorProfile {
   id: string;
   name: string;
@@ -69,6 +77,7 @@ export interface CorridorProfile {
   summary: string;
   limits: string[];
   steps: CorridorStep[];
+  reasoningDimensions: CorridorReasoningDimension[];
   claims: EvidenceClaim[];
 }
 
