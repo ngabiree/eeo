@@ -43,7 +43,8 @@ source
 - Add internal review workspace.
 
 ### Phase 3: Pilot Corridor
-- Select one commodity, geography, and chain.
+- Select one commodity, geography, and chain using `docs/eeo/PILOT_CORRIDOR_SELECTION_FRAMEWORK.md`.
+- Produce an internal selection memo before any real public claim is drafted.
 - Ingest public or consent-cleared sources.
 - Draft flagship dossier.
 - Run exposure review.
