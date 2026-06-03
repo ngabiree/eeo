@@ -247,6 +247,7 @@ export default async function ReviewPage() {
                     <li>This correction may require harm-risk restriction.</li>
                   </ul>
                   <CorrectionTriageActions
+                    key={submission.id}
                     submissionId={submission.id}
                     currentStatus={submission.triageStatus}
                     initialNote={submission.triageNote}
