@@ -23,6 +23,9 @@ const sizeClasses: Record<NonNullable<EeoLogoProps["size"]>, string> = {
   lg: "h-14 w-14 md:h-16 md:w-16",
 };
 
+const logoFrameClass =
+  "overflow-hidden rounded-xl border border-[color:var(--eeo-border)] bg-[linear-gradient(135deg,var(--eeo-green-soft)_0%,rgba(255,255,255,0.92)_54%,var(--eeo-sky)_100%)] shadow-[0_1px_0_rgba(19,66,74,0.06),0_8px_20px_rgba(19,66,74,0.08)] ring-1 ring-white/70";
+
 export default function EeoLogo({
   variant = "transparent",
   priority = false,
@@ -32,13 +35,13 @@ export default function EeoLogo({
 }: EeoLogoProps) {
   const alt = decorative ? "" : "Earth Endowment Observatory";
   return (
-    <span className={`inline-flex shrink-0 items-center justify-center ${className}`.trim()}>
+    <span className={`inline-flex ${sizeClasses[size]} shrink-0 items-center justify-center ${logoFrameClass} ${className}`.trim()}>
       <Image
         src={VARIANT_SRC[variant]}
         alt={alt}
         width={1254}
         height={1254}
-        className={`${sizeClasses[size]} object-contain`}
+        className="h-[82%] w-[82%] object-contain"
         sizes="56px"
         priority={priority}
         {...(decorative ? ({ "aria-hidden": true } as const) : {})}
