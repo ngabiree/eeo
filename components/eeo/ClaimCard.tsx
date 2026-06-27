@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { evidenceItems } from "@/data/evidence";
 import { copperCobaltPilotSourceMap } from "@/data/sourceMap";
+import { releaseManifest } from "@/data/releaseManifest";
 import { sources } from "@/data/sources";
 import { canClaimBeApprovedForRelease, requiresRightOfReply } from "@/lib/publicationRules";
 import {
@@ -21,6 +22,30 @@ import {
   PublicationDecisionBadge,
   ReviewStatusBadge,
 } from "./StatusBadges";
+
+function formatToken(value: string): string {
+  return value.replaceAll("_", " ");
+}
+
+function getReleaseManifestStatus(claimId: string): string {
+  if (releaseManifest.includedClaimIds.includes(claimId)) {
+    return "included in current release manifest";
+  }
+
+  if (releaseManifest.withheldClaimIds.includes(claimId)) {
+    return "withheld in current release manifest";
+  }
+
+  return "not listed in current release manifest";
+}
+
+function getReleaseManifestStatusClass(claimId: string): string {
+  if (releaseManifest.includedClaimIds.includes(claimId)) {
+    return "border-emerald-200 bg-emerald-50 text-emerald-950";
+  }
+
+  return "border-amber-200 bg-amber-50 text-amber-950";
+}
 
 function governanceMessage(status: ClaimCorrectionSummary["governanceStatus"]): string {
   if (status === "challenged" || status === "under_review") {
@@ -54,6 +79,7 @@ export default function ClaimCard({
   const rightOfReplyApplies = requiresRightOfReply(claim);
   const completeness = getClaimEvidenceCompleteness(claim, evidenceItems, sources, copperCobaltPilotSourceMap);
   const sourceLimitations = getSourceLimitationsForClaim(claim.id, evidenceItems, sources, copperCobaltPilotSourceMap);
+  const releaseManifestStatus = getReleaseManifestStatus(claim.id);
 
   return (
     <article className="eeo-claim-card space-y-4 p-6 backdrop-blur-sm md:p-7">
@@ -70,6 +96,9 @@ export default function ClaimCard({
         <p className="text-sm text-[color:var(--eeo-text)]">
           <strong>Corridor node:</strong> {claim.corridorNode}
         </p>
+        <p className="text-sm text-[color:var(--eeo-text)]">
+          <strong>Evidence links:</strong> {linkedEvidence.length}
+        </p>
         <p className="text-sm text-[color:var(--eeo-text)] md:col-span-2">
           <strong>Right of reply:</strong> {claim.rightOfReplyStatus.replaceAll("_", " ")}
         </p>
@@ -78,6 +107,18 @@ export default function ClaimCard({
           {rightOfReplyApplies ? "may apply for materially affected identifiable actors" : "not required for this claim form"}
         </p>
       </div>
+
+      <section
+        className={`rounded-2xl border p-4 text-sm ${getReleaseManifestStatusClass(claim.id)}`}
+      >
+        <h4 className="font-semibold">Public dossier readiness</h4>
+        <div className="mt-2 grid gap-2 md:grid-cols-2">
+          <p><strong>Release manifest status:</strong> {releaseManifestStatus}</p>
+          <p><strong>Review status:</strong> {formatToken(claim.reviewStatus)}</p>
+          <p><strong>Confidence:</strong> {formatToken(claim.confidence)}</p>
+          <p><strong>Source limitations linked:</strong> {sourceLimitations.length}</p>
+        </div>
+      </section>
 
       <div className="flex flex-wrap gap-2">
         <ConfidenceBadge value={claim.confidence} />
@@ -143,9 +184,34 @@ export default function ClaimCard({
         </div>
       </section>
 
+      <section className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+        <h4 className="font-semibold text-emerald-950">What this evidence supports</h4>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-emerald-900">
+          {linkedEvidence.length > 0 ? (
+            linkedEvidence.map(({ evidenceId, role, note, evidence }) => (
+              <li key={`${evidenceId}-support`}>
+                <strong>{formatToken(role)} evidence:</strong>{" "}
+                {note ?? evidence?.summary ?? "Evidence record is linked, but no public-safe support note is recorded."}
+              </li>
+            ))
+          ) : (
+            <li>Evidence needed before this can be treated as a public corridor claim.</li>
+          )}
+        </ul>
+        <p className="mt-3 text-xs leading-5 text-emerald-900">
+          This support summary explains the limited interpretation available from linked evidence. It does not
+          create a legal finding, certify traceability, assign responsibility, rank actors, or approve publication.
+        </p>
+      </section>
+
       <section className="space-y-3">
         <h4 className="font-semibold text-[color:var(--eeo-ink)]">Evidence links</h4>
         <div className="space-y-2">
+          {linkedEvidence.length === 0 ? (
+            <div className="rounded-2xl border border-red-200 bg-red-50 p-3 text-sm text-red-900">
+              Evidence needed before public claim.
+            </div>
+          ) : null}
           {linkedEvidence.map(({ evidenceId, role, note, evidence }) => (
             <div key={evidenceId} className="rounded-2xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.75)] p-3">
               <div className="mb-2 flex flex-wrap gap-2">
@@ -190,6 +256,7 @@ export default function ClaimCard({
       </section>
 
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[color:var(--eeo-border)] pt-3">
+        <span className="text-xs text-[color:var(--eeo-muted)]">Release manifest: {releaseManifestStatus}</span>
         <span className="text-xs text-[color:var(--eeo-muted)]">Last updated: {claim.lastUpdated}</span>
         <Link
           href="/pilot/corrections"
