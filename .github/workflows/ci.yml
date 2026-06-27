@@ -39,6 +39,9 @@ jobs:
       - name: Pilot hub route alignment
         run: pnpm run check:pilot-hub-routes
 
+      - name: Corridor section route alignment
+        run: pnpm run check:corridor-section-routes
+
       - name: Temporal profile dormancy
         run: pnpm run check:temporal-dormancy
 
