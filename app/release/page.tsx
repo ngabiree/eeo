@@ -10,7 +10,9 @@ export default function ReleasePage() {
           <p className="font-mono text-xs uppercase tracking-[0.18em] text-stone-500">
             Release readiness
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight">Release manifest and publication gate</h1>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight">
+            Release manifest and publication gate
+          </h1>
           <p className="mt-3 max-w-3xl leading-7 text-stone-700">
             This page shows whether the corridor record is structurally ready for public release. It connects the
             release manifest to evidence-operating checks, right-of-reply posture, correction status, source limitations,
@@ -21,18 +23,26 @@ export default function ReleasePage() {
             origin, approve legal sufficiency, or make legal findings.
           </p>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
-            <Link href="/review" className="rounded-full border border-stone-300 bg-white px-4 py-2 font-medium text-stone-800 hover:bg-stone-50">
+            <Link
+              href="/review"
+              className="rounded-full border border-stone-300 bg-white px-4 py-2 font-medium text-stone-800 hover:bg-stone-50"
+            >
               Open review workspace
             </Link>
-            <Link href="/pilot/evidence-dossier" className="rounded-full border border-stone-300 bg-white px-4 py-2 font-medium text-stone-800 hover:bg-stone-50">
+            <Link
+              href="/pilot/evidence-dossier"
+              className="rounded-full border border-stone-300 bg-white px-4 py-2 font-medium text-stone-800 hover:bg-stone-50"
+            >
               Open evidence dossier
             </Link>
-            <Link href="/pilot/corrections" className="rounded-full border border-stone-300 bg-white px-4 py-2 font-medium text-stone-800 hover:bg-stone-50">
+            <Link
+              href="/pilot/corrections"
+              className="rounded-full border border-stone-300 bg-white px-4 py-2 font-medium text-stone-800 hover:bg-stone-50"
+            >
               Open corrections route
             </Link>
           </div>
         </header>
-
         <ReleaseManifestPanel />
       </div>
     </main>
