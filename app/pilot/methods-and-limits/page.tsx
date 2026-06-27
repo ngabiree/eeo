@@ -7,7 +7,7 @@ export default function PilotMethodsLimitsPage() {
         <PilotRouteNav />
         <h1 className="text-3xl font-semibold tracking-tight">Methods and limits</h1>
         <p className="text-sm font-medium uppercase tracking-[0.12em] text-[color:var(--eeo-muted)]">
-          Public Evidence Prototype: Copper-Cobalt Corridor
+          Public Evidence Methods: Copper-Cobalt Corridor
         </p>
         <p className="leading-7 text-stone-700">
           This page frames how the pilot may reason, not what it has already established. For the full definition of

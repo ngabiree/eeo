@@ -16,7 +16,7 @@ export default function ObservatoryPage() {
       <p>
         Explore the{" "}
         <Link href="/pilot/corridor" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
-          First Corridor
+          Copper-Cobalt Corridor
         </Link>{" "}
         demonstration profile, or review{" "}
         <Link href="/pilot/evidence-ledger" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
