@@ -5,12 +5,15 @@ import CorrectionTriageActions from "@/components/eeo/CorrectionTriageActions";
 import ReleaseReadinessPreview from "@/components/eeo/ReleaseReadinessPreview";
 import ReviewGovernanceSignoff from "@/components/eeo/ReviewGovernanceSignoff";
 import { claims } from "@/data/claims";
+import { evidenceItems } from "@/data/evidence";
+import { sources } from "@/data/sources";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 import {
   hasRecentReleaseGovernanceSignoff,
   listReleaseGovernanceLogEntries,
 } from "@/lib/releaseGovernanceLogStore";
+import { assessEvidenceOperatingSystem } from "@/lib/evidenceOperatingSystem";
 import { isReviewAuthorizedFromCookies } from "@/lib/reviewAuth";
 
 export const dynamic = "force-dynamic";
@@ -69,6 +72,9 @@ export default async function ReviewPage() {
   const submissions = listCorrectionSubmissions();
   const governanceLog = listReleaseGovernanceLogEntries();
   const hasRecentSignoff = hasRecentReleaseGovernanceSignoff(RELEASE_SIGNOFF_MAX_AGE_HOURS);
+  const evidenceOperatingAssessment = assessEvidenceOperatingSystem({ claims, evidenceItems, sources });
+  const hasEvidenceOperatingBlockers = evidenceOperatingAssessment.blockers.length > 0;
+  const hasEvidenceOperatingWarnings = evidenceOperatingAssessment.warnings.length > 0;
   const claimById = new Map(claims.map((claim) => [claim.id, claim]));
   const openCorrectionCount = submissions.filter((s) => s.triageStatus !== "resolved").length;
   const claimGovernanceSummaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, submissions));
@@ -144,6 +150,65 @@ export default async function ReviewPage() {
             This checklist supports publication discipline and does not adjudicate legal liability.
           </p>
         </section>
+        <section
+          className={
+            hasEvidenceOperatingBlockers
+              ? "rounded-3xl border border-red-200 bg-red-50 p-4 text-sm text-red-950"
+              : hasEvidenceOperatingWarnings
+                ? "rounded-3xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"
+                : "rounded-3xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-950"
+          }
+        >
+          <p className="font-semibold">
+            Evidence operating system check:{" "}
+            {hasEvidenceOperatingBlockers ? "Blocked" : hasEvidenceOperatingWarnings ? "Review warnings" : "Pass"}
+          </p>
+          <p className="mt-1 text-xs leading-5">
+            Checks whether claims, evidence records, and sources carry the metadata needed for disciplined publication.
+          </p>
+          <div className="mt-3 grid gap-2 text-xs sm:grid-cols-3">
+            <p>
+              <strong>Blockers:</strong> {evidenceOperatingAssessment.blockers.length}
+            </p>
+            <p>
+              <strong>Warnings:</strong> {evidenceOperatingAssessment.warnings.length}
+            </p>
+            <p>
+              <strong>Passed:</strong> {evidenceOperatingAssessment.passed.length}
+            </p>
+          </div>
+          <p className="mt-3 rounded-2xl border border-white/60 bg-white/65 p-3 text-xs leading-5">
+            {evidenceOperatingAssessment.publicSafeSummary}
+          </p>
+          {evidenceOperatingAssessment.blockers.length > 0 ? (
+            <div className="mt-3 rounded-2xl border border-red-200 bg-white/75 p-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-red-800">Blockers to resolve</p>
+              <ul className="mt-2 space-y-2 text-xs">
+                {evidenceOperatingAssessment.blockers.slice(0, 6).map((finding) => (
+                  <li key={`${finding.recordType}-${finding.recordId}-${finding.issue}`}>
+                    <strong>{finding.recordId}</strong> — {finding.issue} Remedy: {finding.remedy}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          {evidenceOperatingAssessment.warnings.length > 0 ? (
+            <div className="mt-3 rounded-2xl border border-amber-200 bg-white/75 p-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-amber-800">Warnings to review</p>
+              <ul className="mt-2 space-y-2 text-xs">
+                {evidenceOperatingAssessment.warnings.slice(0, 6).map((finding) => (
+                  <li key={`${finding.recordType}-${finding.recordId}-${finding.issue}`}>
+                    <strong>{finding.recordId}</strong> — {finding.issue} Remedy: {finding.remedy}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          <p className="mt-3 text-xs leading-5">
+            This is an internal release-discipline check. It does not certify truth, assign liability, rank actors, or make legal findings.
+          </p>
+        </section>
+
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-stone-950">Release governance review log</h2>
           <p className="mt-1 text-xs text-stone-600">
