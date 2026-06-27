@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import CorrectionTriageActions from "@/components/eeo/CorrectionTriageActions";
+import DossierReadinessPanel from "@/components/eeo/DossierReadinessPanel";
 import ReleaseReadinessPreview from "@/components/eeo/ReleaseReadinessPreview";
 import ReviewGovernanceSignoff from "@/components/eeo/ReviewGovernanceSignoff";
 import { claims } from "@/data/claims";
@@ -150,6 +151,8 @@ export default async function ReviewPage() {
             This checklist supports publication discipline and does not adjudicate legal liability.
           </p>
         </section>
+        <DossierReadinessPanel />
+
         <section
           className={
             hasEvidenceOperatingBlockers
