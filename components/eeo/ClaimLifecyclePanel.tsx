@@ -223,7 +223,7 @@ export default function ClaimLifecyclePanel() {
           Demonstration-data claim lifecycle (one reviewed public claim)
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
-          Pilot preview: demonstration data shows how identifiers chain from stewarded sources through evidence and
+          Evidence lifecycle preview: demonstration data shows how identifiers chain from stewarded sources through evidence and
           review-shaped fields to the public dossier and correction route. This is not a public data release, legal
           finding surface, or global atlas.
         </p>

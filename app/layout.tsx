@@ -12,11 +12,11 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Public Evidence Prototype: Copper-Cobalt Corridor",
-    template: "%s · Copper-Cobalt Pilot",
+    default: "Earth Endowment Observatory: Copper-Cobalt Corridor",
+    template: "%s · Earth Endowment Observatory",
   },
   description:
-    "Earth Endowment Observatory — public-interest evidence infrastructure for copper–cobalt corridor endowment-to-economy chains (prototype). Not a dashboard, atlas, score, or registry.",
+    "Earth Endowment Observatory — public-interest evidence infrastructure for making endowment-to-economy systems visible with source-linked claims, uncertainty, safeguards, and correction pathways. Not a court, registry, score, certification system, or traceability product.",
   icons: {
     icon: [{ url: "/brand/eeo-logo-transparent.png", type: "image/png", sizes: "any" }],
   },

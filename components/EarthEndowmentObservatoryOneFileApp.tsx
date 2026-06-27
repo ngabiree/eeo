@@ -303,7 +303,7 @@ const claims: Claim[] = [
 
 const modules: EcosystemModule[] = [
   {
-    title: "Source Registry",
+    title: "Evidence Dossier",
     status: "Build first",
     icon: Archive,
     body: "Record source identity, publisher, license, use basis, update cadence, limitations, and sensitivity before any claim is drafted.",
@@ -963,7 +963,7 @@ function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
                 onClick={() => document.getElementById("corridor-dashboard")?.scrollIntoView({ behavior: "smooth" })}
                 className="rounded-full bg-[color:var(--eeo-primary)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-green)] focus-visible:ring-offset-2"
               >
-                Explore First Corridor
+                Explore Copper-Cobalt Corridor
               </button>
               <button
                 type="button"
@@ -974,7 +974,7 @@ function Home({ onSelectSection }: { onSelectSection: (id: TabId) => void }) {
               </button>
             </div>
             <div className="rounded-2xl border border-[color:var(--eeo-border)] bg-white/65 px-4 py-3 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
-              Pilot preview · Demonstration data may be used for interface review. Not a public data release.
+              Public evidence preview · Some records may be synthetic or demonstration-only. No public data release is implied unless a signed release manifest is present.
             </div>
           </div>
 
