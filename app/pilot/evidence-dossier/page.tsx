@@ -152,7 +152,6 @@ export default function PilotEvidenceDossierPage() {
               key={claim.id}
               claim={claim}
               correctionSummary={getClaimCorrectionSummary(claim.id, corrections)}
-              releaseStatus="released"
             />
           ))}
         </section>
@@ -169,7 +168,6 @@ export default function PilotEvidenceDossierPage() {
               key={claim.id}
               claim={claim}
               correctionSummary={getClaimCorrectionSummary(claim.id, corrections)}
-              releaseStatus="contextual_under_review"
             />
           ))}
         </section>
