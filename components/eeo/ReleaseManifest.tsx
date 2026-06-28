@@ -28,6 +28,11 @@ function statusClass(status: "pass" | "warning" | "blocked"): string {
 export default function ReleaseManifestPanel() {
   const corrections = listCorrectionSubmissions();
   const summaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
+  const includedClaimIds = new Set(releaseManifest.includedClaimIds);
+  const withheldClaimIds = new Set(releaseManifest.withheldClaimIds);
+  const contextualOrUnderReviewClaimIds = claims
+    .filter((claim) => !includedClaimIds.has(claim.id) && !withheldClaimIds.has(claim.id))
+    .map((claim) => claim.id);
 
   const challengedClaimIds = summaries
     .filter((summary) => summary.governanceStatus === "challenged" || summary.governanceStatus === "under_review")
@@ -98,8 +103,9 @@ export default function ReleaseManifestPanel() {
         <h2 className="text-2xl font-semibold text-stone-950">Release manifest</h2>
         <p className="max-w-3xl text-sm leading-6 text-stone-700">
           This surface records release posture, known limits, evidence-operating checks, structural readiness,
-          correction posture, and right-of-reply posture. It does not sign a release, approve publication,
-          assign liability, certify traceability, or make legal findings.
+          correction posture, and right-of-reply posture. It distinguishes released claims from visible contextual
+          or under-review claim cards. It does not sign a release, approve publication, assign liability, certify
+          traceability, or make legal findings.
         </p>
       </div>
 
@@ -119,13 +125,21 @@ export default function ReleaseManifestPanel() {
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         <article className="rounded-2xl border border-stone-200 bg-white/75 p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">Claims</p>
           <p className="mt-2 text-2xl font-semibold text-stone-950">{releaseReadinessAssessment.totalClaims}</p>
           <p className="mt-1 text-xs text-stone-600">
             {releaseReadinessAssessment.approvableClaims} approvable by local helper;{" "}
             {releaseReadinessAssessment.nonApprovableClaims} require review.
+          </p>
+        </article>
+
+        <article className="rounded-2xl border border-stone-200 bg-white/75 p-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">Released in manifest</p>
+          <p className="mt-2 text-2xl font-semibold text-stone-950">{releaseManifest.includedClaimIds.length}</p>
+          <p className="mt-1 text-xs text-stone-600">
+            {contextualOrUnderReviewClaimIds.length} visible as contextual or under review.
           </p>
         </article>
 
@@ -199,7 +213,8 @@ export default function ReleaseManifestPanel() {
       <div className="grid gap-2 text-sm text-stone-700 md:grid-cols-2">
         <p><strong>Corridor:</strong> {releaseManifest.corridor}</p>
         <p><strong>Methodology version:</strong> {releaseManifest.methodologyVersion}</p>
-        <p><strong>Claims included:</strong> {releaseManifest.includedClaimIds.join(", ") || "None"}</p>
+        <p><strong>Claims included as released:</strong> {releaseManifest.includedClaimIds.join(", ") || "None"}</p>
+        <p><strong>Claims contextual / under review:</strong> {contextualOrUnderReviewClaimIds.join(", ") || "None"}</p>
         <p><strong>Claims withheld:</strong> {releaseManifest.withheldClaimIds.join(", ") || "None"}</p>
         <p><strong>Claims challenged:</strong> {challengedClaimIds.join(", ") || "None"}</p>
         <p><strong>Claims corrected:</strong> {correctedClaimIds.join(", ") || "None"}</p>
