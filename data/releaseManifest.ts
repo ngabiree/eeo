@@ -13,6 +13,7 @@ export const releaseManifest: ReleaseManifest = {
   methodologyVersion: "0.2",
   approvedBy: ["Method review", "Exposure review"],
   publicLimitations: [
+    "Only claims listed in includedClaimIds are released claims for this manifest version; other visible claim cards are contextual or under review.",
     "This release does not assert chain-of-custody verification without underlying evidence.",
     "This release does not make legal findings outside cited authorities.",
     "This release does not identify specific products as containing cobalt from specific mines without substantiation.",
