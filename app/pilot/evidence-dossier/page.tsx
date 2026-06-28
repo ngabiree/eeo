@@ -7,12 +7,19 @@ import PilotRouteNav from "@/components/eeo/PilotRouteNav";
 import ReleaseManifestPanel from "@/components/eeo/ReleaseManifest";
 import { claims } from "@/data/claims";
 import { copperCobaltCorridorPilotSkeleton } from "@/data/corridorDossier";
+import { releaseManifest } from "@/data/releaseManifest";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function PilotEvidenceDossierPage() {
   const dossier = copperCobaltCorridorPilotSkeleton;
   const corrections = listCorrectionSubmissions();
+  const releasedClaimIds = new Set(releaseManifest.includedClaimIds);
+  const withheldClaimIds = new Set(releaseManifest.withheldClaimIds);
+  const releasedClaims = claims.filter((claim) => releasedClaimIds.has(claim.id));
+  const contextualClaims = claims.filter(
+    (claim) => !releasedClaimIds.has(claim.id) && !withheldClaimIds.has(claim.id)
+  );
   const governanceSummaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
   const challengedOrUnderReview = governanceSummaries.filter(
     (summary) => summary.governanceStatus === "challenged" || summary.governanceStatus === "under_review"
@@ -32,6 +39,30 @@ export default function PilotEvidenceDossierPage() {
             legal distinctions.
           </p>
         </header>
+
+        <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-stone-500">Release claim status</p>
+          <h2 className="mt-2 text-xl font-semibold text-stone-950">What is released in this manifest</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-stone-700">
+            Only claims listed in the release manifest as included claims are treated as released claims for this dossier version.
+            Other visible claim cards are contextual or under review: they help show evidence boundaries, source limits, and review posture,
+            but they are not presented as released findings or legal determinations.
+          </p>
+          <div className="mt-4 grid gap-3 text-sm text-stone-700 md:grid-cols-3">
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-950">
+              <p className="font-semibold">Released claims</p>
+              <p className="mt-1 text-xs leading-5">{releasedClaims.map((claim) => claim.id).join(", ") || "None"}</p>
+            </div>
+            <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-950">
+              <p className="font-semibold">Contextual / under review</p>
+              <p className="mt-1 text-xs leading-5">{contextualClaims.map((claim) => claim.id).join(", ") || "None"}</p>
+            </div>
+            <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4 text-stone-700">
+              <p className="font-semibold">Withheld claims</p>
+              <p className="mt-1 text-xs leading-5">{releaseManifest.withheldClaimIds.join(", ") || "None"}</p>
+            </div>
+          </div>
+        </section>
 
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-xl font-semibold">Claim governance states in this release</h2>
@@ -109,12 +140,36 @@ export default function PilotEvidenceDossierPage() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold">Claim cards</h2>
-          {claims.map((claim) => (
+          <div>
+            <h2 className="text-2xl font-semibold">Released claim cards</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-700">
+              These claims are included in the current release manifest. They remain qualified by their source limits,
+              non-proof language, correction route, and release posture.
+            </p>
+          </div>
+          {releasedClaims.map((claim) => (
             <ClaimCard
               key={claim.id}
               claim={claim}
               correctionSummary={getClaimCorrectionSummary(claim.id, corrections)}
+              releaseStatus="released"
+            />
+          ))}
+        </section>
+
+        <section className="space-y-4">
+          <div>
+            <h2 className="text-2xl font-semibold">Contextual and under-review claim cards</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-700">
+              These cards remain visible to document evidence boundaries and review posture, but they are not included as released claims in this manifest.
+            </p>
+          </div>
+          {contextualClaims.map((claim) => (
+            <ClaimCard
+              key={claim.id}
+              claim={claim}
+              correctionSummary={getClaimCorrectionSummary(claim.id, corrections)}
+              releaseStatus="contextual_under_review"
             />
           ))}
         </section>
