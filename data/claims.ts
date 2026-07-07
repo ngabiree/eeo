@@ -1,5 +1,8 @@
 import type { Claim } from "@/types/eeo";
 
+const CLAIM_LAST_REVIEWED = "2026-05-01";
+const CLAIM_STALE_AFTER = "2026-11-01";
+
 // ── Processing / trade ────────────────────────────────────────────────────────
 
 export const sampleClaim: Claim = {
@@ -43,6 +46,8 @@ export const sampleClaim: Claim = {
     "Updated official trade or production data.",
   ],
   lastUpdated: "2026-04-27",
+  lastReviewed: CLAIM_LAST_REVIEWED,
+  staleAfter: CLAIM_STALE_AFTER,
 };
 
 // ── Endowment ─────────────────────────────────────────────────────────────────
@@ -81,6 +86,8 @@ const endowmentClaim: Claim = {
     "Significant reserve discoveries in other jurisdictions altering relative concentration.",
   ],
   lastUpdated: "2026-05-01",
+  lastReviewed: CLAIM_LAST_REVIEWED,
+  staleAfter: CLAIM_STALE_AFTER,
 };
 
 // ── Jurisdiction / governance ─────────────────────────────────────────────────
@@ -119,6 +126,8 @@ const jurisdictionClaim: Claim = {
     "Updated EITI or official sources clarifying governance structure.",
   ],
   lastUpdated: "2026-05-01",
+  lastReviewed: CLAIM_LAST_REVIEWED,
+  staleAfter: CLAIM_STALE_AFTER,
 };
 
 // ── Extraction / production ───────────────────────────────────────────────────
@@ -162,6 +171,8 @@ const extractionClaim: Claim = {
     "Updated USGS or equivalent estimates with improved ASM coverage.",
   ],
   lastUpdated: "2026-05-01",
+  lastReviewed: CLAIM_LAST_REVIEWED,
+  staleAfter: CLAIM_STALE_AFTER,
 };
 
 // ── Labor risk ────────────────────────────────────────────────────────────────
@@ -212,6 +223,8 @@ const laborClaim: Claim = {
     "Company or government right-of-reply providing evidence contradicting documented findings.",
   ],
   lastUpdated: "2026-05-01",
+  lastReviewed: CLAIM_LAST_REVIEWED,
+  staleAfter: CLAIM_STALE_AFTER,
 };
 
 // ── Public revenue ────────────────────────────────────────────────────────────
@@ -250,6 +263,8 @@ const publicRevenueClaim: Claim = {
     "Independent audit findings materially changing the revenue transparency picture.",
   ],
   lastUpdated: "2026-05-01",
+  lastReviewed: CLAIM_LAST_REVIEWED,
+  staleAfter: CLAIM_STALE_AFTER,
 };
 
 // ── Evidence gap ──────────────────────────────────────────────────────────────
@@ -287,6 +302,8 @@ const evidenceGapClaim: Claim = {
     "Updated Open Ownership or equivalent research showing materially improved disclosure coverage.",
   ],
   lastUpdated: "2026-05-01",
+  lastReviewed: CLAIM_LAST_REVIEWED,
+  staleAfter: CLAIM_STALE_AFTER,
 };
 
 export const claims: Claim[] = [

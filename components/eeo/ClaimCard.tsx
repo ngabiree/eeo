@@ -47,6 +47,16 @@ function getReleaseManifestStatusClass(claimId: string): string {
   return "border-amber-200 bg-amber-50 text-amber-950";
 }
 
+function getEvidenceRoleSummary(claim: Claim): string {
+  const roles = [...new Set(claim.evidenceLinks.map((link) => link.role))];
+
+  if (roles.length === 0) {
+    return "no evidence role recorded";
+  }
+
+  return roles.map(formatToken).join(", ");
+}
+
 function governanceMessage(status: ClaimCorrectionSummary["governanceStatus"]): string {
   if (status === "challenged" || status === "under_review") {
     return "This claim has an active correction or review item.";
@@ -80,6 +90,7 @@ export default function ClaimCard({
   const completeness = getClaimEvidenceCompleteness(claim, evidenceItems, sources, copperCobaltPilotSourceMap);
   const sourceLimitations = getSourceLimitationsForClaim(claim.id, evidenceItems, sources, copperCobaltPilotSourceMap);
   const releaseManifestStatus = getReleaseManifestStatus(claim.id);
+  const evidenceRoleSummary = getEvidenceRoleSummary(claim);
 
   return (
     <article className="eeo-claim-card space-y-4 p-6 backdrop-blur-sm md:p-7">
@@ -99,6 +110,9 @@ export default function ClaimCard({
         <p className="text-sm text-[color:var(--eeo-text)]">
           <strong>Evidence links:</strong> {linkedEvidence.length}
         </p>
+        <p className="text-sm text-[color:var(--eeo-text)]">
+          <strong>Evidence roles:</strong> {evidenceRoleSummary}
+        </p>
         <p className="text-sm text-[color:var(--eeo-text)] md:col-span-2">
           <strong>Right of reply:</strong> {claim.rightOfReplyStatus.replaceAll("_", " ")}
         </p>
@@ -117,6 +131,8 @@ export default function ClaimCard({
           <p><strong>Review status:</strong> {formatToken(claim.reviewStatus)}</p>
           <p><strong>Confidence:</strong> {formatToken(claim.confidence)}</p>
           <p><strong>Source limitations linked:</strong> {sourceLimitations.length}</p>
+          <p><strong>Last reviewed:</strong> {claim.lastReviewed}</p>
+          <p><strong>Stale after:</strong> {claim.staleAfter}</p>
         </div>
       </section>
 
@@ -258,6 +274,7 @@ export default function ClaimCard({
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[color:var(--eeo-border)] pt-3">
         <span className="text-xs text-[color:var(--eeo-muted)]">Release manifest: {releaseManifestStatus}</span>
         <span className="text-xs text-[color:var(--eeo-muted)]">Last updated: {claim.lastUpdated}</span>
+        <span className="text-xs text-[color:var(--eeo-muted)]">Review window: {claim.lastReviewed} to {claim.staleAfter}</span>
         <Link
           href="/pilot/corrections"
           className="rounded-full bg-[color:var(--eeo-primary)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2"
