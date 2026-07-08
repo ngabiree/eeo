@@ -4,6 +4,7 @@ import { evidenceItems } from "@/data/evidence";
 import { copperCobaltPilotSourceMap } from "@/data/sourceMap";
 import { releaseManifest } from "@/data/releaseManifest";
 import { sources } from "@/data/sources";
+import { assessClaimFreshness } from "@/lib/claimFreshness";
 import { canClaimBeApprovedForRelease, requiresRightOfReply } from "@/lib/publicationRules";
 import {
   getClaimEvidenceCompleteness,
@@ -91,6 +92,7 @@ export default function ClaimCard({
   const sourceLimitations = getSourceLimitationsForClaim(claim.id, evidenceItems, sources, copperCobaltPilotSourceMap);
   const releaseManifestStatus = getReleaseManifestStatus(claim.id);
   const evidenceRoleSummary = getEvidenceRoleSummary(claim);
+  const freshness = assessClaimFreshness(claim);
 
   return (
     <article className="eeo-claim-card space-y-4 p-6 backdrop-blur-sm md:p-7">
@@ -133,8 +135,16 @@ export default function ClaimCard({
           <p><strong>Source limitations linked:</strong> {sourceLimitations.length}</p>
           <p><strong>Last reviewed:</strong> {claim.lastReviewed}</p>
           <p><strong>Stale after:</strong> {claim.staleAfter}</p>
+          <p><strong>Freshness:</strong> {formatToken(freshness.status)}</p>
         </div>
       </section>
+
+      {freshness.status !== "current" ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          <p className="font-semibold">Claim freshness review needed.</p>
+          <p className="mt-1">{freshness.message}</p>
+        </div>
+      ) : null}
 
       <div className="flex flex-wrap gap-2">
         <ConfidenceBadge value={claim.confidence} />
