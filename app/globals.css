@@ -276,3 +276,10 @@ body.eeo-brand-body {
     box-shadow: none;
   }
 }
+
+/* Corridor system view: favor legibility over compressed heading tracking. */
+.csv-title-row h1,
+.csv-card h2,
+.csv-info-panel h2 {
+  letter-spacing: 0 !important;
+}
