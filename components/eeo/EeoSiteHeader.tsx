@@ -52,7 +52,7 @@ export default function EeoSiteHeader() {
                 </span>
                 <span className="block text-xs font-medium text-[color:var(--eeo-muted)] sm:text-sm">From Earth to economy, made visible.</span>
                 <span className="hidden text-xs leading-relaxed text-[color:var(--eeo-muted)] lg:block">
-                  A public observatory for natural wealth, stewardship, and accountability.
+                  A public observatory for endowments, stewardship, evidence, and accountability.
                 </span>
               </span>
             </Link>
@@ -87,14 +87,14 @@ export default function EeoSiteHeader() {
             </nav>
             <div className="flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end md:w-auto md:justify-end">
               <span className="inline-flex min-h-10 items-center justify-center rounded-full border border-[color:var(--eeo-border)] bg-[color:var(--eeo-green-soft)] px-3 text-center text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--eeo-green-dark)]">
-                Pilot Preview
+                Public Evidence Preview
               </span>
               <Link
                 href="/pilot/corridor"
                 onClick={() => setMenuOpen(false)}
                 className="inline-flex min-h-11 items-center justify-center rounded-full bg-[color:var(--eeo-primary)] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2 active:scale-[0.99]"
               >
-                Explore First Corridor
+                Explore Corridor
               </Link>
             </div>
           </div>

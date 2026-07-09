@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { patchCorrectionTriage } from "@/app/review/actions";
 import type { CorrectionGovernanceOutcome, CorrectionTriageStatus } from "@/lib/correctionsSchema";
@@ -39,18 +39,6 @@ export default function CorrectionTriageActions({
   );
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    setStatus(currentStatus);
-  }, [currentStatus]);
-
-  useEffect(() => {
-    setNote(initialNote ?? "");
-  }, [initialNote]);
-
-  useEffect(() => {
-    setGovernanceOutcome(initialGovernanceOutcome ?? "");
-  }, [initialGovernanceOutcome]);
 
   async function apply(next: CorrectionTriageStatus) {
     if (next === status) return;

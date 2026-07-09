@@ -16,19 +16,19 @@ const footerColumns = [
   {
     title: "Evidence",
     links: [
-      { label: "Evidence Ledger", href: "/evidence-ledger" },
-      { label: "Source Registry", href: "/source-registry" },
+      { label: "Evidence Ledger", href: "/pilot/evidence-ledger" },
+      { label: "Evidence Dossier", href: "/pilot/evidence-dossier" },
       { label: "Methods", href: "/pilot/methods-and-limits" },
       { label: "Corrections", href: "/pilot/corrections" },
     ],
   },
   {
-    title: "First Corridor",
+    title: "Corridor",
     links: [
-      { label: "Critical Minerals Corridor", href: "/pilot" },
-      { label: "Corridor Map", href: "/pilot/map" },
+      { label: "Copper-Cobalt Corridor", href: "/pilot/corridor" },
+      { label: "Governance Profile", href: "/pilot/governance-profile" },
       { label: "Value Chain", href: "/pilot/value-chain" },
-      { label: "Public Revenue", href: "/pilot/public-revenue" },
+      { label: "Labor, Ecology & Revenue", href: "/pilot/labor-ecology-revenue" },
     ],
   },
   {
@@ -79,7 +79,7 @@ export default function EeoSiteFooter() {
               </div>
             </div>
 
-            <p className="mt-6 max-w-md text-sm leading-7 text-[#4F6F75]">A public observatory for natural wealth, stewardship, and accountability.</p>
+            <p className="mt-6 max-w-md text-sm leading-7 text-[#4F6F75]">A public observatory for natural endowments, stewardship, evidence, and accountability.</p>
 
             <p className="mt-5 max-w-md rounded-2xl border border-[#CFE3DA] bg-white/55 p-4 text-xs leading-6 text-[#4F6F75] backdrop-blur">
               EEO content is informational and does not constitute legal, financial, investment, certification, or traceability advice.

@@ -19,9 +19,9 @@ The Observatory helps societies interpret how Earth’s endowments enter economi
 ## Anchored analytic chain
 
 ```text
-Endowment → Governance → Concession / Permit → Operator → Ownership / Control
+Endowment → Governance → Concession / Permit → Operator → Ownership / Control evidence
 → Extraction / Production → Processing / Trade → Labor Risk → Ecological Signal
-→ Public Revenue → Public Benefit → Evidence Gap
+→ Public Revenue evidence → Public Benefit question → Evidence Gap
 ```
 
 ## Strategic posture: dossier-first

@@ -25,7 +25,7 @@ export default function DossierPage() {
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-10 md:px-6">
         <header className="rounded-3xl border border-stone-200 bg-white/90 p-6 shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[color:var(--eeo-muted)]">
-            Public Evidence Prototype: Copper-Cobalt Corridor
+            Public Evidence Dossier: Copper-Cobalt Corridor
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[color:var(--eeo-ink)]">{dossier.title}</h1>
           <p className="mt-3 leading-7 text-[color:var(--eeo-text)]">{dossier.scopeStatement}</p>

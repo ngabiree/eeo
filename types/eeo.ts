@@ -174,6 +174,8 @@ export interface Claim {
   whatThisDoesNotProve: string[];
   whatWouldReviseThisClaim: string[];
   lastUpdated: string;
+  lastReviewed: string;
+  staleAfter: string;
   governanceStatus?: ClaimGovernanceStatus;
   linkedCorrectionIds?: string[];
   lastGovernanceReviewAt?: string;

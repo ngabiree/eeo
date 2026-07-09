@@ -41,6 +41,8 @@ const baseClaim: Claim = {
   whatThisDoesNotProve: ["It does not make a real-world factual assertion."],
   whatWouldReviseThisClaim: ["A changed test fixture."],
   lastUpdated: "2026-05-25",
+  lastReviewed: "2026-01-01",
+  staleAfter: "2026-07-01",
   governanceNote: "Internal governance note should not be returned.",
 };
 

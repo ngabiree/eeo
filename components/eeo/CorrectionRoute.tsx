@@ -33,6 +33,9 @@ export default function CorrectionRoute() {
       <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 text-center shadow-sm">
         <h2 className="text-2xl font-semibold text-stone-950">Correction route</h2>
         <p className="mt-3 text-stone-700">Your request has been logged for triage and review.</p>
+        <p className="mt-2 text-sm leading-relaxed text-stone-600">
+          We aim to review submissions promptly. Safety or exposure concerns may be prioritized.
+        </p>
         {receiptId ? (
           <p className="mt-2 font-mono text-xs uppercase tracking-[0.14em] text-stone-500">receipt: {receiptId}</p>
         ) : null}

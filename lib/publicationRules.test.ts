@@ -24,6 +24,8 @@ const baseClaim: Claim = {
   whatThisDoesNotProve: ["It does not establish legal responsibility."],
   whatWouldReviseThisClaim: ["Updated authoritative public records."],
   lastUpdated: "2026-05-25",
+  lastReviewed: "2026-01-01",
+  staleAfter: "2026-07-01",
 };
 
 function claimWith(overrides: Partial<Claim>): Claim {

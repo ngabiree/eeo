@@ -7,7 +7,7 @@ export default function PilotSafeguardsPage() {
         <PilotRouteNav />
         <h1 className="text-3xl font-semibold tracking-tight text-[color:var(--eeo-ink)]">Safeguards</h1>
         <p className="text-sm font-medium uppercase tracking-[0.12em] text-[color:var(--eeo-muted)]">
-          Public Evidence Prototype: Copper-Cobalt Corridor
+          Disclosure Safeguards: Copper-Cobalt Corridor
         </p>
         <p className="leading-7 text-[color:var(--eeo-text)]">
           EEO maintains <strong>universal analytical concern</strong>, not universal exposure. Broad public-interest
