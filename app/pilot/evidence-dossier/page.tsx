@@ -7,12 +7,15 @@ import PilotRouteNav from "@/components/eeo/PilotRouteNav";
 import ReleaseManifestPanel from "@/components/eeo/ReleaseManifest";
 import { claims } from "@/data/claims";
 import { copperCobaltCorridorPilotSkeleton } from "@/data/corridorDossier";
+import { releaseManifest } from "@/data/releaseManifest";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function PilotEvidenceDossierPage() {
   const dossier = copperCobaltCorridorPilotSkeleton;
   const corrections = listCorrectionSubmissions();
+  const releasedClaims = claims.filter((claim) => releaseManifest.includedClaimIds.includes(claim.id));
+  const nonManifestClaims = claims.filter((claim) => !releaseManifest.includedClaimIds.includes(claim.id));
   const governanceSummaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
   const challengedOrUnderReview = governanceSummaries.filter(
     (summary) => summary.governanceStatus === "challenged" || summary.governanceStatus === "under_review"
@@ -109,8 +112,15 @@ export default function PilotEvidenceDossierPage() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold">Claim cards</h2>
-          {claims.map((claim) => (
+          <div>
+            <h2 className="text-2xl font-semibold">Released claim cards</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-700">
+              Full public claim cards are shown only for claims included in the current release manifest.
+              Other corridor claims remain visible as review-scope records below until release review,
+              exposure review, and right-of-reply discipline are satisfied where applicable.
+            </p>
+          </div>
+          {releasedClaims.map((claim) => (
             <ClaimCard
               key={claim.id}
               claim={claim}
@@ -118,6 +128,37 @@ export default function PilotEvidenceDossierPage() {
             />
           ))}
         </section>
+
+        {nonManifestClaims.length > 0 ? (
+          <section className="rounded-3xl border border-amber-200 bg-amber-50 p-6 shadow-sm">
+            <h2 className="text-xl font-semibold text-amber-950">Claims not in the current release manifest</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-amber-900">
+              These claim records help track dossier development, but they are not part of the current public
+              release. They should not be treated as released findings or quoted without completing the release
+              checklist.
+            </p>
+            <div className="mt-4 grid gap-3">
+              {nonManifestClaims.map((claim) => (
+                <article key={claim.id} className="rounded-2xl border border-amber-200 bg-white/70 p-4 text-sm text-amber-950">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="font-mono text-xs uppercase tracking-[0.14em] text-amber-800">{claim.id}</p>
+                      <h3 className="mt-1 font-semibold">{claim.title}</h3>
+                    </div>
+                    <p className="rounded-full border border-amber-200 bg-amber-100 px-3 py-1 text-xs">
+                      {claim.reviewStatus.replaceAll("_", " ")}
+                    </p>
+                  </div>
+                  <p className="mt-2 text-xs leading-5">
+                    Release posture: not included in {releaseManifest.id}. Publication decision:{" "}
+                    {claim.publicationDecision.replaceAll("_", " ")}. Right of reply:{" "}
+                    {claim.rightOfReplyStatus.replaceAll("_", " ")}.
+                  </p>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <OwnershipControlNotice />
         <CorridorChain />
