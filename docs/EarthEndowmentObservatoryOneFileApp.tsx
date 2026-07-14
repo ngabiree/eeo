@@ -1184,7 +1184,7 @@ function Dossier({ onSelectSection }: { onSelectSection: (id: TabId) => void }) 
               <thead className="border-b border-stone-200 bg-stone-50 font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
                 <tr>
                   <th className="px-4 py-3">Claim ID</th>
-                  <th className="px-4 py-3">Status (machine)</th>
+                  <th className="px-4 py-3">Status code</th>
                   <th className="px-4 py-3">Label</th>
                 </tr>
               </thead>
