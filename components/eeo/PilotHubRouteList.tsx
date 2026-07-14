@@ -15,8 +15,8 @@ export default function PilotHubRouteList() {
         All corridor prototype pages
       </h2>
       <p className="mt-2 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
-        The site header repeats a subset of shortcuts; this list is generated from **`lib/pilotHubRoutes.ts`** alongside
-        **`docs/mvp-evidence-loop.md`**.
+        The site header shows common public paths; this index lists the full pilot surface for exploring evidence,
+        methods, safeguards, and correction routes.
       </p>
       <ul className="mt-4 grid gap-2 sm:grid-cols-2">
         {PILOT_HUB_ROUTES.map(({ href, label }) => (
