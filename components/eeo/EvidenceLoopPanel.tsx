@@ -44,11 +44,7 @@ export default function EvidenceLoopPanel() {
         <span className="text-[color:var(--eeo-muted)]">(mock IDs only).</span>
       </p>
       <p className="mt-4 text-xs leading-relaxed text-[color:var(--eeo-muted)]">
-        For governing doctrine and disclosure tiers, see the repository README (Canonical Specification) and{" "}
-        <code className="rounded bg-stone-100 px-1 py-0.5 text-[10px]">
-          docs/canonical/eeo_institutional_constitution_and_systems_specification-final.md
-        </code>
-        .
+        For the public methods, limits, and disclosure posture, use the Methods and Safeguards pages in this pilot.
       </p>
     </section>
   );

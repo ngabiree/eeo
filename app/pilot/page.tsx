@@ -10,7 +10,7 @@ export default function PilotOverviewPage() {
         <h1 className="text-3xl font-semibold tracking-tight text-[color:var(--eeo-ink)]">Pilot overview</h1>
         <p className="leading-7 text-[color:var(--eeo-text)]">
           This public-interest observatory pilot walks a governance-first publication chain: stewarded sources through
-          evidence and claims into review, release, and corrections. It is a limited corridor dashboard and evidence
+          evidence and claims into review, release, and corrections. It is a limited corridor profile and evidence
           dossier — not a global atlas, supply-chain assurance platform, marketing comparison surface, or legal tribunal. EEO makes
           no legal finding.
         </p>
