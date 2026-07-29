@@ -6,6 +6,12 @@ import { entities } from "@/data/entities";
 import { evidenceItems } from "@/data/evidence";
 import { releaseManifest } from "@/data/releaseManifest";
 import { sources } from "@/data/sources";
+import {
+  getClaimPublicRecordStatus,
+  getDefaultPublicRecordStatus,
+} from "@/lib/recordDisclosure";
+
+import { PublicRecordStatusBadge, RecordModeBadge } from "./StatusBadges";
 
 /**
  * Illustrative trace for one public claim using demonstration data.
@@ -30,6 +36,11 @@ export default function ClaimLifecyclePanel() {
   const linkedEntities = claim.entityIds
     .map((id) => entities.find((e) => e.id === id))
     .filter((e): e is NonNullable<typeof e> => Boolean(e));
+  const claimPublicStatus = getClaimPublicRecordStatus({
+    governanceStatus: "stable",
+    includedInRelease: releaseManifest.includedClaimIds.includes(claim.id),
+    recordMode: claim.recordMode,
+  });
 
   const steps: {
     id: string;
@@ -50,6 +61,10 @@ export default function ClaimLifecyclePanel() {
               <span className="mx-2 text-[color:var(--eeo-muted)]">—</span>
               <span>{src.title}</span>
               <span className="mt-1 block text-xs text-[color:var(--eeo-muted)]">{src.publisher}</span>
+              <span className="mt-2 flex flex-wrap gap-2">
+                <RecordModeBadge value={src.recordMode} />
+                <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(src.recordMode)} />
+              </span>
             </li>
           ))}
         </ul>
@@ -68,6 +83,10 @@ export default function ClaimLifecyclePanel() {
               <span className="mx-2">→</span>
               <strong>{src.licenseStatus}</strong>
               <span className="text-[color:var(--eeo-muted)]"> (sample field)</span>
+              <span className="mt-2 flex flex-wrap gap-2">
+                <RecordModeBadge value={src.recordMode} />
+                <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(src.recordMode)} />
+              </span>
             </li>
           ))}
         </ul>
@@ -83,6 +102,10 @@ export default function ClaimLifecyclePanel() {
           {linkedEvidence.map((ev) => (
             <li key={ev.id} className="rounded-xl border border-[color:var(--eeo-border)] bg-white/70 px-3 py-2">
               <div className="font-mono text-xs text-[color:var(--eeo-muted)]">{ev.id}</div>
+              <div className="mt-2 flex flex-wrap gap-2">
+                <RecordModeBadge value={ev.recordMode} />
+                <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(ev.recordMode)} />
+              </div>
               <div className="mt-1 font-medium">{ev.title}</div>
               <div className="mt-1 text-xs text-[color:var(--eeo-muted)]">
                 Roles toward this claim:{" "}
@@ -103,6 +126,10 @@ export default function ClaimLifecyclePanel() {
       body: (
         <div className="mt-2 rounded-xl border border-[color:var(--eeo-border)] bg-white/70 px-3 py-2 text-sm">
           <div className="font-mono text-xs text-[color:var(--eeo-muted)]">{claim.id}</div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <RecordModeBadge value={claim.recordMode} />
+            <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(claim.recordMode)} />
+          </div>
           <div className="mt-1 font-semibold text-[color:var(--eeo-ink)]">{claim.title}</div>
           <p className="mt-2 leading-relaxed">{claim.plainLanguageClaim}</p>
         </div>
@@ -121,6 +148,10 @@ export default function ClaimLifecyclePanel() {
               <span className="mx-2">—</span>
               {ent.name}
               <span className="ml-2 text-xs text-[color:var(--eeo-muted)]">({ent.entityType})</span>
+              <span className="mt-2 flex flex-wrap gap-2">
+                <RecordModeBadge value={ent.recordMode} />
+                <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(ent.recordMode)} />
+              </span>
             </li>
           ))}
         </ul>
@@ -128,14 +159,13 @@ export default function ClaimLifecyclePanel() {
     },
     {
       id: "review",
-      title: "Review (method / publication readiness)",
+      title: "Public status",
       illustrativeNote:
-        "Illustrative placeholder — this build does not run a real review queue or legal clearance workflow.",
+        "Institutional state shown publicly without exposing internal delivery or review-stage tokens.",
       body: (
         <p className="mt-2 text-sm leading-relaxed text-[color:var(--eeo-text)]">
-          Sample <strong>review status</strong> on this claim:{" "}
-          <span className="font-mono">{claim.reviewStatus}</span>. Method and publication checks would gate release in
-          a full system; here they are static fields on mock data.
+          <strong>Public status:</strong> <span className="font-mono">{claimPublicStatus.replaceAll("_", " ")}</span>.
+          Internal method and publication checks remain outside the public status vocabulary.
         </p>
       ),
     },
@@ -146,7 +176,7 @@ export default function ClaimLifecyclePanel() {
       body: (
         <p className="mt-2 text-sm leading-relaxed text-[color:var(--eeo-text)]">
           Sample <strong>exposure risk</strong>: <span className="font-mono">{claim.exposureRisk}</span>.{" "}
-          <strong>Publication decision</strong>: <span className="font-mono">{claim.publicationDecision}</span>.
+          <strong>Record mode</strong>: <span className="font-mono">{claim.recordMode}</span>.
         </p>
       ),
     },
@@ -169,6 +199,10 @@ export default function ClaimLifecyclePanel() {
       body: (
         <div className="mt-2 rounded-xl border border-[color:var(--eeo-border)] bg-white/70 px-3 py-2 text-sm">
           <div className="font-mono text-xs text-[color:var(--eeo-muted)]">{releaseManifest.id}</div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <RecordModeBadge value={releaseManifest.recordMode} />
+            <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(releaseManifest.recordMode)} />
+          </div>
           <div className="mt-1">
             <strong>Included claim IDs:</strong> {releaseManifest.includedClaimIds.join(", ") || "None"}
           </div>

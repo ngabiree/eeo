@@ -2,6 +2,7 @@ import type { HumanCapabilityProfile } from "@/types/humanLayer";
 
 export const humanCapabilityProfile: HumanCapabilityProfile = {
   id: "HCP-CM-0001",
+  recordMode: "synthetic",
   title: "Human Capability, Labor, Stewardship, and Relationship Layer",
   corridor: "Critical minerals corridor",
   doctrine:
@@ -23,6 +24,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
   capabilityIndicators: [
     {
       id: "CAP-001",
+      recordMode: "synthetic",
       family: "technical",
       label: "Technical capability",
       valueStatement:
@@ -38,6 +40,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "CAP-002",
+      recordMode: "synthetic",
       family: "ecological_knowledge",
       label: "Ecological knowledge",
       valueStatement:
@@ -53,6 +56,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "CAP-003",
+      recordMode: "synthetic",
       family: "civic",
       label: "Worker and community voice",
       valueStatement:
@@ -70,6 +74,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
   bioculturalRelations: [
     {
       id: "REL-001",
+      recordMode: "synthetic",
       relationType: "labor",
       publicLabel: "Labor relation",
       publicSummary:
@@ -81,6 +86,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "REL-002",
+      recordMode: "synthetic",
       relationType: "stewardship",
       publicLabel: "Stewardship relation",
       publicSummary:
@@ -93,6 +99,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "REL-003",
+      recordMode: "synthetic",
       relationType: "harm_exposure",
       publicLabel: "Harm exposure relation",
       publicSummary:
@@ -104,6 +111,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "REL-004",
+      recordMode: "synthetic",
       relationType: "future_inheritance",
       publicLabel: "Future inheritance relation",
       publicSummary:
@@ -117,6 +125,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
   liveEvidenceBoundaries: [
     {
       id: "LIVE-001",
+      recordMode: "synthetic",
       workType: "Raw evidence files",
       liveSupported: true,
       belongsIn: "Private evidence-vault bucket with audit logging",
@@ -125,6 +134,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "LIVE-002",
+      recordMode: "synthetic",
       workType: "Restricted files and reviewer notes",
       liveSupported: true,
       belongsIn: "Restricted review workspace and private schema",
@@ -133,6 +143,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "LIVE-003",
+      recordMode: "synthetic",
       workType: "Sensitive geospatial data",
       liveSupported: true,
       belongsIn: "Restricted PostGIS layers and map-safety review workflow",
@@ -141,6 +152,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "LIVE-004",
+      recordMode: "synthetic",
       workType: "Released public claims",
       liveSupported: true,
       belongsIn: "Public released views",

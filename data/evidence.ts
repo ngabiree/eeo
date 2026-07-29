@@ -4,6 +4,7 @@ export const evidenceItems: EvidenceItem[] = [
   // ── Processing / trade (existing) ────────────────────────────────────────
   {
     id: "EVID-USGS-CO-001",
+    recordMode: "illustrative",
     sourceId: "SRC-USGS-CO-001",
     title: "Cobalt production and reserve context",
     summary:
@@ -24,6 +25,7 @@ export const evidenceItems: EvidenceItem[] = [
   },
   {
     id: "EVID-UNCOMTRADE-CO-001",
+    recordMode: "illustrative",
     sourceId: "SRC-UNCOMTRADE-CO-001",
     title: "Reported cobalt-related trade flows",
     summary:
@@ -45,6 +47,7 @@ export const evidenceItems: EvidenceItem[] = [
   // ── Endowment ─────────────────────────────────────────────────────────────
   {
     id: "EVID-USGS-CO-002",
+    recordMode: "illustrative",
     sourceId: "SRC-USGS-CO-001",
     title: "DRC cobalt reserve concentration per USGS Mineral Commodity Summaries",
     summary:
@@ -66,6 +69,7 @@ export const evidenceItems: EvidenceItem[] = [
   // ── Jurisdiction / governance ──────────────────────────────────────────────
   {
     id: "EVID-EITI-DRC-001",
+    recordMode: "illustrative",
     sourceId: "SRC-EITI-DRC-001",
     title: "EITI DRC country disclosures: governance and transparency context",
     summary:
@@ -88,6 +92,7 @@ export const evidenceItems: EvidenceItem[] = [
   // ── Extraction / production ────────────────────────────────────────────────
   {
     id: "EVID-USGS-ASM-001",
+    recordMode: "illustrative",
     sourceId: "SRC-USGS-CO-001",
     title: "USGS notes on artisanal and small-scale mining contribution to DRC cobalt production",
     summary:
@@ -110,6 +115,7 @@ export const evidenceItems: EvidenceItem[] = [
   // ── Labor risk ───────────────────────────────────────────────────────────
   {
     id: "EVID-ILOSTAT-DRC-001",
+    recordMode: "illustrative",
     sourceId: "SRC-ILOSTAT-001",
     title: "ILOSTAT mining sector labour indicators for DRC context",
     summary:
@@ -129,6 +135,7 @@ export const evidenceItems: EvidenceItem[] = [
   },
   {
     id: "EVID-UNICEF-ASM-001",
+    recordMode: "illustrative",
     sourceId: "SRC-UNICEF-ASM-001",
     title: "UNICEF documentation of child labour in artisanal cobalt mining",
     summary:
@@ -149,6 +156,7 @@ export const evidenceItems: EvidenceItem[] = [
   },
   {
     id: "EVID-AMNESTY-CO-001",
+    recordMode: "illustrative",
     sourceId: "SRC-AMNESTY-COBALT-001",
     title: "Amnesty International research on labour conditions in DRC artisanal cobalt mining",
     summary:
@@ -171,6 +179,7 @@ export const evidenceItems: EvidenceItem[] = [
   // ── Public revenue ────────────────────────────────────────────────────────
   {
     id: "EVID-EITI-DRC-002",
+    recordMode: "illustrative",
     sourceId: "SRC-EITI-DRC-001",
     title: "EITI DRC reported royalty and tax collection figures and gaps",
     summary:
@@ -193,6 +202,7 @@ export const evidenceItems: EvidenceItem[] = [
   // ── Evidence gap ─────────────────────────────────────────────────────────
   {
     id: "EVID-OPENOWNERSHIP-DRC-001",
+    recordMode: "illustrative",
     sourceId: "SRC-OPENOWNERSHIP-001",
     title: "Open Ownership assessment of beneficial ownership disclosure in DRC extractive sector",
     summary:

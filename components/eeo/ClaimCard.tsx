@@ -5,6 +5,10 @@ import { copperCobaltPilotSourceMap } from "@/data/sourceMap";
 import { releaseManifest } from "@/data/releaseManifest";
 import { sources } from "@/data/sources";
 import { assessClaimFreshness } from "@/lib/claimFreshness";
+import {
+  getClaimPublicRecordStatus,
+  getDefaultPublicRecordStatus,
+} from "@/lib/recordDisclosure";
 import { canClaimBeApprovedForRelease, requiresRightOfReply } from "@/lib/publicationRules";
 import {
   getClaimEvidenceCompleteness,
@@ -18,10 +22,9 @@ import {
   ConfidenceBadge,
   EvidenceRoleBadge,
   ExposureRiskBadge,
-  GovernanceStatusBadge,
   LegalPostureBadge,
-  PublicationDecisionBadge,
-  ReviewStatusBadge,
+  PublicRecordStatusBadge,
+  RecordModeBadge,
 } from "./StatusBadges";
 
 function formatToken(value: string): string {
@@ -93,11 +96,20 @@ export default function ClaimCard({
   const releaseManifestStatus = getReleaseManifestStatus(claim.id);
   const evidenceRoleSummary = getEvidenceRoleSummary(claim);
   const freshness = assessClaimFreshness(claim);
+  const publicStatus = getClaimPublicRecordStatus({
+    governanceStatus: correctionSummary.governanceStatus,
+    includedInRelease: releaseManifest.includedClaimIds.includes(claim.id),
+    recordMode: claim.recordMode,
+  });
 
   return (
     <article className="eeo-claim-card space-y-4 p-6 backdrop-blur-sm md:p-7">
       <div className="space-y-2">
-        <div className="font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--eeo-muted)]">{claim.id}</div>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--eeo-muted)]">{claim.id}</span>
+          <RecordModeBadge value={claim.recordMode} />
+          <PublicRecordStatusBadge value={publicStatus} />
+        </div>
         <h3 className="text-xl font-semibold tracking-tight text-[color:var(--eeo-ink)] md:text-2xl">{claim.title}</h3>
         <p className="leading-7 text-[color:var(--eeo-text)]">{claim.plainLanguageClaim}</p>
       </div>
@@ -130,7 +142,7 @@ export default function ClaimCard({
         <h4 className="font-semibold">Public dossier readiness</h4>
         <div className="mt-2 grid gap-2 md:grid-cols-2">
           <p><strong>Release manifest status:</strong> {releaseManifestStatus}</p>
-          <p><strong>Review status:</strong> {formatToken(claim.reviewStatus)}</p>
+          <p><strong>Public status:</strong> {formatToken(publicStatus)}</p>
           <p><strong>Confidence:</strong> {formatToken(claim.confidence)}</p>
           <p><strong>Source limitations linked:</strong> {sourceLimitations.length}</p>
           <p><strong>Last reviewed:</strong> {claim.lastReviewed}</p>
@@ -149,8 +161,6 @@ export default function ClaimCard({
       <div className="flex flex-wrap gap-2">
         <ConfidenceBadge value={claim.confidence} />
         <ExposureRiskBadge value={claim.exposureRisk} />
-        <PublicationDecisionBadge value={claim.publicationDecision} />
-        <ReviewStatusBadge value={claim.reviewStatus} />
         <LegalPostureBadge value={claim.legalPosture} />
       </div>
 
@@ -194,7 +204,7 @@ export default function ClaimCard({
       <section className="rounded-2xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.75)] p-4">
         <h4 className="font-semibold text-[color:var(--eeo-ink)]">Claim governance</h4>
         <div className="mt-2 flex flex-wrap gap-2">
-          <GovernanceStatusBadge value={correctionSummary.governanceStatus} />
+          <PublicRecordStatusBadge value={publicStatus} />
         </div>
         <div className="mt-2 space-y-1 text-sm text-[color:var(--eeo-text)]">
           <p>
@@ -243,6 +253,10 @@ export default function ClaimCard({
               <div className="mb-2 flex flex-wrap gap-2">
                 <span className="font-mono text-xs text-[color:var(--eeo-muted)]">{evidenceId}</span>
                 <EvidenceRoleBadge value={role} />
+                {evidence ? <RecordModeBadge value={evidence.recordMode} /> : null}
+                {evidence ? (
+                  <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(evidence.recordMode)} />
+                ) : null}
               </div>
               <p className="text-sm text-[color:var(--eeo-text)]">{evidence?.summary ?? "Evidence item not found in current release."}</p>
               {note ? <p className="mt-1 text-xs text-[color:var(--eeo-muted)]">note: {note}</p> : null}

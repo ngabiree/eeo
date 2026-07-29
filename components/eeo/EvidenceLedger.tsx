@@ -3,8 +3,13 @@ import Link from "next/link";
 import { claims } from "@/data/claims";
 import { evidenceItems } from "@/data/evidence";
 import { sources } from "@/data/sources";
+import { getDefaultPublicRecordStatus } from "@/lib/recordDisclosure";
 
-import { EvidenceRoleBadge } from "./StatusBadges";
+import {
+  EvidenceRoleBadge,
+  PublicRecordStatusBadge,
+  RecordModeBadge,
+} from "./StatusBadges";
 
 export default function EvidenceLedger() {
   return (
@@ -27,18 +32,26 @@ export default function EvidenceLedger() {
                 <span className="rounded-full border border-stone-300 bg-stone-50 px-2.5 py-1 text-xs text-stone-700">
                   evidence class: {item.evidenceClass}
                 </span>
+                <RecordModeBadge value={item.recordMode} />
+                <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(item.recordMode)} />
               </div>
 
               <h3 className="text-lg font-semibold text-stone-950">{item.title}</h3>
               <p className="mt-2 text-sm leading-6 text-stone-700">{item.summary}</p>
 
               <div className="mt-4 grid gap-2 text-sm md:grid-cols-2">
-                <p><strong>Source:</strong> {source?.title}</p>
+                <p className="flex flex-wrap items-center gap-2">
+                  <strong>Source:</strong> {source?.title}
+                  {source ? <RecordModeBadge value={source.recordMode} /> : null}
+                  {source ? (
+                    <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(source.recordMode)} />
+                  ) : null}
+                </p>
                 <p><strong>Publisher:</strong> {source?.publisher}</p>
                 <p><strong>Source type:</strong> {source?.sourceType}</p>
                 <p><strong>Confidence contribution:</strong> {item.confidenceContribution}</p>
                 <p><strong>Exposure risk:</strong> {item.exposureRisk}</p>
-                <p><strong>Publication decision:</strong> {item.publicationDecision}</p>
+                <p><strong>Public status:</strong> {getDefaultPublicRecordStatus(item.recordMode).replaceAll("_", " ")}</p>
                 <p><strong>Date accessed:</strong> {source?.accessedDate}</p>
                 <p><strong>License status:</strong> {source?.licenseStatus}</p>
               </div>

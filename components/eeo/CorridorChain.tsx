@@ -1,7 +1,10 @@
 import { corridorNodes } from "@/data/corridorNodes";
+import { getDefaultPublicRecordStatus } from "@/lib/recordDisclosure";
+
+import { PublicRecordStatusBadge, RecordModeBadge } from "./StatusBadges";
 
 export default function CorridorChain() {
-  const releasedNodes = corridorNodes.filter((node) => node.id === "processing_trade");
+  const availableNodes = corridorNodes.filter((node) => node.id === "processing_trade");
   const unreleasedNodes = corridorNodes.filter((node) => node.id !== "processing_trade");
 
   return (
@@ -14,12 +17,16 @@ export default function CorridorChain() {
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {releasedNodes.map((node, idx) => {
+        {availableNodes.map((node, idx) => {
           return (
             <article key={node.id} className="eeo-chain-node p-4 md:p-5">
               <div className="eeo-chain-node-inner space-y-3">
                 <div className="font-mono text-xs uppercase tracking-[0.18em] text-[color:var(--eeo-muted)]">
                   {idx + 1}. {node.label}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <RecordModeBadge value={node.recordMode} />
+                  <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(node.recordMode)} />
                 </div>
                 <dl className="space-y-2 text-sm text-[color:var(--eeo-text)]">
                   <div>
@@ -51,8 +58,12 @@ export default function CorridorChain() {
         </p>
         <ul className="mt-4 grid gap-2 text-sm text-[color:var(--eeo-text)] sm:grid-cols-2 lg:grid-cols-3">
           {unreleasedNodes.map((node) => (
-            <li key={node.id} className="rounded-xl border border-[color:var(--eeo-border)] bg-[rgba(223,243,231,0.4)] px-3 py-2">
-              {node.label}
+            <li key={node.id} className="space-y-2 rounded-xl border border-[color:var(--eeo-border)] bg-[rgba(223,243,231,0.4)] px-3 py-2">
+              <span className="block">{node.label}</span>
+              <span className="flex flex-wrap gap-2">
+                <RecordModeBadge value={node.recordMode} />
+                <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(node.recordMode)} />
+              </span>
             </li>
           ))}
         </ul>

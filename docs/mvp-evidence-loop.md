@@ -14,6 +14,18 @@ source -> license -> evidence -> claim -> entity resolution -> review -> exposur
 
 This is a **visibility rule** for governance-first alignment — not an executable workflow promise in the static build.
 
+## Public record disclosure
+
+Every displayed claim, evidence item, source, entity, dossier section, corridor node, release manifest, and human-capability record carries an explicit `recordMode`:
+
+`synthetic | illustrative | governed | released | restricted`
+
+Public status labels use only institutional states:
+
+`released | under_review | corrected | challenged | withdrawn | restricted`
+
+Internal method stages, implementation milestones, and engineering readiness tokens remain available to repository logic but are not public status labels.
+
 ## Header shortcuts vs full public surface
 
 Navigation shortcuts use **`lib/pilotPublicNav.ts`** and a deliberate subset of stable public routes for clarity. The full set of shipped corridor routes is listed below; use **`/corridors/copper-cobalt`** as the index for deep links not repeated in the header.

@@ -7,6 +7,7 @@ const asOf = new Date("2026-07-07T00:00:00.000Z");
 
 const baseClaim: Claim = {
   id: "CLAIM-TEST-001",
+  recordMode: "synthetic",
   title: "Test claim",
   plainLanguageClaim: "A test-only claim fixture.",
   claimType: "descriptive",

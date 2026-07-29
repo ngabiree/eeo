@@ -3,6 +3,8 @@
  * No runtime dossier publishing or temporal/monitoring hooks.
  */
 
+import type { RecordMode } from "@/types/eeo";
+
 export type CorridorDossierSection =
   | "scope"
   | "source_map"
@@ -37,6 +39,7 @@ export type DossierSectionStatus =
 
 export interface CorridorDossierSectionRecord {
   id: string;
+  recordMode: RecordMode;
   section: CorridorDossierSection;
   title: string;
   status: DossierSectionStatus;
@@ -51,6 +54,7 @@ export interface CorridorDossierSectionRecord {
 
 export interface CorridorDossier {
   id: string;
+  recordMode: RecordMode;
   title: string;
   corridor: string;
   geography: string;

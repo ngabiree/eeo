@@ -9,6 +9,7 @@ import type {
 
 const baseSection: CorridorDossierSectionRecord = {
   id: "CDS-TEST-scope",
+  recordMode: "illustrative",
   section: "scope",
   title: "Scope",
   status: "source_mapping",
@@ -23,6 +24,7 @@ const baseSection: CorridorDossierSectionRecord = {
 
 const baseDossier: CorridorDossier = {
   id: "CDR-TEST-001",
+  recordMode: "illustrative",
   title: "Test dossier",
   corridor: "Test corridor",
   geography: "Test geography",

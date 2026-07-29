@@ -5,7 +5,7 @@ import type {
 
 const V07_UPDATED = "2026-05-26T00:00:00.000Z";
 
-const sections: CorridorDossierSectionRecord[] = [
+const sectionSeeds: Omit<CorridorDossierSectionRecord, "recordMode">[] = [
   // ── Scope ──────────────────────────────────────────────────────────────────
   {
     id: "CDS-CU-CO-scope",
@@ -471,8 +471,14 @@ const sections: CorridorDossierSectionRecord[] = [
   },
 ];
 
+const sections: CorridorDossierSectionRecord[] = sectionSeeds.map((section) => ({
+  ...section,
+  recordMode: "illustrative",
+}));
+
 export const copperCobaltCorridorPilotSkeleton: CorridorDossier = {
   id: "CDR-CU-CO-PILOT-001",
+  recordMode: "illustrative",
   title: "Earth Endowment Observatory: Critical Minerals Corridor Evidence Record",
   corridor: "Copper-Cobalt Critical Minerals Corridor",
   geography:

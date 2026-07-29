@@ -5,10 +5,12 @@ import CorridorChain from "@/components/eeo/CorridorChain";
 import OwnershipControlNotice from "@/components/eeo/OwnershipControlNotice";
 import PilotRouteNav from "@/components/eeo/PilotRouteNav";
 import ReleaseManifestPanel from "@/components/eeo/ReleaseManifest";
+import { PublicRecordStatusBadge, RecordModeBadge } from "@/components/eeo/StatusBadges";
 import { claims } from "@/data/claims";
 import { copperCobaltCorridorPilotSkeleton } from "@/data/corridorDossier";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
+import { getDefaultPublicRecordStatus } from "@/lib/recordDisclosure";
 
 export default function PilotEvidenceDossierPage() {
   const dossier = copperCobaltCorridorPilotSkeleton;
@@ -26,6 +28,10 @@ export default function PilotEvidenceDossierPage() {
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-10 md:px-6">
         <PilotRouteNav />
         <header className="eeo-glass-card border-[color:var(--eeo-border)] p-6 shadow-sm">
+          <div className="mb-3 flex flex-wrap gap-2">
+            <RecordModeBadge value={dossier.recordMode} />
+            <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(dossier.recordMode)} />
+          </div>
           <h1 className="text-3xl font-semibold tracking-tight text-[color:var(--eeo-ink)]">Copper–Cobalt corridor evidence dossier</h1>
           <p className="mt-3 leading-7 text-[color:var(--eeo-text)]">
             This dossier frames public claims about a critical-minerals corridor so they stay traceable, qualified, reviewable, and correctable—without overclaiming, exposing sensitive data, or collapsing
@@ -83,9 +89,10 @@ export default function PilotEvidenceDossierPage() {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <h3 className="text-lg font-semibold text-stone-950">{section.title}</h3>
-                      <p className="mt-1 text-xs uppercase tracking-[0.08em] text-stone-500">
-                        {section.status.replaceAll("_", " ")}
-                      </p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <RecordModeBadge value={section.recordMode} />
+                        <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(section.recordMode)} />
+                      </div>
                     </div>
                     <p className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs text-stone-600">
                       {claimLayer} · {evidenceLayer}

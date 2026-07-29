@@ -3,6 +3,7 @@ import type { Source } from "@/types/eeo";
 export const sources: Source[] = [
   {
     id: "SRC-USGS-CO-001",
+    recordMode: "illustrative",
     title: "Mineral Commodity Summaries: Cobalt",
     publisher: "U.S. Geological Survey",
     url: "https://www.usgs.gov/centers/national-minerals-information-center",
@@ -15,6 +16,7 @@ export const sources: Source[] = [
   },
   {
     id: "SRC-UNCOMTRADE-CO-001",
+    recordMode: "illustrative",
     title: "UN Comtrade reported trade flows",
     publisher: "United Nations",
     url: "https://comtradeplus.un.org/",
@@ -26,6 +28,7 @@ export const sources: Source[] = [
   },
   {
     id: "SRC-EITI-DRC-001",
+    recordMode: "illustrative",
     title: "EITI Democratic Republic of Congo country reports and disclosures",
     publisher: "Extractive Industries Transparency Initiative",
     url: "https://eiti.org/country/drc",
@@ -38,6 +41,7 @@ export const sources: Source[] = [
   },
   {
     id: "SRC-ILOSTAT-001",
+    recordMode: "illustrative",
     title: "ILOSTAT mining sector labour indicators",
     publisher: "International Labour Organization",
     url: "https://ilostat.ilo.org/",
@@ -50,6 +54,7 @@ export const sources: Source[] = [
   },
   {
     id: "SRC-UNICEF-ASM-001",
+    recordMode: "illustrative",
     title: "UNICEF research on children in artisanal and small-scale mining",
     publisher: "UNICEF",
     url: "https://www.unicef.org/",
@@ -62,6 +67,7 @@ export const sources: Source[] = [
   },
   {
     id: "SRC-AMNESTY-COBALT-001",
+    recordMode: "illustrative",
     title: "Amnesty International cobalt and artisanal mining research",
     publisher: "Amnesty International",
     url: "https://www.amnesty.org/",
@@ -74,6 +80,7 @@ export const sources: Source[] = [
   },
   {
     id: "SRC-OPENOWNERSHIP-001",
+    recordMode: "illustrative",
     title: "Open Ownership beneficial ownership data and research",
     publisher: "Open Ownership",
     url: "https://www.openownership.org/",

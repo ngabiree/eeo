@@ -1,3 +1,5 @@
+import type { RecordMode } from "@/types/eeo";
+
 export interface CorridorNodeData {
   id:
     | "endowment"
@@ -10,8 +12,9 @@ export interface CorridorNodeData {
     | "labor_risk"
     | "ecological_signal"
     | "public_revenue"
-    | "public_benefit"
-    | "evidence_gap";
+      | "public_benefit"
+      | "evidence_gap";
+  recordMode: RecordMode;
   label: string;
   known: string;
   unknown: string;
@@ -20,6 +23,7 @@ export interface CorridorNodeData {
 }
 
 const DEFAULT_DETAIL = {
+  recordMode: "illustrative" as const,
   known: "No public record released yet.",
   unknown: "Pending reviewed source integration.",
   evidence: "Evidence not yet released.",
@@ -35,6 +39,7 @@ export const corridorNodes: CorridorNodeData[] = [
   { id: "extraction_production", label: "Extraction / Production", ...DEFAULT_DETAIL },
   {
     id: "processing_trade",
+    recordMode: "illustrative",
     label: "Processing / Trade",
     known: "Public production and trade datasets can show cobalt flow context at national and corridor scales.",
     unknown: "Product-level chain-of-custody linkage from mine to downstream goods.",

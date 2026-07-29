@@ -7,6 +7,7 @@ const CLAIM_STALE_AFTER = "2026-11-01";
 
 export const sampleClaim: Claim = {
   id: "CLAIM-DRC-CO-001",
+  recordMode: "synthetic",
   title: "Reported cobalt production is not the same as traceable product origin",
   plainLanguageClaim:
     "Public production and trade data can show cobalt production and export patterns, but they do not by themselves prove that a specific downstream battery, vehicle, or consumer product contains cobalt from a specific mine.",
@@ -54,6 +55,7 @@ export const sampleClaim: Claim = {
 
 const endowmentClaim: Claim = {
   id: "CLAIM-DRC-CO-002",
+  recordMode: "synthetic",
   title: "DRC holds the largest known cobalt reserves globally",
   plainLanguageClaim:
     "According to USGS Mineral Commodity Summaries, the Democratic Republic of Congo holds the largest identified cobalt reserves of any single country, accounting for the substantial majority of global known reserves.",
@@ -94,6 +96,7 @@ const endowmentClaim: Claim = {
 
 const jurisdictionClaim: Claim = {
   id: "CLAIM-DRC-CO-003",
+  recordMode: "synthetic",
   title: "Cobalt extraction in DRC operates under multiple overlapping governance regimes",
   plainLanguageClaim:
     "EITI DRC reports and public law sources indicate that cobalt extraction in the DRC is subject to national mining law, provincial authority, and the obligations of applicable international frameworks. These regimes overlap and interact in ways that are not always consistently enforced.",
@@ -134,6 +137,7 @@ const jurisdictionClaim: Claim = {
 
 const extractionClaim: Claim = {
   id: "CLAIM-DRC-CO-004",
+  recordMode: "synthetic",
   title: "Artisanal and small-scale mining contributes a significant but poorly quantified share of DRC cobalt production",
   plainLanguageClaim:
     "Available public data indicate that artisanal and small-scale mining (ASM) contributes materially to total DRC cobalt production, but reliable disaggregated figures are not consistently published. Estimates vary considerably across reporting cycles and sources, and ASM activity is systematically under-measured in official statistics.",
@@ -179,6 +183,7 @@ const extractionClaim: Claim = {
 
 const laborClaim: Claim = {
   id: "CLAIM-DRC-CO-005",
+  recordMode: "synthetic",
   title: "Published research identifies documented labour risks in DRC artisanal cobalt mining, including child labour",
   plainLanguageClaim:
     "UNICEF research, Amnesty International investigations, and labour sector data document serious labour risks in DRC artisanal cobalt mining. Documented concerns include children working in or near mines, hazardous physical conditions, inadequate safety protections, and limited access to remedy. These are documented risks, not legal findings, and they do not uniformly apply to all ASM sites or operators.",
@@ -231,6 +236,7 @@ const laborClaim: Claim = {
 
 const publicRevenueClaim: Claim = {
   id: "CLAIM-DRC-CO-006",
+  recordMode: "synthetic",
   title: "DRC's mining royalty and tax regime applies to cobalt, but EITI reports show persistent revenue reporting gaps",
   plainLanguageClaim:
     "The DRC mining code requires royalties and taxes on cobalt extraction. EITI DRC reconciliation reports have identified persistent discrepancies between amounts reported by extractive companies and amounts recorded by government agencies, indicating gaps in revenue transparency.",
@@ -271,6 +277,7 @@ const publicRevenueClaim: Claim = {
 
 const evidenceGapClaim: Claim = {
   id: "CLAIM-DRC-CO-007",
+  recordMode: "synthetic",
   title: "Beneficial ownership of many DRC cobalt concession holders is not fully and publicly disclosed",
   plainLanguageClaim:
     "Open Ownership data and research indicate that beneficial ownership disclosure requirements for DRC extractive sector companies remain incomplete. Many concession holders do not publicly disclose ultimate beneficial owners in a machine-readable or consistently accessible format, limiting accountability tracking.",

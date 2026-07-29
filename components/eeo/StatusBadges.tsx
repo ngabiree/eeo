@@ -5,6 +5,8 @@ import type {
   ExposureRisk,
   LegalPosture,
   PublicationDecision,
+  PublicRecordStatus,
+  RecordMode,
   ReviewStatus,
 } from "@/types/eeo";
 
@@ -99,4 +101,27 @@ export function GovernanceStatusBadge({ value }: { value: ClaimGovernanceStatus 
     withdrawn: tone.red,
   };
   return <span className={badgeClass(map[value])}>Governance: {toLabel(value)}</span>;
+}
+
+export function RecordModeBadge({ value }: { value: RecordMode }) {
+  const map: Record<RecordMode, string> = {
+    synthetic: tone.amber,
+    illustrative: tone.blue,
+    governed: tone.green,
+    released: tone.green,
+    restricted: tone.neutral,
+  };
+  return <span className={badgeClass(map[value])}>Record mode: {toLabel(value)}</span>;
+}
+
+export function PublicRecordStatusBadge({ value }: { value: PublicRecordStatus }) {
+  const map: Record<PublicRecordStatus, string> = {
+    released: tone.green,
+    under_review: tone.blue,
+    corrected: tone.green,
+    challenged: tone.amber,
+    withdrawn: tone.red,
+    restricted: tone.neutral,
+  };
+  return <span className={badgeClass(map[value])}>Public status: {toLabel(value)}</span>;
 }

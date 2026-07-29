@@ -3,7 +3,7 @@
  * EEO does not replace these systems; it cites, evaluates, defers, and connects corridor analysis.
  */
 
-import type { Source } from "@/types/eeo";
+import type { RecordMode, Source } from "@/types/eeo";
 
 export type SourceDomain =
   | "mineral_context"
@@ -30,6 +30,7 @@ export type SourceMapUse =
 export interface SourceMapEntry {
   sourceId?: string;
   id: string;
+  recordMode: RecordMode;
   domain: SourceDomain;
   name: string;
   institution?: string;
@@ -63,12 +64,16 @@ export interface SourceMapEntry {
   notes?: string;
 }
 
+type SourceMapSeed = Omit<SourceMapEntry, "recordMode"> & {
+  recordMode?: RecordMode;
+};
+
 function inferSourceType(domain: SourceDomain): SourceMapEntry["sourceType"] {
   if (domain === "methods" || domain === "safeguards" || domain === "human_rights") return "framework";
   return "other";
 }
 
-function withOperationalFields(entry: SourceMapEntry): SourceMapEntry {
+function withOperationalFields(entry: SourceMapSeed): SourceMapEntry {
   const publicationStatus: SourceMapEntry["publicationStatus"] =
     entry.exposureRisk === "restricted"
       ? "restricted"
@@ -76,6 +81,7 @@ function withOperationalFields(entry: SourceMapEntry): SourceMapEntry {
         ? "permission_based"
         : "public";
   return {
+    recordMode: entry.recordMode ?? "illustrative",
     sourceId: entry.id,
     publisher: entry.institution ?? "Unknown institution",
     sourceType: inferSourceType(entry.domain),
@@ -94,7 +100,7 @@ function withOperationalFields(entry: SourceMapEntry): SourceMapEntry {
   };
 }
 
-const SOURCE_MAP_BASE: SourceMapEntry[] = [
+const SOURCE_MAP_BASE: SourceMapSeed[] = [
   {
     id: "SM-USGS-MM",
     domain: "mineral_context",
