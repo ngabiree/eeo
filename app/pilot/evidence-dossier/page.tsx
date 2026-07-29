@@ -10,13 +10,13 @@ import { copperCobaltCorridorPilotSkeleton } from "@/data/corridorDossier";
 import { releaseManifest } from "@/data/releaseManifest";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
+import { getReleaseClaims, getUnreleasedClaimCount } from "@/lib/releaseClaims";
 
 export default function PilotEvidenceDossierPage() {
   const dossier = copperCobaltCorridorPilotSkeleton;
   const corrections = listCorrectionSubmissions();
-  const releaseClaimIds = new Set(releaseManifest.includedClaimIds);
-  const releasedClaims = claims.filter((claim) => releaseClaimIds.has(claim.id));
-  const unreleasedClaimCount = claims.length - releasedClaims.length;
+  const releasedClaims = getReleaseClaims(claims, releaseManifest);
+  const unreleasedClaimCount = getUnreleasedClaimCount(claims, releaseManifest);
   const governanceSummaries = releasedClaims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
   const challengedOrUnderReview = governanceSummaries.filter(
     (summary) => summary.governanceStatus === "challenged" || summary.governanceStatus === "under_review"
