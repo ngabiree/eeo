@@ -57,6 +57,7 @@ EEO must not be framed as:
 - `docs/right-of-reply.md` and `docs/right-of-reply-protocol.md` cover reply/correction discipline.
 - `docs/mvp-evidence-loop.md` documents the corridor-first evidence loop and public routes.
 - `docs/corridor-charter-template.md` defines the authorization gate for any corridor before it moves beyond roadmap or candidate status.
+- `docs/copper-cobalt-claim-readiness.md` records claim-by-claim release-readiness status for the current pilot corridor.
 - `docs/founding/README.md` is the founding-document hub.
 
 ## Completed increments
@@ -64,10 +65,11 @@ EEO must not be framed as:
 - Repository already includes a Next.js App Router prototype with public EEO surfaces, corridor pilot routes, evidence/correction/review/release helpers, and doctrine docs.
 - Repository already includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
 - 2026-07-29: Added a corridor charter template and roadmap/docs links so future corridors require boundary, evidence, source-rights, disclosure, map-safety, right-of-reply, reviewer, release-manifest, and stop-condition review before activation.
+- 2026-07-29: Added a Copper-Cobalt claim readiness matrix that keeps `CLAIM-DRC-CO-001` release-scoped, identifies `CLAIM-DRC-CO-002` as the next near-candidate, and keeps method/exposure/ownership-sensitive claims withheld pending review.
 
 ## Current safe next step
 
-Complete a small dossier-readiness pass for the Copper-Cobalt corridor: verify that each public corridor claim links to evidence, source limits, confidence/review state, correction route, right-of-reply state when applicable, and public-safe release-manifest status.
+Review `CLAIM-DRC-CO-002` as the next possible release addition by confirming source/license posture, source date, confidence explanation, accountable reviewer role, and release-manifest approval conditions.
 
 Do not start a second public corridor until the Copper-Cobalt release gate is coherent and the second corridor has a completed charter.
 
@@ -77,6 +79,7 @@ Do not start a second public corridor until the Copper-Cobalt release gate is co
 - Public/private boundary must remain strict. Do not expose reviewer notes, submitter identities, restricted map coordinates, internal triage reasoning, or sensitive harm-review details.
 - The public homepage and pilot pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
 - Future corridor expansion could create global-atlas or public-exposure drift unless the corridor charter gate is enforced.
+- Visible prototype claims can be mistaken for release-approved public findings unless release-manifest scope remains explicit.
 - CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
 
 ## Deferred items
