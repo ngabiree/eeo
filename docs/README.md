@@ -1,6 +1,7 @@
 # Documentation
 
-- **[Founding documents](founding/README.md)** — constitution, policies, protocols, governance, roadmap, and reference links (start here for doctrine and norms).
+- **[Founding documents](founding/README.md)** - constitution, policies, protocols, governance, roadmap, and reference links (start here for doctrine and norms).
+- **[Corridor charter template](corridor-charter-template.md)** - authorization checklist for any corridor before it moves beyond roadmap or candidate status.
 
 ## Other `docs/` artifacts
 
