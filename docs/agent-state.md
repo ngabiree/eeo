@@ -58,22 +58,25 @@ EEO must not be framed as:
 - `docs/mvp-evidence-loop.md` documents the corridor-first evidence loop and public routes.
 - `docs/founding/README.md` is the founding-document hub.
 - `docs/release-checklist.md` now completes release-manifest, corridor authorization, stop-condition, and post-release checks for public release discipline.
+- `docs/corridor-dossier-readiness.md` records the first corridor claim/evidence/release-readiness matrix and identifies release-manifest disposition gaps.
 
 ## Completed increments
 
 - Repository already includes a Next.js App Router prototype with public EEO surfaces, corridor pilot routes, evidence/correction/review/release helpers, and doctrine docs.
 - Repository already includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
 - 2026-07-29: Completed `docs/release-checklist.md`, which previously ended mid-release-manifest checklist, by adding bounded release-manifest requirements, corridor authorization checks, stop conditions, and post-release checks.
+- 2026-07-29: Added `docs/corridor-dossier-readiness.md`, documenting seven observed corridor claims, their evidence-link counts, review status, release-manifest status, and blockers before broader release.
 
 ## Current safe next step
 
-Run a small dossier-readiness pass for the first corridor: verify that each public corridor claim links to evidence, source limits, confidence/review state, correction route, right-of-reply state when applicable, and public-safe release-manifest status.
+Create a typed or documented release-disposition layer that records whether each claim is included, withheld, restricted, challenged, corrected, withdrawn, or deferred, with a public-safe reason. Start with documentation or inert sample data before changing public UI behavior.
 
 ## Open risks
 
 - Prototype persistence boundaries remain: correction submissions, reviewer notes, and activity logs may not be durable unless persistent storage is separately configured.
 - Public/private boundary must remain strict. Do not expose reviewer notes, submitter identities, restricted map coordinates, internal triage reasoning, or sensitive harm-review details.
 - The public homepage and pilot pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
+- The release manifest currently includes only `CLAIM-DRC-CO-001`; other observed claims need explicit disposition before broader public release.
 - CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
 
 ## Deferred items
@@ -84,4 +87,4 @@ Run a small dossier-readiness pass for the first corridor: verify that each publ
 
 ## Last checks run
 
-- Not run in this increment. The change is documentation-only and was made through the GitHub connector because the repository could not be cloned in the workspace due network restrictions.
+- Not run in this increment. The changes are documentation-only and were made through the GitHub connector because the repository could not be cloned in the workspace due network restrictions.
