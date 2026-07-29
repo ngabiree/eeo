@@ -1,6 +1,6 @@
 # EEO Implementation Roadmap
 
-This roadmap keeps EEO on a corridor-first evidence dossier path. It should be read with `GOVERNANCE.md`, `DISCLOSURE_POLICY.md`, `docs/mvp-evidence-loop.md`, `docs/language-safety.md`, `docs/map-safety-protocol.md`, and `docs/release-process.md`.
+This roadmap keeps EEO on a corridor-first evidence dossier path. It should be read with `GOVERNANCE.md`, `DISCLOSURE_POLICY.md`, `docs/mvp-evidence-loop.md`, `docs/language-safety.md`, `docs/map-safety-protocol.md`, `docs/release-process.md`, and `docs/corridor-charter-template.md`.
 
 EEO publishes evidence for inquiry, not a verdict. Every increment should strengthen the loop from source to public-safe dossier, correction, right of reply, and release discipline.
 
@@ -25,6 +25,14 @@ source
 ```
 
 Do not expand into a global atlas, ESG score, ranking product, certification system, legal-adjudication surface, blockchain trust system, monitoring dashboard, forecasting UI, public exposure engine, or AI decision authority.
+
+## Corridor authorization gate
+
+The current MVP corridor is the Copper-Cobalt Critical Minerals Corridor. Additional corridors must not move beyond roadmap or candidate status until a corridor charter records the boundary, source and license posture, evidence gaps, disclosure and map-safety plan, rights and legal posture, right-of-reply triggers, correction path, named reviewers, release manifest conditions, and stop conditions.
+
+Use `docs/corridor-charter-template.md` before creating public pages, public claims, public map layers, or dashboard surfaces for any future corridor.
+
+Candidate corridors may be researched internally only when they remain clearly marked as roadmap, candidate, or provisional work. They must not imply EEO has made findings, authorized publication, verified custody, adjudicated responsibility, or approved disclosure.
 
 ## Sprint 0: Repo and safety baseline
 
