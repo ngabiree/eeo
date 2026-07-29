@@ -1,13 +1,19 @@
 import Link from "next/link";
 
 import { claims } from "@/data/claims";
+import { PublicRecordStatusBadge, RecordModeBadge } from "@/components/eeo/StatusBadges";
 import { copperCobaltCorridorPilotSkeleton } from "@/data/corridorDossier";
 import { copperCobaltPilotSourceMap } from "@/data/sourceMap";
 import { evidenceItems } from "@/data/evidence";
+import { releaseManifest } from "@/data/releaseManifest";
 import { sources } from "@/data/sources";
 import { canRenderPublicMapLayer } from "@/lib/mapSafety";
 import { getClaimCorrectionSummary, getClaimEvidenceCompleteness } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
+import {
+  getClaimPublicRecordStatus,
+  getDefaultPublicRecordStatus,
+} from "@/lib/recordDisclosure";
 
 export default function DossierPage() {
   const dossier = copperCobaltCorridorPilotSkeleton;
@@ -28,9 +34,13 @@ export default function DossierPage() {
             Public Evidence Dossier: Copper-Cobalt Corridor
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[color:var(--eeo-ink)]">{dossier.title}</h1>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <RecordModeBadge value={dossier.recordMode} />
+            <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(dossier.recordMode)} />
+          </div>
           <p className="mt-3 leading-7 text-[color:var(--eeo-text)]">{dossier.scopeStatement}</p>
           <p className="mt-2 text-sm text-[color:var(--eeo-muted)]">
-            Prototype structure only. This dossier view does not yet make substantive corridor assertions.
+            Illustrative structure only. This dossier view does not yet make substantive corridor assertions.
           </p>
         </header>
 
@@ -50,7 +60,7 @@ export default function DossierPage() {
               <strong>Geography:</strong> {dossier.geography}
             </p>
             <p>
-              <strong>Release status:</strong> {dossier.releaseReadiness.replaceAll("_", " ")}
+              <strong>Public status:</strong> {getDefaultPublicRecordStatus(dossier.recordMode).replaceAll("_", " ")}
             </p>
             <p>
               <strong>Last updated:</strong> {new Date(dossier.lastUpdated).toLocaleString()}
@@ -70,11 +80,14 @@ export default function DossierPage() {
             {dossier.sections.map((section) => (
               <li key={section.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
                 <p className="font-medium text-stone-900">{section.title}</p>
-                <p className="text-xs uppercase tracking-[0.08em] text-stone-500">{section.status.replaceAll("_", " ")}</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <RecordModeBadge value={section.recordMode} />
+                  <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(section.recordMode)} />
+                </div>
                 <p className="mt-2 text-sm text-stone-700">{section.summary}</p>
                 {section.status === "not_started" ? (
                   <div className="mt-2 text-xs text-stone-600">
-                    <p>Known: Not yet established in this prototype.</p>
+                    <p>Known: Not yet established in this record.</p>
                     <p>Unknown: Pending source integration.</p>
                     <p>Evidence: Not yet linked.</p>
                     <p>Risk: Avoid inference without evidence.</p>
@@ -100,6 +113,10 @@ export default function DossierPage() {
               .map((entry) => (
                 <li key={entry.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-3">
                   <p className="font-medium text-stone-900">{entry.name}</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <RecordModeBadge value={entry.recordMode} />
+                    <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(entry.recordMode)} />
+                  </div>
                   <p className="text-xs text-stone-600">
                     Used for: {(entry.usedFor ?? []).join("; ") || entry.whatItHelpsAnswer}
                   </p>
@@ -125,12 +142,21 @@ export default function DossierPage() {
             {claims.map((claim, idx) => {
               const summary = governance.find((row) => row.claimId === claim.id);
               const completeness = claimCompleteness[idx];
+              const publicStatus = getClaimPublicRecordStatus({
+                governanceStatus: summary?.governanceStatus ?? "stable",
+                includedInRelease: releaseManifest.includedClaimIds.includes(claim.id),
+                recordMode: claim.recordMode,
+              });
               return (
                 <li key={claim.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-3">
                   <p className="font-medium text-stone-900">{claim.id}</p>
+                  <div className="my-2 flex flex-wrap gap-2">
+                    <RecordModeBadge value={claim.recordMode} />
+                    <PublicRecordStatusBadge value={publicStatus} />
+                  </div>
                   <p>{claim.title}</p>
                   <p className="text-xs text-stone-600">
-                    Governance: {summary?.governanceStatus.replaceAll("_", " ") ?? "stable"} · Linked corrections:{" "}
+                    Public status: {publicStatus.replaceAll("_", " ")} · Linked corrections:{" "}
                     {summary?.linkedCorrections.length ?? 0}
                   </p>
                   <p className="text-xs text-stone-600">
@@ -154,8 +180,12 @@ export default function DossierPage() {
           <h2 className="text-xl font-semibold">Evidence completeness status by dossier section</h2>
           <ul className="mt-3 space-y-2 text-sm text-stone-700">
             {dossier.sections.map((section) => (
-              <li key={section.id}>
-                <strong>{section.title}:</strong>{" "}
+              <li key={section.id} className="space-y-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <strong>{section.title}:</strong>
+                  <RecordModeBadge value={section.recordMode} />
+                  <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(section.recordMode)} />
+                </div>
                 {section.linkedEvidenceIds.length > 0
                   ? "Evidence-populated: This section has linked evidence and source limitations."
                   : "Structure-only: This section is structurally defined but not yet evidence-populated. It should not be treated as a substantive finding."}
@@ -185,7 +215,7 @@ export default function DossierPage() {
         </section>
 
         <div className="flex flex-wrap gap-4 text-sm">
-          <Link href="/pilot/corrections" className="underline">
+          <Link href="/corrections" className="underline">
             Correction route
           </Link>
           <Link href="/right-of-reply" className="underline">

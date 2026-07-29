@@ -7,7 +7,10 @@ import { sources } from "@/data/sources";
 import { getClaimCorrectionSummary, getClaimEvidenceCompleteness } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 import { assessEvidenceOperatingSystem } from "@/lib/evidenceOperatingSystem";
+import { getDefaultPublicRecordStatus } from "@/lib/recordDisclosure";
 import { assessReleaseManifestReadiness } from "@/lib/releaseManifestReadiness";
+
+import { PublicRecordStatusBadge, RecordModeBadge } from "./StatusBadges";
 
 function formatToken(value: string): string {
   return value.replaceAll("_", " ");
@@ -93,9 +96,13 @@ export default function ReleaseManifestPanel() {
     <section className="space-y-6 rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
       <div className="space-y-2">
         <p className="font-mono text-xs uppercase tracking-[0.18em] text-stone-500">
-          Release gate
+          Release record
         </p>
         <h2 className="text-2xl font-semibold text-stone-950">Release manifest</h2>
+        <div className="flex flex-wrap gap-2">
+          <RecordModeBadge value={releaseManifest.recordMode} />
+          <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(releaseManifest.recordMode)} />
+        </div>
         <p className="max-w-3xl text-sm leading-6 text-stone-700">
           This surface records release posture, known limits, evidence-operating checks, structural readiness,
           correction posture, and right-of-reply posture. It does not sign a release, approve publication,
@@ -105,8 +112,7 @@ export default function ReleaseManifestPanel() {
 
       <div className={statusClass(releaseStatus)}>
         <p className="text-sm font-semibold">
-          Release readiness posture:{" "}
-          {releaseStatus === "pass" ? "Pass" : releaseStatus === "warning" ? "Review required" : "Blocked"}
+          Public status: {formatToken(getDefaultPublicRecordStatus(releaseManifest.recordMode))}
         </p>
         <div className="mt-3 grid gap-2 text-xs sm:grid-cols-4">
           <p><strong>Structural blockers:</strong> {structuralBlockerCount}</p>
@@ -124,8 +130,8 @@ export default function ReleaseManifestPanel() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">Claims</p>
           <p className="mt-2 text-2xl font-semibold text-stone-950">{releaseReadinessAssessment.totalClaims}</p>
           <p className="mt-1 text-xs text-stone-600">
-            {releaseReadinessAssessment.approvableClaims} approvable by local helper;{" "}
-            {releaseReadinessAssessment.nonApprovableClaims} require review.
+            {releaseReadinessAssessment.approvableClaims} meet structural checks;{" "}
+            {releaseReadinessAssessment.nonApprovableClaims} remain under review.
           </p>
         </article>
 
@@ -238,7 +244,7 @@ export default function ReleaseManifestPanel() {
           withdrawn states.
         </p>
         <p><strong>Approvals:</strong> {releaseManifest.approvedBy.join(", ")}</p>
-        <p><strong>Correction route:</strong> /pilot/corrections</p>
+        <p><strong>Correction route:</strong> /corrections</p>
       </div>
     </section>
   );

@@ -10,6 +10,16 @@ Temporal profiles are intended for disciplined foresight, not prediction.
 
 EEO studies human labor, knowledge, stewardship, rights, harm, and capability. It does **not** classify people as natural resources, assets, or inventory.
 
+## Authority and tracing boundary
+
+EEO distinguishes **evidence-supported tracing** from **physical chain of custody**. Evidence-supported tracing links a public statement to its evidence, source, method, limitations, and correction history. It does not prove the movement, custody, or product-level origin of physical material.
+
+Physical chain-of-custody claims require documented custody or transfer records appropriate to the material and claim. Production statistics, trade records, company disclosures, and spatial proximity do not establish that chain on their own. EEO may cite such records but does not certify them.
+
+EEO makes no legal finding and assigns no liability. It may report a judgment, order, allegation, or regulatory finding made by a competent authority only with the issuing authority, procedural status, scope, and limitations made clear.
+
+EEO's ethical principles guide its own stewardship, rights, consent, harm, public-benefit, and intergenerational analysis. They are not legal verdicts or compliance determinations. EEO's institutional authority is limited to its own evidence, review, disclosure, correction, and release practices; it is not judicial, regulatory, sovereign, territorial, or certifying authority.
+
 ## Knowledge-governance caution
 
 Knowledge held by Indigenous peoples, local communities, workers, or customary institutions is **not** automatically part of the public evidence commons. It may be described only under **authority**, **consent**, **context**, and **benefit** rules.
@@ -117,7 +127,7 @@ Correction submissions, triage state, reviewer notes, and activity logs currentl
 
 ## Public/private boundary
 
-Public surfaces may disclose governance status labels (stable/challenged/under_review/corrected/restricted/withdrawn), public-safe correction counts, source limitations, and publication limitations.
+Public surfaces may disclose institutional status labels (`released`, `under_review`, `corrected`, `challenged`, `withdrawn`, `restricted`), explicit record modes, public-safe correction counts, source limitations, and publication limitations.
 
 Public surfaces must not disclose reviewer notes, internal activity logs, reviewer identity, submitter email, private triage reasoning, sensitive harm-review details, restricted map coordinates, or whistleblower-identifying information.
 

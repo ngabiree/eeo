@@ -36,7 +36,7 @@ export default function TrustIndexPage() {
             — public summary aligned to repository stewardship rules.
           </li>
           <li>
-            <Link href="/pilot/corrections" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+            <Link href="/corrections" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
               Corrections
             </Link>{" "}
             — public factual challenge route.

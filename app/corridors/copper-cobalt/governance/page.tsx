@@ -9,14 +9,14 @@ export default function GovernanceProfilePage() {
         <PilotRouteNav />
         <h1 className="text-3xl font-semibold tracking-tight">Governance profile</h1>
         <p className="leading-7 text-stone-700">
-          This pilot shows governance context through released claims and corridor notes. It does not make legal
+          This corridor profile shows governance context through released claims and corridor notes. It does not make legal
           findings or claim adjudicatory authority.
         </p>
         <p className="text-sm text-stone-600">
           For claim-level governance posture, review the dossier and release manifest.
         </p>
         <div className="flex flex-wrap gap-3 text-sm">
-          <Link href="/pilot/evidence-dossier" className="underline">Open evidence dossier</Link>
+          <Link href="/corridors/copper-cobalt/dossier" className="underline">Open evidence dossier</Link>
           <Link href="/release" className="underline">Open release manifest</Link>
         </div>
       </div>

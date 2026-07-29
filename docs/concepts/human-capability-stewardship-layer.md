@@ -83,7 +83,7 @@ benefit, and leaves future generations with more capability rather than less.
 
 1. Add this doctrine document.
 2. Add typed model and synthetic sample data.
-3. Add `/pilot/human-capability` route.
+3. Add `/corridors/copper-cobalt/human-capability` route.
 4. Wire route into public navigation.
 5. **Later**, add Supabase-backed live-data tables for this layer only once **RLS**, **private (evidence and restricted) buckets**, **audit logs**, **release views**, and **review workflows** are in place. Until then the public surface stays synthetic. Live governed data belongs in Postgres and storage—not in this Git repository.
 

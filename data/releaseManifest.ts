@@ -2,6 +2,7 @@ import type { ReleaseManifest } from "@/types/eeo";
 
 export const releaseManifest: ReleaseManifest = {
   id: "REL-CC-001",
+  recordMode: "illustrative",
   title: "Copper-Cobalt corridor public record",
   corridor: "Copper-Cobalt Critical Minerals Corridor",
   releaseDate: "2026-04-27",

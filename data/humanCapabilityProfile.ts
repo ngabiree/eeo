@@ -2,12 +2,13 @@ import type { HumanCapabilityProfile } from "@/types/humanLayer";
 
 export const humanCapabilityProfile: HumanCapabilityProfile = {
   id: "HCP-CM-0001",
+  recordMode: "synthetic",
   title: "Human Capability, Labor, Stewardship, and Relationship Layer",
-  corridor: "Critical minerals corridor pilot",
+  corridor: "Critical minerals corridor",
   doctrine:
     "Human beings are not Earth endowments. They are rights-bearing, knowledge-bearing, laboring, creative, governing, ecological, cultural, and intergenerational agents within endowment systems.",
   publicSummary:
-    "This pilot profile shows how EEO can describe human capability, labor, ingenuity, ecological relationship, harm exposure, public benefit, and stewardship without reducing people to resources or publishing sensitive community data.",
+    "This corridor profile shows how EEO can describe human capability, labor, ingenuity, ecological relationship, harm exposure, public benefit, and stewardship without reducing people to resources or publishing sensitive community data.",
   operatingPrinciple:
     "EEO should be live where evidence is governed, and restrained where evidence is exposed.",
   redLines: [
@@ -23,13 +24,14 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
   capabilityIndicators: [
     {
       id: "CAP-001",
+      recordMode: "synthetic",
       family: "technical",
       label: "Technical capability",
       valueStatement:
         "Synthetic placeholder for local technical skills relevant to extraction, repair, monitoring, logistics, and processing.",
       geography: "corridor-level",
-      temporalScope: "pilot",
-      sourceSummary: "Pilot preview demonstration data.",
+      temporalScope: "demonstration period",
+      sourceSummary: "Synthetic demonstration data.",
       confidence: "insufficient",
       exposureRisk: "low",
       publicationDecision: "publish",
@@ -38,13 +40,14 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "CAP-002",
+      recordMode: "synthetic",
       family: "ecological_knowledge",
       label: "Ecological knowledge",
       valueStatement:
         "Synthetic placeholder for seasonal, land, water, and place-based knowledge that may sustain or warn about endowment condition.",
       geography: "aggregated corridor context",
-      temporalScope: "pilot",
-      sourceSummary: "Pilot preview demonstration data.",
+      temporalScope: "demonstration period",
+      sourceSummary: "Synthetic demonstration data.",
       confidence: "insufficient",
       exposureRisk: "restricted",
       publicationDecision: "publish_aggregated",
@@ -53,13 +56,14 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "CAP-003",
+      recordMode: "synthetic",
       family: "civic",
       label: "Worker and community voice",
       valueStatement:
         "Synthetic placeholder for whether workers and nearby communities have safe channels to contest harm, correct claims, and influence outcomes.",
       geography: "corridor-level",
-      temporalScope: "pilot",
-      sourceSummary: "Pilot preview demonstration data.",
+      temporalScope: "demonstration period",
+      sourceSummary: "Synthetic demonstration data.",
       confidence: "insufficient",
       exposureRisk: "medium",
       publicationDecision: "publish_aggregated",
@@ -70,17 +74,19 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
   bioculturalRelations: [
     {
       id: "REL-001",
+      recordMode: "synthetic",
       relationType: "labor",
       publicLabel: "Labor relation",
       publicSummary:
         "People transform endowments through extraction, transport, processing, monitoring, repair, administration, and care work.",
       disclosureRule: "contextual_public",
-      authorityOrConsentStatus: "Not applicable in this pilot preview.",
+      authorityOrConsentStatus: "Not applicable to this illustrative record.",
       limitation:
         "Labor claims require wage, safety, informality, coercion-risk, and worker-voice evidence before public use.",
     },
     {
       id: "REL-002",
+      recordMode: "synthetic",
       relationType: "stewardship",
       publicLabel: "Stewardship relation",
       publicSummary:
@@ -93,6 +99,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "REL-003",
+      recordMode: "synthetic",
       relationType: "harm_exposure",
       publicLabel: "Harm exposure relation",
       publicSummary:
@@ -104,12 +111,13 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "REL-004",
+      recordMode: "synthetic",
       relationType: "future_inheritance",
       publicLabel: "Future inheritance relation",
       publicSummary:
         "Children and future generations inherit either strengthened capability, restored ecosystems, depleted endowments, or unresolved liabilities.",
       disclosureRule: "contextual_public",
-      authorityOrConsentStatus: "Not applicable in this pilot preview.",
+      authorityOrConsentStatus: "Not applicable to this illustrative record.",
       limitation:
         "Future-generation claims should remain normative and analytical, not legal adjudications.",
     },
@@ -117,6 +125,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
   liveEvidenceBoundaries: [
     {
       id: "LIVE-001",
+      recordMode: "synthetic",
       workType: "Raw evidence files",
       liveSupported: true,
       belongsIn: "Private evidence-vault bucket with audit logging",
@@ -125,6 +134,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "LIVE-002",
+      recordMode: "synthetic",
       workType: "Restricted files and reviewer notes",
       liveSupported: true,
       belongsIn: "Restricted review workspace and private schema",
@@ -133,6 +143,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "LIVE-003",
+      recordMode: "synthetic",
       workType: "Sensitive geospatial data",
       liveSupported: true,
       belongsIn: "Restricted PostGIS layers and map-safety review workflow",
@@ -141,6 +152,7 @@ export const humanCapabilityProfile: HumanCapabilityProfile = {
     },
     {
       id: "LIVE-004",
+      recordMode: "synthetic",
       workType: "Released public claims",
       liveSupported: true,
       belongsIn: "Public released views",

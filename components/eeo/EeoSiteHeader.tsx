@@ -87,10 +87,10 @@ export default function EeoSiteHeader() {
             </nav>
             <div className="flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end md:w-auto md:justify-end">
               <span className="inline-flex min-h-10 items-center justify-center rounded-full border border-[color:var(--eeo-border)] bg-[color:var(--eeo-green-soft)] px-3 text-center text-xs font-semibold uppercase tracking-[0.12em] text-[color:var(--eeo-green-dark)]">
-                Public Evidence Preview
+                Public Evidence Observatory
               </span>
               <Link
-                href="/pilot/corridor"
+                href="/corridors/copper-cobalt"
                 onClick={() => setMenuOpen(false)}
                 className="inline-flex min-h-11 items-center justify-center rounded-full bg-[color:var(--eeo-primary)] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2 active:scale-[0.99]"
               >

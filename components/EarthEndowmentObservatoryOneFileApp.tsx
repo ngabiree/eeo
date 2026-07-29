@@ -1297,7 +1297,7 @@ function Methods() {
     ["Labor", "Labor data may be national, sectoral, or modeled rather than site-specific; informal work may be undercounted."],
     ["Public revenue", "Disclosed public revenue does not establish durable public benefit."],
     ["Ecology", "Spatial proximity does not establish causation without additional evidence."],
-    ["Legal", "EEO makes no legal finding unless citing a competent authority’s finding."],
+    ["Legal", "EEO does not issue legal findings; it reports competent-authority findings with source, status, scope, and limits."],
   ];
   return (
     <div className="space-y-8">
@@ -1505,7 +1505,7 @@ const RELEASE_MANIFEST = {
   signed_by: null,
   signed_at: null,
   method_note_path: "/docs/evidence-standard.md",
-  correction_route_path: "/pilot/corrections",
+  correction_route_path: "/corrections",
   manifest_hash: null,
 };
 

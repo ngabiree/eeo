@@ -8,6 +8,7 @@ import type { Claim, EvidenceItem, Source } from "@/types/eeo";
 
 const baseSource: Source = {
   id: "SRC-TEST-001",
+  recordMode: "illustrative",
   title: "Test source",
   publisher: "Test publisher",
   sourceType: "government",
@@ -17,6 +18,7 @@ const baseSource: Source = {
 
 const baseEvidenceItem: EvidenceItem = {
   id: "EVID-TEST-001",
+  recordMode: "illustrative",
   sourceId: "SRC-TEST-001",
   title: "Test evidence",
   summary: "Test evidence summary.",
@@ -30,6 +32,7 @@ const baseEvidenceItem: EvidenceItem = {
 
 const baseClaim: Claim = {
   id: "CLAIM-TEST-001",
+  recordMode: "synthetic",
   title: "Test claim",
   plainLanguageClaim: "Available public evidence indicates a test condition.",
   claimType: "descriptive",

@@ -53,24 +53,24 @@ Launch gate:
 - Must clearly state limits of evidence and authority.
 - Must avoid “prototype” language where it undermines public trust, except where describing demonstration-only data.
 
-### Class B — Corridor MVP public routes
+### Class B — Corridor public routes
 
 These routes make the limited corridor visible.
 
 Expected routes:
 
-- `/pilot`
-- `/pilot/corridor`
-- `/pilot/evidence-dossier`
-- `/pilot/evidence-ledger`
-- `/pilot/governance-profile`
-- `/pilot/value-chain`
-- `/pilot/labor-ecology-revenue`
-- `/pilot/human-capability`
-- `/pilot/claim-lifecycle`
-- `/pilot/methods-and-limits`
-- `/pilot/safeguards`
-- `/pilot/corrections`
+- `/corridors/copper-cobalt`
+- `/corridors/copper-cobalt/system`
+- `/corridors/copper-cobalt/dossier`
+- `/evidence-ledger`
+- `/corridors/copper-cobalt/governance`
+- `/corridors/copper-cobalt/value-chain`
+- `/corridors/copper-cobalt/labor-ecology-revenue`
+- `/corridors/copper-cobalt/human-capability`
+- `/corridors/copper-cobalt/claim-lifecycle`
+- `/methods`
+- `/safeguards`
+- `/corrections`
 
 Launch gate:
 
@@ -122,10 +122,11 @@ Expected routes:
 - `/dossier`
 - `/evidence`
 - `/corridor`
+- `/pilot/*`
 
 Launch gate:
 
-- Should redirect or clearly align with canonical `/pilot/*` routes.
+- Should redirect or clearly align with stable public routes.
 - Should not contain conflicting public copy.
 - Should not preserve outdated “prototype” or “pilot hub” language if visible to the public.
 

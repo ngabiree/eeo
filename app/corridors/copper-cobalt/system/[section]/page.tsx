@@ -1,13 +1,13 @@
 import { notFound, redirect } from "next/navigation";
 
 const corridorSectionRedirects = {
-  "historical-record": "/pilot/corridor?expand=historical-record",
-  "evidence-gaps": "/pilot/corridor?expand=evidence-gaps",
-  "shared-inquiry-field": "/pilot/corridor?expand=shared-inquiry-field",
-  "ecology-system": "/pilot/corridor?expand=ecology-system",
-  "water-system": "/pilot/corridor?expand=water-system",
-  "human-governance-system": "/pilot/corridor?expand=human-governance-system",
-  "restoration-pathway": "/pilot/corridor?expand=restoration-pathway",
+  "historical-record": "/corridors/copper-cobalt/system?expand=historical-record",
+  "evidence-gaps": "/corridors/copper-cobalt/system?expand=evidence-gaps",
+  "shared-inquiry-field": "/corridors/copper-cobalt/system?expand=shared-inquiry-field",
+  "ecology-system": "/corridors/copper-cobalt/system?expand=ecology-system",
+  "water-system": "/corridors/copper-cobalt/system?expand=water-system",
+  "human-governance-system": "/corridors/copper-cobalt/system?expand=human-governance-system",
+  "restoration-pathway": "/corridors/copper-cobalt/system?expand=restoration-pathway",
 } as const;
 
 type CorridorSection = keyof typeof corridorSectionRedirects;

@@ -5,6 +5,7 @@ import type { Claim } from "@/types/eeo";
 
 const baseClaim: Claim = {
   id: "CLAIM-TEST-001",
+  recordMode: "synthetic",
   title: "Test claim",
   plainLanguageClaim: "A test-only claim fixture.",
   claimType: "descriptive",

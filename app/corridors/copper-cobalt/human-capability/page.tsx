@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 
 import { humanCapabilityProfile } from "@/data/humanCapabilityProfile";
+import { getDefaultPublicRecordStatus } from "@/lib/recordDisclosure";
 
 import PilotRouteNav from "@/components/eeo/PilotRouteNav";
+import { PublicRecordStatusBadge, RecordModeBadge } from "@/components/eeo/StatusBadges";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -26,6 +28,10 @@ export default function HumanCapabilityPage() {
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-[color:var(--eeo-muted)]">
             Human Capability Layer
           </p>
+          <div className="flex flex-wrap gap-2">
+            <RecordModeBadge value={humanCapabilityProfile.recordMode} />
+            <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(humanCapabilityProfile.recordMode)} />
+          </div>
           <h1 className="max-w-4xl font-serif text-4xl font-semibold leading-tight tracking-tight text-[color:var(--eeo-ink)] md:text-5xl">
             Humans are not resources. They are rights-bearing agents in relation to Earth&apos;s endowments.
           </h1>
@@ -58,6 +64,10 @@ export default function HumanCapabilityPage() {
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--eeo-muted)]">
                   {formatToken(indicator.family)}
                 </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <RecordModeBadge value={indicator.recordMode} />
+                  <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(indicator.recordMode)} />
+                </div>
                 <h3 className="mt-2 text-lg font-semibold text-[color:var(--eeo-ink)]">{indicator.label}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-[color:var(--eeo-text)]">
                   {indicator.valueStatement}
@@ -90,6 +100,10 @@ export default function HumanCapabilityPage() {
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[color:var(--eeo-muted)]">
                   {formatToken(relation.relationType)}
                 </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <RecordModeBadge value={relation.recordMode} />
+                  <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(relation.recordMode)} />
+                </div>
                 <h3 className="mt-2 text-lg font-semibold text-[color:var(--eeo-ink)]">{relation.publicLabel}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-[color:var(--eeo-text)]">
                   {relation.publicSummary}
@@ -125,6 +139,10 @@ export default function HumanCapabilityPage() {
                   <span className="rounded-full border border-[color:var(--eeo-border)] bg-white px-3 py-1 text-xs font-medium text-[color:var(--eeo-text)]">
                     {boundary.publicByDefault ? "Public by default" : "Private by default"}
                   </span>
+                </div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  <RecordModeBadge value={boundary.recordMode} />
+                  <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(boundary.recordMode)} />
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-[color:var(--eeo-text)]">
                   <strong>Belongs in:</strong> {boundary.belongsIn}

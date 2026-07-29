@@ -11,7 +11,7 @@ export default function PilotClaimLifecyclePage() {
             Claim lifecycle (mock data)
           </h1>
           <p className="max-w-3xl leading-relaxed text-[color:var(--eeo-text)]">
-            A single-thread illustration of the MVP publication chain: how stewarded sources and evidence rows connect to
+            A single-thread illustration of the governed publication chain: how stewarded sources and evidence rows connect to
             one reviewed public claim, then to the release bundle and public surfaces. All identifiers and statuses are
             synthetic examples.
           </p>

@@ -2,6 +2,7 @@ import type {
   ConfidenceLevel,
   ExposureRisk,
   PublicationDecision,
+  RecordMode,
   ReviewStatus,
 } from "@/types/eeo";
 
@@ -36,6 +37,7 @@ export type HumanLayerDisclosureRule =
 
 export interface CapabilityIndicator {
   id: string;
+  recordMode: RecordMode;
   family: CapabilityFamily;
   label: string;
   valueStatement: string;
@@ -50,6 +52,7 @@ export interface CapabilityIndicator {
 
 export interface BioculturalRelation {
   id: string;
+  recordMode: RecordMode;
   relationType: HumanEndowmentRelationType;
   publicLabel: string;
   publicSummary: string;
@@ -60,6 +63,7 @@ export interface BioculturalRelation {
 
 export interface LiveEvidenceBoundary {
   id: string;
+  recordMode: RecordMode;
   workType: string;
   liveSupported: boolean;
   belongsIn: string;
@@ -69,6 +73,7 @@ export interface LiveEvidenceBoundary {
 
 export interface HumanCapabilityProfile {
   id: string;
+  recordMode: RecordMode;
   title: string;
   corridor: string;
   doctrine: string;

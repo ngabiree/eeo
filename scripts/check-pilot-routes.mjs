@@ -1,17 +1,26 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
 const ROOT = process.cwd();
 const TARGET_DIRS = ["app", "components"];
 const FILE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx"]);
-const LEGACY_SEGMENTS = ["dossier", "evidence", "methods", "safeguards", "corrections", "corridor"];
-const legacyRoutePattern = new RegExp(`["']\\/(${LEGACY_SEGMENTS.join("|")})(?:["'/?#])`, "g");
-/**
- * Optional path-prefix allowlist for intentional legacy-route references.
- * Keep this list short and explicit; default stays strict.
- * Example: ["app/legacy-notices/"]
- */
-const ALLOWED_FILE_PREFIXES = [];
+const legacyPilotRoutePattern = /["']\/pilot(?:["'/?#])/g;
+const REQUIRED_LEGACY_REDIRECTS = new Map([
+  ["/pilot", "/corridors/copper-cobalt"],
+  ["/pilot/corridor", "/corridors/copper-cobalt/system"],
+  ["/pilot/corridor/:section", "/corridors/copper-cobalt/system/:section"],
+  ["/pilot/evidence-dossier", "/corridors/copper-cobalt/dossier"],
+  ["/pilot/evidence-ledger", "/evidence-ledger"],
+  ["/pilot/governance-profile", "/corridors/copper-cobalt/governance"],
+  ["/pilot/human-capability", "/corridors/copper-cobalt/human-capability"],
+  ["/pilot/claim-lifecycle", "/corridors/copper-cobalt/claim-lifecycle"],
+  ["/pilot/labor-ecology-revenue", "/corridors/copper-cobalt/labor-ecology-revenue"],
+  ["/pilot/value-chain", "/corridors/copper-cobalt/value-chain"],
+  ["/pilot/methods-and-limits", "/methods"],
+  ["/pilot/safeguards", "/safeguards"],
+  ["/pilot/corrections", "/corrections"],
+]);
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -35,27 +44,43 @@ async function walk(directory) {
 const violations = [];
 
 for (const dir of TARGET_DIRS) {
-  const absoluteDir = path.join(ROOT, dir);
-  const files = await walk(absoluteDir);
+  const files = await walk(path.join(ROOT, dir));
   for (const file of files) {
-    const relPath = path.relative(ROOT, file);
-    if (ALLOWED_FILE_PREFIXES.some((prefix) => relPath.startsWith(prefix))) {
-      continue;
-    }
     const content = await readFile(file, "utf8");
-    const matches = [...content.matchAll(legacyRoutePattern)];
-    for (const match of matches) {
-      violations.push({ file: relPath, route: match[1] });
+    if (legacyPilotRoutePattern.test(content)) {
+      violations.push(path.relative(ROOT, file));
     }
+    legacyPilotRoutePattern.lastIndex = 0;
   }
 }
 
 if (violations.length > 0) {
-  console.error("Legacy public route references detected. Use canonical /pilot/* routes instead:");
-  for (const v of violations) {
-    console.error(`- ${v.file}: /${v.route}`);
+  console.error("Legacy /pilot route references detected. Use stable public routes instead:");
+  for (const file of violations) {
+    console.error(`- ${file}`);
   }
   process.exit(1);
 }
 
-console.log("Pilot route check passed: no legacy public route references found.");
+const configUrl = pathToFileURL(path.join(ROOT, "next.config.mjs")).href;
+const { default: nextConfig } = await import(configUrl);
+const configuredRedirects = await nextConfig.redirects();
+const missingRedirects = [...REQUIRED_LEGACY_REDIRECTS].filter(
+  ([source, destination]) =>
+    !configuredRedirects.some(
+      (redirect) =>
+        redirect.source === source &&
+        redirect.destination === destination &&
+        redirect.permanent === true,
+    ),
+);
+
+if (missingRedirects.length > 0) {
+  console.error("Required permanent legacy redirects are missing or incorrect:");
+  for (const [source, destination] of missingRedirects) {
+    console.error(`- ${source} -> ${destination}`);
+  }
+  process.exit(1);
+}
+
+console.log("Public route check passed: stable links and permanent /pilot redirects are in place.");

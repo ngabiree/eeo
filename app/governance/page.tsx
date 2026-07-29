@@ -20,7 +20,7 @@ export default function GovernancePage() {
           Disclosure Policy
         </Link>{" "}
         summary and{" "}
-        <Link href="/pilot/safeguards" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+        <Link href="/safeguards" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Safeguards
         </Link>
         .

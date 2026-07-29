@@ -3,6 +3,7 @@ import type { Entity } from "@/types/eeo";
 export const entities: Entity[] = [
   {
     id: "ENT-DRC",
+    recordMode: "illustrative",
     name: "Democratic Republic of the Congo",
     entityType: "jurisdiction",
     jurisdiction: "DRC",
@@ -13,6 +14,7 @@ export const entities: Entity[] = [
   },
   {
     id: "ENT-COBALT",
+    recordMode: "illustrative",
     name: "Cobalt",
     entityType: "resource",
     caveats: [

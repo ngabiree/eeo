@@ -23,13 +23,13 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
-                href="/pilot/corridor"
+                href="/corridors/copper-cobalt"
                 className="rounded-full bg-[color:var(--eeo-primary)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2"
               >
                 Explore Copper-Cobalt Corridor
               </Link>
               <Link
-                href="/pilot/evidence-ledger"
+                href="/evidence-ledger"
                 className="rounded-full border border-[color:var(--eeo-primary)] px-6 py-3 text-sm font-semibold text-[color:var(--eeo-primary)] transition hover:bg-[color:var(--eeo-green-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2"
               >
                 Inspect Evidence Ledger
@@ -37,7 +37,7 @@ export default function HomePage() {
             </div>
             <div className="eeo-prose-tight rounded-2xl border border-[color:var(--eeo-border)] bg-white/60 px-4 py-4 text-sm leading-relaxed text-[color:var(--eeo-muted)] md:px-5">
               <p className="font-medium text-[color:var(--eeo-text)]">
-                Public evidence preview · Some records may be synthetic or demonstration-only. No public data release is implied unless a signed release manifest is present.
+                Public Evidence Observatory · Some records may be synthetic or demonstration-only. No public data release is implied unless a signed release manifest is present.
               </p>
               <p className="mt-2 border-t border-[color:var(--eeo-border)] pt-2 font-medium text-[color:var(--eeo-text)]">
                 A public observatory for natural endowments, human dependency, stewardship, and accountability.

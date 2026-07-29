@@ -273,7 +273,7 @@ function Chain() {
 
 const BRAND_DOCTRINE = [
   {
-    title: "Reveal the chain",
+    title: "Trace the evidence",
     body: "Make value pathways visible from endowment to public-benefit question.",
     icon: Eye,
     tone: "blue",
@@ -609,7 +609,7 @@ function Methods() {
     ["Labor", "Labor data may be national, sectoral, or modeled rather than site-specific; informal work may be undercounted."],
     ["Public revenue", "Disclosed public revenue does not prove durable public benefit."],
     ["Ecology", "Spatial proximity does not prove causation without additional evidence."],
-    ["Legal", "EEO makes no legal finding unless citing a competent authority’s finding."],
+    ["Legal", "EEO does not issue legal findings; it reports competent-authority findings with source, status, scope, and limits."],
   ];
   return (
     <div className="space-y-8">

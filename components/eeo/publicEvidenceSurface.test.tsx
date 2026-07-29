@@ -34,6 +34,9 @@ describe("public evidence surfaces", () => {
     const html = renderToStaticMarkup(<ReleaseManifestPanel />);
     expect(html).toContain("Correction/governance summary:");
     expect(html).toContain("total correction submissions");
+    expect(html).toContain("Record mode: Illustrative");
+    expect(html).toContain("Public status: Under Review");
+    expect(html).not.toContain("Public status: Blocked");
     expect(html).not.toContain("SECRET_REVIEWER_NOTE_SHOULD_NOT_APPEAR_ON_PUBLIC");
     expect(html).not.toContain("Latest triage note");
     expect(html).not.toContain("Activity history");
@@ -61,6 +64,9 @@ describe("public evidence surfaces", () => {
       <ClaimCard claim={sampleClaim} correctionSummary={summary} />
     );
     expect(html).toContain("Claim governance");
+    expect(html).toContain("Record mode: Synthetic");
+    expect(html).toContain("Public status: Under Review");
+    expect(html).not.toContain("approved_for_release");
     expect(html).not.toContain("SHOULD_NOT_LEAK_TO_PUBLIC_CARD");
     expect(html).not.toContain("Activity history");
     expect(html).not.toContain("Reviewer note");

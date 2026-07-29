@@ -2,8 +2,10 @@ import Link from "next/link";
 
 import EvidenceLedger from "@/components/eeo/EvidenceLedger";
 import PilotRouteNav from "@/components/eeo/PilotRouteNav";
+import { PublicRecordStatusBadge, RecordModeBadge } from "@/components/eeo/StatusBadges";
 import { evidenceItems } from "@/data/evidence";
 import { sources } from "@/data/sources";
+import { getDefaultPublicRecordStatus } from "@/lib/recordDisclosure";
 
 export default function PilotEvidenceLedgerPage() {
   return (
@@ -31,17 +33,21 @@ export default function PilotEvidenceLedgerPage() {
 
         <section className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
           <h2 className="text-xl font-semibold">Source list</h2>
-          <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-stone-700">
+          <ul className="mt-3 space-y-2 text-sm text-stone-700">
             {sources.map((source) => (
-              <li key={source.id}>
-                {source.title} ({source.publisher}) — {source.sourceType}
+              <li key={source.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span>{source.title} ({source.publisher}) — {source.sourceType}</span>
+                  <RecordModeBadge value={source.recordMode} />
+                  <PublicRecordStatusBadge value={getDefaultPublicRecordStatus(source.recordMode)} />
+                </div>
               </li>
             ))}
           </ul>
           <p className="mt-4 text-xs text-[color:var(--eeo-muted)]">Evidence records in this ledger: {evidenceItems.length}</p>
         </section>
 
-        <Link href="/pilot/evidence-dossier" className="text-sm underline">
+        <Link href="/corridors/copper-cobalt/dossier" className="text-sm underline">
           Back to claim cards
         </Link>
       </div>

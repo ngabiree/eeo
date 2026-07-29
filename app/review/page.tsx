@@ -300,7 +300,7 @@ export default async function ReviewPage() {
                   </div>
                   {submission.claimId ? (
                     <p className="mt-2 text-xs text-stone-500">
-                      <Link className="underline" href="/pilot/evidence-dossier">
+                      <Link className="underline" href="/corridors/copper-cobalt/dossier">
                         Open dossier claims
                       </Link>
                     </p>

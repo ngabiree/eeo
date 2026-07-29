@@ -12,10 +12,10 @@ export default function PilotHubRouteList() {
       className="rounded-3xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.78)] p-6 shadow-sm backdrop-blur-sm"
     >
       <h2 id="pilot-hub-routes-heading" className="text-lg font-semibold text-[color:var(--eeo-ink)]">
-        All corridor prototype pages
+        All corridor pages
       </h2>
       <p className="mt-2 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
-        The site header shows common public paths; this index lists the full pilot surface for exploring evidence,
+        The site header shows common public paths; this index lists the full corridor surface for exploring evidence,
         methods, safeguards, and correction routes.
       </p>
       <ul className="mt-4 grid gap-2 sm:grid-cols-2">

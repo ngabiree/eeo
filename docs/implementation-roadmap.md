@@ -56,12 +56,12 @@ Definition of done:
 
 ## Sprint 1: Canonical public framing
 
-Goal: ensure the public landing and pilot hub explain EEO plainly and safely.
+Goal: ensure the public landing and corridor overview explain EEO plainly and safely.
 
 Likely files:
 
 - `app/page.tsx`
-- `app/pilot/page.tsx`
+- `app/corridors/copper-cobalt/page.tsx`
 - `lib/pilotPublicNav.ts`
 - `components/eeo/*`
 - relevant docs under `docs/`
@@ -80,9 +80,9 @@ Goal: make the first corridor dossier navigable as the central public product ob
 
 Likely files:
 
-- `app/pilot/corridor/*`
-- `app/pilot/evidence-dossier/*`
-- `app/pilot/evidence-ledger/*`
+- `app/corridors/copper-cobalt/system/*`
+- `app/corridors/copper-cobalt/dossier/*`
+- `app/evidence-ledger/*`
 - `data/corridorDossier.ts`
 - `types/corridorDossier.ts`
 - `components/eeo/*`

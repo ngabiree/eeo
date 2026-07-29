@@ -10,7 +10,7 @@ export default function PilotLaborEcologyRevenuePage() {
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-10 md:px-6">
         <PilotRouteNav />
         <header className="rounded-3xl border border-stone-200 bg-white/80 p-6 shadow-sm">
-          <h1 className="text-3xl font-semibold tracking-tight">Pilot labor, ecology, and revenue panel</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Corridor labor, ecology, and revenue panel</h1>
           <p className="mt-2 leading-7 text-stone-700">
             This panel foregrounds evidence limitations: labor risk indicators, ecological signals, and public-revenue
             context are not interchangeable proof and should not be read as legal findings.
@@ -31,7 +31,7 @@ export default function PilotLaborEcologyRevenuePage() {
 
         <p className="text-sm text-stone-600">
           Continue to the{" "}
-          <Link href="/pilot/methods-and-limits" className="underline">
+          <Link href="/methods" className="underline">
             methods and limits
           </Link>{" "}
           page for evidence-layer and confidence interpretation.

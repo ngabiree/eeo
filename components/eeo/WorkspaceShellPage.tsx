@@ -150,7 +150,7 @@ export default async function WorkspaceShellPage({ title }: { title: string }) {
             </p>
           </Link>
           <Link
-            href="/pilot/evidence-dossier"
+            href="/corridors/copper-cobalt/dossier"
             className="rounded-3xl border border-stone-200 bg-white/80 p-5 shadow-sm hover:bg-stone-50"
           >
             <p className="text-sm font-semibold text-stone-950">Public evidence dossier</p>
