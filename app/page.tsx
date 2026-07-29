@@ -37,7 +37,7 @@ export default function HomePage() {
             </div>
             <div className="eeo-prose-tight rounded-2xl border border-[color:var(--eeo-border)] bg-white/60 px-4 py-4 text-sm leading-relaxed text-[color:var(--eeo-muted)] md:px-5">
               <p className="font-medium text-[color:var(--eeo-text)]">
-                Public evidence preview · Some records may be synthetic or demonstration-only. No public data release is implied unless a signed release manifest is present.
+                Public Evidence Observatory · Some records may be synthetic or demonstration-only. No public data release is implied unless a signed release manifest is present.
               </p>
               <p className="mt-2 border-t border-[color:var(--eeo-border)] pt-2 font-medium text-[color:var(--eeo-text)]">
                 A public observatory for natural endowments, human dependency, stewardship, and accountability.

@@ -10,7 +10,7 @@ export default function RightOfReplyPage() {
         response—not as a concession that any claim is defamatory, but as civic discipline for high-stakes public records.
       </p>
       <p>
-        The pilot correction route collects structured challenges, factual corrections, and safety concerns; material that qualifies as right-of-reply under internal release rules should typically be lodged there alongside evidence links whenever possible so review can trace claims to sources.
+        The correction route collects structured challenges, factual corrections, and safety concerns; material that qualifies as right-of-reply under internal release rules should typically be lodged there alongside evidence links whenever possible so review can trace claims to sources.
       </p>
       <p>
         <Link href="/pilot/corrections" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">

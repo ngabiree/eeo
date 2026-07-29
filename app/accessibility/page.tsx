@@ -31,7 +31,7 @@ export default function AccessibilityPage() {
         <p>
           As of <strong>{year}</strong>, the Observatory does <strong>not</strong> publish an independent third-party accessibility audit
           report, WCAG conformance claim with full test evidence, or remediated issue register on this domain. Engineering and editorial
-          practices aim toward the target above; gaps may remain, especially in rapidly iterated pilot interfaces, embedded media, and
+          practices aim toward the target above; gaps may remain, especially in recently introduced interfaces, embedded media, and
           complex data tables.
         </p>
         <p>
@@ -69,7 +69,7 @@ export default function AccessibilityPage() {
             Contact
           </Link>{" "}
           with &ldquo;Accessibility&rdquo; noted in the message. Maintainership should triage serious blockers on a best-effort basis
-          appropriate to pilot resourcing; production programs should publish a target response window.
+          appropriate to current resourcing; mature programs should publish a target response window.
         </p>
       </section>
     </InstitutionalArticle>

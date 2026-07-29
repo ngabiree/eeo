@@ -16,7 +16,7 @@ export default function ClaimLifecyclePanel() {
   if (!claim) {
     return (
       <p className="text-sm text-[color:var(--eeo-muted)]">
-        No demonstration claims are currently loaded in this pilot build.
+        No demonstration claims are currently loaded in this corridor record.
       </p>
     );
   }
@@ -165,7 +165,7 @@ export default function ClaimLifecyclePanel() {
     {
       id: "manifest",
       title: "Release manifest",
-      illustrativeNote: "Bundle of what this pilot release includes and its stated limitations.",
+      illustrativeNote: "Bundle of what this release record includes and its stated limitations.",
       body: (
         <div className="mt-2 rounded-xl border border-[color:var(--eeo-border)] bg-white/70 px-3 py-2 text-sm">
           <div className="font-mono text-xs text-[color:var(--eeo-muted)]">{releaseManifest.id}</div>
@@ -190,7 +190,7 @@ export default function ClaimLifecyclePanel() {
             href="/pilot/evidence-dossier"
             className="font-medium text-[color:var(--eeo-primary)] underline underline-offset-2 hover:text-[color:var(--eeo-primary-dark)]"
           >
-            Open the pilot evidence dossier
+            Open the corridor evidence dossier
           </Link>{" "}
           <span className="text-[color:var(--eeo-muted)]">(same sample claim cards)</span>
         </p>
@@ -199,7 +199,7 @@ export default function ClaimLifecyclePanel() {
     {
       id: "corrections",
       title: "Correction route",
-      illustrativeNote: "Public intake for challenges and corrections — triage is pilot-build only.",
+      illustrativeNote: "Public intake for challenges and corrections; current triage handling is limited.",
       body: (
         <p className="mt-2 text-sm">
           <Link
@@ -223,7 +223,7 @@ export default function ClaimLifecyclePanel() {
           Demonstration-data claim lifecycle (one reviewed public claim)
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-[color:var(--eeo-muted)]">
-          Evidence lifecycle preview: demonstration data shows how identifiers chain from stewarded sources through evidence and
+          Evidence lifecycle illustration: demonstration data shows how identifiers chain from stewarded sources through evidence and
           review-shaped fields to the public dossier and correction route. This is not a public data release, legal
           finding surface, or global atlas.
         </p>

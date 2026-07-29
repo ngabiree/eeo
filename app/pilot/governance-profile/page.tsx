@@ -9,7 +9,7 @@ export default function GovernanceProfilePage() {
         <PilotRouteNav />
         <h1 className="text-3xl font-semibold tracking-tight">Governance profile</h1>
         <p className="leading-7 text-stone-700">
-          This pilot shows governance context through released claims and corridor notes. It does not make legal
+          This corridor profile shows governance context through released claims and corridor notes. It does not make legal
           findings or claim adjudicatory authority.
         </p>
         <p className="text-sm text-stone-600">

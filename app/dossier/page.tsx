@@ -30,7 +30,7 @@ export default function DossierPage() {
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[color:var(--eeo-ink)]">{dossier.title}</h1>
           <p className="mt-3 leading-7 text-[color:var(--eeo-text)]">{dossier.scopeStatement}</p>
           <p className="mt-2 text-sm text-[color:var(--eeo-muted)]">
-            Prototype structure only. This dossier view does not yet make substantive corridor assertions.
+            Illustrative structure only. This dossier view does not yet make substantive corridor assertions.
           </p>
         </header>
 
@@ -74,7 +74,7 @@ export default function DossierPage() {
                 <p className="mt-2 text-sm text-stone-700">{section.summary}</p>
                 {section.status === "not_started" ? (
                   <div className="mt-2 text-xs text-stone-600">
-                    <p>Known: Not yet established in this prototype.</p>
+                    <p>Known: Not yet established in this record.</p>
                     <p>Unknown: Pending source integration.</p>
                     <p>Evidence: Not yet linked.</p>
                     <p>Risk: Avoid inference without evidence.</p>

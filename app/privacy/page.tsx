@@ -19,12 +19,12 @@ export default function PrivacyPage() {
 
       <section className="space-y-3" aria-labelledby="privacy-scope">
         <h2 id="privacy-scope" className="text-base font-semibold text-[color:var(--eeo-ink)]">
-          Scope: pilot versus production
+          Scope of this notice
         </h2>
         <p>
           Today the site is <strong>predominantly informational</strong> and may include <strong>demonstration</strong> data and interfaces
-          for review. Pilot deployments may use simplified persistence and hosting defaults. A future production privacy program should
-          supersede pilot summaries with versioned policy documents and change logs.
+          for review. Current deployments may use simplified persistence and hosting defaults. A mature privacy program should
+          supersede this notice with versioned policy documents and change logs.
         </p>
       </section>
 
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
 
       <section className="space-y-3" aria-labelledby="privacy-retention">
         <h2 id="privacy-retention" className="text-base font-semibold text-[color:var(--eeo-ink)]">
-          Retention (pilot)
+          Retention
         </h2>
         <p>
           Retention for logs and triage records should be governed by deploy environment policy and maintainership decisions. As of{" "}
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
           Rights and requests
         </h2>
         <p>
-          Depending on your location, you may have rights to access, correct, delete, or restrict certain processing. This pilot notice does
+          Depending on your location, you may have rights to access, correct, delete, or restrict certain processing. This notice does
           not determine which rights apply. Route requests via{" "}
           <Link href="/contact" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
             Contact

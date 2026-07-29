@@ -23,7 +23,7 @@ const DEFAULT_DETAIL = {
   known: "No public record released yet.",
   unknown: "Pending reviewed source integration.",
   evidence: "Evidence not yet released.",
-  risk: "Not available in this pilot release.",
+  risk: "Not available in the current public record.",
 };
 
 export const corridorNodes: CorridorNodeData[] = [

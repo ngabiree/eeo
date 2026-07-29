@@ -10,17 +10,17 @@ export default function PilotMethodsLimitsPage() {
           Public Evidence Methods: Copper-Cobalt Corridor
         </p>
         <p className="leading-7 text-stone-700">
-          This page frames how the pilot may reason, not what it has already established. For the full definition of
+          This page frames how the Observatory may reason, not what it has already established. For the full definition of
           Earth&apos;s endowments, human capability vs inventorying people, and exposure guardrails, see the root{" "}
           <span className="font-mono text-xs">README.md</span> (sections on core identity and endowment definition).
         </p>
         <p className="leading-7 text-stone-700">
-          The pilot distinguishes factual observations, methodological limits, risk indicators, analytical inferences,
+          The Observatory distinguishes factual observations, methodological limits, risk indicators, analytical inferences,
           normative concerns, and legal findings. <strong>EEO makes no legal finding</strong> unless explicitly
           supported by authoritative legal or regulatory sources.
         </p>
         <section className="rounded-2xl border border-stone-200 bg-white/80 p-5 text-sm leading-6 text-stone-800 shadow-sm">
-          <h2 className="text-base font-semibold text-stone-900">What this copper–cobalt pilot does not establish</h2>
+          <h2 className="text-base font-semibold text-stone-900">What this copper-cobalt corridor record does not establish</h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>Product-level physical chain-of-custody or mine-to-gadget traceability.</li>
             <li>That a named consumer good contains copper or cobalt from a specific mine or jurisdiction.</li>

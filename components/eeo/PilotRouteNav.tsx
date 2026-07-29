@@ -11,15 +11,15 @@ export default function PilotRouteNav() {
   return (
     <div className="space-y-3">
       <nav
-        aria-label="Pilot route index"
+        aria-label="Corridor route index"
         className="rounded-2xl border border-[color:var(--eeo-border)] bg-[rgba(255,255,255,0.88)] p-3 shadow-sm backdrop-blur-sm"
       >
         <p className="mb-1 text-xs font-mono uppercase tracking-[0.14em] text-[color:var(--eeo-muted)]">
-          Pilot routes (same list as the site header)
+          Corridor routes (same list as the site header)
         </p>
         <p className="mb-3 text-xs leading-relaxed text-[color:var(--eeo-muted)]">
-          Header shortcuts only — open <Link href="/pilot" className="underline">/pilot</Link> for the full corridor
-          prototype route list. Demonstration data · not a public data release.
+          Header shortcuts only — open <Link href="/pilot" className="underline">the corridor</Link> for the full route
+          list. Demonstration data · not a public data release.
         </p>
         <div className="flex flex-wrap gap-2 text-sm">
           {PILOT_PUBLIC_NAV.map((route) => (

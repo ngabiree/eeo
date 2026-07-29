@@ -10,15 +10,15 @@ const sections: CorridorDossierSectionRecord[] = [
   {
     id: "CDS-CU-CO-scope",
     section: "scope",
-    title: "Scope & pilot framing",
+    title: "Scope and corridor framing",
     status: "drafting",
     summary:
-      "This section documents the public scope of one copper-cobalt critical-minerals corridor dossier. It depends on the source-map and evidence-ledger layers to keep claims traceable, qualified, reviewable, and correctable. It remains uncertain where later evidence can safely support concession, operator, ownership/control, ecological, or capability narratives. The pilot does not verify supply-chain custody, make legal findings, compare actors through composite indicators, or publish sensitive geospatial detail.",
+      "This section documents the public scope of one copper-cobalt critical-minerals corridor dossier. It depends on the source-map and evidence-ledger layers to keep claims traceable, qualified, reviewable, and correctable. It remains uncertain where later evidence can safely support concession, operator, ownership/control, ecological, or capability narratives. The dossier does not verify supply-chain custody, make legal findings, compare actors through composite indicators, or publish sensitive geospatial detail.",
     linkedClaimIds: [],
     linkedEvidenceIds: [],
     sourceIds: ["SM-USGS-MM", "SM-UNCOMTRADE"],
     publicLimitations: [
-      "Scope is pilot-only. Claims are limited to public or public-safe evidence available for the corridor at this stage.",
+      "Scope is corridor-specific. Claims are limited to public or public-safe evidence available for the corridor at this stage.",
       "Temporal profiling, monitoring signals, and scenario analysis are deferred milestones.",
       "Correction and right-of-reply routes govern any claim that could materially affect identifiable actors.",
     ],
@@ -130,7 +130,7 @@ const sections: CorridorDossierSectionRecord[] = [
     publicLimitations: [
       "Public contract or concession absence is not evidence that no instrument exists.",
       "This section does not interpret concession validity, compliance, consent, or rights-holder status.",
-      "No precise concession geometry or sensitive infrastructure location is published in this prototype.",
+      "No precise concession geometry or sensitive infrastructure location is published in this dossier.",
     ],
     exposureNotes: [
       "Named concession and permit records can materially affect identifiable actors and require legal, exposure, map-safety, correction, and right-of-reply review before public release.",
@@ -150,7 +150,7 @@ const sections: CorridorDossierSectionRecord[] = [
     linkedEvidenceIds: ["EVID-EITI-DRC-001", "EVID-OPENOWNERSHIP-DRC-001"],
     sourceIds: ["SM-EITI", "SM-RESOURCE-CONTRACTS", "SM-OPEN-OWNERSHIP"],
     publicLimitations: [
-      "No named operator allegation is made in this prototype dossier.",
+      "No named operator allegation is made in this dossier.",
       "Operator identity, conduct, or control claims require reciprocal evidence links, exposure review, correction route, and right-of-reply posture.",
       "Public records may describe formal roles without establishing actual operational control or responsibility.",
     ],
@@ -177,7 +177,7 @@ const sections: CorridorDossierSectionRecord[] = [
       "Actor-affecting ownership claims require correction and right-of-reply pathways before release.",
     ],
     exposureNotes: [
-      "Ownership/control material has reputational and privacy exposure risk and remains limited to transparency-gap framing in this prototype.",
+      "Ownership/control material has reputational and privacy exposure risk and remains limited to transparency-gap framing in this dossier.",
     ],
     lastUpdated: V07_UPDATED,
   },
@@ -457,7 +457,7 @@ const sections: CorridorDossierSectionRecord[] = [
     title: "Release manifest",
     status: "not_started",
     summary:
-      "This section documents the release-manifest boundary for the prototype. It depends on structural readiness across dossier sections, claim/evidence/source linkage, source posture, right-of-reply posture, map-safety posture, correction route, and release-owner sign-off. The manifest is not signed, not published, and not used to approve claims in this pass. Manifest assembly, signing, hash generation, and public release packaging remain deferred until blockers and review flags are resolved.",
+      "This section documents the release-manifest boundary for the corridor record. It depends on structural readiness across dossier sections, claim/evidence/source linkage, source posture, right-of-reply posture, map-safety posture, correction route, and release-owner sign-off. The manifest is not signed, not published, and not used to approve claims in this pass. Manifest assembly, signing, hash generation, and public release packaging remain deferred until blockers and review flags are resolved.",
     linkedClaimIds: [],
     linkedEvidenceIds: [],
     sourceIds: [],
@@ -473,7 +473,7 @@ const sections: CorridorDossierSectionRecord[] = [
 
 export const copperCobaltCorridorPilotSkeleton: CorridorDossier = {
   id: "CDR-CU-CO-PILOT-001",
-  title: "Earth Endowment Observatory: Critical Minerals Corridor Evidence Pilot",
+  title: "Earth Endowment Observatory: Critical Minerals Corridor Evidence Record",
   corridor: "Copper-Cobalt Critical Minerals Corridor",
   geography:
     "Corridor framing only — jurisdictions to be enumerated with evidence-backed boundary notes in later milestones.",
@@ -481,7 +481,7 @@ export const copperCobaltCorridorPilotSkeleton: CorridorDossier = {
   purpose:
     "To test whether EEO can produce one safe, sourced, reviewable, correctable endowment-to-economy corridor dossier before attempting broader observatory scope.",
   scopeStatement:
-    "This pilot focuses on public, low-exposure evidence about the copper-cobalt corridor. It examines how a critical mineral endowment enters economic life through governance, concessions, operators, ownership/control structures, extraction, processing, trade, labour conditions, ecological signals, public revenue, value-capture questions, and public-benefit implications.",
+    "This corridor record focuses on public, low-exposure evidence about the copper-cobalt corridor. It examines how a critical mineral endowment enters economic life through governance, concessions, operators, ownership/control structures, extraction, processing, trade, labour conditions, ecological signals, public revenue, value-capture questions, and public-benefit implications.",
   nonGoals: [
     "It does not provide product-level chain-of-custody verification.",
     "It does not claim that a specific consumer product contains cobalt or copper from a specific mine.",
@@ -494,7 +494,7 @@ export const copperCobaltCorridorPilotSkeleton: CorridorDossier = {
   sections,
   releaseReadiness: "not_ready",
   publicLimitations: [
-    "Pilot build in progress. Public sections now carry cautious narrative, but release remains incomplete and under review.",
+    "Under review. Public sections now carry cautious narrative, but release remains incomplete.",
     "Claims CLAIM-DRC-CO-004 (extraction/ASM) and CLAIM-DRC-CO-006 (public revenue) are under method review.",
     "Claim CLAIM-DRC-CO-005 (labour risk) is under exposure review; publication posture is publish_with_redactions.",
     "Actor-affecting claims require correction and right-of-reply posture before release.",
