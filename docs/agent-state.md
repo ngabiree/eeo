@@ -58,6 +58,7 @@ EEO must not be framed as:
 - `docs/mvp-evidence-loop.md` documents the corridor-first evidence loop and public routes.
 - `docs/corridor-charter-template.md` defines the authorization gate for any corridor before it moves beyond roadmap or candidate status.
 - `docs/copper-cobalt-claim-readiness.md` records claim-by-claim release-readiness status for the current pilot corridor.
+- `docs/claim-drc-co-002-release-review.md` records the bounded source, method, disclosure, and authorization review for the next candidate claim.
 - `docs/founding/README.md` is the founding-document hub.
 
 ## Completed increments
@@ -66,10 +67,13 @@ EEO must not be framed as:
 - Repository already includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
 - 2026-07-29: Added a corridor charter template and roadmap/docs links so future corridors require boundary, evidence, source-rights, disclosure, map-safety, right-of-reply, reviewer, release-manifest, and stop-condition review before activation.
 - 2026-07-29: Added a Copper-Cobalt claim readiness matrix that keeps `CLAIM-DRC-CO-001` release-scoped, identifies `CLAIM-DRC-CO-002` as the next near-candidate, and keeps method/exposure/ownership-sensitive claims withheld pending review.
+- 2026-07-29: Reviewed `CLAIM-DRC-CO-002` as a conditional release candidate. The claim remains withheld because its source record uses a generic institutional landing page and an underspecified `open` license label rather than a citation-grade document locator and explicit lawful-use basis.
 
 ## Current safe next step
 
-Review `CLAIM-DRC-CO-002` as the next possible release addition by confirming source/license posture, source date, confidence explanation, accountable reviewer role, and release-manifest approval conditions.
+Replace the generic USGS source locator for `SRC-USGS-CO-001` with the exact 2026 *Mineral Commodity Summaries: Cobalt* document, page or table locator, edition metadata, and explicit lawful-use basis. Then perform a narrow method and release-authority review.
+
+Do not add `CLAIM-DRC-CO-002` to the release manifest in the same increment merely because its source record is improved. Manifest inclusion requires a separate accountable release decision.
 
 Do not start a second public corridor until the Copper-Cobalt release gate is coherent and the second corridor has a completed charter.
 
@@ -80,6 +84,7 @@ Do not start a second public corridor until the Copper-Cobalt release gate is co
 - The public homepage and pilot pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
 - Future corridor expansion could create global-atlas or public-exposure drift unless the corridor charter gate is enforced.
 - Visible prototype claims can be mistaken for release-approved public findings unless release-manifest scope remains explicit.
+- The `CLAIM-DRC-CO-002` wording must be checked against the exact USGS edition, especially the distinction among reserves, resources, reported estimates, and economic recoverability.
 - CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
 
 ## Deferred items
