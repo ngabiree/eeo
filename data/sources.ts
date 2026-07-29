@@ -11,9 +11,9 @@ export const sources: Source[] = [
     jurisdiction: "United States / Global",
     publicationDate: "2026-02-06",
     accessedDate: "2026-07-29",
-    licenseStatus: "public_domain_with_attribution",
+    licenseStatus: "open",
     notes:
-      "Citation-grade parent report: U.S. Geological Survey, 2026, Mineral commodity summaries 2026 (ver. 1.3, May 2026), 222 p., doi:10.3133/mcs2026. Commodity locator: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf. USGS-authored information is generally U.S. public-domain material, with proper credit requested; separately marked third-party material remains subject to its own rights. Used for production, reserve, and mineral context only. USGS reports DRC as the leading cobalt reserve jurisdiction, with an estimated 55% of global reserves; this does not establish mine-to-product chain of custody, independently verify host-country estimates, or describe site-level social or ecological conditions.",
+      "Citation-grade parent report: U.S. Geological Survey, 2026, Mineral commodity summaries 2026 (ver. 1.3, May 2026), 222 p., doi:10.3133/mcs2026. Commodity locator: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf. Use basis: USGS-authored information is generally U.S. public-domain material, with proper credit requested; separately marked third-party material remains subject to its own rights. Used for production, reserve, and mineral context only. USGS reports DRC as the leading cobalt reserve jurisdiction, with an estimated 55% of global reserves; this does not establish mine-to-product chain of custody, independently verify host-country estimates, or describe site-level social or ecological conditions.",
   },
   {
     id: "SRC-UNCOMTRADE-CO-001",
