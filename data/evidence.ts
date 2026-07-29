@@ -49,20 +49,21 @@ export const evidenceItems: EvidenceItem[] = [
     id: "EVID-USGS-CO-002",
     recordMode: "illustrative",
     sourceId: "SRC-USGS-CO-001",
-    title: "DRC cobalt reserve concentration per USGS Mineral Commodity Summaries",
+    title: "USGS estimate of DRC cobalt reserve concentration",
     summary:
-      "USGS Mineral Commodity Summaries consistently identify the Democratic Republic of Congo as holding the largest known cobalt reserves of any single country, accounting for the substantial majority of global identified reserves.",
+      "The USGS Mineral Commodity Summaries 2026 cobalt commodity sheet identifies the Democratic Republic of the Congo as the leading cobalt reserve jurisdiction and estimates that it holds about 55% of global cobalt reserves.",
     evidenceClass: "official",
     confidenceContribution: "high",
     limitations: [
+      "The 55% figure is an estimate tied to the report's reserve definition, reporting period, and global denominator.",
       "Reserve estimates are subject to methodological revision as geological knowledge, pricing, and extraction technology evolve.",
-      "USGS estimates reflect reported figures; they do not independently verify host-country data.",
-      "Reserve concentration does not indicate rate of extraction, environmental condition, or social conditions at specific sites.",
+      "USGS compiles reported reserve figures and does not independently verify every underlying host-country estimate.",
+      "Reserve concentration does not indicate extraction rate, ownership, entitlement, public benefit, environmental condition, or social conditions at specific sites.",
     ],
     exposureRisk: "low",
     publicationDecision: "publish",
     claimLinks: [
-      { claimId: "CLAIM-DRC-CO-002", role: "supports", note: "Primary source for DRC reserve concentration claim." },
+      { claimId: "CLAIM-DRC-CO-002", role: "supports", note: "Primary official source for the estimated 55% reserve-share claim." },
     ],
   },
 
