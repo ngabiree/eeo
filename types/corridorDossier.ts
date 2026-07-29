@@ -1,5 +1,5 @@
 /**
- * Corridor evidence dossier structure (v0.6) — typing only for the Critical Minerals Corridor pilot.
+ * Corridor evidence dossier structure (v0.7) — typing only for the Critical Minerals Corridor pilot.
  * No runtime dossier publishing or temporal/monitoring hooks.
  */
 
@@ -35,6 +35,59 @@ export type DossierSectionStatus =
   | "ready_for_release"
   | "withheld";
 
+export type CorridorLifecyclePhase =
+  | "candidate"
+  | "scoping"
+  | "evidence_development"
+  | "review"
+  | "release_candidate"
+  | "release_authorized"
+  | "public"
+  | "correction_review"
+  | "superseded"
+  | "archived";
+
+export type CorridorReleaseGate =
+  | "scope_authority"
+  | "source_rights"
+  | "evidence_provenance"
+  | "method_review"
+  | "legal_posture_review"
+  | "exposure_review"
+  | "map_safety_review"
+  | "right_of_reply"
+  | "correction_route"
+  | "manifest_completeness"
+  | "release_authorization";
+
+export type CorridorGateStatus =
+  | "not_started"
+  | "in_progress"
+  | "satisfied"
+  | "not_required"
+  | "blocked"
+  | "revoked";
+
+export interface CorridorGateRecord {
+  gate: CorridorReleaseGate;
+  status: CorridorGateStatus;
+  publicSummary: string;
+  internalReason?: string;
+  accountableRole?: string;
+  reviewedAt?: string;
+}
+
+export interface CorridorLifecycleRecord {
+  corridorId: string;
+  phase: CorridorLifecyclePhase;
+  gates: CorridorGateRecord[];
+  releaseManifestId?: string;
+  authorizedAt?: string;
+  publicSince?: string;
+  supersedesLifecycleId?: string;
+  lastUpdated: string;
+}
+
 export interface CorridorDossierSectionRecord {
   id: string;
   section: CorridorDossierSection;
@@ -59,6 +112,8 @@ export interface CorridorDossier {
   scopeStatement: string;
   nonGoals: string[];
   sections: CorridorDossierSectionRecord[];
+  lifecycle?: CorridorLifecycleRecord;
+  /** @deprecated Use lifecycle.phase and lifecycle.gates for new governance work. */
   releaseReadiness:
     | "not_ready"
     | "internal_review"
