@@ -10,6 +10,8 @@ Live evidence work belongs in governed databases and private storage, not GitHub
 
 ## Core identity & governing doctrine
 
+EEO is a rights-aware, evidence-disciplined public-interest observatory that connects claims to sources, identifies uncertainty, and makes no legal finding.
+
 EEO is **not** a headline dashboard SKU, VC-style startup app, composite ESG score, campaign NGO, consulting portal, blockchain project, or generic open-data platform. It is **public-interest evidence infrastructure** for **endowment-to-economy chains**.
 
 **Governing mantra:** *Reveal systems. Protect peoples. Trace value. Respect sovereignty. Publish with evidence. Scale only after trust.*
