@@ -97,16 +97,40 @@ describe("assessDossierClaimReadiness", () => {
     );
   });
 
-  it("flags claims not listed in the release manifest for review", () => {
+  it("flags claims omitted from both release-manifest lists for review", () => {
+    const unlistedClaim = claims[1];
+
+    const assessment = assessDossierClaimReadiness({
+      ...baseParams,
+      claims: [unlistedClaim],
+      releaseManifest: {
+        ...releaseManifest,
+        includedClaimIds: [],
+        withheldClaimIds: [],
+      },
+    });
+
+    expect(assessment.rows).toHaveLength(1);
+    expect(assessment.rows[0].releaseManifestDisposition).toBe("not_listed");
+    expect(assessment.rows[0].status).toBe("needs_review");
+    expect(assessment.rows[0].issues.map((issue) => issue.type)).toContain(
+      "not_listed_in_release_manifest"
+    );
+  });
+
+  it("marks explicitly withheld claims for review", () => {
     const assessment = assessDossierClaimReadiness(baseParams);
-    const unlistedRows = assessment.rows.filter(
-      (row) => row.releaseManifestDisposition === "not_listed"
+
+    const withheldRows = assessment.rows.filter(
+      (row) => row.releaseManifestDisposition === "withheld"
     );
 
-    expect(unlistedRows.length).toBeGreaterThan(0);
+    expect(withheldRows).toHaveLength(releaseManifest.withheldClaimIds.length);
     expect(
-      unlistedRows.some((row) =>
-        row.issues.some((issue) => issue.type === "not_listed_in_release_manifest")
+      withheldRows.every((row) =>
+        row.issues.some(
+          (issue) => issue.type === "withheld_from_release_manifest"
+        )
       )
     ).toBe(true);
   });
