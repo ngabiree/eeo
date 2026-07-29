@@ -2,7 +2,7 @@
 
 ## Last updated
 
-2026-06-27
+2026-07-29
 
 ## Current repo observations
 
@@ -57,17 +57,17 @@ EEO must not be framed as:
 - `docs/right-of-reply.md` and `docs/right-of-reply-protocol.md` cover reply/correction discipline.
 - `docs/mvp-evidence-loop.md` documents the corridor-first evidence loop and public routes.
 - `docs/founding/README.md` is the founding-document hub.
+- `docs/release-checklist.md` now completes release-manifest, corridor authorization, stop-condition, and post-release checks for public release discipline.
 
 ## Completed increments
 
 - Repository already includes a Next.js App Router prototype with public EEO surfaces, corridor pilot routes, evidence/correction/review/release helpers, and doctrine docs.
 - Repository already includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
+- 2026-07-29: Completed `docs/release-checklist.md`, which previously ended mid-release-manifest checklist, by adding bounded release-manifest requirements, corridor authorization checks, stop conditions, and post-release checks.
 
 ## Current safe next step
 
-Complete the Sprint 0 continuity baseline by keeping this file, `docs/implementation-roadmap.md`, `docs/eeo-language-guardrails.md`, and `docs/release-checklist.md` current with the actual repository state.
-
-After this baseline is stable, the next implementation increment should be a small dossier-readiness pass for the first corridor: verify that each public corridor claim links to evidence, source limits, confidence/review state, correction route, right-of-reply state when applicable, and public-safe release-manifest status.
+Run a small dossier-readiness pass for the first corridor: verify that each public corridor claim links to evidence, source limits, confidence/review state, correction route, right-of-reply state when applicable, and public-safe release-manifest status.
 
 ## Open risks
 
@@ -81,3 +81,7 @@ After this baseline is stable, the next implementation increment should be a sma
 - Global atlas, rankings, composite scores, certification seals, monitoring dashboards, alerts, scenario/forecast UI, temporal profile UI, blockchain modules, AI judgment surfaces, and public community reporting modules are deferred.
 - Live data ingestion and governed evidence storage are deferred until access controls, private storage, audit logs, release views, review workflows, backups, retention rules, and security review are ready.
 - Monitoring and temporal profile runtime features remain deferred until the corridor dossier and release discipline are coherent.
+
+## Last checks run
+
+- Not run in this increment. The change is documentation-only and was made through the GitHub connector because the repository could not be cloned in the workspace due network restrictions.
