@@ -63,6 +63,23 @@ export type ClaimGovernanceStatus =
   | "restricted"
   | "withdrawn";
 
+export type ReleaseDispositionStatus =
+  | "included"
+  | "withheld"
+  | "restricted"
+  | "challenged"
+  | "corrected"
+  | "withdrawn"
+  | "deferred";
+
+export type ReleaseReviewLane =
+  | "method"
+  | "legal_posture"
+  | "exposure"
+  | "right_of_reply"
+  | "correction"
+  | "release_authorization";
+
 export interface Source {
   id: string;
   title: string;
@@ -182,11 +199,26 @@ export interface Claim {
   governanceNote?: string;
 }
 
+export interface ReleaseDecision {
+  claimId: Claim["id"];
+  disposition: ReleaseDispositionStatus;
+  publicReason: string;
+  decisionBasis: string;
+  requiredReviewLanes: ReleaseReviewLane[];
+  completedReviewLanes: ReleaseReviewLane[];
+  releaseManifestId?: string;
+  reviewCompletedAt?: string;
+  decidedAt?: string;
+  supersedesDecisionId?: string;
+  correctionIds?: string[];
+}
+
 export interface ReleaseManifest {
   id: string;
   title: string;
   corridor: string;
   releaseDate?: string;
+  releaseDecisions?: ReleaseDecision[];
   includedClaimIds: string[];
   withheldClaimIds: string[];
   unresolvedDisputes: string[];
