@@ -2,7 +2,7 @@
 
 ## Last updated
 
-2026-06-27
+2026-07-29
 
 ## Current repo observations
 
@@ -56,28 +56,36 @@ EEO must not be framed as:
 - `docs/map-safety-protocol.md` defines spatial disclosure defaults and map release gates.
 - `docs/right-of-reply.md` and `docs/right-of-reply-protocol.md` cover reply/correction discipline.
 - `docs/mvp-evidence-loop.md` documents the corridor-first evidence loop and public routes.
+- `docs/corridor-charter-template.md` defines the authorization gate for any corridor before it moves beyond roadmap or candidate status.
 - `docs/founding/README.md` is the founding-document hub.
 
 ## Completed increments
 
 - Repository already includes a Next.js App Router prototype with public EEO surfaces, corridor pilot routes, evidence/correction/review/release helpers, and doctrine docs.
 - Repository already includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
+- 2026-07-29: Added a corridor charter template and roadmap/docs links so future corridors require boundary, evidence, source-rights, disclosure, map-safety, right-of-reply, reviewer, release-manifest, and stop-condition review before activation.
 
 ## Current safe next step
 
-Complete the Sprint 0 continuity baseline by keeping this file, `docs/implementation-roadmap.md`, `docs/eeo-language-guardrails.md`, and `docs/release-checklist.md` current with the actual repository state.
+Complete a small dossier-readiness pass for the Copper-Cobalt corridor: verify that each public corridor claim links to evidence, source limits, confidence/review state, correction route, right-of-reply state when applicable, and public-safe release-manifest status.
 
-After this baseline is stable, the next implementation increment should be a small dossier-readiness pass for the first corridor: verify that each public corridor claim links to evidence, source limits, confidence/review state, correction route, right-of-reply state when applicable, and public-safe release-manifest status.
+Do not start a second public corridor until the Copper-Cobalt release gate is coherent and the second corridor has a completed charter.
 
 ## Open risks
 
 - Prototype persistence boundaries remain: correction submissions, reviewer notes, and activity logs may not be durable unless persistent storage is separately configured.
 - Public/private boundary must remain strict. Do not expose reviewer notes, submitter identities, restricted map coordinates, internal triage reasoning, or sensitive harm-review details.
 - The public homepage and pilot pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
+- Future corridor expansion could create global-atlas or public-exposure drift unless the corridor charter gate is enforced.
 - CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
 
 ## Deferred items
 
 - Global atlas, rankings, composite scores, certification seals, monitoring dashboards, alerts, scenario/forecast UI, temporal profile UI, blockchain modules, AI judgment surfaces, and public community reporting modules are deferred.
+- Additional public corridors are deferred until Copper-Cobalt release discipline is coherent and the proposed corridor has a completed charter.
 - Live data ingestion and governed evidence storage are deferred until access controls, private storage, audit logs, release views, review workflows, backups, retention rules, and security review are ready.
 - Monitoring and temporal profile runtime features remain deferred until the corridor dossier and release discipline are coherent.
+
+## Last checks run
+
+- Not run in this increment. Changes are documentation-only and were prepared through the GitHub branch workflow.
