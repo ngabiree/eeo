@@ -124,7 +124,7 @@ describe("assessReviewSignoffReadiness", () => {
   it("ignores superseded signoffs when resolving the current lane", () => {
     const assessment = assessReviewSignoffReadiness({
       objectId: "CLAIM-TEST-001",
-      requirements: [requirements[0]],
+      requirements: [requirements[0]!],
       signoffs: [
         signoffWith({
           id: "RSIGN-OLD",
