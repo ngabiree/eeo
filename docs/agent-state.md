@@ -10,8 +10,8 @@
 - package manager: pnpm, standardized by `packageManager` in `package.json` and `pnpm-lock.yaml`.
 - routing: `app/` uses App Router routes. Public surfaces include `/`, `/pilot`, `/pilot/corridor`, `/pilot/evidence-dossier`, `/pilot/evidence-ledger`, `/pilot/methods-and-limits`, `/pilot/safeguards`, `/pilot/corrections`, `/right-of-reply`, `/trust`, and related governance/disclosure pages. Internal or reviewer-oriented surfaces include `/review` and `/workspace`.
 - styling: Tailwind plus EEO-specific CSS tokens and utilities in `app/globals.css`.
-- data approach: prototype TypeScript data modules under `data/`, including claims, evidence, sources, entities, corridor dossier, source map, release manifest, and review/access examples. Public live evidence is not stored in GitHub.
-- schema/type approach: TypeScript contracts under `types/`, including corridor dossier, EEO domain types, human layer, map safety, release gate, review signoff, monitoring signal, and dormant temporal profile types.
+- data approach: prototype TypeScript data modules under `data/`, including claims, evidence, sources, entities, corridor dossier, source map, release manifest, release decisions, corridor lifecycle, and review/access examples. Public live evidence is not stored in GitHub.
+- schema/type approach: TypeScript contracts under `types/`, including corridor dossier, lifecycle gates, EEO domain types, human layer, map safety, release gate, review signoff, monitoring signal, and dormant temporal profile types.
 - known build/test commands:
   - `pnpm dev`
   - `pnpm build`
@@ -57,26 +57,32 @@ EEO must not be framed as:
 - `docs/right-of-reply.md` and `docs/right-of-reply-protocol.md` cover reply/correction discipline.
 - `docs/mvp-evidence-loop.md` documents the corridor-first evidence loop and public routes.
 - `docs/founding/README.md` is the founding-document hub.
-- `docs/release-checklist.md` now completes release-manifest, corridor authorization, stop-condition, and post-release checks for public release discipline.
+- `docs/release-checklist.md` completes release-manifest, corridor authorization, stop-condition, and post-release checks.
 - `docs/corridor-dossier-readiness.md` records the first corridor claim/evidence/release-readiness matrix and identifies release-manifest disposition gaps.
 
 ## Completed increments
 
 - Repository already includes a Next.js App Router prototype with public EEO surfaces, corridor pilot routes, evidence/correction/review/release helpers, and doctrine docs.
 - Repository already includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
-- 2026-07-29: Completed `docs/release-checklist.md`, which previously ended mid-release-manifest checklist, by adding bounded release-manifest requirements, corridor authorization checks, stop conditions, and post-release checks.
+- 2026-07-29: Completed `docs/release-checklist.md`, adding bounded release-manifest requirements, corridor authorization checks, stop conditions, and post-release checks.
 - 2026-07-29: Added `docs/corridor-dossier-readiness.md`, documenting seven observed corridor claims, their evidence-link counts, review status, release-manifest status, and blockers before broader release.
+- 2026-07-29: Added first-class `ReleaseDecision` typing and inert claim release-decision records. Publication treatment is no longer inferred only from arrays of claim IDs.
+- 2026-07-29: Added a canonical corridor lifecycle model with an overall phase plus independent source-rights, provenance, method, legal-posture, exposure, map-safety, right-of-reply, correction, manifest, and authorization gates.
+- 2026-07-29: Added an inert copper-cobalt lifecycle record. It explicitly records that the corridor is in review and has not received corridor-level release authorization.
 
 ## Current safe next step
 
-Create a typed or documented release-disposition layer that records whether each claim is included, withheld, restricted, challenged, corrected, withdrawn, or deferred, with a public-safe reason. Start with documentation or inert sample data before changing public UI behavior.
+Reconcile the draft release manifest with the canonical `ReleaseDecision` records. Every observed claim should appear exactly once in the decision set, manifest summaries should be derived from those decisions rather than maintained independently, and no helper should treat manifest inclusion as corridor authorization.
+
+Begin with typed validation or tests. Do not expose lifecycle internals, reviewer reasons, or authorization controls in public UI during this increment.
 
 ## Open risks
 
 - Prototype persistence boundaries remain: correction submissions, reviewer notes, and activity logs may not be durable unless persistent storage is separately configured.
 - Public/private boundary must remain strict. Do not expose reviewer notes, submitter identities, restricted map coordinates, internal triage reasoning, or sensitive harm-review details.
 - The public homepage and pilot pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
-- The release manifest currently includes only `CLAIM-DRC-CO-001`; other observed claims need explicit disposition before broader public release.
+- The draft release manifest includes only `CLAIM-DRC-CO-001`; other observed claims now have inert release decisions but have not received corridor release authorization.
+- `releaseReadiness` remains for compatibility and is deprecated for new governance work. New decisions should use lifecycle phase plus explicit gate status.
 - CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
 
 ## Deferred items
@@ -87,4 +93,5 @@ Create a typed or documented release-disposition layer that records whether each
 
 ## Last checks run
 
-- Not run in this increment. The changes are documentation-only and were made through the GitHub connector because the repository could not be cloned in the workspace due network restrictions.
+- No local checks were run. Changes were made through the GitHub connector because the repository could not be cloned in the workspace due to network restrictions.
+- Static consistency was reviewed across `types/eeo.ts`, `types/corridorDossier.ts`, `data/releaseDispositions.ts`, and `data/corridorLifecycle.ts`.
