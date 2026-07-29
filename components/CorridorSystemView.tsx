@@ -74,39 +74,39 @@ const cards: Card[] = [
 
 export const corridorSystemLinks = {
   "historical-record": {
-    asset: "/pilot/corridor/assets/historical-record",
-    page: "/pilot/corridor/historical-record",
-    expansion: "/pilot/corridor?expand=historical-record",
+    asset: "/evidence-ledger",
+    page: "/corridors/copper-cobalt/system/historical-record",
+    expansion: "/corridors/copper-cobalt/system?expand=historical-record",
   },
   "evidence-gaps": {
-    asset: "/pilot/corridor/assets/evidence-gaps",
-    page: "/pilot/corridor/evidence-gaps",
-    expansion: "/pilot/corridor?expand=evidence-gaps",
+    asset: "/evidence-ledger",
+    page: "/corridors/copper-cobalt/system/evidence-gaps",
+    expansion: "/corridors/copper-cobalt/system?expand=evidence-gaps",
   },
   "shared-inquiry-field": {
-    asset: "/pilot/corridor/assets/shared-inquiry-field",
-    page: "/pilot/corridor/shared-inquiry-field",
-    expansion: "/pilot/corridor?expand=shared-inquiry-field",
+    asset: "/evidence-ledger",
+    page: "/corridors/copper-cobalt/system/shared-inquiry-field",
+    expansion: "/corridors/copper-cobalt/system?expand=shared-inquiry-field",
   },
   "ecology-system": {
-    asset: "/pilot/corridor/assets/ecology-system",
-    page: "/pilot/corridor/ecology-system",
-    expansion: "/pilot/corridor?expand=ecology-system",
+    asset: "/evidence-ledger",
+    page: "/corridors/copper-cobalt/system/ecology-system",
+    expansion: "/corridors/copper-cobalt/system?expand=ecology-system",
   },
   "water-system": {
-    asset: "/pilot/corridor/assets/water-system",
-    page: "/pilot/corridor/water-system",
-    expansion: "/pilot/corridor?expand=water-system",
+    asset: "/evidence-ledger",
+    page: "/corridors/copper-cobalt/system/water-system",
+    expansion: "/corridors/copper-cobalt/system?expand=water-system",
   },
   "human-governance-system": {
-    asset: "/pilot/corridor/assets/human-governance-system",
-    page: "/pilot/corridor/human-governance-system",
-    expansion: "/pilot/corridor?expand=human-governance-system",
+    asset: "/evidence-ledger",
+    page: "/corridors/copper-cobalt/system/human-governance-system",
+    expansion: "/corridors/copper-cobalt/system?expand=human-governance-system",
   },
   "restoration-pathway": {
-    asset: "/pilot/corridor/assets/restoration-pathway",
-    page: "/pilot/corridor/restoration-pathway",
-    expansion: "/pilot/corridor?expand=restoration-pathway",
+    asset: "/evidence-ledger",
+    page: "/corridors/copper-cobalt/system/restoration-pathway",
+    expansion: "/corridors/copper-cobalt/system?expand=restoration-pathway",
   },
 } as const;
 
@@ -179,7 +179,7 @@ export default function CorridorSystemView() {
 function DiagramCard({ card, className }: { card: Card; className: string }) {
   return (
     <article className={`csv-card csv-card-${card.kind} ${className}`}>
-      <a className="csv-card-asset" href={corridorSystemLinks[card.id].asset} aria-label={`Open assets for ${card.title}`}>
+      <a className="csv-card-asset" href={corridorSystemLinks[card.id].asset} aria-label={`Open evidence ledger for ${card.title}`}>
         {card.icon}
       </a>
 

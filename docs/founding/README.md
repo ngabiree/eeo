@@ -11,7 +11,7 @@ Executive summary: **Earth endowments → relational stewardship and human capab
 | Document | Purpose |
 |----------|---------|
 | [Canonical institutional constitution and systems specification](../canonical/eeo_institutional_constitution_and_systems_specification-final.md) | **Operating doctrine**: product scope, evidence discipline, workflow, disclosure tiers, map safety, right-of-reply, corrections posture, MVP boundaries |
-| [MVP evidence loop (visibility rule)](../mvp-evidence-loop.md) | Publication-chain reference; **`/pilot/*`** path table vs header shortcuts (**`lib/pilotPublicNav.ts`**); legacy redirect map |
+| [MVP evidence loop (visibility rule)](../mvp-evidence-loop.md) | Publication-chain reference; stable public path table, header shortcuts (**`lib/pilotPublicNav.ts`**), and legacy redirect map |
 
 ## Policies (root — contributor and maintainer norms)
 
@@ -77,7 +77,7 @@ Executive summary: **Earth endowments → relational stewardship and human capab
 ## How to cite
 
 - For **product and institutional scope**, cite the **canonical specification** path above.
-- For **MVP route and redirect discipline**, cite **mvp-evidence-loop**, `lib/pilotPublicNav.ts` (header shortcuts), and `lib/pilotHubRoutes.ts` (complete **`/pilot`** hub index).
+- For **MVP route and redirect discipline**, cite **mvp-evidence-loop**, `lib/pilotPublicNav.ts` (header shortcuts), and `lib/pilotHubRoutes.ts` (complete stable public route index).
 - For **security and data boundaries**, cite **SECURITY** and **DATA_POLICY** first.
 
 ---

@@ -187,7 +187,7 @@ export default function ClaimLifecyclePanel() {
       body: (
         <p className="mt-2 text-sm">
           <Link
-            href="/pilot/evidence-dossier"
+            href="/corridors/copper-cobalt/dossier"
             className="font-medium text-[color:var(--eeo-primary)] underline underline-offset-2 hover:text-[color:var(--eeo-primary-dark)]"
           >
             Open the corridor evidence dossier
@@ -203,7 +203,7 @@ export default function ClaimLifecyclePanel() {
       body: (
         <p className="mt-2 text-sm">
           <Link
-            href="/pilot/corrections"
+            href="/corrections"
             className="font-medium text-[color:var(--eeo-primary)] underline underline-offset-2 hover:text-[color:var(--eeo-primary-dark)]"
           >
             Open the correction route

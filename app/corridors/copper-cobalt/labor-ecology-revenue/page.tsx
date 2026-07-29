@@ -31,7 +31,7 @@ export default function PilotLaborEcologyRevenuePage() {
 
         <p className="text-sm text-stone-600">
           Continue to the{" "}
-          <Link href="/pilot/methods-and-limits" className="underline">
+          <Link href="/methods" className="underline">
             methods and limits
           </Link>{" "}
           page for evidence-layer and confidence interpretation.

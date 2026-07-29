@@ -277,15 +277,15 @@ The web app should launch with these public routes:
 
 ```text
 /
-/pilot
-/pilot/evidence-dossier
-/pilot/evidence-ledger
-/pilot/governance-profile
-/pilot/value-chain
-/pilot/labor-ecology-revenue
-/pilot/methods-and-limits
-/pilot/safeguards
-/pilot/corrections
+/corridors/copper-cobalt
+/corridors/copper-cobalt/dossier
+/evidence-ledger
+/corridors/copper-cobalt/governance
+/corridors/copper-cobalt/value-chain
+/corridors/copper-cobalt/labor-ecology-revenue
+/methods
+/safeguards
+/corrections
 ```
 
 ## 7.3 Deferred routes
@@ -2050,11 +2050,11 @@ Deliverables:
 
 Deliverables:
 
-- `/pilot/evidence-dossier`;
-- `/pilot/evidence-ledger`;
-- `/pilot/methods-and-limits`;
-- `/pilot/safeguards`;
-- `/pilot/corrections`.
+- `/corridors/copper-cobalt/dossier`;
+- `/evidence-ledger`;
+- `/methods`;
+- `/safeguards`;
+- `/corrections`.
 
 ## Sprint 7 — limited dashboard
 
@@ -2826,4 +2826,3 @@ If yes, the institution can grow.
 If no, the institution should not scale.
 
 **The chain must be made visible without making vulnerable people, places, species, or knowledge more vulnerable.**
-

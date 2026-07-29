@@ -1507,7 +1507,7 @@ const RELEASE_MANIFEST = {
   signed_by: null,
   signed_at: null,
   method_note_path: "/docs/evidence-standard.md",
-  correction_route_path: "/pilot/corrections",
+  correction_route_path: "/corrections",
   manifest_hash: null,
 };
 

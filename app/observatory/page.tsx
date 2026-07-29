@@ -15,15 +15,15 @@ export default function ObservatoryPage() {
       </p>
       <p>
         Explore the{" "}
-        <Link href="/pilot/corridor" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+        <Link href="/corridors/copper-cobalt" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Copper-Cobalt Corridor
         </Link>{" "}
         demonstration profile, or review{" "}
-        <Link href="/pilot/evidence-ledger" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+        <Link href="/evidence-ledger" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Evidence Ledger
         </Link>{" "}
         and{" "}
-        <Link href="/pilot/methods-and-limits" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+        <Link href="/methods" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Methods
         </Link>
         .

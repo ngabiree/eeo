@@ -1,13 +1,10 @@
-/**
- * Header + in-page **shortcut** pilot links (single source for labels).
- * Deeper pilots still exist under `/pilot/*` — see `/pilot` overview and `docs/mvp-evidence-loop.md`.
- */
+/** Header and in-page public route shortcuts (single source for labels). */
 export const PILOT_PUBLIC_NAV: readonly { href: string; label: string }[] = [
   { href: "/", label: "Observatory" },
-  { href: "/pilot", label: "Corridor" },
-  { href: "/pilot/corridor", label: "Copper-Cobalt Corridor" },
-  { href: "/pilot/evidence-ledger", label: "Evidence Ledger" },
-  { href: "/pilot/methods-and-limits", label: "Methods & Limits" },
-  { href: "/pilot/safeguards", label: "Disclosure Safeguards" },
-  { href: "/pilot/corrections", label: "Corrections & Reply" },
+  { href: "/corridors/copper-cobalt", label: "Corridor" },
+  { href: "/corridors/copper-cobalt/system", label: "Copper-Cobalt Corridor" },
+  { href: "/evidence-ledger", label: "Evidence Ledger" },
+  { href: "/methods", label: "Methods & Limits" },
+  { href: "/safeguards", label: "Disclosure Safeguards" },
+  { href: "/corrections", label: "Corrections & Reply" },
 ];

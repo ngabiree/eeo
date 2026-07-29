@@ -18,7 +18,7 @@ export default function PilotRouteNav() {
           Corridor routes (same list as the site header)
         </p>
         <p className="mb-3 text-xs leading-relaxed text-[color:var(--eeo-muted)]">
-          Header shortcuts only — open <Link href="/pilot" className="underline">the corridor</Link> for the full route
+          Header shortcuts only — open <Link href="/corridors/copper-cobalt" className="underline">the corridor</Link> for the full route
           list. Demonstration data · not a public data release.
         </p>
         <div className="flex flex-wrap gap-2 text-sm">

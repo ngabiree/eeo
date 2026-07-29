@@ -41,7 +41,7 @@ export default function PilotEvidenceLedgerPage() {
           <p className="mt-4 text-xs text-[color:var(--eeo-muted)]">Evidence records in this ledger: {evidenceItems.length}</p>
         </section>
 
-        <Link href="/pilot/evidence-dossier" className="text-sm underline">
+        <Link href="/corridors/copper-cobalt/dossier" className="text-sm underline">
           Back to claim cards
         </Link>
       </div>

@@ -9,7 +9,7 @@ export default function ContactPage() {
         For factual corrections to published claims and related governance requests, prefer the Corrections intake so identifiers and evidence can be routed consistently:
       </p>
       <p>
-        <Link href="/pilot/corrections" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+        <Link href="/corrections" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Open Corrections / challenge route
         </Link>
       </p>

@@ -36,7 +36,7 @@ export default function EvidenceLoopPanel() {
       </ol>
       <p className="mt-4 text-sm leading-relaxed text-[color:var(--eeo-text)]">
         <Link
-          href="/pilot/claim-lifecycle"
+          href="/corridors/copper-cobalt/claim-lifecycle"
           className="font-medium text-[color:var(--eeo-primary)] underline underline-offset-2 hover:text-[color:var(--eeo-primary-dark)]"
         >
           See one sample claim traced through the chain

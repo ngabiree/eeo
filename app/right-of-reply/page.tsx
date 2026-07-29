@@ -13,7 +13,7 @@ export default function RightOfReplyPage() {
         The correction route collects structured challenges, factual corrections, and safety concerns; material that qualifies as right-of-reply under internal release rules should typically be lodged there alongside evidence links whenever possible so review can trace claims to sources.
       </p>
       <p>
-        <Link href="/pilot/corrections" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+        <Link href="/corrections" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Submit corrections or reply materials
         </Link>
       </p>

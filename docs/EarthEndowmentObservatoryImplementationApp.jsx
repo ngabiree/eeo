@@ -139,15 +139,15 @@ const roles = [
 
 const appRoutes = [
   { path: "/", surface: "public", purpose: "Institutional identity, doctrine, pilot status" },
-  { path: "/pilot", surface: "public", purpose: "Pilot overview and non-claims" },
-  { path: "/pilot/evidence-dossier", surface: "public", purpose: "Narrative evidence dossier" },
-  { path: "/pilot/evidence-ledger", surface: "public", purpose: "Inspectable public claims" },
-  { path: "/pilot/governance-profile", surface: "public", purpose: "Jurisdiction, laws, concessions, public authority" },
-  { path: "/pilot/value-chain", surface: "public", purpose: "Extraction, processing, trade-flow context" },
-  { path: "/pilot/labor-ecology-revenue", surface: "public", purpose: "Indicator cards, no score" },
-  { path: "/pilot/methods-and-limits", surface: "public", purpose: "Sources, confidence taxonomy, limitations" },
-  { path: "/pilot/safeguards", surface: "public", purpose: "Suppressed, aggregated, restricted, not-collected data" },
-  { path: "/pilot/corrections", surface: "public", purpose: "Correction, right-of-reply, exposure concern intake" },
+  { path: "/corridors/copper-cobalt", surface: "public", purpose: "Corridor overview and non-claims" },
+  { path: "/corridors/copper-cobalt/dossier", surface: "public", purpose: "Narrative evidence dossier" },
+  { path: "/evidence-ledger", surface: "public", purpose: "Inspectable public claims" },
+  { path: "/corridors/copper-cobalt/governance", surface: "public", purpose: "Jurisdiction, laws, concessions, public authority" },
+  { path: "/corridors/copper-cobalt/value-chain", surface: "public", purpose: "Extraction, processing, trade-flow context" },
+  { path: "/corridors/copper-cobalt/labor-ecology-revenue", surface: "public", purpose: "Indicator cards, no score" },
+  { path: "/methods", surface: "public", purpose: "Sources, confidence taxonomy, limitations" },
+  { path: "/safeguards", surface: "public", purpose: "Suppressed, aggregated, restricted, not-collected data" },
+  { path: "/corrections", surface: "public", purpose: "Correction, right-of-reply, exposure concern intake" },
   { path: "/workspace/sources", surface: "restricted", purpose: "Source registry CRUD" },
   { path: "/workspace/licenses", surface: "restricted", purpose: "License and use-basis review" },
   { path: "/workspace/evidence", surface: "restricted", purpose: "Private evidence vault metadata" },
@@ -257,8 +257,8 @@ const sampleReleaseManifest = {
   release_status: "draft",
   signed_by: null,
   signed_at: null,
-  method_note_path: "/pilot/methods-and-limits",
-  correction_route_path: "/pilot/corrections",
+  method_note_path: "/methods",
+  correction_route_path: "/corrections",
   manifest_hash: null,
   required_checks: [
     "license_review_complete",
@@ -495,14 +495,14 @@ const repositoryTree = `eeo-web/
   app/
     (public)/
       page.tsx
-      pilot/evidence-dossier/page.tsx
-      pilot/evidence-ledger/page.tsx
-      pilot/governance-profile/page.tsx
-      pilot/value-chain/page.tsx
-      pilot/labor-ecology-revenue/page.tsx
-      pilot/methods-and-limits/page.tsx
-      pilot/safeguards/page.tsx
-      pilot/corrections/page.tsx
+      corridors/copper-cobalt/dossier/page.tsx
+      corridors/copper-cobalt/governance/page.tsx
+      corridors/copper-cobalt/value-chain/page.tsx
+      corridors/copper-cobalt/labor-ecology-revenue/page.tsx
+      evidence-ledger/page.tsx
+      methods/page.tsx
+      safeguards/page.tsx
+      corrections/page.tsx
     (workspace)/
       workspace/sources/page.tsx
       workspace/licenses/page.tsx

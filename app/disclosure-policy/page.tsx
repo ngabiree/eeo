@@ -20,7 +20,7 @@ export default function DisclosurePolicyPage() {
         versioning follows repository history alongside public release notes where applicable.
       </p>
       <p>
-        <Link href="/pilot/safeguards" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+        <Link href="/safeguards" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Safeguards
         </Link>{" "}
         describes tiers and harm-aware defaults aligned with these rules.

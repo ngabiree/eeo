@@ -90,7 +90,7 @@ export default function EeoSiteHeader() {
                 Public Evidence Observatory
               </span>
               <Link
-                href="/pilot/corridor"
+                href="/corridors/copper-cobalt"
                 onClick={() => setMenuOpen(false)}
                 className="inline-flex min-h-11 items-center justify-center rounded-full bg-[color:var(--eeo-primary)] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2 active:scale-[0.99]"
               >

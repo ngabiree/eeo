@@ -124,7 +124,7 @@ export default function PilotEvidenceDossierPage() {
         <ReleaseManifestPanel />
 
         <div className="text-sm">
-          <Link href="/pilot/corrections" className="underline">
+          <Link href="/corrections" className="underline">
             Open correction route
           </Link>
         </div>

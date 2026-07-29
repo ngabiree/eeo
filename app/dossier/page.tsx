@@ -185,7 +185,7 @@ export default function DossierPage() {
         </section>
 
         <div className="flex flex-wrap gap-4 text-sm">
-          <Link href="/pilot/corrections" className="underline">
+          <Link href="/corrections" className="underline">
             Correction route
           </Link>
           <Link href="/right-of-reply" className="underline">

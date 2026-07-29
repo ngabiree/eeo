@@ -82,7 +82,7 @@ pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The site header lists **shortcut links** from **`lib/pilotPublicNav.ts`** — Observatory, **Pilot hub** (`/pilot`), First Corridor, Evidence Ledger, Methods, Safeguards, and Corrections — to keep navigation compact. **`/pilot`** surfaces additional corridor prototype pages (overview, evidence dossier and ledger, governance profile, claim lifecycle, human capability, labor/ecology/revenue, value-chain view, and others); see **`docs/mvp-evidence-loop.md`** for paths. Corridor workspace tabs live inside `/pilot/corridor`; **`/trust`** exposes the public Trust index; internal reviewer routes under **`/review`** and **`/workspace`** omit the public chrome.
+Open [http://localhost:3000](http://localhost:3000). The site header lists **shortcut links** from **`lib/pilotPublicNav.ts`** — Observatory, **Corridor** (`/corridors/copper-cobalt`), Evidence Ledger, Methods, Safeguards, and Corrections — to keep navigation compact. The corridor overview surfaces the evidence dossier, governance profile, claim lifecycle, human capability, labor/ecology/revenue, value-chain view, and system view at stable public URLs; see **`docs/mvp-evidence-loop.md`** for paths. **`/trust`** exposes the public Trust index; internal reviewer routes under **`/review`** and **`/workspace`** omit the public chrome.
 
 ### npm fallback
 
@@ -104,8 +104,8 @@ If you use npm locally, keep committed lockfile/package-manager conventions unch
 | `pnpm start`        | Run production build       |
 | `pnpm lint`         | ESLint CLI (`next/core-web-vitals` + `next/typescript` via `eslint.config.mjs`) |
 | `pnpm typecheck`    | TypeScript (`tsc --noEmit`) |
-| `pnpm check:pilot-routes` | Fails if legacy public routes are referenced instead of canonical `/pilot/*` routes |
-| `pnpm check:pilot-hub-routes` | Fails if **`app/pilot/page.tsx`** is missing, **`lib/pilotHubRoutes.ts`** drifts from segment **`page.tsx`** files, or **`lib/pilotPublicNav.ts`** **`/pilot/...`** shortcuts miss a matching segment |
+| `pnpm check:pilot-routes` | Fails if app or component links reference legacy `/pilot/*` routes |
+| `pnpm check:pilot-hub-routes` | Fails if **`lib/pilotHubRoutes.ts`** or **`lib/pilotPublicNav.ts`** points to a missing stable App Router page |
 | `pnpm verify`       | Same sequence as CI: `check:pilot-routes`, `check:pilot-hub-routes`, lint, typecheck, test, build |
 
 `pnpm check:pilot-routes`, `pnpm check:pilot-hub-routes`, and the rest of `pnpm verify` run in GitHub Actions on pushes and pull requests. Short legacy bookmark paths are listed in `docs/mvp-evidence-loop.md` and implemented in `next.config.mjs`.
@@ -121,7 +121,7 @@ Do not commit `package-lock.json` (it is in `.gitignore`). CI uses **`pnpm insta
 - `app/` — Next.js App Router (`layout.tsx`, `page.tsx`, `globals.css`)
 - `types/corridorDossier.ts` · `types/mapSafety.ts` · `types/temporalProfile.ts` (**dormant temporal stub**)  
 - `data/corridorDossier.ts` — copper–cobalt dossier skeleton; **`data/sourceMap.ts`** — pilot source / non-duplication map  
-- `lib/pilotPublicNav.ts` — header shortcuts; **`lib/pilotHubRoutes.ts`** — full **`/pilot`** exploration list  
+- `lib/pilotPublicNav.ts` — header shortcuts; **`lib/pilotHubRoutes.ts`** — full public corridor exploration list
 - `components/EarthEndowmentObservatoryOneFileApp.tsx` — **canonical** corridor workspace UI (client component); treat this as the source of shipped behavior.
 - `docs/eeo_one_file_corridor_app.jsx` — small one-file corridor snapshot (reference; uses `lucide-react`)
 - `docs/eeo_one_file_corridor_app_data_reactive.jsx` — curated repaired data-reactive atmospheric/public-evidence variant imported from local download
@@ -191,7 +191,7 @@ This canonical specification governs:
 
 ### MVP evidence loop (visibility rule)
 
-Also echoed on the `/pilot` overview page (static panel). Full text: `docs/mvp-evidence-loop.md`.
+Also echoed on the `/corridors/copper-cobalt` overview page (static panel). Full text: `docs/mvp-evidence-loop.md`.
 
 ```text
 source -> license -> evidence -> claim -> entity resolution -> review -> exposure review -> right-of-reply if needed -> release manifest -> public evidence dossier -> correction route

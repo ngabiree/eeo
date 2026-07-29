@@ -16,7 +16,7 @@ export default function GovernanceProfilePage() {
           For claim-level governance posture, review the dossier and release manifest.
         </p>
         <div className="flex flex-wrap gap-3 text-sm">
-          <Link href="/pilot/evidence-dossier" className="underline">Open evidence dossier</Link>
+          <Link href="/corridors/copper-cobalt/dossier" className="underline">Open evidence dossier</Link>
           <Link href="/release" className="underline">Open release manifest</Link>
         </div>
       </div>

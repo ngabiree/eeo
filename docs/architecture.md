@@ -11,7 +11,7 @@ Supabase is configured in `.env.example` but not yet integrated — planned for 
 
 | Layer | Status | Notes |
 |---|---|---|
-| Public evidence dossier (`/pilot/*`) | Shipped | Corridor profile, evidence ledger, governance, value chain, methods, safeguards, corrections |
+| Public evidence dossier | Shipped | Stable corridor, evidence ledger, governance, value chain, methods, safeguards, and corrections routes |
 | Internal review workspace (`/review`, `/workspace/*`) | Shipped | Password-gated; correction triage, release readiness preview, sign-off review |
 | File-backed prototype stores | Shipped | `.eeo/corrections.json`, `.eeo/release-governance-log.json` — single-node only |
 | Supabase data plane | Deferred to v0.7+ | RLS, Auth, Postgres, Storage |
@@ -81,7 +81,7 @@ GitHub Repository
   → Pull Request → Vercel Preview Deployment → Review / QA
     → Merge to main → Vercel Production Deployment
       → Next.js App
-        → Public Evidence Dossier (/pilot/*)
+        → Public Evidence Dossier (/corridors/copper-cobalt/dossier)
         → Restricted Review Workspace (/review, /workspace/*)
         → Server Actions / API Routes
           → Supabase Auth

@@ -1,17 +1,14 @@
-/**
- * All shipped corridor prototype routes under segment `app/pilot` child pages (excluding `/pilot` hub).
- * Keep aligned with `docs/mvp-evidence-loop.md`.
- */
+/** All shipped corridor and institutional public routes. */
 export const PILOT_HUB_ROUTES: readonly { href: string; label: string }[] = [
-  { href: "/pilot/corridor", label: "Corridor workspace" },
-  { href: "/pilot/evidence-dossier", label: "Evidence dossier" },
-  { href: "/pilot/evidence-ledger", label: "Evidence ledger" },
-  { href: "/pilot/governance-profile", label: "Governance profile" },
-  { href: "/pilot/human-capability", label: "Human capability" },
-  { href: "/pilot/claim-lifecycle", label: "Claim lifecycle" },
-  { href: "/pilot/labor-ecology-revenue", label: "Labor · ecology · revenue" },
-  { href: "/pilot/value-chain", label: "Value chain" },
-  { href: "/pilot/methods-and-limits", label: "Methods and limits" },
-  { href: "/pilot/safeguards", label: "Safeguards" },
-  { href: "/pilot/corrections", label: "Corrections" },
+  { href: "/corridors/copper-cobalt/system", label: "Corridor system" },
+  { href: "/corridors/copper-cobalt/dossier", label: "Evidence dossier" },
+  { href: "/evidence-ledger", label: "Evidence ledger" },
+  { href: "/corridors/copper-cobalt/governance", label: "Governance profile" },
+  { href: "/corridors/copper-cobalt/human-capability", label: "Human capability" },
+  { href: "/corridors/copper-cobalt/claim-lifecycle", label: "Claim lifecycle" },
+  { href: "/corridors/copper-cobalt/labor-ecology-revenue", label: "Labor · ecology · revenue" },
+  { href: "/corridors/copper-cobalt/value-chain", label: "Value chain" },
+  { href: "/methods", label: "Methods and limits" },
+  { href: "/safeguards", label: "Safeguards" },
+  { href: "/corrections", label: "Corrections" },
 ];

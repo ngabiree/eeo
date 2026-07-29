@@ -15,7 +15,7 @@ export default function StewardshipPage() {
       </p>
       <p>
         For operational safeguards aligned with OECD-style methodological seriousness and civic accountability, review{" "}
-        <Link href="/pilot/safeguards" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
+        <Link href="/safeguards" className="font-semibold text-[color:var(--eeo-primary)] underline underline-offset-2">
           Safeguards
         </Link>{" "}
         and{" "}

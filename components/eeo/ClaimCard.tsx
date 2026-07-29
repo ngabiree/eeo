@@ -286,7 +286,7 @@ export default function ClaimCard({
         <span className="text-xs text-[color:var(--eeo-muted)]">Last updated: {claim.lastUpdated}</span>
         <span className="text-xs text-[color:var(--eeo-muted)]">Review window: {claim.lastReviewed} to {claim.staleAfter}</span>
         <Link
-          href="/pilot/corrections"
+          href="/corrections"
           className="rounded-full bg-[color:var(--eeo-primary)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[color:var(--eeo-primary-dark)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--eeo-primary)] focus-visible:ring-offset-2"
         >
           Challenge or correct this claim

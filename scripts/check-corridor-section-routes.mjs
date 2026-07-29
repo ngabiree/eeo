@@ -7,8 +7,9 @@ const CORRIDOR_VIEW_FILE = path.join(ROOT, "components", "CorridorSystemView.tsx
 const CORRIDOR_SECTION_ROUTE_FILE = path.join(
   ROOT,
   "app",
-  "pilot",
-  "corridor",
+  "corridors",
+  "copper-cobalt",
+  "system",
   "[section]",
   "page.tsx",
 );
@@ -28,7 +29,7 @@ function collectUniqueMatches(source, pattern) {
 
 function collectRouteRedirects(source) {
   return new Map(
-    [...source.matchAll(/"([^"]+)": "\/pilot\/corridor\?expand=([^"]+)",/g)].map((match) => [
+    [...source.matchAll(/"([^"]+)": "\/corridors\/copper-cobalt\/system\?expand=([^"]+)",/g)].map((match) => [
       match[1],
       match[2],
     ]),
@@ -41,7 +42,7 @@ function formatList(values) {
 
 if (!(await fileExists(CORRIDOR_SECTION_ROUTE_FILE))) {
   console.error(
-    "Missing app/pilot/corridor/[section]/page.tsx for declared corridor section page links.",
+    "Missing app/corridors/copper-cobalt/system/[section]/page.tsx for declared corridor section page links.",
   );
   process.exit(1);
 }
@@ -51,11 +52,11 @@ const routeSource = await readFile(CORRIDOR_SECTION_ROUTE_FILE, "utf8");
 
 const declaredPageSlugs = collectUniqueMatches(
   viewSource,
-  /page: "\/pilot\/corridor\/([^"]+)"/g,
+  /page: "\/corridors\/copper-cobalt\/system\/([^"]+)"/g,
 );
 const declaredExpansionSlugs = collectUniqueMatches(
   viewSource,
-  /expansion: "\/pilot\/corridor\?expand=([^"]+)"/g,
+  /expansion: "\/corridors\/copper-cobalt\/system\?expand=([^"]+)"/g,
 );
 const routeRedirects = collectRouteRedirects(routeSource);
 const routeSlugs = new Set(routeRedirects.keys());
@@ -78,7 +79,7 @@ if (
   );
 
   if (missingRouteSlugs.length > 0) {
-    console.error("Declared page links missing from app/pilot/corridor/[section]/page.tsx:");
+    console.error("Declared page links missing from app/corridors/copper-cobalt/system/[section]/page.tsx:");
     console.error(formatList(missingRouteSlugs));
   }
 

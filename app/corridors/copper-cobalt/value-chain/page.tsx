@@ -19,7 +19,7 @@ export default function PilotValueChainPage() {
         <CorridorChain />
         <p className="text-sm text-stone-600">
           For claim-level evidence and limitations, open the{" "}
-          <Link href="/pilot/evidence-dossier" className="underline">
+          <Link href="/corridors/copper-cobalt/dossier" className="underline">
             evidence dossier
           </Link>
           .

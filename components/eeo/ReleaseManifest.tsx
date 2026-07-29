@@ -238,7 +238,7 @@ export default function ReleaseManifestPanel() {
           withdrawn states.
         </p>
         <p><strong>Approvals:</strong> {releaseManifest.approvedBy.join(", ")}</p>
-        <p><strong>Correction route:</strong> /pilot/corrections</p>
+        <p><strong>Correction route:</strong> /corrections</p>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@
 
 - framework: Next.js App Router application with TypeScript, React, Tailwind CSS, Vitest, and ESLint.
 - package manager: pnpm, standardized by `packageManager` in `package.json` and `pnpm-lock.yaml`.
-- routing: `app/` uses App Router routes. Public surfaces include `/`, `/pilot`, `/pilot/corridor`, `/pilot/evidence-dossier`, `/pilot/evidence-ledger`, `/pilot/methods-and-limits`, `/pilot/safeguards`, `/pilot/corrections`, `/right-of-reply`, `/trust`, and related governance/disclosure pages. Internal or reviewer-oriented surfaces include `/review` and `/workspace`.
+- routing: `app/` uses App Router routes. Public surfaces include `/`, `/corridors/copper-cobalt`, `/corridors/copper-cobalt/dossier`, `/evidence-ledger`, `/methods`, `/safeguards`, `/corrections`, `/right-of-reply`, `/trust`, and related governance/disclosure pages. Internal or reviewer-oriented surfaces include `/review` and `/workspace`; `/pilot/*` paths are redirects only.
 - styling: Tailwind plus EEO-specific CSS tokens and utilities in `app/globals.css`.
 - data approach: prototype TypeScript data modules under `data/`, including claims, evidence, sources, entities, corridor dossier, source map, release manifest, and review/access examples. Public live evidence is not stored in GitHub.
 - schema/type approach: TypeScript contracts under `types/`, including corridor dossier, EEO domain types, human layer, map safety, release gate, review signoff, monitoring signal, and dormant temporal profile types.
