@@ -73,6 +73,44 @@ The claim must remain outside the release manifest until all of the following ar
 5. **Release authority** approves the exact claim version for manifest inclusion.
 6. The signed release manifest is updated in a separate, reviewable change.
 
+## Accountable review record
+
+This section must be completed by accountable human reviewers. Blank fields are unresolved gates, not implied approvals. A reviewer should assess only the role for which they are authorized.
+
+**Exact claim version under review**
+
+> The U.S. Geological Survey's 2026 cobalt materials identify the Democratic Republic of the Congo as the leading cobalt reserve jurisdiction and estimate that it held about 55% of global cobalt reserves.
+
+| Review role | Reviewer name or accountable office | Decision | Decision date | Conditions or required changes | Evidence of authorization |
+|---|---|---|---|---|---|
+| Method reviewer | _Unassigned_ | _Pending_ | _Pending_ | _Pending_ | _Pending_ |
+| Evidence steward | _Unassigned_ | _Pending_ | _Pending_ | _Pending_ | _Pending_ |
+| Legal-posture reviewer | _Unassigned_ | _Pending_ | _Pending_ | _Pending_ | _Pending_ |
+| Disclosure reviewer | _Unassigned_ | _Pending_ | _Pending_ | _Pending_ | _Pending_ |
+| Release authority | _Unassigned_ | _Pending_ | _Pending_ | _Pending_ | _Pending_ |
+
+Permitted decision values are:
+
+- `approved`;
+- `approved_with_conditions`;
+- `changes_required`;
+- `not_approved`.
+
+A decision is incomplete unless it records the reviewer or accountable office, date, exact claim wording reviewed, conditions or rationale, and evidence that the reviewer held the relevant authority. Release-authority approval does not itself alter the public release; a separate signed manifest change is still required.
+
+## Version and correction controls
+
+Before manifest inclusion, record:
+
+- the claim-record version or commit reviewed;
+- the source and evidence-record versions reviewed;
+- the stale-after date accepted by the evidence steward;
+- the public correction route;
+- the withdrawal trigger if the source is superseded or materially revised;
+- whether any reviewer conditions remain open.
+
+Any wording change after approval reopens method, legal-posture, disclosure, and release-authority review unless the responsible reviewer expressly records that the change is non-substantive.
+
 ## Stop conditions
 
 Do not release the claim if:
@@ -83,10 +121,13 @@ Do not release the claim if:
 - the use basis becomes uncertain;
 - the wording implies independent verification, ownership, entitlement, supply-chain traceability, or public benefit;
 - the claim is stale or superseded;
-- accountable review or release authority is absent.
+- accountable review or release authority is absent;
+- a required reviewer field remains blank or marked pending;
+- conditions attached to an approval remain unresolved;
+- the exact approved wording differs from the wording proposed for the release manifest.
 
 ## Review recommendation
 
 **Recommendation:** Eligible for accountable method review; not yet approved for public release.
 
-The smallest safe next action is for a named human method reviewer and evidence steward to record their decisions. Manifest inclusion, if approved, must occur separately.
+The smallest safe next action is for a named human method reviewer and evidence steward to record their decisions. Legal-posture, disclosure, and release-authority decisions remain separate gates. Manifest inclusion, if approved, must occur through a separate reviewable change.
