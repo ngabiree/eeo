@@ -816,7 +816,7 @@ function Home({ setActive }) {
           This version keeps the product prototype visible while adding implementation-critical detail: contracts, tables, RLS doctrine, repository structure, API routes, review workflows, release readiness, and test strategy.
         </SectionTitle>
         <div className="grid gap-4 md:grid-cols-3">
-          <Principle icon={Eye} title="Reveal the chain" body="Make endowment transformation visible from source to public-benefit question without claiming control." />
+          <Principle icon={Eye} title="Trace the evidence" body="Make evidence-supported relationships visible from source to public-benefit question without claiming physical custody or institutional control." />
           <Principle icon={ShieldCheck} title="Protect the vulnerable" body="Tier, aggregate, suppress, or refuse data when publication could create harm." />
           <Principle icon={TerminalSquare} title="Build the loop" body="The MVP is the governed source-to-claim-to-release-to-correction loop, not a beautiful map." />
         </div>
@@ -1062,7 +1062,7 @@ function Methods() {
     ["Labor", "Labor data may be national, sectoral, or modeled rather than site-specific; informal work may be undercounted."],
     ["Public revenue", "Disclosed public revenue does not prove durable public benefit."],
     ["Ecology", "Spatial proximity does not prove causation without additional evidence."],
-    ["Legal", "EEO makes no legal finding unless citing a competent authority’s finding."],
+    ["Legal", "EEO does not issue legal findings; it reports competent-authority findings with source, status, scope, and limits."],
     ["AI", "AI may assist with code, drafts, and summarization; it may not make final publication, confidence, legal, or disclosure decisions."],
   ];
   return (

@@ -16,9 +16,35 @@ export default function PilotMethodsLimitsPage() {
         </p>
         <p className="leading-7 text-stone-700">
           The Observatory distinguishes factual observations, methodological limits, risk indicators, analytical inferences,
-          normative concerns, and legal findings. <strong>EEO makes no legal finding</strong> unless explicitly
-          supported by authoritative legal or regulatory sources.
+          normative concerns, and legal findings by competent authorities. <strong>EEO makes no legal finding</strong>.
+          It may report a court, regulator, tribunal, or other competent authority&apos;s finding with its source,
+          procedural status, scope, and limitations made clear.
         </p>
+        <section className="rounded-2xl border border-stone-200 bg-white/80 p-5 text-sm leading-6 text-stone-800 shadow-sm">
+          <h2 className="text-base font-semibold text-stone-900">Five distinctions that govern public language</h2>
+          <dl className="mt-3 space-y-3">
+            <div>
+              <dt className="font-semibold">Evidence-supported tracing</dt>
+              <dd>Links a public statement to evidence, sources, methods, limitations, and correction history. It traces the basis of a claim, not physical material.</dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Physical chain of custody</dt>
+              <dd>Requires documented custody or transfer events. Production statistics, trade data, company disclosures, and spatial proximity do not establish it on their own.</dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Legal findings</dt>
+              <dd>Belong to competent legal or regulatory authorities. EEO may report them accurately but does not issue findings or assign liability.</dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Ethical principles</dt>
+              <dd>Guide EEO&apos;s stewardship, rights, consent, harm, public-benefit, and intergenerational analysis. They are not legal verdicts or compliance determinations.</dd>
+            </div>
+            <div>
+              <dt className="font-semibold">Institutional authority</dt>
+              <dd>Covers EEO&apos;s own evidence, review, disclosure, correction, and release practices. It is not judicial, regulatory, sovereign, territorial, or certifying authority.</dd>
+            </div>
+          </dl>
+        </section>
         <section className="rounded-2xl border border-stone-200 bg-white/80 p-5 text-sm leading-6 text-stone-800 shadow-sm">
           <h2 className="text-base font-semibold text-stone-900">What this copper-cobalt corridor record does not establish</h2>
           <ul className="mt-3 list-disc space-y-2 pl-5">

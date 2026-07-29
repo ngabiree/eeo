@@ -106,7 +106,7 @@ EEO is not:
 
 EEO must never convert moral concern into unauthorized institutional control.
 
-It may reveal the chain. It may not claim authority over the chain.
+It may trace evidence-supported relationships in an endowment-to-economy system. It may not present that trace as physical chain of custody or claim authority over the people, places, institutions, materials, or legal rights involved.
 
 ---
 
@@ -394,6 +394,18 @@ Allowed phrasing:
 - “The cited authority found...”
 - “The cited complaint alleges...”
 - “The legal status is disputed.”
+
+## 8.1.1 Canonical authority and tracing distinctions
+
+EEO must keep five concepts separate in every public record, method note, and institutional statement:
+
+1. **Evidence-supported tracing** means a visible, reviewable path from a public statement to its evidence records, sources, methods, limitations, and correction history. It traces the basis of a claim; it does not establish the movement, custody, origin, or identity of physical material.
+2. **Physical chain of custody** means documented control or transfer of material through relevant custody events. Production statistics, customs data, corporate disclosures, spatial proximity, or an EEO evidence path do not establish physical chain of custody on their own. EEO may cite a chain-of-custody record but does not certify it.
+3. **Legal findings** are determinations, orders, judgments, or formal findings made by a competent court, regulator, tribunal, or other legally authorized body. EEO makes no legal finding, assigns no liability, and reports the issuing authority, status, scope, and limits of any cited finding.
+4. **Ethical principles** guide EEO's own stewardship, rights, harm, public-benefit, consent, and intergenerational analysis. They support questions and institutional choices; they are not legal verdicts, compliance determinations, or certification criteria.
+5. **Institutional authority** is limited to EEO's own evidence, review, disclosure, correction, and release practices. EEO's authority is civic and epistemic, not sovereign, judicial, regulatory, territorial, or certifying.
+
+Public language must use **evidence-supported tracing** where the claim-to-source path is meant. It must not shorten that concept to **traceability** when a reasonable reader could understand physical origin, custody, certification, or regulatory assurance.
 
 ## 8.2 Claim taxonomy
 
