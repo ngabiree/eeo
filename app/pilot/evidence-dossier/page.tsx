@@ -7,13 +7,17 @@ import PilotRouteNav from "@/components/eeo/PilotRouteNav";
 import ReleaseManifestPanel from "@/components/eeo/ReleaseManifest";
 import { claims } from "@/data/claims";
 import { copperCobaltCorridorPilotSkeleton } from "@/data/corridorDossier";
+import { releaseManifest } from "@/data/releaseManifest";
 import { getClaimCorrectionSummary } from "@/lib/claimUtils";
 import { listCorrectionSubmissions } from "@/lib/correctionsStore";
 
 export default function PilotEvidenceDossierPage() {
   const dossier = copperCobaltCorridorPilotSkeleton;
   const corrections = listCorrectionSubmissions();
-  const governanceSummaries = claims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
+  const releaseClaimIds = new Set(releaseManifest.includedClaimIds);
+  const releasedClaims = claims.filter((claim) => releaseClaimIds.has(claim.id));
+  const unreleasedClaimCount = claims.length - releasedClaims.length;
+  const governanceSummaries = releasedClaims.map((claim) => getClaimCorrectionSummary(claim.id, corrections));
   const challengedOrUnderReview = governanceSummaries.filter(
     (summary) => summary.governanceStatus === "challenged" || summary.governanceStatus === "under_review"
   );
@@ -51,9 +55,16 @@ export default function PilotEvidenceDossierPage() {
             </p>
           </div>
           <p className="mt-2 text-xs text-stone-600">
-            Governance states summarize correction-linked review outcomes and publication posture; they are not legal
-            determinations.
+            Governance states summarize correction-linked review outcomes and publication posture for claims included in the
+            release manifest; they are not legal determinations.
           </p>
+          {unreleasedClaimCount > 0 ? (
+            <p className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-xs leading-5 text-amber-950">
+              {unreleasedClaimCount} prototype claim{unreleasedClaimCount === 1 ? "" : "s"} remain outside this public
+              release until release-manifest inclusion, evidence review, exposure review, and any required right-of-reply
+              discipline are complete.
+            </p>
+          ) : null}
         </section>
 
         <section className="space-y-4">
@@ -109,8 +120,8 @@ export default function PilotEvidenceDossierPage() {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold">Claim cards</h2>
-          {claims.map((claim) => (
+          <h2 className="text-2xl font-semibold">Claim cards included in this release</h2>
+          {releasedClaims.map((claim) => (
             <ClaimCard
               key={claim.id}
               claim={claim}
