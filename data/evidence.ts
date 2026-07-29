@@ -49,20 +49,21 @@ export const evidenceItems: EvidenceItem[] = [
     id: "EVID-USGS-CO-002",
     recordMode: "illustrative",
     sourceId: "SRC-USGS-CO-001",
-    title: "DRC cobalt reserve concentration per USGS Mineral Commodity Summaries",
+    title: "USGS estimate of DRC cobalt reserve concentration",
     summary:
-      "USGS Mineral Commodity Summaries consistently identify the Democratic Republic of Congo as holding the largest known cobalt reserves of any single country, accounting for the substantial majority of global identified reserves.",
+      "The 2026 USGS cobalt commodity sheet identifies Congo (Kinshasa) as the leading cobalt reserve jurisdiction. The cited reserve rows and official USGS country summary support a bounded estimate that the DRC held about 55% of estimated global cobalt reserves.",
     evidenceClass: "official",
     confidenceContribution: "high",
     limitations: [
-      "Reserve estimates are subject to methodological revision as geological knowledge, pricing, and extraction technology evolve.",
-      "USGS estimates reflect reported figures; they do not independently verify host-country data.",
-      "Reserve concentration does not indicate rate of extraction, environmental condition, or social conditions at specific sites.",
+      "The percentage reports a USGS estimate derived from the cited edition and denominator; it is not an EEO geological measurement.",
+      "Reserve estimates and country shares may change with geological knowledge, prices, technology, definitions, classifications, reporting, and revisions to the global total.",
+      "USGS may rely partly on reported host-country figures; this evidence does not independently verify mine-level quantities or recoverability.",
+      "Reserve concentration does not establish ownership, entitlement, sovereignty, allocation rights, extraction rates, physical chain of custody, supply security, public benefit, stewardship quality, or site-level social and ecological conditions.",
     ],
     exposureRisk: "low",
     publicationDecision: "publish",
     claimLinks: [
-      { claimId: "CLAIM-DRC-CO-002", role: "supports", note: "Primary source for DRC reserve concentration claim." },
+      { claimId: "CLAIM-DRC-CO-002", role: "supports", note: "Primary official evidence for the bounded DRC reserve-share estimate." },
     ],
   },
 

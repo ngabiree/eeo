@@ -4,15 +4,16 @@ export const sources: Source[] = [
   {
     id: "SRC-USGS-CO-001",
     recordMode: "illustrative",
-    title: "Mineral Commodity Summaries: Cobalt",
+    title: "Mineral commodity summaries 2026: Cobalt",
     publisher: "U.S. Geological Survey",
-    url: "https://www.usgs.gov/centers/national-minerals-information-center",
+    url: "https://doi.org/10.3133/mcs2026",
     sourceType: "government",
     jurisdiction: "United States / Global",
-    publicationDate: "2026",
-    accessedDate: "2026-04-27",
+    publicationDate: "2026-02-06",
+    accessedDate: "2026-07-29",
     licenseStatus: "open",
-    notes: "Used for production, reserve, and mineral context. Not a chain-of-custody source.",
+    notes:
+      "Citation-grade parent report: U.S. Geological Survey, 2026, Mineral commodity summaries 2026 (ver. 1.3, May 2026), 222 p., doi:10.3133/mcs2026. Commodity locator: https://pubs.usgs.gov/periodicals/mcs2026/mcs2026-cobalt.pdf, page 2 of 2, World Mine Production and Reserves table, Congo (Kinshasa) and World total (rounded) rows. Use basis: USGS-authored information is generally U.S. public-domain material, with proper credit requested; separately marked third-party material remains subject to its own rights. Used for production, reserve, and mineral context only. USGS reports DRC as the leading cobalt reserve jurisdiction, with an estimated 55% of global reserves; this does not establish mine-to-product chain of custody, independently verify host-country estimates, or describe site-level social or ecological conditions.",
   },
   {
     id: "SRC-UNCOMTRADE-CO-001",

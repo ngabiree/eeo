@@ -58,28 +58,34 @@ EEO must not be framed as:
 - `docs/mvp-evidence-loop.md` documents the corridor-first evidence loop and public routes.
 - `docs/corridor-charter-template.md` defines the authorization gate for any corridor before it moves beyond roadmap or candidate status.
 - `docs/copper-cobalt-claim-readiness.md` records claim-by-claim release-readiness status for the current pilot corridor.
+- `docs/claim-002-method-review-packet.md` records the bounded wording, source locator, limitations, stop conditions, and blank accountable review fields for `CLAIM-DRC-CO-002`.
 - `docs/founding/README.md` is the founding-document hub.
 
 ## Completed increments
 
-- Repository already includes a Next.js App Router prototype with public EEO surfaces, corridor pilot routes, evidence/correction/review/release helpers, and doctrine docs.
+- Repository already includes a Next.js App Router prototype with public EEO surfaces, corridor routes, evidence/correction/review/release helpers, and doctrine docs.
 - Repository already includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
 - 2026-07-29: Added a corridor charter template and roadmap/docs links so future corridors require boundary, evidence, source-rights, disclosure, map-safety, right-of-reply, reviewer, release-manifest, and stop-condition review before activation.
-- 2026-07-29: Added a Copper-Cobalt claim readiness matrix that keeps `CLAIM-DRC-CO-001` release-scoped, identifies `CLAIM-DRC-CO-002` as the next near-candidate, and keeps method/exposure/ownership-sensitive claims withheld pending review.
+- 2026-07-29: Added a Copper-Cobalt claim readiness matrix that keeps `CLAIM-DRC-CO-001` release-scoped and keeps method, exposure, ownership, and actor-affecting claims withheld pending review.
+- 2026-07-29: Hardened the source and wording basis for `CLAIM-DRC-CO-002` by recording the 2026 USGS DOI, edition, cobalt commodity-sheet locator, source-use basis, bounded estimate of about 55%, limitations, and `method_review` status.
+- 2026-07-29: Added a method-review packet with auditable but blank human signoff fields. No reviewer decision or release approval has been inferred or recorded.
 
 ## Current safe next step
 
-Review `CLAIM-DRC-CO-002` as the next possible release addition by confirming source/license posture, source date, confidence explanation, accountable reviewer role, and release-manifest approval conditions.
+A named, authorized human method reviewer and evidence steward should review the exact proposed wording in `docs/claim-002-method-review-packet.md` and record their decisions, dates, authority, conditions, and version reviewed.
 
-Do not start a second public corridor until the Copper-Cobalt release gate is coherent and the second corridor has a completed charter.
+After those decisions, legal-posture and disclosure reviewers must assess the same exact wording. Release authority and any manifest change remain separate final gates.
+
+Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or start a second public corridor while any required reviewer field remains pending.
 
 ## Open risks
 
 - Prototype persistence boundaries remain: correction submissions, reviewer notes, and activity logs may not be durable unless persistent storage is separately configured.
 - Public/private boundary must remain strict. Do not expose reviewer notes, submitter identities, restricted map coordinates, internal triage reasoning, or sensitive harm-review details.
-- The public homepage and pilot pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
+- The public homepage and corridor pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
 - Future corridor expansion could create global-atlas or public-exposure drift unless the corridor charter gate is enforced.
 - Visible prototype claims can be mistaken for release-approved public findings unless release-manifest scope remains explicit.
+- A prepared method-review packet can be mistaken for completed approval unless blank or pending reviewer fields remain visibly unresolved.
 - CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
 
 ## Deferred items
@@ -91,4 +97,4 @@ Do not start a second public corridor until the Copper-Cobalt release gate is co
 
 ## Last checks run
 
-- Not run in this increment. Changes are documentation-only and were prepared through the GitHub branch workflow.
+- Not run in this increment. Changes are data/documentation-only and were prepared through the GitHub branch workflow.
