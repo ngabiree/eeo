@@ -71,12 +71,14 @@ EEO must not be framed as:
 - 2026-07-29: Added a method-review packet with auditable but blank human signoff fields. No reviewer decision or release approval has been inferred or recorded.
 - 2026-07-29: Separated formal review requirements from completed signoffs, declared the accountable review lanes required for `CLAIM-DRC-CO-002`, and added readiness logic that treats missing, blocked, withdrawn, superseded, and expired decisions conservatively.
 - 2026-07-29: Added an intentionally empty governed signoff dataset. Rehearsal-only signoff examples remain separate and cannot satisfy release readiness.
+- 2026-07-29: Declared the same accountable review lanes for the currently included methodological claim so manifest gating cannot be bypassed by omitting requirement records.
+- 2026-07-29: Added a manifest-level signoff gate that blocks included claims with missing requirements or pending, blocked, withdrawn, or expired governed decisions. The current illustrative manifest therefore remains structurally blocked while the governed signoff dataset is empty.
 
 ## Current safe next step
 
-Integrate the formal review-requirement assessment into release-manifest readiness so a future attempt to include `CLAIM-DRC-CO-002` is structurally blocked while any required lane is pending, blocked, withdrawn, or expired.
+Surface the manifest signoff gate in the protected reviewer workspace, showing only public-safe requirement summaries and aggregate counts. Do not expose internal rationale, reviewer identities, or private notes.
 
-After structural enforcement exists, surface the same public-safe gate state in the protected reviewer workspace. Do not create reviewer decisions through inference, examples, or system rules.
+The reviewer workspace should state clearly that a structural pass does not sign, publish, certify, or adjudicate a manifest. It should also show that rehearsal examples cannot satisfy governed release requirements.
 
 Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or start a second public corridor while any required reviewer field remains pending.
 
@@ -89,6 +91,7 @@ Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or star
 - Visible prototype claims can be mistaken for release-approved public findings unless release-manifest scope remains explicit.
 - A prepared method-review packet or declared requirement can be mistaken for completed approval unless pending state and the absence of governed signoffs remain explicit.
 - Repository-backed signoff records are not a substitute for authenticated workflow, durable audit storage, reviewer authorization checks, or protected internal notes.
+- The current illustrative manifest is not structurally ready under the governed signoff gate because no current governed signoffs are recorded. This must remain visible rather than being silently inferred from rehearsal data.
 - CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
 
 ## Deferred items
@@ -101,4 +104,4 @@ Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or star
 ## Last checks run
 
 - Local checks were not available in this connector workflow.
-- Added Vitest coverage for pending, approved, conditioned, blocked, expired, and superseded signoff handling; CI status remains to be observed after the pull request opens.
+- Added Vitest coverage for claim-level signoff state resolution and manifest-level blocking when requirements are missing or governed decisions are pending, blocked, or expired; CI status remains to be observed after the pull request opens.
