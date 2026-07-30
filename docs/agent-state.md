@@ -10,8 +10,8 @@
 - package manager: pnpm, standardized by `packageManager` in `package.json` and `pnpm-lock.yaml`.
 - routing: `app/` uses App Router routes. Public surfaces include `/`, `/corridors/copper-cobalt`, `/corridors/copper-cobalt/dossier`, `/evidence-ledger`, `/methods`, `/safeguards`, `/corrections`, `/right-of-reply`, `/trust`, and related governance/disclosure pages. Internal or reviewer-oriented surfaces include `/review` and `/workspace`; `/pilot/*` paths are redirects only.
 - styling: Tailwind plus EEO-specific CSS tokens and utilities in `app/globals.css`.
-- data approach: prototype TypeScript data modules under `data/`, including claims, evidence, sources, entities, corridor dossier, source map, release manifest, and review/access examples. Public live evidence is not stored in GitHub.
-- schema/type approach: TypeScript contracts under `types/`, including corridor dossier, EEO domain types, human layer, map safety, release gate, review signoff, monitoring signal, and dormant temporal profile types.
+- data approach: prototype TypeScript data modules under `data/`, including claims, evidence, sources, entities, corridor dossier, source map, release manifest, review requirements, governed review signoffs, and review/access examples. Public live evidence is not stored in GitHub.
+- schema/type approach: TypeScript contracts under `types/`, including corridor dossier, EEO domain types, human layer, map safety, release gate, review requirement/signoff, monitoring signal, and dormant temporal profile types.
 - known build/test commands:
   - `pnpm dev`
   - `pnpm build`
@@ -69,12 +69,14 @@ EEO must not be framed as:
 - 2026-07-29: Added a Copper-Cobalt claim readiness matrix that keeps `CLAIM-DRC-CO-001` release-scoped and keeps method, exposure, ownership, and actor-affecting claims withheld pending review.
 - 2026-07-29: Hardened the source and wording basis for `CLAIM-DRC-CO-002` by recording the 2026 USGS DOI, edition, cobalt commodity-sheet locator, source-use basis, bounded estimate of about 55%, limitations, and `method_review` status.
 - 2026-07-29: Added a method-review packet with auditable but blank human signoff fields. No reviewer decision or release approval has been inferred or recorded.
+- 2026-07-29: Separated formal review requirements from completed signoffs, declared the accountable review lanes required for `CLAIM-DRC-CO-002`, and added readiness logic that treats missing, blocked, withdrawn, superseded, and expired decisions conservatively.
+- 2026-07-29: Added an intentionally empty governed signoff dataset. Rehearsal-only signoff examples remain separate and cannot satisfy release readiness.
 
 ## Current safe next step
 
-A named, authorized human method reviewer and evidence steward should review the exact proposed wording in `docs/claim-002-method-review-packet.md` and record their decisions, dates, authority, conditions, and version reviewed.
+Integrate the formal review-requirement assessment into release-manifest readiness so a future attempt to include `CLAIM-DRC-CO-002` is structurally blocked while any required lane is pending, blocked, withdrawn, or expired.
 
-After those decisions, legal-posture and disclosure reviewers must assess the same exact wording. Release authority and any manifest change remain separate final gates.
+After structural enforcement exists, surface the same public-safe gate state in the protected reviewer workspace. Do not create reviewer decisions through inference, examples, or system rules.
 
 Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or start a second public corridor while any required reviewer field remains pending.
 
@@ -85,7 +87,8 @@ Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or star
 - The public homepage and corridor pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
 - Future corridor expansion could create global-atlas or public-exposure drift unless the corridor charter gate is enforced.
 - Visible prototype claims can be mistaken for release-approved public findings unless release-manifest scope remains explicit.
-- A prepared method-review packet can be mistaken for completed approval unless blank or pending reviewer fields remain visibly unresolved.
+- A prepared method-review packet or declared requirement can be mistaken for completed approval unless pending state and the absence of governed signoffs remain explicit.
+- Repository-backed signoff records are not a substitute for authenticated workflow, durable audit storage, reviewer authorization checks, or protected internal notes.
 - CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
 
 ## Deferred items
@@ -97,4 +100,5 @@ Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or star
 
 ## Last checks run
 
-- Not run in this increment. Changes are data/documentation-only and were prepared through the GitHub branch workflow.
+- Local checks were not available in this connector workflow.
+- Added Vitest coverage for pending, approved, conditioned, blocked, expired, and superseded signoff handling; CI status remains to be observed after the pull request opens.

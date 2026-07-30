@@ -1,17 +1,23 @@
 /**
- * v1.3 contract only — formal review sign-off record.
+ * v1.4 contract — formal review requirements and completed sign-off records.
  *
- * Defines how EEO records that a specific review pass occurred for a specific object.
- * Does not introduce persistence, public UI, runtime enforcement, or release-manifest automation.
+ * A requirement states which accountable review lane must be completed for a
+ * specific object. A sign-off records that a review decision actually occurred.
+ * Keeping these concepts separate prevents a required or prepared review from
+ * being mistaken for approval.
+ *
+ * This contract does not introduce persistence, public UI, automatic approval,
+ * reviewer identity disclosure, or release-manifest authorization.
  */
 
 import type { AccessObjectType } from "./accessGovernance";
 
 /**
- * The nine formal review disciplines shipped for v1.3 sign-off modeling.
- * Aligns with RequiredReview where applicable; adds access_governance_review as its own sign-off lane.
+ * Formal review disciplines available to claim, evidence, map, dossier, press,
+ * and release-manifest governance.
  */
 export type FormalReviewSignoffType =
+  | "method_review"
   | "evidence_review"
   | "language_safety_review"
   | "map_safety_review"
@@ -20,7 +26,50 @@ export type FormalReviewSignoffType =
   | "legal_review"
   | "labor_or_human_rights_review"
   | "ecological_review"
-  | "press_review";
+  | "press_review"
+  | "release_authority_review";
+
+export type FormalReviewAccountableRole =
+  | "method_reviewer"
+  | "evidence_steward"
+  | "language_safety_reviewer"
+  | "map_safety_reviewer"
+  | "right_of_reply_reviewer"
+  | "access_governance_reviewer"
+  | "legal_posture_reviewer"
+  | "labor_or_human_rights_reviewer"
+  | "ecological_reviewer"
+  | "press_reviewer"
+  | "release_authority";
+
+/**
+ * A required review lane. This is not evidence that a review occurred.
+ */
+export interface ReviewSignoffRequirement {
+  id: string;
+
+  objectType: AccessObjectType;
+
+  objectId: string;
+
+  reviewType: FormalReviewSignoffType;
+
+  accountableRole: FormalReviewAccountableRole;
+
+  required: boolean;
+
+  /**
+   * Internal explanation of why the lane is required. Do not render publicly
+   * without a separate language and disclosure review.
+   */
+  rationale: string;
+
+  /**
+   * Safe to expose in an internal reviewer-facing checklist and, if separately
+   * approved, in a public release-limitation summary.
+   */
+  publicSafeSummary: string;
+}
 
 export type ReviewSignoffStatus =
   | "approved"
