@@ -1,9 +1,9 @@
 name: Regenerate React lockfile
 
 on:
-  push:
+  pull_request:
     branches:
-      - codex/react-runtime-alignment
+      - main
 
 permissions:
   contents: write
@@ -13,10 +13,11 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch
+      - name: Checkout repair branch
         uses: actions/checkout@v7
         with:
           ref: codex/react-runtime-alignment
+          persist-credentials: true
 
       - name: Install pnpm
         uses: pnpm/action-setup@v6
