@@ -11,7 +11,7 @@
 - routing: `app/` uses App Router routes. Public surfaces include `/`, `/corridors/copper-cobalt`, `/corridors/copper-cobalt/dossier`, `/evidence-ledger`, `/methods`, `/safeguards`, `/corrections`, `/right-of-reply`, `/trust`, and related governance/disclosure pages. Internal or reviewer-oriented surfaces include `/review` and `/workspace`; `/pilot/*` paths are redirects only.
 - styling: Tailwind plus EEO-specific CSS tokens and utilities in `app/globals.css`.
 - data approach: prototype TypeScript data modules under `data/`, including claims, evidence, sources, entities, corridor dossier, source map, release manifest, review requirements, governed review signoffs, and review/access examples. Public live evidence is not stored in GitHub.
-- schema/type approach: TypeScript contracts under `types/`, including corridor dossier, EEO domain types, human layer, map safety, release gate, review requirement/signoff, monitoring signal, and dormant temporal profile types.
+- schema/type approach: TypeScript contracts under `types/`, including corridor dossier, EEO domain types, human layer, map safety, release gate, review requirement/signoff, governed object-version and authority bindings, monitoring signal, and dormant temporal profile types.
 - known build/test commands:
   - `pnpm dev`
   - `pnpm build`
@@ -76,28 +76,30 @@ EEO must not be framed as:
 - 2026-07-30: Aligned React and ReactDOM at version 19.2.8, regenerated the frozen pnpm lockfile, and restored successful clean installation, tests, and production build.
 - 2026-07-30: Surfaced the governed manifest gate and claim-level review lanes in the protected reviewer workspace using only public-safe summaries and aggregate states.
 - 2026-07-30: Kept the reviewer panel read-only. It does not expose internal rationale, reviewer identities, private notes, restricted evidence, sensitive geography, or approval controls, and it states that rehearsal examples cannot satisfy the gate.
+- 2026-07-30: Added focused regression coverage for the protected reviewer panel, including blocked manifest posture, claim 002 ineligibility, absence of approval controls, and non-disclosure of internal rationale.
+- 2026-07-30: Defined governed sign-offs as a stricter subtype carrying an immutable SHA-256 object-version binding and an opaque accountable-authority binding.
+- 2026-07-30: Added fail-closed structural validation for changed object content, invalid digests, unverified, revoked, expired, out-of-role or out-of-scope authority, expired decisions, and non-satisfying statuses.
 
 ## Current safe next step
 
-Define the version-binding and accountable-authority contract required before any repository-backed governed signoff can be recorded.
+Define and test the deterministic `eeo-json-v1` canonicalization and SHA-256 snapshot process that produces reviewable object-version bindings. The process must include only the governed review scope, avoid private or volatile runtime fields, and produce the same digest for semantically identical content.
 
-A future signoff must bind to the exact reviewed object version or immutable digest, identify the accountable authority basis, record decision time and conditions, support expiry and supersession, and fail closed when the reviewed object changes. This contract must remain separate from the final release-manifest action.
+After canonical snapshot generation is stable, integrate governed-signoff validity into the manifest gate so only a current version-bound, in-scope decision can satisfy a required lane. Keep the governed signoff dataset empty until authenticated authority, durable audit persistence, protected notes, retention, and security controls exist.
 
-Do not create governed signoff records, approval controls, reviewer assignment workflows, or release actions until authentication, authorization, durable audit storage, protected internal-note handling, retention, and security boundaries are defined.
-
-Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or start a second public corridor while any required reviewer field remains pending.
+Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, create governed signoff records, or start a second public corridor while required reviewer fields and operational controls remain pending.
 
 ## Open risks
 
 - Prototype persistence boundaries remain: correction submissions, reviewer notes, and activity logs may not be durable unless persistent storage is separately configured.
-- Public/private boundary must remain strict. Do not expose reviewer notes, submitter identities, restricted map coordinates, internal triage reasoning, or sensitive harm-review details.
+- Public/private boundary must remain strict. Do not expose reviewer notes, submitter identities, restricted map coordinates, internal triage reasoning, authority references, or sensitive harm-review details.
 - The public homepage and corridor pages already contain strong posture language, but every new claim card or dossier paragraph still requires language-safety review.
 - Future corridor expansion could create global-atlas or public-exposure drift unless the corridor charter gate is enforced.
 - Visible prototype claims can be mistaken for release-approved public findings unless release-manifest scope remains explicit.
-- A prepared method-review packet or declared requirement can be mistaken for completed approval unless pending state and the absence of governed signoffs remain explicit.
-- Repository-backed signoff records are not a substitute for authenticated workflow, durable audit storage, reviewer authorization checks, protected internal notes, or version-bound decisions.
+- A prepared method-review packet, declared requirement, authority record, or version binding can be mistaken for completed approval unless pending state and the absence of governed signoffs remain explicit.
+- Repository-backed signoff records are not a substitute for authenticated workflow, durable audit storage, reviewer authorization checks, protected internal notes, retention controls, or version-bound decisions.
 - The current illustrative manifest is not structurally ready under the governed signoff gate because no current governed signoffs are recorded. This remains visible in the protected reviewer workspace.
 - The protected reviewer panel is a read-only diagnostic surface, not an approval workflow or legal record.
+- `eeo-json-v1` canonicalization is declared but not yet implemented; no content digest should be treated as authoritative until deterministic snapshot generation is defined and tested.
 - CI currently runs frozen installation, route checks, temporal dormancy, lint, typecheck, tests, and build. Keep CI and `pnpm verify` aligned intentionally.
 
 ## Deferred items
@@ -110,6 +112,6 @@ Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or star
 
 ## Last checks run
 
-- 2026-07-30: Clean `pnpm install --frozen-lockfile` and `pnpm verify` passed after React and ReactDOM alignment; 14 test files and 97 tests passed before the reviewer-panel regression test was added.
-- 2026-07-30: CI passed for the review-requirement model, manifest signoff gate, and protected reviewer panel increments, including frozen install, route checks, lint, typecheck, tests, and production build.
-- Added focused component regression coverage for blocked governed-signoff state, claim 002 ineligibility, absence of approval controls, and non-disclosure of internal rationale; branch CI remains to be observed.
+- 2026-07-30: Clean `pnpm install --frozen-lockfile` and `pnpm verify` passed after React and ReactDOM alignment; 14 test files and 97 tests passed before later governance tests were added.
+- 2026-07-30: CI passed for the review-requirement model, manifest signoff gate, protected reviewer panel, and reviewer-panel regression increments, including frozen install, route checks, lint, typecheck, tests, and production build.
+- Added unit coverage for governed sign-off version, authority, expiry, scope, and decision-state validation; branch CI remains to be observed.
