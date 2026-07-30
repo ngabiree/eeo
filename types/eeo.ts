@@ -63,25 +63,24 @@ export type ClaimGovernanceStatus =
   | "restricted"
   | "withdrawn";
 
-export type ReleaseDispositionStatus =
-  | "included"
-  | "withheld"
-  | "restricted"
-  | "challenged"
-  | "corrected"
-  | "withdrawn"
-  | "deferred";
+export type RecordMode =
+  | "synthetic"
+  | "illustrative"
+  | "governed"
+  | "released"
+  | "restricted";
 
-export type ReleaseReviewLane =
-  | "method"
-  | "legal_posture"
-  | "exposure"
-  | "right_of_reply"
-  | "correction"
-  | "release_authorization";
+export type PublicRecordStatus =
+  | "released"
+  | "under_review"
+  | "corrected"
+  | "challenged"
+  | "withdrawn"
+  | "restricted";
 
 export interface Source {
   id: string;
+  recordMode: RecordMode;
   title: string;
   publisher: string;
   url?: string;
@@ -104,6 +103,7 @@ export interface Source {
 
 export interface EvidenceItem {
   id: string;
+  recordMode: RecordMode;
   sourceId: string;
   title: string;
   summary: string;
@@ -121,6 +121,7 @@ export interface EvidenceItem {
 
 export interface Entity {
   id: string;
+  recordMode: RecordMode;
   name: string;
   entityType:
     | "resource"
@@ -146,6 +147,7 @@ export interface Entity {
 
 export interface Claim {
   id: string;
+  recordMode: RecordMode;
   title: string;
   plainLanguageClaim: string;
   claimType:
@@ -199,26 +201,12 @@ export interface Claim {
   governanceNote?: string;
 }
 
-export interface ReleaseDecision {
-  claimId: Claim["id"];
-  disposition: ReleaseDispositionStatus;
-  publicReason: string;
-  decisionBasis: string;
-  requiredReviewLanes: ReleaseReviewLane[];
-  completedReviewLanes: ReleaseReviewLane[];
-  releaseManifestId?: string;
-  reviewCompletedAt?: string;
-  decidedAt?: string;
-  supersedesDecisionId?: string;
-  correctionIds?: string[];
-}
-
 export interface ReleaseManifest {
   id: string;
+  recordMode: RecordMode;
   title: string;
   corridor: string;
   releaseDate?: string;
-  releaseDecisions?: ReleaseDecision[];
   includedClaimIds: string[];
   withheldClaimIds: string[];
   unresolvedDisputes: string[];
