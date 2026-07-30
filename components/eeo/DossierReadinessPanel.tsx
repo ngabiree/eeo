@@ -42,6 +42,7 @@ function formatToken(value: string): string {
 /**
  * Protected reviewer workspace panel. Do not import into public routes.
  * Only public-safe signoff summaries and aggregate state are rendered here.
+ * This diagnostic surface cannot create, approve, or persist review decisions.
  */
 export default function DossierReadinessPanel() {
   const corrections = listCorrectionSubmissions();
