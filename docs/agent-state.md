@@ -112,4 +112,4 @@ Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or star
 
 - 2026-07-30: Clean `pnpm install --frozen-lockfile` and `pnpm verify` passed after React and ReactDOM alignment; 14 test files and 97 tests passed before the reviewer-panel regression test was added.
 - 2026-07-30: CI passed for the review-requirement model, manifest signoff gate, and protected reviewer panel increments, including frozen install, route checks, lint, typecheck, tests, and production build.
-- Added focused component regression coverage for blocked governed-signoff state, claim 002 ineligibility, absence of approval controls, and non-disclosure of internal rationale; branch CI remains to be observed.
+- 2026-07-30: Focused component regression coverage now verifies blocked governed-signoff state, claim 002 ineligibility, absence of approval controls, and non-disclosure of internal rationale; branch CI passed.
