@@ -19,7 +19,7 @@ export type VisualType =
   | "none";
 
 export type VisualOutcome =
-  | "APPROVED"
+  | "VALID_FOR_REVIEW"
   | "DOWNGRADED_TO_TABLE"
   | "DOWNGRADED_TO_DIAGRAM"
   | "AGGREGATED"
@@ -94,7 +94,7 @@ export interface EEOVisualContract {
   timeScope?: TimeScope;
   geographyScope?: GeographyScope;
   missingDataPolicy: string;
-  missingValueTreatment: "preserve" | "explicit-not-available" | "zero";
+  missingValueTreatment: "preserve" | "explicit-not-available";
   uncertaintyPolicy: string;
   aggregationMethod?: string;
   transformationMethod?: string;

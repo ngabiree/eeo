@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+
 import { describe, expect, it } from "vitest";
 
 import type { EEOVisualContract } from "./visual-contract";
@@ -15,7 +17,12 @@ const baseContract: EEOVisualContract = {
 
 describe("visual contract linter", () => {
   it("approves a semantically specified, datum-provenanced visual", () => {
-    expect(lintVisualContract(baseContract)).toMatchObject({ outcome: "APPROVED", effectiveDisclosureTier: "contextual public", issues: [] });
+    expect(lintVisualContract(baseContract)).toMatchObject({
+      outcome: "VALID_FOR_REVIEW",
+      effectiveDisclosureTier: "contextual public",
+      publicationAuthorized: false,
+      issues: [],
+    });
   });
 
   it("rejects modeled evidence rendered as observed", () => {
@@ -28,6 +35,65 @@ describe("visual contract linter", () => {
     const result = lintVisualContract({ ...baseContract, disclosureTier: "open", dataRefs: [{ ...baseContract.dataRefs[0], disclosureTier: "aggregated" }] });
     expect(result.outcome).toBe("RESTRICTED");
     expect(result.effectiveDisclosureTier).toBe("aggregated");
+  });
+
+  it("fails closed for an unknown runtime disclosure tier", () => {
+    const result = lintVisualContract({
+      ...baseContract,
+      dataRefs: [{ ...baseContract.dataRefs[0], disclosureTier: "unclassified" as unknown as "open" }],
+    });
+    expect(result.outcome).toBe("BLOCKED");
+    expect(result.effectiveDisclosureTier).toBe("suppressed");
+    expect(result.issues.map((issue) => issue.code)).toContain("UNKNOWN_DISCLOSURE_TIER");
+  });
+
+  it("does not permit missing values to become zero", () => {
+    const result = lintVisualContract({
+      ...baseContract,
+      missingValueTreatment: "zero" as unknown as "preserve",
+    });
+    expect(result.outcome).toBe("BLOCKED");
+    expect(result.issues.map((issue) => issue.code)).toContain("MISSING_AS_ZERO");
+  });
+
+  it("accepts a measured numeric zero", () => {
+    const result = lintVisualContract({
+      ...baseContract,
+      dataRefs: [{ ...baseContract.dataRefs[0], value: 0 }],
+    });
+    expect(result.outcome).toBe("VALID_FOR_REVIEW");
+  });
+
+  it.each([Number.NaN, Number.POSITIVE_INFINITY])("rejects non-finite quantitative value %p", (value) => {
+    const result = lintVisualContract({ ...baseContract, dataRefs: [{ ...baseContract.dataRefs[0], value }] });
+    expect(result.outcome).toBe("BLOCKED");
+    expect(result.issues.map((issue) => issue.code)).toContain("INVALID_QUANTITATIVE_VALUE");
+  });
+
+  it("rejects negative and non-positive pie totals", () => {
+    const negative = lintVisualContract({ ...baseContract, visualType: "pie", dataRefs: [{ ...baseContract.dataRefs[0], value: -1 }] });
+    const empty = lintVisualContract({ ...baseContract, visualType: "pie", dataRefs: [{ ...baseContract.dataRefs[0], value: 0 }] });
+    expect(negative.issues.map((issue) => issue.code)).toContain("INVALID_PIE_VALUE");
+    expect(empty.issues.map((issue) => issue.code)).toContain("INVALID_PIE_TOTAL");
+  });
+
+  it("blocks public secondary axes", () => {
+    const result = lintVisualContract({
+      ...baseContract,
+      metricDefinitions: [{ ...baseContract.metricDefinitions[0], axis: "secondary" }],
+    });
+    expect(result.outcome).toBe("BLOCKED");
+    expect(result.issues.map((issue) => issue.code)).toContain("PUBLIC_SECONDARY_AXIS");
+  });
+
+  it("gives semantic blocks precedence over disclosure restrictions", () => {
+    const result = lintVisualContract({
+      ...baseContract,
+      disclosureTier: "open",
+      dataRefs: [{ ...baseContract.dataRefs[0], disclosureTier: "aggregated", claimType: "modeled", displayedAs: "observed" }],
+    });
+    expect(result.outcome).toBe("BLOCKED");
+    expect(result.issues.map((issue) => issue.code)).toEqual(expect.arrayContaining(["INFERENCE_UPGRADE", "DISCLOSURE_DOWNGRADE"]));
   });
 
   it("blocks Sankeys made from reported trade rather than verified physical movement", () => {
@@ -52,5 +118,9 @@ describe("visual contract linter", () => {
     expect(result.issues.map((issue) => issue.code)).toEqual(
       expect.arrayContaining(["INVALID_METRIC_SEMANTICS", "MIXED_AXIS_UNITS"])
     );
+  });
+
+  it("does not require or import a selector module", () => {
+    expect(existsSync(new URL("./visual-selector.ts", import.meta.url))).toBe(false);
   });
 });

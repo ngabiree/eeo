@@ -1,5 +1,4 @@
-import { validateMetricSemantics } from "./metric-semantics";
-import { visualDisclosureTier } from "./disclosure-policy";
+import { resolveVisualDisclosureTier } from "./disclosure-policy";
 import type { EEOVisualContract, VisualOutcome } from "./visual-contract";
 
 export interface VisualLintIssue {
@@ -11,10 +10,32 @@ export interface VisualLintIssue {
 export interface VisualLintResult {
   outcome: VisualOutcome;
   effectiveDisclosureTier: EEOVisualContract["disclosureTier"];
+  publicationAuthorized: false;
   issues: VisualLintIssue[];
 }
 
 const observedOnlyClaimTypes = new Set(["modeled", "inferred", "alleged", "disputed", "confidential", "withdrawn"]);
+const quantitativeVisualTypes = new Set(["bar", "line", "pie", "scatter", "sankey"]);
+const hardErrorCodes = new Set([
+  "INVALID_METRIC_SEMANTICS", "MIXED_AXIS_UNITS", "UNKNOWN_METRIC", "MISSING_VALUE", "MISSING_AS_ZERO",
+  "UNDOCUMENTED_TRANSFORMATION", "INFERENCE_UPGRADE", "INVALID_QUANTITATIVE_VALUE", "INVALID_PIE_VALUE",
+  "INVALID_PIE_TOTAL", "UNSAFE_SANKEY", "TRADE_NOT_TRACEABILITY", "NETWORK_INTENT", "PUBLIC_SECONDARY_AXIS",
+  "NO_TABLE_FALLBACK", "COLOR_DEPENDENT", "UNKNOWN_DISCLOSURE_TIER",
+]);
+const restrictionErrorCodes = new Set(["DISCLOSURE_DOWNGRADE", "SENSITIVE_COORDINATES"]);
+
+function validateMetricSemantics(metric: EEOVisualContract["metricDefinitions"][number]): string[] {
+  const issues: string[] = [];
+  const isPercentage = metric.aggregation === "share" || /%|percent|percentage/i.test(metric.unit);
+
+  if (!metric.name.trim()) issues.push("Metric name is required.");
+  if (!metric.unit.trim()) issues.push("Metric unit is required.");
+  if (isPercentage && !metric.denominator?.trim()) issues.push("Percentages and shares require a denominator.");
+  if (metric.aggregation === "rate" && (!metric.numerator?.trim() || !metric.denominator?.trim())) {
+    issues.push("Rates require both numerator and denominator.");
+  }
+  return issues;
+}
 
 export function lintVisualContract(contract: EEOVisualContract): VisualLintResult {
   const issues: VisualLintIssue[] = [];
@@ -35,6 +56,9 @@ export function lintVisualContract(contract: EEOVisualContract): VisualLintResul
   for (const [axis, units] of unitsByAxis) {
     if (units.size > 1) error("MIXED_AXIS_UNITS", `The ${axis} axis mixes incompatible units: ${[...units].join(", ")}.`);
   }
+  if (contract.audience === "public" && contract.metricDefinitions.some((metric) => metric.axis === "secondary")) {
+    error("PUBLIC_SECONDARY_AXIS", "Public visuals cannot use a secondary axis in the MVP.");
+  }
   if (!contract.dataRefs.length) error("MISSING_DATA", "A public visual requires datum-level data.");
   for (const datum of contract.dataRefs) {
     if (!metricIds.has(datum.metricId)) error("UNKNOWN_METRIC", `Datum ${datum.id} references an unknown metric.`);
@@ -46,6 +70,12 @@ export function lintVisualContract(contract: EEOVisualContract): VisualLintResul
     if (observedOnlyClaimTypes.has(datum.claimType) && ["observed", "official"].includes(datum.displayedAs)) {
       error("INFERENCE_UPGRADE", `Datum ${datum.id} cannot render ${datum.claimType} evidence as ${datum.displayedAs}.`);
     }
+    if (quantitativeVisualTypes.has(contract.visualType) && (typeof datum.value !== "number" || !Number.isFinite(datum.value))) {
+      error("INVALID_QUANTITATIVE_VALUE", `Datum ${datum.id} must be a finite number for ${contract.visualType} visuals.`);
+    }
+    if (contract.visualType === "pie" && typeof datum.value === "number" && datum.value < 0) {
+      error("INVALID_PIE_VALUE", `Datum ${datum.id} cannot be negative in a pie chart.`);
+    }
   }
   if (contract.missingValueTreatment !== "preserve" && contract.missingValueTreatment !== "explicit-not-available") {
     error("MISSING_AS_ZERO", "Missing values cannot be converted to zero.");
@@ -54,11 +84,14 @@ export function lintVisualContract(contract: EEOVisualContract): VisualLintResul
     warn("TRUNCATED_AXIS", "A truncated quantitative axis requires a visible justification.");
   }
 
-  const effectiveDisclosureTier = visualDisclosureTier(
+  const disclosure = resolveVisualDisclosureTier(
     contract.dataRefs.map((datum) => datum.disclosureTier),
     contract.disclosureTier
   );
-  if (effectiveDisclosureTier !== contract.disclosureTier) {
+  if (disclosure.hasUnknownTier) {
+    error("UNKNOWN_DISCLOSURE_TIER", "An unknown disclosure tier fails closed.");
+  }
+  if (!disclosure.hasUnknownTier && disclosure.effectiveTier !== contract.disclosureTier) {
     error("DISCLOSURE_DOWNGRADE", "The visual cannot be less restrictive than its underlying claims or geometries.");
   }
   if (contract.audience === "public" && (contract.geographyScope?.containsSensitiveCoordinates || contract.dataRefs.some((datum) => datum.geometry?.containsSensitiveCoordinates))) {
@@ -79,19 +112,27 @@ export function lintVisualContract(contract: EEOVisualContract): VisualLintResul
     if (contract.audience === "public" && (topology?.meaningfulNodeCount ?? 0) > 25) warn("PUBLIC_NETWORK_COMPLEXITY", "Public networks over 25 meaningful nodes should be filtered, tabular, or searchable.");
   }
   if (contract.visualType === "pie" && contract.dataRefs.length > 6) warn("PIE_COMPLEXITY", "Pies over six categories should use a clearer alternative.");
+  if (contract.visualType === "pie" && contract.dataRefs.every((datum) => typeof datum.value === "number") && contract.dataRefs.reduce((total, datum) => total + (datum.value as number), 0) <= 0) {
+    error("INVALID_PIE_TOTAL", "Pie charts require a positive total.");
+  }
   if (!contract.accessibility.tableFallback) error("NO_TABLE_FALLBACK", "A table fallback is required.");
   if (!contract.accessibility.colorIndependent) error("COLOR_DEPENDENT", "The visual must not rely on color alone.");
 
-  const hasErrors = issues.some((issue) => issue.severity === "error");
-  const outcome: VisualOutcome = hasErrors
-    ? issues.some((issue) => issue.code === "MISSING_PROVENANCE" || issue.code === "MISSING_DATA")
+  const errorCodes = new Set(issues.filter((issue) => issue.severity === "error").map((issue) => issue.code));
+  const hasHardError = [...errorCodes].some((code) => hardErrorCodes.has(code));
+  const hasMissingEvidence = errorCodes.has("MISSING_PROVENANCE") || errorCodes.has("MISSING_DATA");
+  const hasOnlyRestrictions = errorCodes.size > 0 && [...errorCodes].every((code) => restrictionErrorCodes.has(code));
+  const outcome: VisualOutcome = hasHardError
+    ? "BLOCKED"
+    : hasMissingEvidence
       ? "INSUFFICIENT_EVIDENCE"
-      : issues.some((issue) => issue.code === "SENSITIVE_COORDINATES" || issue.code === "DISCLOSURE_DOWNGRADE")
+      : hasOnlyRestrictions
         ? "RESTRICTED"
-        : "BLOCKED"
-    : contract.visualType === "network" && issues.some((issue) => issue.code === "PUBLIC_NETWORK_COMPLEXITY")
-      ? "DOWNGRADED_TO_TABLE"
-      : "APPROVED";
+        : errorCodes.size > 0
+          ? "BLOCKED"
+          : contract.visualType === "network" && issues.some((issue) => issue.code === "PUBLIC_NETWORK_COMPLEXITY")
+            ? "DOWNGRADED_TO_TABLE"
+            : "VALID_FOR_REVIEW";
 
-  return { outcome, effectiveDisclosureTier, issues };
+  return { outcome, effectiveDisclosureTier: disclosure.effectiveTier, publicationAuthorized: false, issues };
 }

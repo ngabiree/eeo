@@ -9,17 +9,17 @@ the renderer is considered.
 Evidence ledger
   -> approved analytical query
   -> metric semantic resolver
-  -> visualization intent resolver
+  -> future governed visual-type resolver (deferred)
   -> visual contract compiler
   -> semantic, evidence, statistical, inference, disclosure, and accessibility lint
-  -> APPROVED | DOWNGRADED_TO_TABLE | DOWNGRADED_TO_DIAGRAM | AGGREGATED | RESTRICTED | BLOCKED | INSUFFICIENT_EVIDENCE
+  -> VALID_FOR_REVIEW | DOWNGRADED_TO_TABLE | DOWNGRADED_TO_DIAGRAM | AGGREGATED | RESTRICTED | BLOCKED | INSUFFICIENT_EVIDENCE
 ```
 
-The contract and linter are in `src/eeo/visualization/`. They are deliberately
-renderer-agnostic: this prototype has no quantitative chart renderer, Sankey,
-or public network explorer to activate. The existing corridor system view is a
-static inquiry diagram, not an evidentiary relationship graph; it must remain
-labelled as such until it is backed by a compiled visual contract.
+The contract and linter are in `src/eeo/visualization/`. A future governed
+visual-type resolver is deferred. This prototype has no quantitative chart
+renderer, Sankey, or public network explorer to activate. The existing corridor
+system view is a static inquiry diagram, not an evidentiary relationship graph;
+it must remain labelled as such until it is backed by a compiled visual contract.
 
 ## Non-negotiable checks
 
@@ -46,4 +46,5 @@ labelled as such until it is backed by a compiled visual contract.
 
 The linter is a release guard, not evidence validation itself. A passing visual
 contract does not establish source quality, legal adequacy, physical custody,
-causation, or durable public benefit.
+causation, or durable public benefit. `VALID_FOR_REVIEW` means only that the
+contract passed these automated checks; it never authorizes publication.
