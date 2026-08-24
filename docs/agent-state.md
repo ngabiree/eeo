@@ -2,7 +2,7 @@
 
 ## Last updated
 
-2026-07-29
+2026-07-30
 
 ## Current repo observations
 
@@ -63,8 +63,8 @@ EEO must not be framed as:
 
 ## Completed increments
 
-- Repository already includes a Next.js App Router prototype with public EEO surfaces, corridor routes, evidence/correction/review/release helpers, and doctrine docs.
-- Repository already includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
+- Repository includes a Next.js App Router prototype with public EEO surfaces, corridor routes, evidence/correction/review/release helpers, and doctrine docs.
+- Repository includes route discipline scripts, Vitest tests, lint, typecheck, and CI.
 - 2026-07-29: Added a corridor charter template and roadmap/docs links so future corridors require boundary, evidence, source-rights, disclosure, map-safety, right-of-reply, reviewer, release-manifest, and stop-condition review before activation.
 - 2026-07-29: Added a Copper-Cobalt claim readiness matrix that keeps `CLAIM-DRC-CO-001` release-scoped and keeps method, exposure, ownership, and actor-affecting claims withheld pending review.
 - 2026-07-29: Hardened the source and wording basis for `CLAIM-DRC-CO-002` by recording the 2026 USGS DOI, edition, cobalt commodity-sheet locator, source-use basis, bounded estimate of about 55%, limitations, and `method_review` status.
@@ -73,12 +73,17 @@ EEO must not be framed as:
 - 2026-07-29: Added an intentionally empty governed signoff dataset. Rehearsal-only signoff examples remain separate and cannot satisfy release readiness.
 - 2026-07-29: Declared the same accountable review lanes for the currently included methodological claim so manifest gating cannot be bypassed by omitting requirement records.
 - 2026-07-29: Added a manifest-level signoff gate that blocks included claims with missing requirements or pending, blocked, withdrawn, or expired governed decisions. The current illustrative manifest therefore remains structurally blocked while the governed signoff dataset is empty.
+- 2026-07-30: Aligned React and ReactDOM at version 19.2.8, regenerated the frozen pnpm lockfile, and restored successful clean installation, tests, and production build.
+- 2026-07-30: Surfaced the governed manifest gate and claim-level review lanes in the protected reviewer workspace using only public-safe summaries and aggregate states.
+- 2026-07-30: Kept the reviewer panel read-only. It does not expose internal rationale, reviewer identities, private notes, restricted evidence, sensitive geography, or approval controls, and it states that rehearsal examples cannot satisfy the gate.
 
 ## Current safe next step
 
-Surface the manifest signoff gate in the protected reviewer workspace, showing only public-safe requirement summaries and aggregate counts. Do not expose internal rationale, reviewer identities, or private notes.
+Define the version-binding and accountable-authority contract required before any repository-backed governed signoff can be recorded.
 
-The reviewer workspace should state clearly that a structural pass does not sign, publish, certify, or adjudicate a manifest. It should also show that rehearsal examples cannot satisfy governed release requirements.
+A future signoff must bind to the exact reviewed object version or immutable digest, identify the accountable authority basis, record decision time and conditions, support expiry and supersession, and fail closed when the reviewed object changes. This contract must remain separate from the final release-manifest action.
+
+Do not create governed signoff records, approval controls, reviewer assignment workflows, or release actions until authentication, authorization, durable audit storage, protected internal-note handling, retention, and security boundaries are defined.
 
 Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or start a second public corridor while any required reviewer field remains pending.
 
@@ -90,18 +95,21 @@ Do not add `CLAIM-DRC-CO-002` to the release manifest, mark it approved, or star
 - Future corridor expansion could create global-atlas or public-exposure drift unless the corridor charter gate is enforced.
 - Visible prototype claims can be mistaken for release-approved public findings unless release-manifest scope remains explicit.
 - A prepared method-review packet or declared requirement can be mistaken for completed approval unless pending state and the absence of governed signoffs remain explicit.
-- Repository-backed signoff records are not a substitute for authenticated workflow, durable audit storage, reviewer authorization checks, or protected internal notes.
-- The current illustrative manifest is not structurally ready under the governed signoff gate because no current governed signoffs are recorded. This must remain visible rather than being silently inferred from rehearsal data.
-- CI currently runs route checks, temporal dormancy, lint, typecheck, tests, and build. If `pnpm verify` includes additional checks, keep CI and verify aligned intentionally.
+- Repository-backed signoff records are not a substitute for authenticated workflow, durable audit storage, reviewer authorization checks, protected internal notes, or version-bound decisions.
+- The current illustrative manifest is not structurally ready under the governed signoff gate because no current governed signoffs are recorded. This remains visible in the protected reviewer workspace.
+- The protected reviewer panel is a read-only diagnostic surface, not an approval workflow or legal record.
+- CI currently runs frozen installation, route checks, temporal dormancy, lint, typecheck, tests, and build. Keep CI and `pnpm verify` aligned intentionally.
 
 ## Deferred items
 
 - Global atlas, rankings, composite scores, certification seals, monitoring dashboards, alerts, scenario/forecast UI, temporal profile UI, blockchain modules, AI judgment surfaces, and public community reporting modules are deferred.
 - Additional public corridors are deferred until Copper-Cobalt release discipline is coherent and the proposed corridor has a completed charter.
 - Live data ingestion and governed evidence storage are deferred until access controls, private storage, audit logs, release views, review workflows, backups, retention rules, and security review are ready.
+- Authenticated review-decision entry, reviewer assignment, digital signatures, durable signoff persistence, and release execution are deferred until authorization, audit, privacy, retention, and security requirements are defined.
 - Monitoring and temporal profile runtime features remain deferred until the corridor dossier and release discipline are coherent.
 
 ## Last checks run
 
-- Local checks were not available in this connector workflow.
-- Added Vitest coverage for claim-level signoff state resolution and manifest-level blocking when requirements are missing or governed decisions are pending, blocked, or expired; CI status remains to be observed after the pull request opens.
+- 2026-07-30: Clean `pnpm install --frozen-lockfile` and `pnpm verify` passed after React and ReactDOM alignment; 14 test files and 97 tests passed before the reviewer-panel regression test was added.
+- 2026-07-30: CI passed for the review-requirement model, manifest signoff gate, and protected reviewer panel increments, including frozen install, route checks, lint, typecheck, tests, and production build.
+- 2026-07-30: Focused component regression coverage now verifies blocked governed-signoff state, claim 002 ineligibility, absence of approval controls, and non-disclosure of internal rationale; branch CI passed.
