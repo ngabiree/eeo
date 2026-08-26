@@ -97,3 +97,65 @@ Before a public release or public-facing amplification, confirm the release mani
 - right-of-reply status where applicable;
 - correction status where applicable;
 - public-safe limitations;
+- reviewer or accountable owner roles;
+- release decision and release date;
+- known unresolved limits or deferred questions;
+- withdrawal or correction path.
+
+A release manifest is not a proof certificate. It records why a bounded set of claims is considered ready for public view under stated limits.
+
+## 7. Corridor authorization check
+
+Before treating a corridor as public, active, authorized, or release-ready, confirm the corridor charter records:
+
+- corridor name and version;
+- resource or commodity;
+- geographic boundary;
+- relevant jurisdictions and rights-holders;
+- time period;
+- upstream starting point and downstream stopping point;
+- public-interest question;
+- intended users;
+- explicit exclusions;
+- source inventory and license or lawful-use basis;
+- evidence-coverage assessment;
+- entity-resolution method;
+- legal and sovereignty posture;
+- rights-holder and community considerations;
+- map and exposure-risk assessment;
+- disclosure-tier plan;
+- right-of-reply triggers and process;
+- correction and withdrawal process;
+- named review owners;
+- go, pause, or stop decision.
+
+If those conditions are incomplete, describe the corridor as roadmap, candidate, or provisional according to the corridor status record. Do not infer authorization from aspiration, priority, or preliminary research.
+
+## 8. Final stop conditions
+
+Pause public release or amplification when any of the following are unresolved:
+
+- source rights, license, or lawful-use basis;
+- evidence provenance or claim linkage;
+- material source limitation that is not visible to the public;
+- corridor boundary or corridor status;
+- rights-holder, sovereignty, or community exposure concern;
+- sensitive spatial detail or map-safety risk;
+- actor-affecting claim without required legal, exposure, correction, or right-of-reply posture;
+- release owner or reviewer approval;
+- correction route or withdrawal path;
+- public language that could be read as a verdict, score, certification, ownership finding, traceability proof, or legal conclusion.
+
+When a stop condition applies, publish nothing stronger than a public-safe limitation or status note until the issue is resolved.
+
+## 9. Post-release check
+
+After release, confirm:
+
+- correction and right-of-reply routes are visible and working;
+- public limitations remain attached to the released claims;
+- withdrawn, disputed, stale, restricted, or corrected claims are marked clearly;
+- no newly introduced UI, export, map layer, or downloadable file exposes restricted detail;
+- release notes describe the bounded release without implying institutional authority beyond the evidence record.
+
+Expansion should begin only after the flagship corridor dossier demonstrates the full source-to-release-to-correction loop safely.
