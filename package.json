@@ -22,8 +22,8 @@
     "sync:corridor-docs": "node scripts/sync-corridor-docs-mirror.mjs"
   },
   "dependencies": {
-    "lucide-react": "^1.27.0",
-    "next": "15.5.22",
+    "lucide-react": "^1.33.0",
+    "next": "15.5.23",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "server-only": "^0.0.1"
@@ -34,13 +34,13 @@
     "@types/node": "^26.1.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^6.0.4",
+    "@vitejs/plugin-react": "^6.1.0",
     "eslint": "^9.18.0",
     "eslint-config-next": "16.2.12",
-    "jsdom": "^29.1.1",
+    "jsdom": "^30.0.1",
     "postcss": "^8.5.23",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   }
 }
