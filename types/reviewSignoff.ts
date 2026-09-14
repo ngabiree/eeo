@@ -1,13 +1,15 @@
 /**
- * v1.4 contract — formal review requirements and completed sign-off records.
+ * v1.5 contract — formal review requirements and completed sign-off records.
  *
  * A requirement states which accountable review lane must be completed for a
  * specific object. A sign-off records that a review decision actually occurred.
  * Keeping these concepts separate prevents a required or prepared review from
  * being mistaken for approval.
  *
- * This contract does not introduce persistence, public UI, automatic approval,
- * reviewer identity disclosure, or release-manifest authorization.
+ * Governed sign-offs add immutable object-version binding and accountable
+ * authority verification. This contract does not introduce persistence, public
+ * UI, automatic approval, reviewer identity disclosure, or release-manifest
+ * authorization.
  */
 
 import type { AccessObjectType } from "./accessGovernance";
@@ -123,4 +125,56 @@ export interface ReviewSignoff {
    * Prior sign-off record replaced by this decision (same or refined scope).
    */
   supersedesSignoffId?: string;
+}
+
+/**
+ * Immutable reference to the exact object content reviewed.
+ *
+ * The canonicalization and digest must be produced by a separately controlled
+ * process. A mutable timestamp or repository branch name is not a sufficient
+ * version binding.
+ */
+export interface ReviewObjectVersionBinding {
+  objectType: AccessObjectType;
+  objectId: string;
+  schemaVersion: string;
+  canonicalization: "eeo-json-v1";
+  digestAlgorithm: "sha256";
+  contentDigest: string;
+}
+
+export type ReviewAuthorityVerificationStatus =
+  | "pending"
+  | "verified"
+  | "revoked"
+  | "expired";
+
+/**
+ * Opaque internal authority record for a governed review decision.
+ *
+ * `authorityId` and `basisReference` are internal identifiers. They must not be
+ * rendered on public routes or treated as proof of personal identity by
+ * themselves. Authentication and authorization remain external requirements.
+ */
+export interface ReviewAuthorityBinding {
+  authorityId: string;
+  accountableRole: FormalReviewAccountableRole;
+  basisReference: string;
+  verificationStatus: ReviewAuthorityVerificationStatus;
+  verifiedAt?: string;
+  expiresAt?: string;
+  permittedObjectTypes: AccessObjectType[];
+  permittedReviewTypes: FormalReviewSignoffType[];
+}
+
+/**
+ * Repository representation of a governed sign-off.
+ *
+ * This shape is necessary but not sufficient for operational authorization. A
+ * record must also be created through an authenticated, authorized, durable,
+ * audited workflow with protected internal notes and retention controls.
+ */
+export interface GovernedReviewSignoff extends ReviewSignoff {
+  objectVersion: ReviewObjectVersionBinding;
+  authority: ReviewAuthorityBinding;
 }
